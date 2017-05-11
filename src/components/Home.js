@@ -1,14 +1,14 @@
 import React,{Component} from 'react'
-
+import ChallengeList from './ChallengeList'
 
 class Home extends Component{
   render(){
     return(
       <div>
-        {/* <Navbar /> */}
-        <h1>Home screen</h1>
-        <h1>Home screen</h1>
-        <h1>Home screen</h1>
+        <br/>
+        {/* <h2 style={{color:"#002984"}}>Home screen</h2> */}
+        <br />
+        <ChallengeList />
       </div>
     )
   }

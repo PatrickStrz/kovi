@@ -6,6 +6,7 @@ class Site extends Component {
   styles = {
     body: {
       backgroundColor:"#f6f0f0",
+      textAlign: "center"
     }
   }
 
@@ -13,7 +14,7 @@ class Site extends Component {
     return(
       <div>
         <Navbar />
-        <div className="grid-center" style={this.styles.body}>
+        <div style={this.styles.body}>
           {this.props.children}
         </div>
       </div>
