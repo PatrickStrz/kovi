@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import Navbar from './Navbar'
-import {checkLogin} from '../lib/auth-helpers'
+import {checkLogin} from '../lib/auth'
 // import Home from './components/Home'
 
 class Site extends Component {
