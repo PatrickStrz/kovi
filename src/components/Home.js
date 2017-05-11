@@ -6,7 +6,7 @@ class Home extends Component{
     return(
       <div>
         <br/>
-        <h1>Home screen</h1>
+        {/* <h2 style={{color:"#002984"}}>Home screen</h2> */}
         <br />
         <ChallengeList />
       </div>

@@ -9,7 +9,7 @@ class ChallengeList extends Component {
 
     if (this.props.data.loading){
       return(<div>
-        <h1>Loading...</h1>
+        <h1 style={{color:"#002984"}}>Loading...</h1>
       </div>)
     }
 

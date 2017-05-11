@@ -1,6 +1,5 @@
 import React from 'react'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
-import FlatButton from 'material-ui/FlatButton'
+import {Card, CardHeader, CardText} from 'material-ui/Card'
 import PropTypes from 'prop-types'
 
 const ChallengeCard = (props) => {
