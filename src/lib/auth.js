@@ -4,7 +4,7 @@ const authService = new AuthService(
   process.env.REACT_APP_AUTH0_DOMAIN
 )
 
-export function checkLogin() {
+export const checkLogin = ()=> {
     // Add callback for lock's `authenticated` event
     authService.lock.on('authenticated', authResult => {
       authService.lock.getProfile(authResult.idToken, (error, profile) => {
@@ -21,9 +21,7 @@ export function checkLogin() {
 }
 
 //checks if
-//////////////////////////////////////////////////////////
 // export const requireAuth = callback => {
-//   return dispatch => {
 //     if(AuthService.loggedIn() && AuthService.getApiUserId()){
 //       callback()
 //     }
@@ -34,39 +32,23 @@ export function checkLogin() {
 //     else {
 //       dispatch(login())
 //     }
-//   }
 // }
+export const requireAuth = callback => {
+    if(AuthService.loggedIn()){
+      callback()
+    }
+    else {
+      login()
+    }
+}
 
-
-
-
-// export function checkLogin() {
-//   return dispatch => {
-//     // Add callback for lock's `authenticated` event
-//     authService.lock.on('authenticated', authResult => {
-//       authService.lock.getProfile(authResult.idToken, (error, profile) => {
-//         if (error)
-//           return dispatch(loginError(error))
-//         AuthService.setToken(authResult.idToken) // static method
-//         AuthService.setProfile(profile) // static method
-//         // syncUser()
-//         dispatch(syncUser(profile))
-//         return dispatch(loginSuccess(profile))
-//       })
-//     })
-//     // Add callback for lock's `authorization_error` event
-//     authService.lock.on('authorization_error', error => dispatch(loginError(error)))
-//   }
-// }
 
 export const logout = () => {
   authService.logout()
 }
 
-export function login() {
-
+export const login = () => {
   authService.login()
-
 }
 
 // export const checkLogin = () => {

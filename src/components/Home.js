@@ -1,20 +1,22 @@
 import React,{Component} from 'react'
 import ChallengeList from './ChallengeList'
-import {login, logout} from '../lib/auth'
+import {login, logout, requireAuth} from '../lib/auth'
 
 
 class Home extends Component{
+
+  loggedTest = () => {
+    console.log('logggggged in!!')
+  }
+
   render(){
     return(
       <div>
-        <button onClick={()=>{
-          login()
-        }}>Login</button>
-        <button onClick={()=>{
-          logout()
-        }}>Logout</button>
+        <button onClick={()=> login()}>Login</button>
+        <button onClick={()=>logout()}>Logout</button>
         <br/>
-        {/* <h2 style={{color:"#002984"}}>Home screen</h2> */}
+        <button onClick={()=>requireAuth(this.loggedTest)}>Test require auth by clicking this!</button>
+        <br/>
         <br />
         <ChallengeList />
       </div>
