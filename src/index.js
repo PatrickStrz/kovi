@@ -6,7 +6,8 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import authReducer from './reducers/auth-reducer'
 
 const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj2hsn8pvak4o0187k52n2i3l'
@@ -33,6 +34,7 @@ const store = createStore(
   combineReducers({
     apollo: client.reducer(),
     form: formReducer,
+    auth: authReducer,
   }),
   {}, // initial state
   compose(
