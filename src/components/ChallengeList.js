@@ -1,18 +1,33 @@
 import React,{Component} from 'react'
 import {graphql, compose} from 'react-apollo'
 import ChallengeCard from './ChallengeCard'
-// import {gql} from 'graphql-tag'
 import {allChallengesQuery} from '../queries/challenge-queries'
-import {deleteChallengeMutation} from '../mutations/challenge-mutations'
-// import {authRequired} from '../lib/auth'
+import {deleteChallengeMutation, createChallengeMutation} from '../mutations/challenge-mutations'
+import ChallengeCreateForm from './ChallengeCreateForm'
+import {requireAuth} from '../lib/auth'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class ChallengeList extends Component {
 
+  state = {formVisible:false}
+
+  toggleForm = () => {
+    this.setState({formVisible: !this.state.formVisible})
+  }
+
   handleDeleteChallenge = async (id) => {
-    const queryParams = {
-      variables:{id:id}, refetchQueries:[{ query: allChallengesQuery}]
+    const mutationParams = {
+      variables:{id}, refetchQueries:[{ query: allChallengesQuery}]
     }
-    await this.props.deleteChallengeMutation(queryParams)
+    await this.props.deleteChallengeMutation(mutationParams)
+  }
+
+  handleCreateChallengeSubmit = async (values) =>{
+    const {title, description} = values
+    const mutationParams = {
+      variables:{title, description}, refetchQueries:[{ query: allChallengesQuery}]
+    }
+    await this.props.createChallengeMutation(mutationParams)
   }
 
   render(){
@@ -25,19 +40,20 @@ class ChallengeList extends Component {
     return(
         <div>
         {this.props.data.allChallenges.map(challenge =>(
-          // <p key={challenge.id}>{challenge.title}</p>
-          <div key={challenge.id}>
+          <div key={'challengelist'+challenge.id}>
             <ChallengeCard challenge={challenge}
               handleDelete={this.handleDeleteChallenge}
             />
           </div>
         ))}
+        <RaisedButton label="Add a new challenge" primary={true}
+            onClick={()=> requireAuth(this.toggleForm)}>
+        </RaisedButton>
+        { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
         </div>
       )
     }
   }
-
-// graphql(deleteChallengeMutation, {name:"deleteChallengeMutation"}),
 
 const ChallengeListApollo = compose(
   graphql(
@@ -46,7 +62,8 @@ const ChallengeListApollo = compose(
         fetchPolicy: 'network-only'
       },
     }),
-  graphql(deleteChallengeMutation, {name:"deleteChallengeMutation"})
+  graphql(deleteChallengeMutation, {name:"deleteChallengeMutation"}),
+  graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
 export default ChallengeListApollo

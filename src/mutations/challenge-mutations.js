@@ -5,3 +5,10 @@ export const deleteChallengeMutation = gql`mutation deleteChallenge($id:ID!){
     id
   }
 }`
+
+export const createChallengeMutation = gql`mutation
+  createChallengeMutation($description: String, $title: String){
+	  createChallenge(description:$description,title:$title){
+    id
+  }
+}`

@@ -5,7 +5,11 @@ import PropTypes from 'prop-types'
 import {requireAuth} from '../lib/auth'
 
 const ChallengeCard = (props) => {
-
+  const styles = {
+    card:{
+      borderRadius:5
+    }
+  }
   const {id, title, description} = props.challenge
   const {handleDelete} = props
   const handleDeleteCallback = () => handleDelete(id)
@@ -13,7 +17,7 @@ const ChallengeCard = (props) => {
   return(
   <div className="grid-center">
     <div className="col-10_sm-12">
-      <Card zDepth={5}>
+      <Card zDepth={4} style={styles.card}>
         <CardHeader
           title={title}
           subtitle={description}
@@ -21,7 +25,11 @@ const ChallengeCard = (props) => {
           showExpandableButton={true}
         />
         <CardActions>
-          <FlatButton onClick={()=> requireAuth(handleDeleteCallback)}>delete this ting</FlatButton>
+          <FlatButton
+            label="delete this ting"
+            onClick={()=> requireAuth(handleDeleteCallback)}
+            secondary={true}
+          />
         </CardActions>
         <CardText expandable={true}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.

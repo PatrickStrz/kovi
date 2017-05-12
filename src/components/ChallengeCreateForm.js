@@ -34,4 +34,4 @@ import FlatButton from 'material-ui/FlatButton';
 export default reduxForm({
   form: 'problemCreate',
   validate,
-},null)(ProblemCreateForm)
+},null)(ChallengeCreateForm)
