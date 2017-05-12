@@ -1,8 +1,14 @@
 import React,{Component} from 'react'
 import Navbar from './Navbar'
-// import Home from './components/Home'
+import {checkLogin} from '../lib/auth'
 
 class Site extends Component {
+
+  constructor(props) {
+  super(props)
+  checkLogin() // check is Auth0 lock is authenticating after login callback
+  }
+
   styles = {
     body: {
       backgroundColor:"#f6f0f0",
