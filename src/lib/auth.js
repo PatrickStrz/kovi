@@ -28,6 +28,10 @@ export const login = () => {
   authService.login()
 }
 
+export const isLoggedIn = () => {
+  return authService.loggedIn()
+}
+
 export const requireAuth = callback => {
     if(AuthService.loggedIn()){
       callback()

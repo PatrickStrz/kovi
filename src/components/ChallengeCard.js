@@ -1,19 +1,36 @@
 import React from 'react'
-import {Card, CardHeader, CardText} from 'material-ui/Card'
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types'
+import {requireAuth} from '../lib/auth'
 
 const ChallengeCard = (props) => {
-  const {title, description} = props.challenge
+  const styles = {
+    card:{
+      borderRadius:5
+    }
+  }
+  const {id, title, description} = props.challenge
+  const {handleDelete} = props
+  const handleDeleteCallback = () => handleDelete(id)
+
   return(
   <div className="grid-center">
     <div className="col-10_sm-12">
-      <Card>
+      <Card zDepth={4} style={styles.card}>
         <CardHeader
           title={title}
           subtitle={description}
           actAsExpander={true}
           showExpandableButton={true}
         />
+        <CardActions>
+          <FlatButton
+            label="delete this ting"
+            onClick={()=> requireAuth(handleDeleteCallback)}
+            secondary={true}
+          />
+        </CardActions>
         <CardText expandable={true}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
@@ -28,7 +45,8 @@ const ChallengeCard = (props) => {
 }
 
 ChallengeCard.propTypes = {
-  challenge: PropTypes.object.isRequired
+  challenge: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func.isRequired
 }
 
 export default ChallengeCard
