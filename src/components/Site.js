@@ -1,7 +1,6 @@
 import React,{Component} from 'react'
 import Navbar from './Navbar'
 import {checkLogin} from '../lib/auth'
-// import Home from './components/Home'
 
 class Site extends Component {
 
@@ -9,7 +8,6 @@ class Site extends Component {
   super(props)
   checkLogin() // check is Auth0 lock is authenticating after login callback
   }
-
 
   styles = {
     body: {
