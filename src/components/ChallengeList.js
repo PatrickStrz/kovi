@@ -4,7 +4,7 @@ import ChallengeCard from './ChallengeCard'
 // import {gql} from 'graphql-tag'
 import {allChallengesQuery} from '../queries/challenge-queries'
 import {deleteChallengeMutation} from '../mutations/challenge-mutations'
-import {authRequired} from '../lib/auth'
+// import {authRequired} from '../lib/auth'
 
 class ChallengeList extends Component {
 
@@ -27,8 +27,9 @@ class ChallengeList extends Component {
         {this.props.data.allChallenges.map(challenge =>(
           // <p key={challenge.id}>{challenge.title}</p>
           <div key={challenge.id}>
-            <ChallengeCard challenge={challenge} />
-          <button onClick={()=> this.handleDeleteChallenge(challenge.id)}>delete this ting</button>
+            <ChallengeCard challenge={challenge}
+              handleDelete={this.handleDeleteChallenge}
+            />
           </div>
         ))}
         </div>
