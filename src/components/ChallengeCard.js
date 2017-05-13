@@ -18,20 +18,28 @@ class ChallengeCard extends Component {
     }
   }
 
+  id = this.props.challenge.id
+
   handleUpdateChallengeSubmit = async (values) =>{
     const {title, description} = values
     const mutationParams = {
-      variables: { id: this.props.challenge.id, title, description},
+      variables: { id: this.id, title, description},
       refetchQueries: [{ query: allChallengesQuery}]
     }
     await this.props.updateChallengeMutation(mutationParams)
   }
 
+  handleDeleteChallenge = async () => {
+    const mutationParams = {
+      variables:{id: this.id}, refetchQueries:[{ query: allChallengesQuery}]
+    }
+    await this.props.deleteChallengeMutation(mutationParams)
+  }
+
   render(){
     const {challenge} = this.props
-    const {id, title, description} = challenge
-    const {handleDelete} = this.props
-    const handleDeleteCallback = () => handleDelete(id)
+    const {title, description} = challenge
+    const handleDeleteCallback = () => this.handleDeleteChallenge()
 
     return(
     <div className="grid-center">
@@ -45,7 +53,7 @@ class ChallengeCard extends Component {
           />
           <CardActions>
             <FlatButton
-              label="delete this ting"
+              label="Delete"
               onClick={()=> requireAuth(handleDeleteCallback)}
               secondary={true}
             />
@@ -76,7 +84,6 @@ const ChallengeCardApollo = compose(
 
 ChallengeCard.propTypes = {
   challenge: PropTypes.object.isRequired,
-  handleDelete: PropTypes.func.isRequired
 }
 
 export default ChallengeCardApollo
