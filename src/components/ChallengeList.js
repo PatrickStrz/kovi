@@ -2,7 +2,12 @@ import React,{Component} from 'react'
 import {graphql, compose} from 'react-apollo'
 import ChallengeCard from './ChallengeCard'
 import {allChallengesQuery} from '../queries/challenge-queries'
-import {deleteChallengeMutation, createChallengeMutation} from '../mutations/challenge-mutations'
+import {
+        deleteChallengeMutation,
+        createChallengeMutation,
+        updateChallengeMutation,
+      } from '../mutations/challenge-mutations'
+
 import ChallengeCreateForm from './ChallengeCreateForm'
 import {requireAuth} from '../lib/auth'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -64,6 +69,7 @@ const ChallengeListApollo = compose(
     }),
   graphql(deleteChallengeMutation, {name:"deleteChallengeMutation"}),
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
+  graphql(updateChallengeMutation, {name:"updateChallengeMutation"}),
 )(ChallengeList)
 
 export default ChallengeListApollo
