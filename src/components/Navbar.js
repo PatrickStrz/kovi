@@ -1,12 +1,15 @@
 import React,{Component} from 'react'
+import propTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
-import {login, logout} from '../lib/auth'
+import {login} from '../lib/auth'
 import AuthService from '../lib/AuthService'
 
-
 class Navbar extends Component {
-
+  static propTypes = {
+    handleLogout: propTypes.func.isRequired,
+    isAuthenticated: propTypes.bool.isRequired
+  }
   state = {
     isLoggedIn: AuthService.loggedIn()
   }
@@ -21,16 +24,14 @@ class Navbar extends Component {
   }
 
   render(){
+    const {handleLogout} = this.props
     return(
       <AppBar
-        // {localStorag}
         style={this.styles.navbar}
         titleStyle={this.styles.title}
         title="KOVI">
-        { this.state.isLoggedIn? <RaisedButton label="Log out"onClick={()=> logout()} /> : <RaisedButton label="Log in" onClick={()=> login()}/>}
-
+        { this.props.isAuthenticated ? <RaisedButton label="Log out"onClick={() => handleLogout()} /> : <RaisedButton label="Log in" onClick={()=> login()}/>}
       </AppBar>
-
     )
   }
 }

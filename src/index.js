@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom'
 import App from './components/App'
 import './index.css'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import reduxThunk from 'redux-thunk'
 import { reducer as formReducer } from 'redux-form'
+import authReducer from './reducers/auth-reducer'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import authReducer from './reducers/auth-reducer'
+
 
 const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj2hsn8pvak4o0187k52n2i3l'
@@ -38,7 +40,7 @@ const store = createStore(
   }),
   {}, // initial state
   compose(
-      applyMiddleware(client.middleware()),
+      applyMiddleware(client.middleware(), reduxThunk),
       (typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
   )
 )

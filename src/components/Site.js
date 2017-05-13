@@ -1,13 +1,14 @@
 import React,{Component} from 'react'
 import Navbar from './Navbar'
-import {checkLogin} from '../lib/auth'
+import {checkLogin, logout} from '../actions/auth-actions'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 class Site extends Component {
 
   constructor(props) {
   super(props)
-  checkLogin() // check is Auth0 lock is authenticating after login callback
+  this.props.checkLogin() // check is Auth0 lock is authenticating after login callback
   }
 
   styles = {
@@ -20,11 +21,13 @@ class Site extends Component {
   render(){
     return(
       <div>
-        <Navbar />
+        <Navbar handleLogout={this.props.logout}
+          isAuthenticated={this.props.isAuthenticated}
+        />
         <div style={this.styles.body}>
           {this.props.children}
         <h1>authed:{this.props.isAuthenticated}</h1>
-        {this.props.isAuthenticated ? <p>authed</p> : <p>not autherd</p>}
+        {this.props.isAuthenticated ? <p>authed</p> : <p>not authed</p>}
         </div>
       </div>
     )
@@ -37,4 +40,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,null)(Site)
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      checkLogin,
+      logout
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Site)
