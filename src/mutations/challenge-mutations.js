@@ -12,3 +12,10 @@ export const createChallengeMutation = gql`mutation
     id
   }
 }`
+
+export const updateChallengeMutation = gql`mutation
+  updateChallengeMutation($id: ID!, $description: String, $title: String){
+	  updateChallenge(id:$id, description:$description,title:$title){
+    id
+  }
+}`
