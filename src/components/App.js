@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import Site from './Site'
+import SiteContainer from './SiteContainer'
 import Home from './Home'
 
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <Site>
+        <SiteContainer>
         <BrowserRouter>
             {/* <div className="grid-center"> */}
             <Switch>
@@ -19,7 +19,7 @@ class App extends Component {
             </Switch>
             {/* </div> */}
         </BrowserRouter>
-        </Site>
+      </SiteContainer>
       </MuiThemeProvider>
     )
   }
