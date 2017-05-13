@@ -2,12 +2,7 @@ import React,{Component} from 'react'
 import {graphql, compose} from 'react-apollo'
 import ChallengeCard from './ChallengeCard'
 import {allChallengesQuery} from '../queries/challenge-queries'
-import {
-        deleteChallengeMutation,
-        createChallengeMutation,
-        updateChallengeMutation,
-      } from '../mutations/challenge-mutations'
-
+import {createChallengeMutation} from '../mutations/challenge-mutations'
 import ChallengeCreateForm from './ChallengeCreateForm'
 import {requireAuth} from '../lib/auth'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -18,13 +13,6 @@ class ChallengeList extends Component {
 
   toggleForm = () => {
     this.setState({formVisible: !this.state.formVisible})
-  }
-
-  handleDeleteChallenge = async (id) => {
-    const mutationParams = {
-      variables:{id}, refetchQueries:[{ query: allChallengesQuery}]
-    }
-    await this.props.deleteChallengeMutation(mutationParams)
   }
 
   handleCreateChallengeSubmit = async (values) =>{
@@ -47,7 +35,6 @@ class ChallengeList extends Component {
         {this.props.data.allChallenges.map(challenge =>(
           <div key={'challengelist'+challenge.id}>
             <ChallengeCard challenge={challenge}
-              handleDelete={this.handleDeleteChallenge}
             />
           </div>
         ))}
@@ -67,9 +54,7 @@ const ChallengeListApollo = compose(
         fetchPolicy: 'network-only'
       },
     }),
-  graphql(deleteChallengeMutation, {name:"deleteChallengeMutation"}),
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
-  graphql(updateChallengeMutation, {name:"updateChallengeMutation"}),
 )(ChallengeList)
 
 export default ChallengeListApollo

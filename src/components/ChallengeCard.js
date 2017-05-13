@@ -12,6 +12,11 @@ import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types'
 
 class ChallengeCard extends Component {
+
+  state = {
+    updateFormVisible:false
+  }
+
   styles = {
     card:{
       borderRadius:5
@@ -36,10 +41,27 @@ class ChallengeCard extends Component {
     await this.props.deleteChallengeMutation(mutationParams)
   }
 
+  toggleUpdateForm = () => {
+    this.setState({updateFormVisible: !this.state.updateFormVisible})
+  }
+
   render(){
     const {challenge} = this.props
     const {title, description} = challenge
     const handleDeleteCallback = () => this.handleDeleteChallenge()
+    const toggleUpdateFormCallback = () => this.toggleUpdateForm()
+
+    const showForm = () => {
+      if(this.state.updateFormVisible){
+        return(
+          <ChallengeUpdateForm
+            form={`challengeUpdateForm${challenge.id}`}
+            initialValues={{title, description}}
+            onSubmit={this.handleUpdateChallengeSubmit}
+          />
+        )
+      }
+    }
 
     return(
     <div className="grid-center">
@@ -57,6 +79,11 @@ class ChallengeCard extends Component {
               onClick={()=> requireAuth(handleDeleteCallback)}
               secondary={true}
             />
+            <FlatButton
+              label="Update"
+              onClick={()=> requireAuth(toggleUpdateFormCallback)}
+              primary={true}
+            />
           </CardActions>
           <CardText expandable={true}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -64,11 +91,7 @@ class ChallengeCard extends Component {
             Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           </CardText>
-          <ChallengeUpdateForm
-            form={`challengeUpdateForm${challenge.id}`}
-            initialValues={{title, description}}
-            onSubmit={this.handleUpdateChallengeSubmit}
-          />
+          {showForm()}
         </Card>
       <br/>
       </div>
