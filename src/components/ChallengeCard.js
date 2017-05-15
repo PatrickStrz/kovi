@@ -17,7 +17,9 @@ class ChallengeCard extends Component {
   }
 
   state = {
-    updateFormVisible:false
+    updateFormVisible: false,
+    updateInProgress: false,
+    deleteInProgress: false,
   }
 
   styles = {
@@ -34,14 +36,21 @@ class ChallengeCard extends Component {
       variables: { id: this.id, title, description},
       refetchQueries: [{ query: allChallengesQuery}]
     }
+
+    this.setState({updateInProgress:true})
     await this.props.updateChallengeMutation(mutationParams)
+    this.setState({updateInProgress:false})
   }
 
   handleDeleteChallenge = async () => {
+
     const mutationParams = {
       variables:{id: this.id}, refetchQueries:[{ query: allChallengesQuery}]
     }
+
+    this.setState({deleteInProgress:true})
     await this.props.deleteChallengeMutation(mutationParams)
+    this.setState({deleteInProgress:false})
   }
 
   toggleUpdateForm = () => {
@@ -61,13 +70,25 @@ class ChallengeCard extends Component {
     }
   }
 
+  cardStyle = () => {
+    if (this.state.updateInProgress){
+        return {...this.styles.card, opacity:0.5}
+    }
+    else if (this.state.deleteInProgress) {
+      return {...this.styles.card, backgroundColor:'#d53b3b'}
+    }
+    else{
+      return this.styles.card
+    }
+  }
+
   render(){
     const {title, description} = this.props.challenge
 
     return(
     <div className="grid-center">
       <div className="col-10_sm-12">
-        <Card zDepth={4} style={this.styles.card}>
+        <Card zDepth={4} style={this.cardStyle()}>
           <CardHeader
             title={title}
             subtitle={description}
