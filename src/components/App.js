@@ -19,7 +19,7 @@ class App extends Component {
             </Switch>
             {/* </div> */}
         </BrowserRouter>
-        </Site>
+      </Site>
       </MuiThemeProvider>
     )
   }
