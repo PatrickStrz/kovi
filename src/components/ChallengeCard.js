@@ -39,7 +39,7 @@ class ChallengeCard extends Component {
 
     this.setState({updateInProgress:true})
     await this.props.updateChallengeMutation(mutationParams)
-    this.setState({updateInProgress:false})
+    this.setState({updateFormVisible:false, updateInProgress:false})
   }
 
   handleDeleteChallenge = async () => {
