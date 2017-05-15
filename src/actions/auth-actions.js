@@ -18,33 +18,13 @@ export function checkLogin() {
           return dispatch(loginError(error))
         AuthService.setToken(authResult.idToken) // static method
         AuthService.setProfile(profile) // static method
-        // syncUser()
-        // dispatch(syncUser(profile))
         return dispatch(loginSuccess(profile))
-        // return dispatch(loginSuccess)
       })
     })
     // Add callback for lock's `authorization_error` event
     authService.lock.on('authorization_error', error => dispatch(loginError(error)))
   }
 }
-
-//Calls the function that is passed in if logged in with Auth0 and
-//the profile is created/ synced with the API
-// export const requireAuth = callback => {
-//   return dispatch => {
-//     if(AuthService.loggedIn() && AuthService.getApiUserId()){
-//       callback()
-//     }
-//     else if (AuthService.loggedIn() && !AuthService.getApiUserId()) {
-//       const profile = AuthService.getProfile()
-//         dispatch(syncUser(profile))
-//       }
-//     else {
-//       dispatch(login())
-//     }
-//   }
-// }
 
 export function login() {
   authService.login()
@@ -75,5 +55,3 @@ export function logout() {
     type: ActionTypes.LOGOUT_SUCCESS
   }
 }
-
-// to keep profile up to date with api (creates or updates user)
