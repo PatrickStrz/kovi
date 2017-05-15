@@ -26,8 +26,6 @@ class Site extends Component {
         />
         <div style={this.styles.body}>
           {this.props.children}
-        <h1>authed:{this.props.isAuthenticated}</h1>
-        {this.props.isAuthenticated ? <p>authed</p> : <p>not authed</p>}
         </div>
       </div>
     )
