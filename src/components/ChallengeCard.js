@@ -57,7 +57,7 @@ class ChallengeCard extends Component {
     this.setState({updateFormVisible: !this.state.updateFormVisible})
   }
 
-  showUpdateForm = () => {
+  renderUpdateForm = () => {
     const {id, title, description} = this.props.challenge
     if(this.state.updateFormVisible){
       return(
@@ -102,7 +102,7 @@ class ChallengeCard extends Component {
               secondary={true}
             />
             <FlatButton
-              label="Update"
+              label={this.state.updateFormVisible ? "Hide Form" : "Update"}
               onClick={()=> requireAuth(this.toggleUpdateForm)}
               primary={true}
             />
@@ -113,7 +113,7 @@ class ChallengeCard extends Component {
             Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           </CardText>
-          {this.showUpdateForm()}
+          {this.renderUpdateForm()}
         </Card>
       <br/>
       </div>

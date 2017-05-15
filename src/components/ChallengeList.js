@@ -20,7 +20,8 @@ class ChallengeList extends Component {
     const mutationParams = {
       variables:{title, description}, refetchQueries:[{ query: allChallengesQuery}]
     }
-    await this.props.createChallengeMutation(mutationParams)
+    const create = await this.props.createChallengeMutation(mutationParams)
+    this.setState({formVisible:false})
   }
 
   render(){
