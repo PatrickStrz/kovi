@@ -12,6 +12,9 @@ import FlatButton from 'material-ui/FlatButton';
 import PropTypes from 'prop-types'
 
 class ChallengeCard extends Component {
+  static propTypes = {
+    challenge: PropTypes.object.isRequired,
+  }
 
   state = {
     updateFormVisible:false
@@ -45,23 +48,21 @@ class ChallengeCard extends Component {
     this.setState({updateFormVisible: !this.state.updateFormVisible})
   }
 
-  render(){
-    const {challenge} = this.props
-    const {title, description} = challenge
-    const handleDeleteCallback = () => this.handleDeleteChallenge()
-    const toggleUpdateFormCallback = () => this.toggleUpdateForm()
-
-    const showForm = () => {
-      if(this.state.updateFormVisible){
-        return(
-          <ChallengeUpdateForm
-            form={`challengeUpdateForm${challenge.id}`}
-            initialValues={{title, description}}
-            onSubmit={this.handleUpdateChallengeSubmit}
-          />
-        )
-      }
+  showUpdateForm = () => {
+    const {id, title, description} = this.props.challenge
+    if(this.state.updateFormVisible){
+      return(
+        <ChallengeUpdateForm
+          form={`challengeUpdateForm${id}`}
+          initialValues={{title, description}}
+          onSubmit={this.handleUpdateChallengeSubmit}
+        />
+      )
     }
+  }
+
+  render(){
+    const {title, description} = this.props.challenge
 
     return(
     <div className="grid-center">
@@ -76,12 +77,12 @@ class ChallengeCard extends Component {
           <CardActions>
             <FlatButton
               label="Delete"
-              onClick={()=> requireAuth(handleDeleteCallback)}
+              onClick={()=> requireAuth(this.handleDeleteChallenge)}
               secondary={true}
             />
             <FlatButton
               label="Update"
-              onClick={()=> requireAuth(toggleUpdateFormCallback)}
+              onClick={()=> requireAuth(this.toggleUpdateForm)}
               primary={true}
             />
           </CardActions>
@@ -91,7 +92,7 @@ class ChallengeCard extends Component {
             Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           </CardText>
-          {showForm()}
+          {this.showUpdateForm()}
         </Card>
       <br/>
       </div>
@@ -104,9 +105,5 @@ const ChallengeCardApollo = compose(
   graphql(updateChallengeMutation, {name:"updateChallengeMutation"}),
   graphql(deleteChallengeMutation, {name:"deleteChallengeMutation"}),
 )(ChallengeCard)
-
-ChallengeCard.propTypes = {
-  challenge: PropTypes.object.isRequired,
-}
 
 export default ChallengeCardApollo
