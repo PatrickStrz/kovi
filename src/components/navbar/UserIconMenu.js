@@ -31,31 +31,30 @@ class UserIconMenu extends Component{
   }
 
   render(){
-
   const { picture, handleLogout } = this.props
-
-  return(
-    <div >
-      <IconButton onTouchTap={this.handleTouchTap} >
-        <Avatar
-          src={picture}
-          size={30}
-        />
-      </IconButton>
-      <Popover
-        open={this.state.open}
-        anchorEl={this.state.anchorEl}
-        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-        onRequestClose={this.handleRequestClose}
-        animated={true}
-      >
-        <Menu>
-          <MenuItem primaryText="Log Out" onTouchTap={()=>handleLogout()}/>
-        </Menu>
-      </Popover>
-    </div>
-  )}
+    return(
+      <div >
+        <IconButton onTouchTap={this.handleTouchTap} >
+          <Avatar
+            src={picture}
+            size={30}
+          />
+        </IconButton>
+        <Popover
+          open={this.state.open}
+          anchorEl={this.state.anchorEl}
+          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          onRequestClose={this.handleRequestClose}
+          animated={true}
+        >
+          <Menu>
+            <MenuItem primaryText="Log Out" onTouchTap={()=>handleLogout()}/>
+          </Menu>
+        </Popover>
+      </div>
+    )
+  }
 }
 
 export default UserIconMenu
