@@ -39,7 +39,6 @@ const Navbar = (props) => {
     }
     else {
       return (
-        // <FlatButton style={styles.loginButton} label="login" onClick={ ()=>handleLogin() } />
         // call clear profile
         <IconButton
           onTouchTap={()=>handleLogin()}

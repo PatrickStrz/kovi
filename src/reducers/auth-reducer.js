@@ -17,7 +17,7 @@ export default function authReducer(state=initialState, action) {
     case ActionTypes.LOGIN_ERROR:
       return { ...state, isFetching: false, isAuthenticated: false, profile: {}, error: action.error }
     case ActionTypes.LOGOUT_SUCCESS:
-      return { ...state, ...initialState, isAuthenticated:false }
+      return { ...state, ...initialState, isAuthenticated:false, profile: {} }
     default:
       return state
   }
