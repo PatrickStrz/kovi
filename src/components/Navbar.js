@@ -8,7 +8,8 @@ import AuthService from '../lib/AuthService'
 class Navbar extends Component {
   static propTypes = {
     handleLogout: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    profile: PropTypes.object.isRequired,
   }
   state = {
     isLoggedIn: AuthService.loggedIn()

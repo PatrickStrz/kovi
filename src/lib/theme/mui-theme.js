@@ -1,10 +1,11 @@
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import {muiColors} from './colors'
 
 export const muiTheme = getMuiTheme({
   palette: {
     // textColor: cyan500,
     // accent1Color: deepPurple200,
-    primary1Color: '#3f51b5',
+    primary1Color: muiColors.primary1,
     primary2Color: '#8eacbc',
     primary3Color: '#34515f',
     // accent1Color: '#47c1bf',
