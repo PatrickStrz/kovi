@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
-import Navbar from './Navbar'
+import Navbar from './navbar/Navbar'
 import {checkLogin, logout} from '../actions/auth-actions'
+import {login} from '../lib/auth'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -22,7 +23,9 @@ class Site extends Component {
     return(
       <div>
         <Navbar handleLogout={this.props.logout}
+          handleLogin={login}
           isAuthenticated={this.props.isAuthenticated}
+          profile={this.props.profile}
         />
         <div style={this.styles.body}>
           {this.props.children}
@@ -35,6 +38,7 @@ class Site extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    profile: state.auth.profile,
   }
 }
 
