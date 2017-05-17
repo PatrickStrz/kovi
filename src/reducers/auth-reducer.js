@@ -3,6 +3,7 @@ import AuthService from '../lib/AuthService'
 
 const initialState = {
   isAuthenticated: !AuthService.isTokenExpired(),
+  auth0UserId: AuthService.getAuth0UserId(),
   isFetching: false,
   profile: AuthService.getProfile(),
   error: null,

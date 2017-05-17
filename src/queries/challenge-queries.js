@@ -11,7 +11,7 @@ import {gql} from 'react-apollo'
 // 	{"auth0UserId": "facebook|10154990636666251"}
 // }
 
-export const allChallengesQuery = gql`query allChallenges($Likesfilter: UserFilter){
+export const allChallengesQuery = gql`query allChallenges($filter: UserFilter){
 	allChallenges{
     id
     title
@@ -19,7 +19,7 @@ export const allChallengesQuery = gql`query allChallenges($Likesfilter: UserFilt
     _upvotesMeta{
       count
     }
-    upvotes(filter: $Likesfilter){
+    upvotes(filter: $filter){
       auth0UserId
     }
   }

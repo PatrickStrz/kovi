@@ -10,9 +10,6 @@ import ChallengeUpdateForm from './ChallengeUpdateForm'
 import {allChallengesQuery} from '../queries/challenge-queries'
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton'
-import ThumbUp from 'material-ui/svg-icons/action/thumb-up'
-import {muiColors} from '../lib/theme/colors'
 import ChallengeLike from './ChallengeLike'
 
 class ChallengeCard extends Component {
@@ -93,22 +90,8 @@ class ChallengeCard extends Component {
 
     <div className="grid-center">
       <div className="col-1_sm-1">
-        <ChallengeLike />
-        <IconButton
-          style = {{paddingTop:50}}
-          // onTouchTap={()=>handleLogin()}
-          iconStyle={{height:30, width:30}}
-        >
-          <ThumbUp
-            // color={muiColors.primary1}
-            // style = {{paddingTop:40, marginTop:"20px"}}
-            color={ upvotes.includes("facebook|10154990636666251") ? muiColors.secondary1 : "#6f6f6f"}
-
-            hoverColor={muiColors.secondary1}
-          />
-        </IconButton>
+        <ChallengeLike upvotes={upvotes}/>
       </div>
-
       <div className="col-9_sm-9">
         <Card zDepth={4} style={this.cardStyle()}>
           <CardHeader

@@ -13,6 +13,8 @@ export function checkLogin() {
   return dispatch => {
     // Add callback for lock's `authenticated` event
     authService.lock.on('authenticated', authResult => {
+      const auth0UserId = authResult.idTokenPayload.sub
+      AuthService.setAuth0UserId(auth0UserId)
       authService.lock.getProfile(authResult.idToken, (error, profile) => {
         if (error)
           return dispatch(loginError(error))

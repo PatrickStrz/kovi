@@ -70,9 +70,19 @@ export default class AuthService {
     localStorage.setItem('id_token', idToken)
   }
 
+  static setAuth0UserId(auth0UserId) {
+    // Saves user id to localStorage
+    localStorage.setItem('auth0_user_id', auth0UserId)
+  }
+
   static getToken() {
     // Retrieves the user token from localStorage
     return localStorage.getItem('id_token')
+  }
+
+  static getAuth0UserId() {
+    // Retrieves the user token from localStorage
+    return localStorage.getItem('auth0_user_id') || ''
   }
 
   static getTokenExpirationDate() {
