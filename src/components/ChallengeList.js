@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {graphql, compose} from 'react-apollo'
+import {connect} from 'react-redux'
 import ChallengeCard from './ChallengeCard'
 import {allChallengesQuery} from '../queries/challenge-queries'
 import {createChallengeMutation} from '../mutations/challenge-mutations'
@@ -33,6 +34,7 @@ class ChallengeList extends Component {
 
     return(
         <div>
+        <h1>isAuthed:{this.props.isAuthenticated ? 'true' : 'not authed'}</h1>
         {this.props.data.allChallenges.map(challenge =>(
           <div key={'challengelist'+challenge.id}>
             <ChallengeCard challenge={challenge}
@@ -48,6 +50,14 @@ class ChallengeList extends Component {
     }
   }
 
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    profile: state.auth.profile,
+  }
+}
+
+
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
@@ -58,4 +68,5 @@ const ChallengeListApollo = compose(
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
-export default ChallengeListApollo
+
+export default connect(mapStateToProps,null)(ChallengeListApollo)
