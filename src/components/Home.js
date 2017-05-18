@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import ChallengeList from './ChallengeList'
 import {gql, graphql} from 'react-apollo'
+import { withRouter } from 'react-router-dom'
 
 class Home extends Component{
 
@@ -24,4 +25,4 @@ const userQuery = gql`
 
 const HomeWithData = graphql(userQuery, { options: {fetchPolicy: 'network-only' }})(Home)
 
-export default HomeWithData
+export default withRouter(HomeWithData)

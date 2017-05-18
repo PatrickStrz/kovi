@@ -9,18 +9,17 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Site>
+
         <BrowserRouter>
+          <Site>
             {/* <div className="grid-center"> */}
-            <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/about" render={() => <h1>about</h1>} />
                 {/* <Route path="/post/:id" component={PostDetail} /> */}
-                <Route render={() => <h1>Page Not Found</h1>}/>
-            </Switch>
+                {/* <Route render={() => <h1>Page Not Found</h1>}/> */}
             {/* </div> */}
+            </Site>
         </BrowserRouter>
-      </Site>
       </MuiThemeProvider>
     )
   }
