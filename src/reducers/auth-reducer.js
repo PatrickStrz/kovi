@@ -5,7 +5,7 @@ const initialState = {
   isAuthenticated: !AuthService.isTokenExpired(),
   isFetching: false,
   profile: AuthService.getProfile(),
-  profileSynced: AuthService.getProfileSynced() || false,
+  profileSynced: AuthService.isProfileSynced() || false,
   error: null,
 }
 

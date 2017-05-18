@@ -89,7 +89,7 @@ export default class AuthService {
     return date
   }
 
-  static getProfileSynced() {
+  static isProfileSynced() {
     return JSON.parse(localStorage.getItem('profile_synced'))
   }
 

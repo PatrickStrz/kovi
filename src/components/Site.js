@@ -6,7 +6,6 @@ import Navbar from './navbar/Navbar'
 import {checkLogin, logout} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 
-
 class Site extends Component {
 
   constructor(props) {
