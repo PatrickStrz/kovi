@@ -1,9 +1,11 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import { withRouter } from 'react-router-dom'
 import Navbar from './navbar/Navbar'
 import {checkLogin, logout} from '../actions/auth-actions'
 import {login} from '../lib/auth'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+
 
 class Site extends Component {
 
@@ -49,4 +51,4 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Site)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Site))

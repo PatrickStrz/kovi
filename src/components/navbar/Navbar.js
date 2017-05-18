@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
+import { withRouter } from 'react-router'
 import AppBar from 'material-ui/AppBar'
 import UserIconMenu from './UserIconMenu'
 import IconButton from 'material-ui/IconButton'
@@ -9,8 +9,7 @@ import {muiColors} from '../../lib/theme/colors'
 
 const Navbar = (props) => {
 
-  const handleTouchTap = () => browserHistory.push('/')
-
+  const handleTouchTap = () => props.history.push('/')
   const {handleLogin, handleLogout, isAuthenticated, profile} = props
 
   const styles = {
@@ -74,4 +73,4 @@ Navbar.propTypes = {
   profile: PropTypes.object.isRequired,
 }
 
-export default Navbar
+export default withRouter(Navbar)
