@@ -19,9 +19,9 @@ class ChallengeList extends Component {
   handleCreateChallengeSubmit = async (values) =>{
     const {title, description} = values
     const mutationParams = {
-      variables:{title, description}, refetchQueries:[{ query: allChallengesQuery, variables: {
-        "filter": this.props.auth0UserId
-      }}]
+      variables:{title, description}, refetchQueries:[{ query: allChallengesQuery,variables: {
+        "filter": this.props.auth0IdToken
+      }, }]
     }
     await this.props.createChallengeMutation(mutationParams)
     this.setState({formVisible:false})
@@ -56,8 +56,19 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     profile: state.auth.profile,
+    auth0IdToken: state.auth.auth0IdToken
   }
 }
+
+// const queryConfig =
+//   ({auth0IdToken})=>({
+//     variables: {
+//       "filter": auth0IdToken
+//     },
+//     options: {
+//       fetchPolicy: 'network-only'
+//     },
+//   })
 
 const queryConfig =
   ({auth0IdToken})=>({
@@ -72,7 +83,14 @@ const queryConfig =
 
 const ChallengeListApollo = compose(
   graphql(
-    allChallengesQuery, {queryConfig}),
+    allChallengesQuery, {
+      options: {
+        fetchPolicy: 'network-only',
+        variables: {
+          "filter": "facebook|10154990636666251"
+        },
+      },
+    }),
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
