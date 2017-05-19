@@ -1,16 +1,17 @@
 import React,{Component} from 'react'
-import {graphql, connect} from 'react-apollo'
+import {graphql} from 'react-apollo'
 import {userQuery} from '../queries/user-queries'
 
 class SyncUser extends Component {
   render(){
-    if (!this.props.data.loading){
+    if (this.props.data.loading){
       console.log('loading data')
-    return(
-      // console.log('return statement')
-      <div style={{visibility:"hidden"}}></div>
-    )
+      return(
+        <div style={{visibility:"hidden"}}></div>
+        //temporary hack needed to move user queries and mutations outside of <Site />
+      )
     }
+    console.log(this.props.data.user.id)
     return(
       <div style={{visibility:"hidden"}}></div>
     )

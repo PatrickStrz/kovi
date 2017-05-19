@@ -1,13 +1,10 @@
 import React,{Component} from 'react'
-// import {graphql, connect} from 'react-apollo'
-import {graphql} from 'react-apollo'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import { withRouter } from 'react-router-dom'
 import Navbar from './navbar/Navbar'
 import {checkLogin, logout} from '../actions/auth-actions'
 import {login} from '../lib/auth'
-import {userQuery} from '../queries/user-queries'
 import SyncUser from './SyncUser'
 
 class Site extends Component {
@@ -17,12 +14,6 @@ class Site extends Component {
     this.props.checkLogin() // check is Auth0 lock is authenticating after login callback
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.isAuthenticated){
-      // this.props.data.refetch()
-    }
-  }
-
   styles = {
     body: {
       backgroundColor:"#f6f0f0",
@@ -30,32 +21,25 @@ class Site extends Component {
     }
   }
 
-  render(){
-    const {data, isAuthenticated, profileSynced} = this.props
-
-    // if (!data.loading){
-    const renderSyncUser = () => {
-      if (isAuthenticated && !profileSynced ){
-        //data.user condition bc null on 1st render (component double renders on login)
-        // console.log('performing')
-        // console.log(data.user.id)
-        console.log('rendeing sync user')
-        return(<SyncUser />)
-      }
-    // }
+  renderSyncUser = () => {
+    if (this.props.isAuthenticated && !this.props.profileSynced ){
+      return(<SyncUser />)
     }
+  }
 
+  render(){
+    const {isAuthenticated, logout, profile, children} = this.props
 
     return(
       <div>
-        {renderSyncUser()}
-        <Navbar handleLogout={this.props.logout}
+        {this.renderSyncUser()}
+        <Navbar handleLogout={logout}
           handleLogin={login}
-          isAuthenticated={this.props.isAuthenticated}
-          profile={this.props.profile}
+          isAuthenticated={isAuthenticated}
+          profile={profile}
         />
         <div style={this.styles.body}>
-          {this.props.children}
+          {children}
         </div>
       </div>
     )
@@ -77,7 +61,4 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch)
 }
 
-const SiteApollo = graphql(userQuery, {options: {fetchPolicy: 'network-only' }})(Site)
-
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SiteApollo))
-export default connect(mapStateToProps, mapDispatchToProps)(Site)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Site))
