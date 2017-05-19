@@ -22,7 +22,7 @@ class Site extends Component {
   }
 
   renderSyncUser = () => {
-    if (this.props.isAuthenticated && !this.props.profileSynced ){
+    if (this.props.isAuthenticated && !this.props.userSynced ){
       return(<SyncUser />)
     }
   }
@@ -49,7 +49,7 @@ class Site extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    profileSynced: state.auth.profileSynced,
+    userSynced: state.auth.userSynced,
     profile: state.auth.profile,
   }
 }

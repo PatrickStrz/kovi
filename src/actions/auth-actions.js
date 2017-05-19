@@ -16,7 +16,7 @@ export function checkLogin() {
       authService.lock.getProfile(authResult.idToken, (error, profile) => {
         if (error)
           return dispatch(loginError(error))
-        AuthService.requireProfileSync() // profile not synced with api
+        AuthService.setUserNotSynced() // profile not synced with api
         AuthService.setToken(authResult.idToken) // static method
         AuthService.setProfile(profile) // static method
         return dispatch(loginSuccess(profile))

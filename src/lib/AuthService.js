@@ -36,10 +36,10 @@ export default class AuthService {
   }
 
   logout(){
-    // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token')
     localStorage.removeItem('profile')
     localStorage.removeItem('auth0_user_id')
+    localStorage.removeItem('user_synced')
   }
 
   // ======================================================
@@ -68,8 +68,12 @@ export default class AuthService {
     localStorage.setItem('id_token', idToken)
   }
 
-  static requireProfileSync() {
-    localStorage.setItem('profile_synced', false)
+  static setUserNotSynced() {
+    localStorage.setItem('user_synced', false)
+  }
+
+  static setUserSynced(){
+    localStorage.setItem('user_synced', true)
   }
 
   static getToken() {
@@ -89,8 +93,8 @@ export default class AuthService {
     return date
   }
 
-  static isProfileSynced() {
-    return JSON.parse(localStorage.getItem('profile_synced'))
+  static isUserSynced() {
+    return JSON.parse(localStorage.getItem('user_synced'))
   }
 
   static isTokenExpired() {
