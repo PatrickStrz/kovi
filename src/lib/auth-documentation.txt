@@ -13,7 +13,7 @@ AuthService and get the profile of the user
 
 - The checkLogin function sits in the Site component so that can login from any child element.
 
--Upon a successful login the user will be synced with the graphql API in the
+- Upon a successful login the user will be synced with the graphql API in the
 SyncUser component (which is only rendered if the redux store says that a
 user is not synced : `state.auth.userSynced:false` and the user isAuthenticated:
 `state.auth.isAuthenticated` ). A user query is performed to check if a user exists.

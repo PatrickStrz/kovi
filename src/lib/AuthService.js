@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode'
 
 const ROOT_ROUTE = '/'
 
-// from https://github.com/amaurymartiny/react-redux-auth0-kit
+// extension of: https://github.com/amaurymartiny/react-redux-auth0-kit
 
 // import LogoImg from 'images/test-icon.png';
 
@@ -40,6 +40,7 @@ export default class AuthService {
     localStorage.removeItem('profile')
     localStorage.removeItem('auth0_user_id')
     localStorage.removeItem('user_synced')
+    localStorage.removeItem('api_user_id')
   }
 
   // ======================================================
@@ -76,9 +77,16 @@ export default class AuthService {
     localStorage.setItem('user_synced', true)
   }
 
+  static setApiUserId(api_user_id){
+    localStorage.setItem('api_user_id', api_user_id )
+  }
+
   static getToken() {
-    // Retrieves the user token from localStorage
     return localStorage.getItem('id_token')
+  }
+
+  static getApiUserId() {
+    return localStorage.getItem('api_user_id')
   }
 
   static getTokenExpirationDate() {

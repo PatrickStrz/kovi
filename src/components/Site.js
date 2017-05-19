@@ -25,6 +25,7 @@ class Site extends Component {
     const {isAuthenticated, userSynced, userSyncSuccess, profile} = this.props
 
     if (isAuthenticated && !userSynced ){
+      console.log('rendering sync usr')
       return(<SyncUser
         handleUserSyncSuccess={userSyncSuccess}
         profile={profile}
