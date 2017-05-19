@@ -31,25 +31,25 @@ class ChallengeCard extends Component {
   id = this.props.challenge.id
 
   handleUpdateChallengeSubmit = async (values) =>{
-    const {title, description} = values
-    const mutationParams = {
+    const {title, description} = values // values coming from redux form after submit
+    const options = {
       variables: { id: this.id, title, description},
       refetchQueries: [{ query: allChallengesQuery}]
     }
 
     this.setState({updateInProgress:true})
-    await this.props.updateChallengeMutation(mutationParams)
+    await this.props.updateChallengeMutation(options)
     this.setState({updateFormVisible:false, updateInProgress:false})
   }
 
   handleDeleteChallenge = async () => {
 
-    const mutationParams = {
+    const options = {
       variables:{id: this.id}, refetchQueries:[{ query: allChallengesQuery}]
     }
 
     this.setState({deleteInProgress:true})
-    await this.props.deleteChallengeMutation(mutationParams)
+    await this.props.deleteChallengeMutation(options)
     this.setState({deleteInProgress:false})
   }
 

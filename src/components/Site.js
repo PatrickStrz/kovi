@@ -3,15 +3,15 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import { withRouter } from 'react-router-dom'
 import Navbar from './navbar/Navbar'
-import {checkLogin, logout} from '../actions/auth-actions'
+import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
-
+import SyncUser from './SyncUser'
 
 class Site extends Component {
 
   constructor(props) {
-  super(props)
-  this.props.checkLogin() // check is Auth0 lock is authenticating after login callback
+    super(props)
+    this.props.checkLogin() // check is Auth0 lock is authenticating after login callback
   }
 
   styles = {
@@ -21,16 +21,37 @@ class Site extends Component {
     }
   }
 
+  renderSyncUser = () => {
+    const {isAuthenticated, userSynced, userSyncSuccess, profile} = this.props
+
+    if (isAuthenticated && !userSynced ){
+      console.log('rendering sync usr')
+      return(<SyncUser
+        handleUserSyncSuccess={userSyncSuccess}
+        profile={profile}
+      />)
+    }
+  }
+
   render(){
+    const {
+      isAuthenticated,
+      logout,
+      profile,
+      children,
+    } = this.props
+
     return(
       <div>
-        <Navbar handleLogout={this.props.logout}
+        {this.renderSyncUser()}
+
+        <Navbar handleLogout={logout}
           handleLogin={login}
-          isAuthenticated={this.props.isAuthenticated}
-          profile={this.props.profile}
+          isAuthenticated={isAuthenticated}
+          profile={profile}
         />
         <div style={this.styles.body}>
-          {this.props.children}
+          {children}
         </div>
       </div>
     )
@@ -40,6 +61,7 @@ class Site extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    userSynced: state.auth.userSynced,
     profile: state.auth.profile,
   }
 }
@@ -47,7 +69,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       checkLogin,
-      logout
+      logout,
+      userSyncSuccess,
     }, dispatch)
 }
 

@@ -1,0 +1,35 @@
+
+- Using Auth0 lock https://auth0.com/docs/libraries/lock/v10
+  and Graph.cool server auth0 integration for auth
+
+- Auth0Lock code is in AuthService.js
+- An AuthService instance is created in auth-actions.js
+
+- Can trigger lock to render a login/register modal by AuthService.login
+  - Upon login will emit an authenticated event
+
+- The checkLogin function in auth-actions.js listens to authenticated event from
+AuthService and get the profile of the user
+
+- The checkLogin function sits in the Site component so that can login from any child element.
+
+- Upon a successful login the user will be synced with the graphql API in the
+SyncUser component (which is only rendered if the redux store says that a
+user is not synced : `state.auth.userSynced:false` and the user isAuthenticated:
+`state.auth.isAuthenticated` ). A user query is performed to check if a user exists.
+If the query returns null a user will be created in the graph.cool db,
+otherwise the user will be updated and thus 'synced' with the graph.cool db.
+There will be a more complete user record in the auth0 db, and a subset of
+the user record info in the graph.cool db.
+
+notes:
+User Authentication states (isAuthenticated, userSynced ...) in the redux store
+depend on localStorage to persist these states after refreshes.
+User related LocalStorage items should be completely clear after logouts.
+
+Kovi auth api:
+
+-To protect any actions use the requireAuth helper in lib/auth.js --> takes a callback that will
+execute only if the user is authenticated, otherwise it will trigger a lock login modal to render.
+
+- To trigger a user sync, dispatch a syncRequired action/

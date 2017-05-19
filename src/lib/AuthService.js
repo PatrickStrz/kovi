@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode'
 
 const ROOT_ROUTE = '/'
 
-// from https://github.com/amaurymartiny/react-redux-auth0-kit
+// extension of: https://github.com/amaurymartiny/react-redux-auth0-kit
 
 // import LogoImg from 'images/test-icon.png';
 
@@ -36,12 +36,11 @@ export default class AuthService {
   }
 
   logout(){
-    // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token')
     localStorage.removeItem('profile')
-    if (localStorage.api_user_id){
-      localStorage.removeItem('api_user_id')
-    }
+    localStorage.removeItem('auth0_user_id')
+    localStorage.removeItem('user_synced')
+    localStorage.removeItem('api_user_id')
   }
 
   // ======================================================
@@ -70,9 +69,24 @@ export default class AuthService {
     localStorage.setItem('id_token', idToken)
   }
 
+  static setUserNotSynced() {
+    localStorage.setItem('user_synced', false)
+  }
+
+  static setUserSynced(){
+    localStorage.setItem('user_synced', true)
+  }
+
+  static setApiUserId(api_user_id){
+    localStorage.setItem('api_user_id', api_user_id )
+  }
+
   static getToken() {
-    // Retrieves the user token from localStorage
     return localStorage.getItem('id_token')
+  }
+
+  static getApiUserId() {
+    return localStorage.getItem('api_user_id')
   }
 
   static getTokenExpirationDate() {
@@ -85,6 +99,10 @@ export default class AuthService {
     const date = new Date(0) // The 0 here is the key, which sets the date to the epoch
     date.setUTCSeconds(decoded.exp)
     return date
+  }
+
+  static isUserSynced() {
+    return JSON.parse(localStorage.getItem('user_synced'))
   }
 
   static isTokenExpired() {

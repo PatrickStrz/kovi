@@ -16,6 +16,7 @@ export function checkLogin() {
       authService.lock.getProfile(authResult.idToken, (error, profile) => {
         if (error)
           return dispatch(loginError(error))
+        AuthService.setUserNotSynced() // profile not synced with api
         AuthService.setToken(authResult.idToken) // static method
         AuthService.setProfile(profile) // static method
         return dispatch(loginSuccess(profile))
@@ -50,8 +51,16 @@ export function loginError(error) {
 
 export function logout() {
   authService.logout()
-  // browserHistory.push('/signedOut')
   return {
     type: ActionTypes.LOGOUT_SUCCESS
+  }
+}
+
+export function userSyncSuccess(apiUserId) {
+  AuthService.setUserSynced()
+  AuthService.setApiUserId(apiUserId)
+  return {
+    type: ActionTypes.USER_SYNC_SUCCESS,
+    apiUserId
   }
 }
