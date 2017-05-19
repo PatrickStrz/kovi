@@ -8,6 +8,7 @@ import Navbar from './navbar/Navbar'
 import {checkLogin, logout} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 import {userQuery} from '../queries/user-queries'
+import SyncUser from './SyncUser'
 
 class Site extends Component {
 
@@ -18,7 +19,7 @@ class Site extends Component {
 
   componentWillReceiveProps(nextProps){
     if (nextProps.isAuthenticated){
-      this.props.data.refetch()
+      // this.props.data.refetch()
     }
   }
 
@@ -30,14 +31,24 @@ class Site extends Component {
   }
 
   render(){
-    if (!this.props.data.loading){
-      // console.log('not loading')
-      if (this.props.isAuthenticated && !this.props.profileSynced){
-        alert("user:"+this.props.data.user.id)
+    const {data, isAuthenticated, profileSynced} = this.props
+
+    // if (!data.loading){
+    const renderSyncUser = () => {
+      if (isAuthenticated && !profileSynced ){
+        //data.user condition bc null on 1st render (component double renders on login)
+        // console.log('performing')
+        // console.log(data.user.id)
+        console.log('rendeing sync user')
+        return(<SyncUser />)
       }
+    // }
     }
+
+
     return(
       <div>
+        {renderSyncUser()}
         <Navbar handleLogout={this.props.logout}
           handleLogin={login}
           isAuthenticated={this.props.isAuthenticated}
@@ -50,8 +61,6 @@ class Site extends Component {
     )
   }
 }
-
-const SiteApollo = graphql(userQuery, {options: {fetchPolicy: 'network-only' }})(Site)
 
 const mapStateToProps = (state) => {
   return {
@@ -68,5 +77,7 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch)
 }
 
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Site))
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SiteApollo))
+const SiteApollo = graphql(userQuery, {options: {fetchPolicy: 'network-only' }})(Site)
+
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SiteApollo))
+export default connect(mapStateToProps, mapDispatchToProps)(Site)
