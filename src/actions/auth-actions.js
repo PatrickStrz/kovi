@@ -51,8 +51,14 @@ export function loginError(error) {
 
 export function logout() {
   authService.logout()
-  // browserHistory.push('/signedOut')
   return {
     type: ActionTypes.LOGOUT_SUCCESS
+  }
+}
+
+export function userSyncSuccess() {
+  AuthService.setUserSynced()
+  return {
+    type: ActionTypes.USER_SYNC_SUCCESS
   }
 }

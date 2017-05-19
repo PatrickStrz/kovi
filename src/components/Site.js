@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import { withRouter } from 'react-router-dom'
 import Navbar from './navbar/Navbar'
-import {checkLogin, logout} from '../actions/auth-actions'
+import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 import SyncUser from './SyncUser'
 
@@ -22,17 +22,28 @@ class Site extends Component {
   }
 
   renderSyncUser = () => {
-    if (this.props.isAuthenticated && !this.props.userSynced ){
-      return(<SyncUser />)
+    const {isAuthenticated, userSynced, userSyncSuccess, profile} = this.props
+
+    if (isAuthenticated && !userSynced ){
+      return(<SyncUser
+        handleUserSyncSuccess={userSyncSuccess}
+        profile={profile}
+      />)
     }
   }
 
   render(){
-    const {isAuthenticated, logout, profile, children} = this.props
+    const {
+      isAuthenticated,
+      logout,
+      profile,
+      children,
+    } = this.props
 
     return(
       <div>
         {this.renderSyncUser()}
+        
         <Navbar handleLogout={logout}
           handleLogin={login}
           isAuthenticated={isAuthenticated}
@@ -57,7 +68,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       checkLogin,
-      logout
+      logout,
+      userSyncSuccess,
     }, dispatch)
 }
 
