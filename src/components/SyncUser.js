@@ -4,6 +4,7 @@ import {graphql, compose} from 'react-apollo'
 import {userQuery} from '../queries/user-queries'
 import {userUpdateMutation} from '../mutations/user-mutations'
 
+//Only render if User authenticated and userSynced: false
 class SyncUser extends Component {
   static PropTypes = {
     data: PropTypes.object.isRequired,
@@ -20,8 +21,14 @@ class SyncUser extends Component {
     "pictureLarge": this.props.profile.picture_large
   }
 
-  updateUser = () =>{
-    this.props.updateUserMutation()
+  handleUpdateUser = async () =>{
+    const options = {
+      variables: { id: this.props.data.user.id, ...this.userProfile}
+      // refetchQueries: [{ query: allChallengesQuery}]
+    }
+    const updateUserMutation = await this.props.updateUserMutation(options)
+    debugger
+    this.props.handleUserSyncSuccess()
   }
 
   render(){
@@ -33,7 +40,10 @@ class SyncUser extends Component {
         //temporary hack needed to move user queries and mutations outside of <Site />
       )
     }
-
+    if (data.user.id) {
+      this.handleUpdateUser()
+      // alert(data.user.id)
+    }
     return(
       <div style={{visibility:"hidden"}}></div>
     )
