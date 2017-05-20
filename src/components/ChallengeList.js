@@ -36,7 +36,6 @@ class ChallengeList extends Component {
 
     return(
         <div>
-        <h1>isAuthed:{this.props.isAuthenticated ? 'true' : 'not authed'}</h1>
         {this.props.data.allChallenges.map(challenge =>(
           <div key={'challengelist'+challenge.id}>
             <ChallengeCard challenge={challenge}
