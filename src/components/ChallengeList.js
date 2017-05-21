@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {graphql, compose} from 'react-apollo'
+import {connect} from 'react-redux'
 import ChallengeCard from './ChallengeCard'
 import {allChallengesQuery} from '../queries/challenge-queries'
 import {createChallengeMutation} from '../mutations/challenge-mutations'
@@ -32,7 +33,7 @@ class ChallengeList extends Component {
     }
 
     return(
-        <div>
+      <div>
         {this.props.data.allChallenges.map(challenge =>(
           <div key={'challengelist'+challenge.id}>
             <ChallengeCard challenge={challenge}
@@ -43,19 +44,33 @@ class ChallengeList extends Component {
             onClick={()=> requireAuth(this.toggleForm)}>
         </RaisedButton>
         { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
-        </div>
+      </div>
       )
     }
   }
 
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    userSynced: state.auth.userSynced,
+    profile: state.auth.profile,
+    apiUserId: state.auth.apiUserId,
+  }
+}
+
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
-      options: {
+      options: (props)=>({
+        variables: {
+          filter:{
+            id: props.apiUserId ? props.apiUserId : ''
+          }
+        },
         fetchPolicy: 'network-only'
-      },
+      }),
     }),
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
-export default ChallengeListApollo
+export default connect(mapStateToProps)(ChallengeListApollo)

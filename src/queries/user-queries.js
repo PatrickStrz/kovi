@@ -1,7 +1,7 @@
 import {gql} from 'react-apollo'
 
 export const userQuery = gql`
-  query {
+  query userQuery{
     user {
       id
     }
