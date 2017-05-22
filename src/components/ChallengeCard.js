@@ -8,8 +8,10 @@ import {requireAuth} from '../lib/auth'
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import {allChallengesQuery} from '../queries/challenge-queries'
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from 'material-ui/FlatButton'
 import PropTypes from 'prop-types'
+import ChallengeUpvote from './ChallengeUpvote'
+
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -30,9 +32,23 @@ class ChallengeCard extends Component {
     }
   }
 
+  cardStyle = () => {
+    if (this.state.updateInProgress){
+        return {...this.styles.card, opacity:0.5}
+    }
+    else if (this.state.deleteInProgress) {
+      return {...this.styles.card, backgroundColor:'#d53b3b'}
+    }
+    else{
+      return this.styles.card
+    }
+  }
+
   id = this.props.challenge.id
 
   allChallengesQueryVariables = {"filter": {id: this.props.apiUserId}}
+
+  userDidUpvote = this.props.challenge.userDidUpvote.length > 0  ? true : false
 
   handleUpdateChallengeSubmit = async (values) =>{
     const {title, description} = values // values coming from redux form after submit
@@ -80,24 +96,13 @@ class ChallengeCard extends Component {
     }
   }
 
-  cardStyle = () => {
-    if (this.state.updateInProgress){
-        return {...this.styles.card, opacity:0.5}
-    }
-    else if (this.state.deleteInProgress) {
-      return {...this.styles.card, backgroundColor:'#d53b3b'}
-    }
-    else{
-      return this.styles.card
-    }
-  }
-
   render(){
     const {title, description} = this.props.challenge
 
     return(
     <div className="grid-center">
-      <div className="col-10_sm-12">
+      <div className="col-8_sm-10">
+        <ChallengeUpvote userDidUpvote={this.userDidUpvote} />
         <Card zDepth={4} style={this.cardStyle()}>
           <CardHeader
             title={title}

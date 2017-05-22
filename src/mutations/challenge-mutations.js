@@ -19,3 +19,25 @@ export const updateChallengeMutation = gql`mutation
     id
   }
 }`
+
+//Upvotes
+
+export const addChallengeUpvoteMutation = gql`mutation
+  addToChallengeUpvotes($userId:ID!,$challengeId:ID!){
+    addToChallengeUpvotes(upvotedChallengesChallengeId: $challengeId,
+      upvotesUserId: $userId,){
+      upvotesUser{
+        name
+      }
+    }
+  }`
+
+  export const removeChallengeUpvoteMutation = gql`mutation
+  removeFromChallengeUpvotes($userId:ID!,$challengeId:ID!){
+    removeFromChallengeUpvotes(upvotedChallengesChallengeId: $challengeId,
+      upvotesUserId: $userId,){
+      upvotesUser{
+        name
+      }
+    }
+  }`
