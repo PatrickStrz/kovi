@@ -14,6 +14,8 @@ import PropTypes from 'prop-types'
 class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.object.isRequired,
+    apiUserId: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
   }
 
   state = {
@@ -30,11 +32,16 @@ class ChallengeCard extends Component {
 
   id = this.props.challenge.id
 
+  allChallengesQueryVariables = {"filter": {id: this.props.apiUserId}}
+
   handleUpdateChallengeSubmit = async (values) =>{
     const {title, description} = values // values coming from redux form after submit
     const options = {
       variables: { id: this.id, title, description},
-      refetchQueries: [{ query: allChallengesQuery}]
+      refetchQueries: [{
+        query: allChallengesQuery,
+        variables: this.allChallengesQueryVariables
+      }]
     }
 
     this.setState({updateInProgress:true})
@@ -45,7 +52,10 @@ class ChallengeCard extends Component {
   handleDeleteChallenge = async () => {
 
     const options = {
-      variables:{id: this.id}, refetchQueries:[{ query: allChallengesQuery}]
+      variables:{id: this.id}, refetchQueries:[{
+        query: allChallengesQuery,
+        variables: this.allChallengesQueryVariables
+      }]
     }
 
     this.setState({deleteInProgress:true})

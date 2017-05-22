@@ -19,7 +19,10 @@ class ChallengeList extends Component {
   handleCreateChallengeSubmit = async (values) =>{
     const {title, description} = values
     const options = {
-      variables:{title, description}, refetchQueries:[{ query: allChallengesQuery}]
+      variables: {title, description}, refetchQueries: [{
+      query: allChallengesQuery,
+      variables: {"filter": {id: this.props.apiUserId}}
+      }]
     }
     await this.props.createChallengeMutation(options)
     this.setState({formVisible:false})
@@ -36,7 +39,10 @@ class ChallengeList extends Component {
       <div>
         {this.props.data.allChallenges.map(challenge =>(
           <div key={'challengelist'+challenge.id}>
-            <ChallengeCard challenge={challenge}
+            <ChallengeCard
+              challenge={challenge}
+              apiUserId={this.props.apiUserId}
+              isAuthenticated={this.props.isAuthenticated}
             />
           </div>
         ))}
@@ -52,8 +58,6 @@ class ChallengeList extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    userSynced: state.auth.userSynced,
-    profile: state.auth.profile,
     apiUserId: state.auth.apiUserId,
   }
 }
