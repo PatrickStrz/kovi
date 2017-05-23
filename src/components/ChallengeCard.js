@@ -12,11 +12,10 @@ import FlatButton from 'material-ui/FlatButton'
 import PropTypes from 'prop-types'
 import ChallengeUpvote from './ChallengeUpvote'
 
-
 class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.object.isRequired,
-    apiUserId: PropTypes.string.isRequired,
+    apiUserId: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired
   }
 
@@ -97,18 +96,25 @@ class ChallengeCard extends Component {
   }
 
   render(){
-    const {title, description} = this.props.challenge
+    const {title, description, id} = this.props.challenge
 
     return(
     <div className="grid-center">
       <div className="col-8_sm-10">
-        <ChallengeUpvote userDidUpvote={this.userDidUpvote} />
+        <ChallengeUpvote
+          // userDidUpvote2={this.props.challenge.userDidUpvote}
+          userDidUpvote={this.props.challenge.userDidUpvote}
+          apiUserId={this.props.apiUserId}
+          challengeId={id}
+          allChallengesQueryVariables={this.allChallengesQueryVariables}
+        />
         <Card zDepth={4} style={this.cardStyle()}>
           <CardHeader
             title={title}
             subtitle={description}
             actAsExpander={true}
             showExpandableButton={true}
+
           />
           <CardActions>
             <FlatButton

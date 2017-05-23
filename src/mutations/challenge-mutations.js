@@ -27,7 +27,7 @@ export const addChallengeUpvoteMutation = gql`mutation
     addToChallengeUpvotes(upvotedChallengesChallengeId: $challengeId,
       upvotesUserId: $userId,){
       upvotesUser{
-        name
+        id
       }
     }
   }`
@@ -37,7 +37,7 @@ export const addChallengeUpvoteMutation = gql`mutation
     removeFromChallengeUpvotes(upvotedChallengesChallengeId: $challengeId,
       upvotesUserId: $userId,){
       upvotesUser{
-        name
+        id
       }
     }
   }`

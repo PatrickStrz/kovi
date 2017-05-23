@@ -11,7 +11,7 @@ export const allChallengesQuery = gql`
 				id
 			}
 			upvotes{
-				name
+				id
 			}
 			_upvotesMeta{
 				count

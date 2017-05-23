@@ -20,8 +20,8 @@ class ChallengeList extends Component {
     const {title, description} = values
     const options = {
       variables: {title, description}, refetchQueries: [{
-      query: allChallengesQuery,
-      variables: {"filter": {id: this.props.apiUserId}}
+        query: allChallengesQuery,
+        variables: {"filter": {id: this.props.apiUserId}}
       }]
     }
     await this.props.createChallengeMutation(options)

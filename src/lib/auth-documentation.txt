@@ -1,3 +1,6 @@
+*Redux state.auth.isLoggedIn is the Source of truth
+ for knowing if a user is logged in.
+ (Apollo store user query may be out of sync)
 
 - Using Auth0 lock https://auth0.com/docs/libraries/lock/v10
   and Graph.cool server auth0 integration for auth
@@ -33,3 +36,6 @@ Kovi auth api:
 execute only if the user is authenticated, otherwise it will trigger a lock login modal to render.
 
 - To trigger a user sync, dispatch a syncRequired action/
+
+*Todo:
+- Clear out user query from apollo store when not logged in.
