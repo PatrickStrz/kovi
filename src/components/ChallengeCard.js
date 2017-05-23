@@ -97,6 +97,7 @@ class ChallengeCard extends Component {
 
   render(){
     const {title, description, id} = this.props.challenge
+    const upvotesCount = this.props.challenge._upvotesMeta.count
 
     return(
     <div className="grid-center">
@@ -107,6 +108,7 @@ class ChallengeCard extends Component {
           apiUserId={this.props.apiUserId}
           challengeId={id}
           allChallengesQueryVariables={this.allChallengesQueryVariables}
+          upvotesCount={upvotesCount}
         />
         <Card zDepth={4} style={this.cardStyle()}>
           <CardHeader

@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'
 class ChallengeUpvote extends Component{
   static propTypes = {
     userDidUpvote: PropTypes.array.isRequired,
+    upvotesCount: PropTypes.number.isRequired,
     apiUserId: PropTypes.string,
     challengeId: PropTypes.string.isRequired,
     allChallengesQueryVariables: PropTypes.object.isRequired,
@@ -51,17 +52,21 @@ class ChallengeUpvote extends Component{
 
   render(){
     return(
-      <IconButton
-        style={{paddingTop:50}}
-        onTouchTap={() => requireAuth(this.handleToggleUpvote)}
-        iconStyle={{height:30, width:30}}
-      >
-        <ThumbUp
-          style={{paddingTop:40, marginTop:"20px"}}
-          color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1 : "#6f6f6f"}
-          // hoverColor={muiColors.primary1}
-        />
-      </IconButton>
+      <div>
+        <span style={{fontSize:30, color:'#424040'}}><div>{this.props.upvotesCount}</div></span>
+
+        <IconButton
+          style={{paddingTop:5}}
+          onTouchTap={() => requireAuth(this.handleToggleUpvote)}
+          iconStyle={{height:30, width:30}}
+        >
+          <ThumbUp
+            style={{paddingTop:40, marginTop:"20px"}}
+            color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1 : "#6f6f6f"}
+            // hoverColor={muiColors.primary1}
+          />
+        </IconButton>
+      </div>
     )
   }
 }
