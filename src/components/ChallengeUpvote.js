@@ -12,6 +12,7 @@ import {muiColors} from '../lib/theme/colors'
 import PropTypes from 'prop-types'
 
 class ChallengeUpvote extends Component{
+  state = { disableUpvote: false}
   static propTypes = {
     userDidUpvote: PropTypes.array.isRequired,
     upvotesCount: PropTypes.number.isRequired,
@@ -20,6 +21,12 @@ class ChallengeUpvote extends Component{
     allChallengesQueryVariables: PropTypes.object.isRequired,
   }
 
+  disableUpvote = () => {
+    this.setState({disableUpvote:true})
+  }
+  enableUpvote = () => {
+    this.setState({disableUpvote:false})
+  }
   handleToggleUpvote = async () => {
     const {
       apiUserId,
@@ -39,13 +46,17 @@ class ChallengeUpvote extends Component{
       }]
     }
     if (userDidUpvote.length > 0) {
+      this.disableUpvote()
       await removeChallengeUpvoteMutation(options)
+      this.enableUpvote()
+
     }
     else {
+      this.disableUpvote()
       await addChallengeUpvoteMutation(options)
+      this.enableUpvote()
     }
   }
-
   handleToggleUpvoteCallback = () => {
     this.handleToggleUpvote()
   }
@@ -59,6 +70,7 @@ class ChallengeUpvote extends Component{
           style={{paddingTop:5}}
           onTouchTap={() => requireAuth(this.handleToggleUpvote)}
           iconStyle={{height:30, width:30}}
+          disabled={this.state.disableUpvote}
         >
           <ThumbUp
             style={{paddingTop:40, marginTop:"20px"}}
