@@ -23,6 +23,7 @@ class ChallengeCard extends Component {
     updateFormVisible: false,
     updateInProgress: false,
     deleteInProgress: false,
+    disableDeleteChallenge: false,
   }
 
   styles = {
@@ -59,9 +60,9 @@ class ChallengeCard extends Component {
       }]
     }
 
-    this.setState({updateInProgress:true})
+    this.setState({updateInProgress: true})
     await this.props.updateChallengeMutation(options)
-    this.setState({updateFormVisible:false, updateInProgress:false})
+    this.setState({updateFormVisible: false, updateInProgress: false})
   }
 
   handleDeleteChallenge = async () => {
@@ -73,9 +74,9 @@ class ChallengeCard extends Component {
       }]
     }
 
-    this.setState({deleteInProgress:true})
+    this.setState({deleteInProgress: true, disableDeleteChallenge: true})
     await this.props.deleteChallengeMutation(options)
-    this.setState({deleteInProgress:false})
+    this.setState({deleteInProgress: false, disableDeleteChallenge: false})
   }
 
   toggleUpdateForm = () => {
@@ -123,6 +124,7 @@ class ChallengeCard extends Component {
               label="Delete"
               onClick={()=> requireAuth(this.handleDeleteChallenge)}
               secondary={true}
+              disabled={this.state.disableDeleteChallenge}
             />
             <FlatButton
               label={this.state.updateFormVisible ? "Hide Form" : "Update"}
