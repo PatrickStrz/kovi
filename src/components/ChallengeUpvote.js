@@ -12,7 +12,7 @@ import {muiColors} from '../lib/theme/colors'
 import PropTypes from 'prop-types'
 
 class ChallengeUpvote extends Component{
-  state = { disableUpvote: false}
+  state = { upvoteInProgress: false}
   static propTypes = {
     userDidUpvote: PropTypes.array.isRequired,
     upvotesCount: PropTypes.number.isRequired,
@@ -22,10 +22,10 @@ class ChallengeUpvote extends Component{
   }
 
   disableUpvote = () => {
-    this.setState({disableUpvote:true})
+    this.setState({upvoteInProgress:true})
   }
   enableUpvote = () => {
-    this.setState({disableUpvote:false})
+    this.setState({upvoteInProgress:false})
   }
   handleToggleUpvote = async () => {
     const {
