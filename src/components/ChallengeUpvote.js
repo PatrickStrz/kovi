@@ -22,10 +22,10 @@ class ChallengeUpvote extends Component{
   }
 
   disableUpvote = () => {
-    this.setState({upvoteInProgress:true})
+    this.setState({upvoteInProgress: true})
   }
   enableUpvote = () => {
-    this.setState({upvoteInProgress:false})
+    this.setState({upvoteInProgress: false})
   }
   handleToggleUpvote = async () => {
     const {
@@ -40,7 +40,7 @@ class ChallengeUpvote extends Component{
         "challengeId": challengeId
       }
     const options = {
-      variables, refetchQueries:[{
+      variables, refetchQueries: [{
         query: allChallengesQuery,
         variables: this.props.allChallengesQueryVariables
       }]
@@ -64,18 +64,16 @@ class ChallengeUpvote extends Component{
   render(){
     return(
       <div>
-        <span style={{fontSize:30, color:'#424040'}}><div>{this.props.upvotesCount}</div></span>
-
+        <span style={{fontSize: 30, color: '#424040'}}><div>{this.props.upvotesCount}</div></span>
         <IconButton
-          style={{paddingTop:5}}
+          style={{paddingTop: 5}}
           onTouchTap={() => requireAuth(this.handleToggleUpvote)}
-          iconStyle={{height:30, width:30}}
-          disabled={this.state.disableUpvote}
+          iconStyle={{height: 30, width: 30}}
+          disabled={this.state.upvoteInProgress}
         >
           <ThumbUp
-            style={{paddingTop:40, marginTop:"20px"}}
-            color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1 : "#6f6f6f"}
-            // hoverColor={muiColors.primary1}
+            style={{paddingTop: 40, marginTop: "20px"}}
+            color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1: "#6f6f6f"}
           />
         </IconButton>
       </div>
@@ -84,8 +82,8 @@ class ChallengeUpvote extends Component{
 }
 
 const ChallengeUpvoteApollo = compose(
-  graphql(addChallengeUpvoteMutation, {name:"addChallengeUpvoteMutation"}),
-  graphql(removeChallengeUpvoteMutation, {name:"removeChallengeUpvoteMutation"}),
+  graphql(addChallengeUpvoteMutation, {name: "addChallengeUpvoteMutation"}),
+  graphql(removeChallengeUpvoteMutation, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeUpvote)
 
 export default ChallengeUpvoteApollo

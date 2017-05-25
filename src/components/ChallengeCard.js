@@ -26,17 +26,17 @@ class ChallengeCard extends Component {
   }
 
   styles = {
-    card:{
-      borderRadius:5
+    card: {
+      borderRadius: 5
     }
   }
 
   cardStyle = () => {
     if (this.state.updateInProgress){
-        return {...this.styles.card, opacity:0.5}
+        return {...this.styles.card, opacity: 0.5}
     }
     else if (this.state.deleteInProgress) {
-      return {...this.styles.card, backgroundColor:'#d53b3b'}
+      return {...this.styles.card, backgroundColor: '#d53b3b'}
     }
     else{
       return this.styles.card
@@ -67,7 +67,7 @@ class ChallengeCard extends Component {
   handleDeleteChallenge = async () => {
 
     const options = {
-      variables:{id: this.id}, refetchQueries:[{
+      variables: {id: this.id}, refetchQueries:[{
         query: allChallengesQuery,
         variables: this.allChallengesQueryVariables
       }]
@@ -103,7 +103,6 @@ class ChallengeCard extends Component {
     <div className="grid-center">
       <div className="col-8_sm-10">
         <ChallengeUpvote
-          // userDidUpvote2={this.props.challenge.userDidUpvote}
           userDidUpvote={this.props.challenge.userDidUpvote}
           apiUserId={this.props.apiUserId}
           challengeId={id}
@@ -116,7 +115,6 @@ class ChallengeCard extends Component {
             subtitle={description}
             actAsExpander={true}
             showExpandableButton={true}
-
           />
           <CardActions>
             <FlatButton
@@ -147,8 +145,8 @@ class ChallengeCard extends Component {
 }
 
 const ChallengeCardApollo = compose(
-  graphql(updateChallengeMutation, {name:"updateChallengeMutation"}),
-  graphql(deleteChallengeMutation, {name:"deleteChallengeMutation"}),
+  graphql(updateChallengeMutation, {name: "updateChallengeMutation"}),
+  graphql(deleteChallengeMutation, {name: "deleteChallengeMutation"}),
 )(ChallengeCard)
 
 export default ChallengeCardApollo
