@@ -5,14 +5,18 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from './Site'
 import Home from './Home'
 import Editor from './Editor'
+import Dialog1 from './Dialog1'
 
 
 class App extends Component {
   render() {
     return(
     <div>
-      <Editor />
+      {/* <Editor /> */}
+      {/* <MuiThemeProvider muiTheme={muiTheme}><Dialog1/></MuiThemeProvider> */}
       <MuiThemeProvider muiTheme={muiTheme}>
+
+
         <BrowserRouter>
           <Site>
             <Switch>
