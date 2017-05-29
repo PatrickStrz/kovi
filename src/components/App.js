@@ -4,11 +4,19 @@ import {muiTheme} from '../lib/theme/mui-theme'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from './Site'
 import Home from './Home'
+import Editor from './Editor'
+import Dialog1 from './Dialog1'
+
 
 class App extends Component {
   render() {
-    return (
+    return(
+    <div>
+      {/* <Editor /> */}
+      {/* <MuiThemeProvider muiTheme={muiTheme}><Dialog1/></MuiThemeProvider> */}
       <MuiThemeProvider muiTheme={muiTheme}>
+
+
         <BrowserRouter>
           <Site>
             <Switch>
@@ -19,6 +27,7 @@ class App extends Component {
           </Site>
         </BrowserRouter>
       </MuiThemeProvider>
+    </div>
     )
   }
 }
