@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid'
 
 // const styles = {
 //   ro
