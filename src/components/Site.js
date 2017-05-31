@@ -6,6 +6,7 @@ import Navbar from './navbar/Navbar'
 import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 import SyncUser from './SyncUser'
+import {Grid} from 'react-flexbox-grid'
 
 class Site extends Component {
 
@@ -17,8 +18,14 @@ class Site extends Component {
   styles = {
     body: {
       backgroundColor:"#f6f0f0",
-      textAlign: "center",
-    }
+      // textAlign: "center",
+    },
+    main: {
+      display: 'flex',
+      minHeight: '100vh',
+      flexDirection: 'column',
+      backgroundColor:"#f6f0f0",
+    },
   }
 
   renderSyncUser = () => {
@@ -41,7 +48,7 @@ class Site extends Component {
     } = this.props
 
     return(
-      <div>
+      <div style={this.styles.main}>
         {this.renderSyncUser()}
 
         <Navbar handleLogout={logout}
@@ -49,9 +56,9 @@ class Site extends Component {
           isAuthenticated={isAuthenticated}
           profile={profile}
         />
-        <div style={this.styles.body}>
+        <Grid>
           {children}
-        </div>
+        </Grid>
       </div>
     )
   }
