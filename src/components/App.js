@@ -4,6 +4,7 @@ import {muiTheme} from '../lib/theme/mui-theme'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from './Site'
 import Home from './Home'
+import Layout from './dev/Layout'
 
 class App extends Component {
   devRoute = `/${process.env.REACT_APP_DEV_ROUTE}/`
@@ -15,8 +16,9 @@ class App extends Component {
           <Site>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/about" render={() => <h1>about</h1>} />
-              <Route path={this.devRoute} render={() => <h1>Secret dev page</h1>}/>
+              <Route exact path="/about" render={() => <h1>about</h1>} />
+              <Route exact path={this.devRoute} render={() => <h1>Secret dev page</h1>}/>
+              <Route exact path={this.devRoute + 'layout'} component={Layout}/>
               <Route render={() => <h1>Page doesn't exist  ¯\_(ツ)_/¯</h1>}/>
             </Switch>
           </Site>
