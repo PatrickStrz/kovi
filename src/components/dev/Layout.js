@@ -1,18 +1,9 @@
 import React from 'react'
-import '../layout.css'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 
 const styles = {
-  main: {
-    display: 'flex',
-    minHeight: '100vh',
-    flexDirection: 'column',
-    backgroundColor: '#c8c8c2',
-  },
-
   grid: {
-    backgroundColor:'#ff4040',
-    // height:'auto'
+    backgroundColor:'#716e6e',
   },
   col:{
     borderStyle:'solid',
@@ -36,7 +27,7 @@ const cards = [1,2,3,4,5]
 
 const Layout = () => {
   return(
-    <Grid fluid style={styles.main}>
+    <Grid fluid style={styles.grid}>
         <Row style={styles.row}>
           <Col style={{...styles.col}} xs={12}>
             <h1>Header</h1>
@@ -62,7 +53,6 @@ const Layout = () => {
                 </Col>
               </Row>
             </div>
-
           </Col>
         </Row>
     </Grid>
