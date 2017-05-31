@@ -37,31 +37,23 @@ class ChallengeList extends Component {
     }
 
     return(
-
-      <div>
-        <Row>
-          <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
+      <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
           <Row>
-          {this.props.data.allChallenges.map(challenge =>(
-            <Col key={'challengelist'+challenge.id} xs={12} lg={6} >
-              <ChallengeCard
-                challenge={challenge}
-                apiUserId={this.props.apiUserId}
-                isAuthenticated={this.props.isAuthenticated}
-              />
-            </Col>
-
-          ))}
+            {this.props.data.allChallenges.map(challenge =>(
+              <Col key={'challengelist'+challenge.id} xs={12} lg={6} >
+                <ChallengeCard
+                  challenge={challenge}
+                  apiUserId={this.props.apiUserId}
+                  isAuthenticated={this.props.isAuthenticated}
+                />
+              </Col>
+            ))}
           </Row>
-
-
         <RaisedButton label="Add a new challenge" primary={true}
             onClick={()=> requireAuth(this.toggleForm)}>
         </RaisedButton>
         { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
-        </Col>
-      </Row>
-      </div>
+      </Col>
       )
     }
   }

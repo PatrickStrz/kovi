@@ -27,23 +27,18 @@ const cards = [1,2,3,4,5]
 
 const Layout = () => {
   return(
-    <Grid fluid style={styles.grid}>
-      <div>
-        {/* home.js */}
-        <Row style={styles.row}>
-          <Col style={{...styles.col}} xs={12}>
-            <h1>Header</h1>
-          </Col>
-        </Row>
-        <div>
-        <Row style={styles.row}>
+
+    <Grid fluid style={styles.grid}> {/* site.js */}
+      <div>{/* Home.js */}
+        <Row style={styles.row}> {/* ChallengeList.js */}
           <Col style={styles.col} xsOffset={1} xs={10} lgOffset={3} lg={7}>
-            <div>
               <Row>
                 {cards.map((card)=>{
                 return(
                   <Col style={styles.col} key={card} xs={12} lg={6}>
-                  <div style={styles.col2}>card#:{card}</div>
+                    <div> {/* ChallengeCard.js */}
+                      <div style={styles.col2}>card#:{card}</div>
+                    </div>
                   </Col>
                 )
               })}
@@ -55,10 +50,8 @@ const Layout = () => {
                   </button>
                 </Col>
               </Row>
-            </div>
           </Col>
         </Row>
-        </div>
       </div>
     </Grid>
   )
