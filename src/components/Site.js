@@ -17,7 +17,7 @@ class Site extends Component {
   styles = {
     body: {
       backgroundColor:"#f6f0f0",
-      textAlign: "center"
+      textAlign: "center",
     }
   }
 
