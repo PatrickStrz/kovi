@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {graphql, compose} from 'react-apollo'
 import {connect} from 'react-redux'
+import {Row, Col} from 'react-flexbox-grid'
 import ChallengeCard from './ChallengeCard'
 import {allChallengesQuery} from '../queries/challenge-queries'
 import {createChallengeMutation} from '../mutations/challenge-mutations'
@@ -36,20 +37,30 @@ class ChallengeList extends Component {
     }
 
     return(
+
       <div>
-        {this.props.data.allChallenges.map(challenge =>(
-          <div key={'challengelist'+challenge.id}>
-            <ChallengeCard
-              challenge={challenge}
-              apiUserId={this.props.apiUserId}
-              isAuthenticated={this.props.isAuthenticated}
-            />
-          </div>
-        ))}
+        <Row>
+          <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
+          <Row>
+          {this.props.data.allChallenges.map(challenge =>(
+            <Col key={'challengelist'+challenge.id} xs={12} lg={6} >
+              <ChallengeCard
+                challenge={challenge}
+                apiUserId={this.props.apiUserId}
+                isAuthenticated={this.props.isAuthenticated}
+              />
+            </Col>
+
+          ))}
+          </Row>
+
+
         <RaisedButton label="Add a new challenge" primary={true}
             onClick={()=> requireAuth(this.toggleForm)}>
         </RaisedButton>
         { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
+        </Col>
+      </Row>
       </div>
       )
     }

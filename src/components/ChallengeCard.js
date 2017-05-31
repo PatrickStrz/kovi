@@ -100,8 +100,6 @@ class ChallengeCard extends Component {
     const upvotesCount = this.props.challenge._upvotesMeta.count
 
     return(
-    // <div className="grid-center">
-      // <div className="col-8_sm-10">
       <div>
         <ChallengeUpvote
           userDidUpvote={this.props.challenge.userDidUpvote}
@@ -140,7 +138,6 @@ class ChallengeCard extends Component {
         </Card>
       <br/>
       </div>
-    // </div>
     )
   }
 }

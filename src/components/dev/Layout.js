@@ -28,13 +28,16 @@ const cards = [1,2,3,4,5]
 const Layout = () => {
   return(
     <Grid fluid style={styles.grid}>
+      <div>
+        {/* home.js */}
         <Row style={styles.row}>
           <Col style={{...styles.col}} xs={12}>
             <h1>Header</h1>
           </Col>
         </Row>
+        <div>
         <Row style={styles.row}>
-          <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
+          <Col style={styles.col} xsOffset={1} xs={10} lgOffset={3} lg={7}>
             <div>
               <Row>
                 {cards.map((card)=>{
@@ -55,6 +58,8 @@ const Layout = () => {
             </div>
           </Col>
         </Row>
+        </div>
+      </div>
     </Grid>
   )
 }
