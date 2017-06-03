@@ -30,7 +30,8 @@ class ChallengeList extends Component {
   }
 
   render(){
-    if (this.props.data.loading){
+    if (this.props.userLoading){
+      debugger
       return(<div>
         <h1 style={{color:"#002984"}}>Loading...</h1>
       </div>)
@@ -65,18 +66,63 @@ const mapStateToProps = (state) => {
   }
 }
 
+// const ChallengeListApollo = compose(
+//   graphql(
+//     allChallengesQuery, {
+//       options: (props)=>({
+//         variables: {
+//           filter:{
+//             id: props.apiUserId ? props.apiUserId : ''
+//           }
+//         },
+//         fetchPolicy: 'network-only'
+//       }),
+//     }),
+//   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
+// )(ChallengeList)
+
+
+// props: ({ data: { loading, allChallenges } })=>{
+//   return{
+//   loading,
+//   allChallenges2:allChallenges,
+//   cursor: 'value'
+//   }
+// }
+//
+
+
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
-      options: (props)=>({
+
+      props: ({ ownProps, data}) => ({
+        userLoading:data.loading,
+        data:{...data},
+        // userLoading: loading,
+
+       }),
+
+      options: (ownProps)=>({
         variables: {
           filter:{
-            id: props.apiUserId ? props.apiUserId : ''
-          }
+            id: ownProps.apiUserId ? ownProps.apiUserId : '',
+          },
+          querySize: 5
         },
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
       }),
-    }),
+      // props: ({ data: { allChallenges } })=>{
+      //   return{
+      //   allChallenges2:allChallenges,
+      //   cursor: 'value'
+      //   }
+      // }
+
+    },
+      // props
+  ),
+
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
