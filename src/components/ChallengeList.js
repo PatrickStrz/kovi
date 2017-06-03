@@ -31,7 +31,6 @@ class ChallengeList extends Component {
 
   render(){
     if (this.props.userLoading){
-      debugger
       return(<div>
         <h1 style={{color:"#002984"}}>Loading...</h1>
       </div>)
@@ -108,7 +107,7 @@ const ChallengeListApollo = compose(
           filter:{
             id: ownProps.apiUserId ? ownProps.apiUserId : '',
           },
-          querySize: 5
+          querySize: 12
         },
         fetchPolicy: 'network-only',
       }),
