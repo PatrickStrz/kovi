@@ -17,17 +17,23 @@ class ChallengeList extends Component {
     this.setState({formVisible: !this.state.formVisible})
   }
 
+  allChallengesQueryVariables = {
+
+  }
+
   handleCreateChallengeSubmit = async (values) =>{
+    const {allChallenges} =  this.props
+    const cursor = allChallenges[allChallenges.length - 1].id
     const {title, description} = values
     const options = {
-      variables: {title, description}, refetchQueries: [{
-        query: allChallengesQuery,
-        variables: {"filter": {id: this.props.apiUserId}}
-      }]
+      variables: {title, description},
     }
     await this.props.createChallengeMutation(options)
+    this.props.loadMoreEntries(cursor)
     this.setState({formVisible:false})
   }
+
+
 
   render(){
     if (this.props.loading){
@@ -35,10 +41,10 @@ class ChallengeList extends Component {
         <h1 style={{color:"#002984"}}>Loading...</h1>
       </div>)
     }
-    // alert('nolonger loafing')
     const {allChallenges} = this.props
+    // used for infinite scroll (loadMoreEntries function), new cursor
+    //every time allChallenges changes:
     const cursor = allChallenges[allChallenges.length - 1].id
-
     return(
       <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
           <Row>
@@ -73,6 +79,7 @@ const mapStateToProps = (state) => {
 
 const querySize = 5
 
+
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
@@ -102,6 +109,7 @@ const ChallengeListApollo = compose(
         },
 
     }),
+
     //original query
       options: (ownProps)=>({
         variables: {
