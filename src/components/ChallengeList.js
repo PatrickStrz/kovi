@@ -3,7 +3,7 @@ import {graphql, compose} from 'react-apollo'
 import {connect} from 'react-redux'
 import {Row, Col} from 'react-flexbox-grid'
 import ChallengeCard from './ChallengeCard'
-import {allChallengesQuery} from '../queries/challenge-queries'
+import {allChallengesQuery, moreChallengesQuery} from '../queries/challenge-queries'
 import {createChallengeMutation} from '../mutations/challenge-mutations'
 import ChallengeCreateForm from './ChallengeCreateForm'
 import {requireAuth} from '../lib/auth'
@@ -16,6 +16,14 @@ class ChallengeList extends Component {
   toggleForm = () => {
     this.setState({formVisible: !this.state.formVisible})
   }
+
+  // allChallengesQueryWithVariables = {
+  //   query: allChallengesQuery,
+  //   variables: {
+  //     "filter": {id: this.props.apiUserId},
+  //     "querySize":
+  //   }
+  // }
 
   handleCreateChallengeSubmit = async (values) =>{
     const {title, description} = values
@@ -39,7 +47,7 @@ class ChallengeList extends Component {
     return(
       <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
           <Row>
-            {this.props.data.allChallenges.map(challenge =>(
+            {this.props.allChallenges.map(challenge =>(
               <Col key={'challengelist'+challenge.id} xs={12} lg={6} >
                 <ChallengeCard
                   challenge={challenge}
@@ -53,6 +61,9 @@ class ChallengeList extends Component {
             onClick={()=> requireAuth(this.toggleForm)}>
         </RaisedButton>
         { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
+        <RaisedButton label="Load more" primary={true}
+            onClick={()=> this.props.loadMoreEntries()}>
+        </RaisedButton>
       </Col>
       )
     }
@@ -89,7 +100,7 @@ const mapStateToProps = (state) => {
 //   }
 // }
 //
-
+const querySize = 5
 
 const ChallengeListApollo = compose(
   graphql(
@@ -97,7 +108,32 @@ const ChallengeListApollo = compose(
 
       props: ({ ownProps, data}) => ({
         userLoading:data.loading,
-        data:{...data},
+        ...data,
+        // cursor: !data.loading ? data.allChallenges[data.allChallenges.length -1] : '',
+        // fetchMore: data.fetchMore,
+        loadMoreEntries: () => {
+          return data.fetchMore({
+            query: moreChallengesQuery,
+            variables: {
+              cursor: !data.loading ? data.allChallenges[data.allChallenges.length -1] : '',
+              querySize
+            },
+            updateQuery: (previousResult, { fetchMoreResult }) => {
+              const previousEntry = previousResult.entry
+              const newChallenges = fetchMoreResult.allChallenges
+              return {
+                // By returning `cursor` here, we update the `loadMore` function
+                // to the new cursor.
+                cursor: fetchMoreResult.allChallenges[data.allChallenges.length - 1].id,
+                entry: {
+                  // Put the new comments in the front of the list
+                  allChallenges: [...newChallenges, ...previousEntry.entry.allChallenges],
+                },
+              }
+            },
+          })
+        },
+
         // userLoading: loading,
 
        }),
@@ -107,7 +143,7 @@ const ChallengeListApollo = compose(
           filter:{
             id: ownProps.apiUserId ? ownProps.apiUserId : '',
           },
-          querySize: 12
+          querySize
         },
         fetchPolicy: 'network-only',
       }),
