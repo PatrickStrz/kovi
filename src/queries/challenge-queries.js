@@ -39,7 +39,7 @@ export const allChallengesQuery = gql`
 	}
 `
 
-export const nextChallengesQuery = gql`
+export const moreChallengesQuery = gql`
 	query allChallenges($filter: UserFilter, $cursor: String, $querySize: Int){
 		allChallenges(after:$cursor, first:$querySize){
 			id
@@ -61,59 +61,3 @@ export const nextChallengesQuery = gql`
 // {
 //   "filter": {"id": "cj2lddgcwoixv01744xswmkk6"}
 // }
-
-
-
-
-
-
-///////////////////////////////////////////////////
-
-const MoreCommentsQuery = gql`
-  query MoreComments($cursor: String) {
-    moreComments(cursor: $cursor) {
-      cursor
-      comments {
-        author
-        text
-      }
-    }
-  }
-`;
-
-
-
-// add cursor to props
-//add filter to props
-
-// const CommentsWithData = graphql(Comment, {
-//   // This function re-runs every time `data` changes, including after `updateQuery`,
-//   // meaning our loadMoreEntries function will always have the right cursor
-//   props({ data: { loading, cursor, comments, fetchMore } }) {
-//     return {
-//       loading,
-//       comments,
-//       loadMoreEntries: () => {
-//         return fetchMore({
-//           query: MoreCommentsQuery,
-//           variables: {
-//             cursor: cursor,
-//           },
-//           updateQuery: (previousResult, { fetchMoreResult }) => {
-//             const previousEntry = previousResult.entry;
-//             const newComments = fetchMoreResult.moreComments.comments;
-//             return {
-//               // By returning `cursor` here, we update the `loadMore` function
-//               // to the new cursor.
-//               cursor: fetchMoreResult.cursor,
-//               entry: {
-//                 // Put the new comments in the front of the list
-//                 comments: [...newComments, ...previousEntry.entry.comments],
-//               },
-//             };
-//           },
-//         });
-//       },
-//     };
-//   },
-// })(Feed);
