@@ -40,7 +40,8 @@ class ChallengeUpvote extends Component{
         "challengeId": challengeId
       }
     const options = {
-      variables, refetchQueries: [{
+        variables,
+        refetchQueries: [{
         query: allChallengesQuery,
         variables: this.props.allChallengesQueryVariables
       }]

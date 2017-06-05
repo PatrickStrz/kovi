@@ -55,7 +55,7 @@ class ChallengeCard extends Component {
       variables: { id: this.id, title, description},
       refetchQueries: [{
         query: allChallengesQuery,
-        variables: this.allChallengesQueryVariables
+        // variables: this.allChallengesQueryVariables
       }]
     }
 
