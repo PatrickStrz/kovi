@@ -38,7 +38,7 @@ class ChallengeList extends Component {
   }
 
   render(){
-    if (this.props.userLoading){
+    if (this.props.loading){
       return(<div>
         <h1 style={{color:"#002984"}}>Loading...</h1>
       </div>)
@@ -76,55 +76,34 @@ const mapStateToProps = (state) => {
   }
 }
 
-// const ChallengeListApollo = compose(
-//   graphql(
-//     allChallengesQuery, {
-//       options: (props)=>({
-//         variables: {
-//           filter:{
-//             id: props.apiUserId ? props.apiUserId : ''
-//           }
-//         },
-//         fetchPolicy: 'network-only'
-//       }),
-//     }),
-//   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
-// )(ChallengeList)
-
-
-// props: ({ data: { loading, allChallenges } })=>{
-//   return{
-//   loading,
-//   allChallenges2:allChallenges,
-//   cursor: 'value'
-//   }
-// }
-//
 const querySize = 5
 
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
 
-      props: ({ ownProps, data}) => ({
-        userLoading:data.loading,
-        ...data,
-        // cursor: !data.loading ? data.allChallenges[data.allChallenges.length -1] : '',
-        // fetchMore: data.fetchMore,
+      props: ({ ownProps, data: { loading, cursor, allChallenges, fetchMore}}) => ({
+        loading,
+        allChallenges,
         loadMoreEntries: () => {
-          return data.fetchMore({
+          // debugger
+          return fetchMore({
             query: moreChallengesQuery,
             variables: {
-              cursor: !data.loading ? data.allChallenges[data.allChallenges.length -1] : '',
-              querySize
+              filter:{
+                id: ownProps.apiUserId ? ownProps.apiUserId : '',
+              },
+              cursor: allChallenges[allChallenges.length - 1].id,
+              querySize: 5,
             },
             updateQuery: (previousResult, { fetchMoreResult }) => {
+              debugger
               const previousEntry = previousResult.entry
               const newChallenges = fetchMoreResult.allChallenges
               return {
                 // By returning `cursor` here, we update the `loadMore` function
                 // to the new cursor.
-                cursor: fetchMoreResult.allChallenges[data.allChallenges.length - 1].id,
+                cursor: fetchMoreResult.allChallenges[fetchMoreResult.allChallenges.length - 1].id,
                 entry: {
                   // Put the new comments in the front of the list
                   allChallenges: [...newChallenges, ...previousEntry.entry.allChallenges],
@@ -147,12 +126,6 @@ const ChallengeListApollo = compose(
         },
         fetchPolicy: 'network-only',
       }),
-      // props: ({ data: { allChallenges } })=>{
-      //   return{
-      //   allChallenges2:allChallenges,
-      //   cursor: 'value'
-      //   }
-      // }
 
     },
       // props
