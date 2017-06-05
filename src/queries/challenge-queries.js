@@ -1,24 +1,6 @@
 import {gql} from 'react-apollo'
 
 // use filter 'id' for didUserUpvote, returns empty array if user didn't upvote
-// export const allChallengesQuery = gql`
-// 	query allChallenges($filter: UserFilter,){
-// 		allChallenges{
-// 			id
-// 			title
-// 			description
-// 			userDidUpvote: upvotes(filter:$filter){
-// 				id
-// 			}
-// 			upvotes{
-// 				id
-// 			}
-// 			_upvotesMeta{
-// 				count
-// 			}
-// 		}
-// 	}
-// `
 
 export const allChallengesQuery = gql`
 	query allChallenges($filter: UserFilter, $querySize: Int){
@@ -39,6 +21,12 @@ export const allChallengesQuery = gql`
 	}
 `
 
+// example filter:
+// {
+//   "filter": {"id": "cj2lddgcwoixv01744xswmkk6"}
+// }
+
+
 export const moreChallengesQuery = gql`
 	query allChallenges($filter: UserFilter, $cursor: String, $querySize: Int){
 		allChallenges(after:$cursor, first:$querySize){
@@ -57,7 +45,3 @@ export const moreChallengesQuery = gql`
 		}
 	}
 `
-// example filter:
-// {
-//   "filter": {"id": "cj2lddgcwoixv01744xswmkk6"}
-// }

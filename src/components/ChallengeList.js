@@ -17,14 +17,6 @@ class ChallengeList extends Component {
     this.setState({formVisible: !this.state.formVisible})
   }
 
-  // allChallengesQueryWithVariables = {
-  //   query: allChallengesQuery,
-  //   variables: {
-  //     "filter": {id: this.props.apiUserId},
-  //     "querySize":
-  //   }
-  // }
-
   handleCreateChallengeSubmit = async (values) =>{
     const {title, description} = values
     const options = {
@@ -43,6 +35,9 @@ class ChallengeList extends Component {
         <h1 style={{color:"#002984"}}>Loading...</h1>
       </div>)
     }
+    // alert('nolonger loafing')
+    const {allChallenges} = this.props
+    const cursor = allChallenges[allChallenges.length - 1].id
 
     return(
       <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
@@ -62,7 +57,7 @@ class ChallengeList extends Component {
         </RaisedButton>
         { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
         <RaisedButton label="Load more" primary={true}
-            onClick={()=> this.props.loadMoreEntries()}>
+            onClick={()=> this.props.loadMoreEntries(cursor)}>
         </RaisedButton>
       </Col>
       )
@@ -82,41 +77,32 @@ const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
 
-      props: ({ ownProps, data: { loading, cursor, allChallenges, fetchMore}}) => ({
+      props: ({ ownProps, data: { loading, allChallenges, fetchMore}}) => ({
+
         loading,
         allChallenges,
-        loadMoreEntries: () => {
-          // debugger
+        loadMoreEntries: (cursor) => {
           return fetchMore({
             query: moreChallengesQuery,
             variables: {
               filter:{
                 id: ownProps.apiUserId ? ownProps.apiUserId : '',
               },
-              cursor: allChallenges[allChallenges.length - 1].id,
-              querySize: 5,
+              cursor,
+              querySize: 3,
             },
-            updateQuery: (previousResult, { fetchMoreResult }) => {
-              debugger
-              const previousEntry = previousResult.entry
+            updateQuery: ( previousResult, { fetchMoreResult }) => {
+              const previousEntry = previousResult
               const newChallenges = fetchMoreResult.allChallenges
               return {
-                // By returning `cursor` here, we update the `loadMore` function
-                // to the new cursor.
-                cursor: fetchMoreResult.allChallenges[fetchMoreResult.allChallenges.length - 1].id,
-                entry: {
-                  // Put the new comments in the front of the list
-                  allChallenges: [...newChallenges, ...previousEntry.entry.allChallenges],
-                },
+                allChallenges: [...previousEntry.allChallenges, ...newChallenges],
               }
             },
           })
         },
 
-        // userLoading: loading,
-
-       }),
-
+    }),
+    //original query
       options: (ownProps)=>({
         variables: {
           filter:{
@@ -126,9 +112,7 @@ const ChallengeListApollo = compose(
         },
         fetchPolicy: 'network-only',
       }),
-
     },
-      // props
   ),
 
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
