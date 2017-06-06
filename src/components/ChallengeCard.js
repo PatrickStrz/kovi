@@ -45,7 +45,7 @@ class ChallengeCard extends Component {
 
   id = this.props.challenge.id
 
-  allChallengesQueryVariables = {"filter": {id: this.props.apiUserId}}
+  allChallengesQueryVariables = {"filter": {id: this.props.apiUserId}, "querySize":5}
 
   userDidUpvote = this.props.challenge.userDidUpvote.length > 0  ? true : false
 
@@ -70,6 +70,7 @@ class ChallengeCard extends Component {
       variables: {id: this.id}, refetchQueries:[{
         query: allChallengesQuery,
         variables: this.allChallengesQueryVariables
+
       }]
     }
 
