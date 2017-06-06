@@ -2,9 +2,8 @@ import {gql} from 'react-apollo'
 
 // use filter 'id' for didUserUpvote, returns empty array if user didn't upvote
 
-export const allChallengesQuery = gql`
-	query allChallenges($filter: UserFilter, $querySize: Int){
-		allChallenges(first:$querySize){
+const challengeBodyFragment = gql`
+		fragment challengeBody on Challenge {
 			id
 			title
 			description
@@ -17,8 +16,16 @@ export const allChallengesQuery = gql`
 			_upvotesMeta{
 				count
 			}
+	}
+`
+
+export const allChallengesQuery = gql`
+	query allChallenges($filter: UserFilter, $querySize: Int){
+		allChallenges(first:$querySize){
+			...challengeBody
 		}
 	}
+	${challengeBodyFragment}
 `
 
 // example filter:
@@ -30,18 +37,8 @@ export const allChallengesQuery = gql`
 export const moreChallengesQuery = gql`
 	query allChallenges($filter: UserFilter, $cursor: String, $querySize: Int){
 		allChallenges(after:$cursor, first:$querySize){
-			id
-			title
-			description
-			userDidUpvote: upvotes(filter:$filter){
-				id
-			}
-			upvotes{
-				id
-			}
-			_upvotesMeta{
-				count
-			}
+			...challengeBody
 		}
 	}
+	${challengeBodyFragment}
 `
