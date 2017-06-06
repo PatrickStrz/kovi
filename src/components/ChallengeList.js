@@ -17,10 +17,6 @@ class ChallengeList extends Component {
     this.setState({formVisible: !this.state.formVisible})
   }
 
-  allChallengesQueryVariables = {
-
-  }
-
   handleCreateChallengeSubmit = async (values) =>{
     const {allChallenges} =  this.props
     const cursor = allChallenges[allChallenges.length - 1].id
@@ -32,8 +28,6 @@ class ChallengeList extends Component {
     this.props.loadMoreEntries(cursor)
     this.setState({formVisible:false})
   }
-
-
 
   render(){
     if (this.props.loading){
