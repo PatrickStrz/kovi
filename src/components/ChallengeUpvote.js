@@ -5,7 +5,6 @@ import {
   addChallengeUpvoteMutation,
   removeChallengeUpvoteMutation,
 } from '../mutations/challenge-mutations'
-import {allChallengesQuery} from '../queries/challenge-queries'
 import IconButton from 'material-ui/IconButton'
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import {muiColors} from '../lib/theme/colors'
@@ -18,7 +17,6 @@ class ChallengeUpvote extends Component{
     upvotesCount: PropTypes.number.isRequired,
     apiUserId: PropTypes.string,
     challengeId: PropTypes.string.isRequired,
-    allChallengesQueryVariables: PropTypes.object.isRequired,
   }
 
   disableUpvote = () => {
@@ -37,24 +35,21 @@ class ChallengeUpvote extends Component{
     } = this.props
     const variables = {
         "userId": apiUserId ,
-        "challengeId": challengeId
+        "challengeId": challengeId,
+        "filter":{
+          "id": apiUserId
+        }
       }
-    const options = {
-        variables,
-        refetchQueries: [{
-        query: allChallengesQuery,
-        variables: this.props.allChallengesQueryVariables
-      }]
-    }
+      //userDidUpvote array empty if user did not upvote:
     if (userDidUpvote.length > 0) {
       this.disableUpvote()
-      await removeChallengeUpvoteMutation(options)
+      await removeChallengeUpvoteMutation({variables})
       this.enableUpvote()
 
     }
     else {
       this.disableUpvote()
-      await addChallengeUpvoteMutation(options)
+      await addChallengeUpvoteMutation({variables})
       this.enableUpvote()
     }
   }
