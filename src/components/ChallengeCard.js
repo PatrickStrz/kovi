@@ -52,11 +52,7 @@ class ChallengeCard extends Component {
   handleUpdateChallengeSubmit = async (values) =>{
     const {title, description} = values // values coming from redux form after submit
     const options = {
-      variables: { id: this.id, title, description},
-      refetchQueries: [{
-        query: allChallengesQuery,
-        // variables: this.allChallengesQueryVariables
-      }]
+      variables: { id: this.id, title, description, "filter": {id: this.props.apiUserId}}
     }
 
     this.setState({updateInProgress: true})
@@ -70,7 +66,6 @@ class ChallengeCard extends Component {
       variables: {id: this.id}, refetchQueries:[{
         query: allChallengesQuery,
         variables: this.allChallengesQueryVariables
-
       }]
     }
 
@@ -106,7 +101,6 @@ class ChallengeCard extends Component {
           userDidUpvote={this.props.challenge.userDidUpvote}
           apiUserId={this.props.apiUserId}
           challengeId={id}
-          allChallengesQueryVariables={this.allChallengesQueryVariables}
           upvotesCount={upvotesCount}
         />
         <Card zDepth={4} style={this.cardStyle()}>

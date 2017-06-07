@@ -1,4 +1,5 @@
 import {gql} from 'react-apollo'
+import {challengeBodyFragment} from '../queries/challenge-queries'
 
 export const deleteChallengeMutation = gql`mutation deleteChallenge($id:ID!){
   deleteChallenge(id:$id){
@@ -14,30 +15,36 @@ export const createChallengeMutation = gql`mutation
 }`
 
 export const updateChallengeMutation = gql`mutation
-  updateChallengeMutation($id: ID!, $description: String, $title: String){
+  updateChallengeMutation($id: ID!, $description: String, $title: String, $filter:UserFilter){
 	  updateChallenge(id:$id, description:$description,title:$title){
-    id
+    ...challengeBody
+    }
   }
-}`
+  ${challengeBodyFragment}
+`
 
-//Upvotes
+
 
 export const addChallengeUpvoteMutation = gql`mutation
-  addToChallengeUpvotes($userId:ID!,$challengeId:ID!){
+  addToChallengeUpvotes($userId:ID!,$challengeId:ID!, $filter:UserFilter){
     addToChallengeUpvotes(upvotedChallengesChallengeId: $challengeId,
       upvotesUserId: $userId,){
-      upvotesUser{
-        id
+      upvotedChallengesChallenge{
+          ...challengeBody
+        }
       }
     }
-  }`
-
-  export const removeChallengeUpvoteMutation = gql`mutation
-  removeFromChallengeUpvotes($userId:ID!,$challengeId:ID!){
-    removeFromChallengeUpvotes(upvotedChallengesChallengeId: $challengeId,
+  ${challengeBodyFragment}
+`
+export const removeChallengeUpvoteMutation = gql`mutation
+  removeFromChallengeUpvotes($userId:ID!,$challengeId:ID!, $filter:UserFilter){
+    removeFromChallengeUpvotes(
+      upvotedChallengesChallengeId: $challengeId,
       upvotesUserId: $userId,){
-      upvotesUser{
-        id
+      upvotedChallengesChallenge{
+          ...challengeBody
+        }
       }
     }
-  }`
+  ${challengeBodyFragment}
+`

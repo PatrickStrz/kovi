@@ -2,7 +2,7 @@ import {gql} from 'react-apollo'
 
 // use filter 'id' for didUserUpvote, returns empty array if user didn't upvote
 
-const challengeBodyFragment = gql`
+export const challengeBodyFragment = gql`
 		fragment challengeBody on Challenge {
 			id
 			title
