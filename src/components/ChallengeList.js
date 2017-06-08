@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {graphql, compose, gql} from 'react-apollo'
+import {graphql, compose} from 'react-apollo'
 import {connect} from 'react-redux'
 import {Row, Col} from 'react-flexbox-grid'
 import ChallengeCard from './ChallengeCard'
@@ -69,8 +69,12 @@ class ChallengeList extends Component {
             onClick={()=> requireAuth(this.toggleForm)}>
         </RaisedButton>
         { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
-        <RaisedButton label="Load more" primary={true}
-            onClick={()=> this.props.loadMoreEntries()}>
+        <RaisedButton
+          label="Load more"
+          primary={true}
+          onClick={()=> this.props.loadMoreEntries()}
+          disabled={this.props.cursor.length === 0 ? true : false}
+        >
         </RaisedButton>
       </Col>
       )

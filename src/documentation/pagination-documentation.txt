@@ -1,0 +1,30 @@
+Cursor based pagination.
+Create cursors manually in queries by using a query aliases and performing a sub query
+
+i.e)
+
+export const allChallengesQuery = gql`
+	query allChallenges($filter: UserFilter){
+		allChallenges(first:5){
+			...challengeBody
+		}
+		cursor: allChallenges(skip:4, first:1){
+    	id
+  	}
+	}
+	${challengeBodyFragment}
+`
+
+-Make sure update cursor when paginating and after deleting an entry.
+
+i.e)
+
+if(data.cursor[0].id === deleteChallenge.id){
+  const newCursor = data.allChallenges[index - 1].id
+  data.cursor[0].id = newCursor
+}
+
+Testing:
+-Make sure pagination works when delete last item.
+-Make sure stops appropriately when reach the end of a list without showing errors
+in the console.
