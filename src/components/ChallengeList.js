@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {graphql, compose} from 'react-apollo'
+import {graphql, compose, gql} from 'react-apollo'
 import {connect} from 'react-redux'
 import {Row, Col} from 'react-flexbox-grid'
 import ChallengeCard from './ChallengeCard'
@@ -17,15 +17,46 @@ class ChallengeList extends Component {
     this.setState({formVisible: !this.state.formVisible})
   }
 
+
+  getCursor = () => {
+    const {allChallenges, loading} = this.props
+    if (this.props.loading){
+      return('')
+    }
+    else{
+      return(allChallenges[allChallenges.length - 1].id)
+    }
+   }
+
   handleCreateChallengeSubmit = async (values) =>{
-    const {allChallenges} =  this.props
-    const cursor = allChallenges[allChallenges.length - 1].id
+
     const {title, description} = values
+    const queryVariables = {
+      "querySize":5, "filter":{ "id": this.props.apiUserId}
+    }
     const options = {
-      variables: {title, description},
+      variables: {
+        title,
+        description,
+        "filter":{ "id": this.props.apiUserId}
+      },
+      update: (proxy, { data: {createChallenge} }) => {
+
+        // const cursor = this.getCursor()
+
+        const data = proxy.readQuery({
+          query: allChallengesQuery,
+          variables: queryVariables
+          // variables: {"querySize":5, cursor, "filter":{ "id": this.props.apiUserId}}
+        });
+
+        data.allChallenges.push(createChallenge)
+        proxy.writeQuery({ query:allChallengesQuery, variables: queryVariables, data })
+      },
     }
     await this.props.createChallengeMutation(options)
-    this.props.loadMoreEntries(cursor)
+    //since only 1 new entry is created loads new entry. Would load 3 if
+    //2 other problems are created by other users in the meantime.
     this.setState({formVisible:false})
   }
 
