@@ -19,11 +19,24 @@ export const challengeBodyFragment = gql`
 	}
 `
 
+// export const allChallengesQuery = gql`
+// 	query allChallenges($filter: UserFilter, $querySize: Int){
+// 		allChallenges(first:$querySize){
+// 			...challengeBody
+// 		}
+//
+// 	}
+// 	${challengeBodyFragment}
+// `
+
 export const allChallengesQuery = gql`
-	query allChallenges($filter: UserFilter, $querySize: Int){
-		allChallenges(first:$querySize){
+	query allChallenges($filter: UserFilter){
+		allChallenges(first:5){
 			...challengeBody
 		}
+		cursor: allChallenges(skip:4, first:1){
+    	id
+  	}
 	}
 	${challengeBodyFragment}
 `
@@ -35,10 +48,13 @@ export const allChallengesQuery = gql`
 
 
 export const moreChallengesQuery = gql`
-	query allChallenges($filter: UserFilter, $cursor: String, $querySize: Int){
-		allChallenges(after:$cursor, first:$querySize){
+	query allChallenges($filter: UserFilter, $cursor: String){
+		allChallenges(after:$cursor, first:5){
 			...challengeBody
 		}
+		cursor: allChallenges(after:$cursor, skip:4, first:1){
+    	id
+  	}
 	}
 	${challengeBodyFragment}
 `
