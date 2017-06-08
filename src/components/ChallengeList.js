@@ -17,22 +17,10 @@ class ChallengeList extends Component {
     this.setState({formVisible: !this.state.formVisible})
   }
 
-
-  getCursor = () => {
-    const {allChallenges, loading} = this.props
-    if (this.props.loading){
-      return('')
-    }
-    else{
-      return(allChallenges[allChallenges.length - 1].id)
-    }
-   }
-
   handleCreateChallengeSubmit = async (values) =>{
-
     const {title, description} = values
     const queryVariables = {
-      "querySize":5, "filter":{ "id": this.props.apiUserId}
+      "filter":{ "id": this.props.apiUserId}
     }
     const options = {
       variables: {
@@ -41,22 +29,15 @@ class ChallengeList extends Component {
         "filter":{ "id": this.props.apiUserId}
       },
       update: (proxy, { data: {createChallenge} }) => {
-
-        // const cursor = this.getCursor()
-
         const data = proxy.readQuery({
           query: allChallengesQuery,
           variables: queryVariables
-          // variables: {"querySize":5, cursor, "filter":{ "id": this.props.apiUserId}}
-        });
-
+        })
         data.allChallenges.push(createChallenge)
         proxy.writeQuery({ query:allChallengesQuery, variables: queryVariables, data })
       },
     }
     await this.props.createChallengeMutation(options)
-    //since only 1 new entry is created loads new entry. Would load 3 if
-    //2 other problems are created by other users in the meantime.
     this.setState({formVisible:false})
   }
 
@@ -66,10 +47,7 @@ class ChallengeList extends Component {
         <h1 style={{color:"#002984"}}>Loading...</h1>
       </div>)
     }
-    const {allChallenges} = this.props
-    // used for infinite scroll (loadMoreEntries function), new cursor
-    //every time allChallenges changes:
-    const cursor = allChallenges[allChallenges.length - 1].id
+
     return(
       <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
           <Row>
@@ -88,7 +66,7 @@ class ChallengeList extends Component {
         </RaisedButton>
         { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
         <RaisedButton label="Load more" primary={true}
-            onClick={()=> this.props.loadMoreEntries(cursor)}>
+            onClick={()=> this.props.loadMoreEntries()}>
         </RaisedButton>
       </Col>
       )
@@ -102,25 +80,22 @@ const mapStateToProps = (state) => {
   }
 }
 
-const querySize = 5
-
-
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
 
-      props: ({ ownProps, data: { loading, allChallenges, fetchMore}}) => ({
-
+      props: ({ ownProps, data: { loading, allChallenges, cursor, fetchMore}}) => ({
         loading,
         allChallenges,
-        loadMoreEntries: (cursor) => {
+        cursor,
+        loadMoreEntries: () => {
           return fetchMore({
             query: moreChallengesQuery,
             variables: {
               filter:{
                 id: ownProps.apiUserId ? ownProps.apiUserId : '',
               },
-              cursor,
+              cursor: cursor[0].id,
               querySize: 3,
             },
             updateQuery: ( previousResult, { fetchMoreResult }) => {
@@ -128,11 +103,11 @@ const ChallengeListApollo = compose(
               const newChallenges = fetchMoreResult.allChallenges
               return {
                 allChallenges: [...previousEntry.allChallenges, ...newChallenges],
+                cursor: fetchMoreResult.cursor
               }
             },
           })
         },
-
     }),
 
     //original query
@@ -141,7 +116,6 @@ const ChallengeListApollo = compose(
           filter:{
             id: ownProps.apiUserId ? ownProps.apiUserId : '',
           },
-          querySize
         },
         fetchPolicy: 'network-only',
       }),

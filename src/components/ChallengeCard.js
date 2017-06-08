@@ -45,8 +45,6 @@ class ChallengeCard extends Component {
 
   id = this.props.challenge.id
 
-  allChallengesQueryVariables = {"filter": {id: this.props.apiUserId}, "querySize":5}
-
   userDidUpvote = this.props.challenge.userDidUpvote.length > 0  ? true : false
 
   handleUpdateChallengeSubmit = async (values) =>{
@@ -65,7 +63,7 @@ class ChallengeCard extends Component {
     const options = {
       variables: {id: this.id}, refetchQueries:[{
         query: allChallengesQuery,
-        variables: this.allChallengesQueryVariables
+        variables: {"filter": {id: this.props.apiUserId}}
       }]
     }
 
