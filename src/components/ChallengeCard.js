@@ -16,7 +16,8 @@ class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.object.isRequired,
     apiUserId: PropTypes.string,
-    isAuthenticated: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    allChallengesQueryVariables: PropTypes.object.isRequired,
   }
 
   state = {
@@ -59,17 +60,31 @@ class ChallengeCard extends Component {
   }
 
   handleDeleteChallenge = async () => {
-
+    const {allChallengesQueryVariables} = this.props
     const options = {
-      variables: {id: this.id}, refetchQueries:[{
-        query: allChallengesQuery,
-        variables: {"filter": {id: this.props.apiUserId}}
-      }]
+      variables: {id: this.id},
+      update: (proxy, { data: {deleteChallenge} }) => {
+        const data = proxy.readQuery({
+          query: allChallengesQuery,
+          variables: allChallengesQueryVariables
+        })
+        const filter = (challenge) => challenge.id === deleteChallenge.id
+        const index = data.allChallenges.findIndex(filter)
+        // index ? data.allChallenges.splice(index)
+        if(index !== -1){
+          data.allChallenges.splice(index,1)
+          proxy.writeQuery({
+            query:allChallengesQuery,
+            variables: allChallengesQueryVariables,
+            data })
+        }
+      },
     }
 
     this.setState({deleteInProgress: true})
     await this.props.deleteChallengeMutation(options)
-    this.setState({deleteInProgress: false})
+    // todo if error deleting setState deleteInProgress to false
+    // this.setState({deleteInProgress: false})
   }
 
   toggleUpdateForm = () => {

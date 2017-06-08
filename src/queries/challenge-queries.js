@@ -18,16 +18,11 @@ export const challengeBodyFragment = gql`
 			}
 	}
 `
+// example filter:
+// {
+//   "filter": {"id": "cj2lddgcwoixv01744xswmkk6"}
+// }
 
-// export const allChallengesQuery = gql`
-// 	query allChallenges($filter: UserFilter, $querySize: Int){
-// 		allChallenges(first:$querySize){
-// 			...challengeBody
-// 		}
-//
-// 	}
-// 	${challengeBodyFragment}
-// `
 
 export const allChallengesQuery = gql`
 	query allChallenges($filter: UserFilter){
@@ -40,12 +35,6 @@ export const allChallengesQuery = gql`
 	}
 	${challengeBodyFragment}
 `
-
-// example filter:
-// {
-//   "filter": {"id": "cj2lddgcwoixv01744xswmkk6"}
-// }
-
 
 export const moreChallengesQuery = gql`
 	query allChallenges($filter: UserFilter, $cursor: String){
