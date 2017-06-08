@@ -72,7 +72,14 @@ class ChallengeCard extends Component {
         const index = data.allChallenges.findIndex(filter)
         // index ? data.allChallenges.splice(index)
         if(index !== -1){
+
           data.allChallenges.splice(index,1)
+          //last item of the query is th new cursor, if delete last item need
+          //to change the cursor to the item just before it
+          if(data.cursor.length > 0 && data.cursor[0].id === deleteChallenge.id){
+            const newCursor = data.allChallenges[index - 1].id
+            data.cursor[0].id = newCursor
+          }
           proxy.writeQuery({
             query:allChallengesQuery,
             variables: allChallengesQueryVariables,
