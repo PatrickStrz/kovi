@@ -8,22 +8,22 @@ export const deleteChallengeMutation = gql`mutation deleteChallenge($id:ID!){
 }`
 
 export const createChallengeMutation = gql`mutation
-  createChallengeMutation($description: String, $title: String){
+  createChallengeMutation($description: String, $title: String, $filter:UserFilter){
 	  createChallenge(description:$description,title:$title){
-    id
-  }
-}`
-
-export const updateChallengeMutation = gql`mutation
-  updateChallengeMutation($id: ID!, $description: String, $title: String, $filter:UserFilter){
-	  updateChallenge(id:$id, description:$description,title:$title){
     ...challengeBody
     }
   }
   ${challengeBodyFragment}
 `
 
-
+export const updateChallengeMutation = gql`mutation
+  updateChallengeMutation($id: ID!, $description: String, $title: String, $filter:UserFilter){
+	  updateChallenge(id:$id, description:$description,title:$title){
+      ...challengeBody
+    }
+  }
+  ${challengeBodyFragment}
+`
 
 export const addChallengeUpvoteMutation = gql`mutation
   addToChallengeUpvotes($userId:ID!,$challengeId:ID!, $filter:UserFilter){
