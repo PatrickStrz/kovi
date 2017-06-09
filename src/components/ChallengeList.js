@@ -8,6 +8,7 @@ import {createChallengeMutation} from '../mutations/challenge-mutations'
 import ChallengeCreateForm from './ChallengeCreateForm'
 import {requireAuth} from '../lib/auth'
 import RaisedButton from 'material-ui/RaisedButton'
+import {uniqBy} from 'lodash'
 
 class ChallengeList extends Component {
 
@@ -107,10 +108,16 @@ const ChallengeListApollo = compose(
               querySize: 3,
             },
             updateQuery: ( previousResult, { fetchMoreResult }) => {
-              const previousEntry = previousResult
+              const previousChallenges = previousResult.allChallenges
               const newChallenges = fetchMoreResult.allChallenges
+              //prevents adding duplicate when query overlaps with previously
+              // manually added entry in apollo cache ( using update). 
+              const allChallenges = uniqBy(
+                [...previousChallenges, ...newChallenges],
+                'id'
+              )
               return {
-                allChallenges: [...previousEntry.allChallenges, ...newChallenges],
+                allChallenges,
                 cursor: fetchMoreResult.cursor
               }
             },
