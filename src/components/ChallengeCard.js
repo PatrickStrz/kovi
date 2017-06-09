@@ -44,25 +44,28 @@ class ChallengeCard extends Component {
     }
   }
 
-  id = this.props.challenge.id
-
   userDidUpvote = this.props.challenge.userDidUpvote.length > 0  ? true : false
 
   handleUpdateChallengeSubmit = async (values) =>{
+    const { updateChallengeMutation, apiUserId} = this.props
     const {title, description} = values // values coming from redux form after submit
     const options = {
-      variables: { id: this.id, title, description, "filter": {id: this.props.apiUserId}}
+      variables: {
+        id: this.props.challenge.id,
+        title,
+        description,
+        "filter": {id: apiUserId}
+      }
     }
-
     this.setState({updateInProgress: true})
-    await this.props.updateChallengeMutation(options)
+    await updateChallengeMutation(options)
     this.setState({updateFormVisible: false, updateInProgress: false})
   }
 
   handleDeleteChallenge = async () => {
-    const {allChallengesQueryVariables} = this.props
+    const {allChallengesQueryVariables, deleteChallengeMutation} = this.props
     const options = {
-      variables: {id: this.id},
+      variables: {id: this.props.challenge.id},
       update: (proxy, { data: {deleteChallenge} }) => {
         const data = proxy.readQuery({
           query: allChallengesQuery,
@@ -70,12 +73,11 @@ class ChallengeCard extends Component {
         })
         const filter = (challenge) => challenge.id === deleteChallenge.id
         const index = data.allChallenges.findIndex(filter)
-        // index ? data.allChallenges.splice(index)
-        if(index !== -1){
 
+        if(index !== -1){
           data.allChallenges.splice(index,1)
-          //last item of the query is th new cursor, if delete last item need
-          //to change the cursor to the item just before it
+          //id of the last item of the query is the cursor, if delete last item need
+          //to change the cursor to the id of the second last item of the query
           if(data.cursor.length > 0 && data.cursor[0].id === deleteChallenge.id){
             const newCursor = data.allChallenges[index - 1].id
             data.cursor[0].id = newCursor
@@ -87,11 +89,9 @@ class ChallengeCard extends Component {
         }
       },
     }
-
     this.setState({deleteInProgress: true})
-    await this.props.deleteChallengeMutation(options)
-    // todo if error deleting setState deleteInProgress to false
-    // this.setState({deleteInProgress: false})
+    await deleteChallengeMutation(options)
+    // todo: if error deleting setState --> this.setState({deleteInProgress: false})
   }
 
   toggleUpdateForm = () => {
