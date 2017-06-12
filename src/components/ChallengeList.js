@@ -9,6 +9,7 @@ import ChallengeCreateForm from './ChallengeCreateForm'
 import {requireAuth} from '../lib/auth'
 import RaisedButton from 'material-ui/RaisedButton'
 import {uniqBy} from 'lodash'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 class ChallengeList extends Component {
 
@@ -52,32 +53,37 @@ class ChallengeList extends Component {
       </div>)
     }
 
+    const challengeCards = this.props.allChallenges.map(challenge =>{
+      return(
+        <Col key={'challengelist'+challenge.id} xs={12} lg={6} >
+          <ChallengeCard
+            challenge={challenge}
+            apiUserId={this.props.apiUserId}
+            isAuthenticated={this.props.isAuthenticated}
+            allChallengesQueryVariables={this.allChallengesQueryVariables}
+          />
+        </Col>
+      )
+    })
+
     return(
-      <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
-          <Row>
-            {this.props.allChallenges.map(challenge =>(
-              <Col key={'challengelist'+challenge.id} xs={12} lg={6} >
-                <ChallengeCard
-                  challenge={challenge}
-                  apiUserId={this.props.apiUserId}
-                  isAuthenticated={this.props.isAuthenticated}
-                  allChallengesQueryVariables={this.allChallengesQueryVariables}
-                />
-              </Col>
-            ))}
-          </Row>
-        <RaisedButton label="Add a new challenge" primary={true}
-            onClick={()=> requireAuth(this.toggleForm)}>
-        </RaisedButton>
-        { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
-        <RaisedButton
-          label="Load more"
-          primary={true}
-          onClick={()=> this.props.loadMoreEntries()}
-          disabled={this.props.cursor.length === 0 ? true : false}
-        >
-        </RaisedButton>
-      </Col>
+        <InfiniteScroll
+          pageStart={0}
+          hasMore={this.props.cursor.length === 0 ? false : true}
+          loader={<div className="loader">Loading ...</div>}
+          next={()=>this.props.loadMoreEntries()}
+         >
+          <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
+            <Row>
+            {challengeCards}
+            </Row>
+            <RaisedButton label="Add a new challenge" primary={true}
+                onClick={()=> requireAuth(this.toggleForm)}>
+            </RaisedButton>
+            { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
+          </Col>
+        </InfiniteScroll>
+
       )
     }
   }
@@ -111,7 +117,7 @@ const ChallengeListApollo = compose(
               const previousChallenges = previousResult.allChallenges
               const newChallenges = fetchMoreResult.allChallenges
               //prevents adding duplicate when query overlaps with previously
-              // manually added entry in apollo cache ( using update). 
+              // manually added entry in apollo cache ( using update).
               const allChallenges = uniqBy(
                 [...previousChallenges, ...newChallenges],
                 'id'
