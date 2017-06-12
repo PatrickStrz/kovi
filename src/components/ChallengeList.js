@@ -46,7 +46,6 @@ class ChallengeList extends Component {
     this.setState({formVisible:false})
   }
 
-
   render(){
     if (this.props.loading){
       return(<div>
@@ -68,23 +67,23 @@ class ChallengeList extends Component {
     })
 
     return(
-      <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
         <InfiniteScroll
           pageStart={0}
           hasMore={this.props.cursor.length === 0 ? false : true}
           loader={<div className="loader">Loading ...</div>}
           next={()=>this.props.loadMoreEntries()}
-        >
-          <Row>
-          {challengeCards}
-          </Row>
+         >
+          <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
+            <Row>
+            {challengeCards}
+            </Row>
+            <RaisedButton label="Add a new challenge" primary={true}
+                onClick={()=> requireAuth(this.toggleForm)}>
+            </RaisedButton>
+            { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
+          </Col>
         </InfiniteScroll>
-        <RaisedButton label="Add a new challenge" primary={true}
-            onClick={()=> requireAuth(this.toggleForm)}>
-        </RaisedButton>
-        { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
 
-      </Col>
       )
     }
   }
