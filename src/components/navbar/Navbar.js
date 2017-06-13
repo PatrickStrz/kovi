@@ -19,6 +19,8 @@ const Navbar = (props) => {
     },
     navbar: {
       backgroundColor:"#ffffff",
+      position: "fixed",
+      top: 0
     },
     accountCircleIcon: {
       width: 30,
