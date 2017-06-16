@@ -55,7 +55,7 @@ class ChallengeList extends Component {
 
     const challengeCards = this.props.allChallenges.map(challenge =>{
       return(
-        <Col key={'challengelist'+challenge.id} xs={12} lg={6} >
+        <Col key={'challengelist'+challenge.id} xs={12}>
           <ChallengeCard
             challenge={challenge}
             apiUserId={this.props.apiUserId}
@@ -73,7 +73,7 @@ class ChallengeList extends Component {
           loader={<div className="loader">Loading ...</div>}
           next={()=>this.props.loadMoreEntries()}
          >
-          <Col xsOffset={1} xs={10} lgOffset={3} lg={7}>
+          <Col xsOffset={1} xs={10} lgOffset={2} lg={8}>
             <Row>
             {challengeCards}
             </Row>

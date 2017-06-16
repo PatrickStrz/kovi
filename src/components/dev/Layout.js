@@ -31,7 +31,7 @@ const Layout = () => {
     <Grid fluid style={styles.grid}> {/* site.js */}
       <div>{/* Home.js */}
         <Row style={styles.row}> {/* ChallengeList.js */}
-          <Col style={styles.col} xsOffset={1} xs={10} lgOffset={3} lg={7}>
+          <Col style={styles.col} xsOffset={1} xs={10} lgOffset={2} lg={8}>
               <Row>
                 {cards.map((card)=>{
                 return(
