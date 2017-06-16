@@ -20,17 +20,19 @@ class Site extends Component {
       backgroundColor:"#f6f0f0",
       // textAlign: "center",
     },
+    //makes sure that the background fills up the screen
     main: {
+      //Make sure background fills screen -->
       display: 'flex',
       minHeight: '100vh',
       flexDirection: 'column',
+    //<---
       backgroundColor:"#f6f0f0",
     },
   }
 
   renderSyncUser = () => {
     const {isAuthenticated, userSynced, userSyncSuccess, profile} = this.props
-
     if (isAuthenticated && !userSynced ){
       return(<SyncUser
         handleUserSyncSuccess={userSyncSuccess}
@@ -55,7 +57,7 @@ class Site extends Component {
           isAuthenticated={isAuthenticated}
           profile={profile}
         />
-        <Grid>
+        <Grid style={{marginTop:100}}>
           {children}
         </Grid>
       </div>

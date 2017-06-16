@@ -8,9 +8,11 @@ import {requireAuth} from '../lib/auth'
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import {allChallengesQuery} from '../queries/challenge-queries'
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
-import FlatButton from 'material-ui/FlatButton'
 import PropTypes from 'prop-types'
 import ChallengeUpvote from './ChallengeUpvote'
+import IconButton from 'material-ui/IconButton'
+import Delete from 'material-ui/svg-icons/action/delete'
+import Create from 'material-ui/svg-icons/content/create'
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -28,7 +30,9 @@ class ChallengeCard extends Component {
 
   styles = {
     card: {
-      borderRadius: 5
+    },
+    actionButtonStyle:{
+      color:'#3bc89f'
     }
   }
 
@@ -117,13 +121,8 @@ class ChallengeCard extends Component {
 
     return(
       <div>
-        <ChallengeUpvote
-          userDidUpvote={this.props.challenge.userDidUpvote}
-          apiUserId={this.props.apiUserId}
-          challengeId={id}
-          upvotesCount={upvotesCount}
-        />
-        <Card zDepth={4} style={this.cardStyle()}>
+
+        <Card style={this.cardStyle()}>
           <CardHeader
             title={title}
             subtitle={description}
@@ -131,17 +130,26 @@ class ChallengeCard extends Component {
             showExpandableButton={true}
           />
           <CardActions>
-            <FlatButton
-              label="Delete"
+            <ChallengeUpvote
+              userDidUpvote={this.props.challenge.userDidUpvote}
+              apiUserId={this.props.apiUserId}
+              challengeId={id}
+              upvotesCount={upvotesCount}
+              style={{paddingBottom:0}}
+            />
+
+            <IconButton
               onClick={()=> requireAuth(this.handleDeleteChallenge)}
-              secondary={true}
-              disabled={this.state.deleteInProgress}
-            />
-            <FlatButton
-              label={this.state.updateFormVisible ? "Hide Form" : "Update"}
+              iconStyle={{color:'#adadad'}}
+              >
+              <Delete />
+            </IconButton>
+            <IconButton
               onClick={()=> requireAuth(this.toggleUpdateForm)}
-              primary={true}
-            />
+              iconStyle={this.styles.actionButtonStyle}
+              >
+              <Create/>
+            </IconButton>
           </CardActions>
           <CardText expandable={true}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -151,7 +159,6 @@ class ChallengeCard extends Component {
           </CardText>
           {this.renderUpdateForm()}
         </Card>
-      <br/>
       </div>
     )
   }

@@ -14,7 +14,7 @@ const styles = {
   },
   col2: {
     backgroundColor:'#40cbff',
-    height:300,
+    height:150,
     borderRadius:5,
   },
   row: {
@@ -31,11 +31,11 @@ const Layout = () => {
     <Grid fluid style={styles.grid}> {/* site.js */}
       <div>{/* Home.js */}
         <Row style={styles.row}> {/* ChallengeList.js */}
-          <Col style={styles.col} xsOffset={1} xs={10} lgOffset={3} lg={7}>
+          <Col style={styles.col} xsOffset={1} xs={10} lgOffset={2} lg={8}>
               <Row>
                 {cards.map((card)=>{
                 return(
-                  <Col style={styles.col} key={card} xs={12} lg={6}>
+                  <Col style={styles.col} key={card} xs={12} lg={12}>
                     <div> {/* ChallengeCard.js */}
                       <div style={styles.col2}>card#:{card}</div>
                     </div>
@@ -46,7 +46,7 @@ const Layout = () => {
               <Row>
                 <Col xsOffset={5} xs={1}>
                   <button>
-                    NEW problem
+                    New challenge
                   </button>
                 </Col>
               </Row>

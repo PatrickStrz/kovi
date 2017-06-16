@@ -59,20 +59,15 @@ class ChallengeUpvote extends Component{
 
   render(){
     return(
-      <div>
-        <span style={{fontSize: 30, color: '#424040'}}><div>{this.props.upvotesCount}</div></span>
         <IconButton
-          style={{paddingTop: 5}}
           onTouchTap={() => requireAuth(this.handleToggleUpvote)}
-          iconStyle={{height: 30, width: 30}}
+          iconStyle={{height: 25, width: 25}}
           disabled={this.state.upvoteInProgress}
         >
           <ThumbUp
-            style={{paddingTop: 40, marginTop: "20px"}}
-            color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1: "#6f6f6f"}
+            color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1: "#adadad"}
           />
         </IconButton>
-      </div>
     )
   }
 }
