@@ -126,9 +126,15 @@ class ChallengeCard extends Component {
           <CardHeader
             title={title}
             subtitle={description}
-            actAsExpander={true}
-            showExpandableButton={true}
+            // actAsExpander={true}
+            // showExpandableButton={true}
           />
+          <CardText >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+          </CardText>
           <CardActions>
             <ChallengeUpvote
               userDidUpvote={this.props.challenge.userDidUpvote}
@@ -151,12 +157,7 @@ class ChallengeCard extends Component {
               <Create/>
             </IconButton>
           </CardActions>
-          <CardText expandable={true}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-          </CardText>
+
           {this.renderUpdateForm()}
         </Card>
       </div>

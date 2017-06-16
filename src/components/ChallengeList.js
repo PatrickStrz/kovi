@@ -73,7 +73,7 @@ class ChallengeList extends Component {
           loader={<div className="loader">Loading ...</div>}
           next={()=>this.props.loadMoreEntries()}
          >
-          <Col xsOffset={1} xs={10} lgOffset={2} lg={8}>
+          <Col xsOffset={1} xs={10} lgOffset={3} lg={6}>
             <Row>
             {challengeCards}
             </Row>
