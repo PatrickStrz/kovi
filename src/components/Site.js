@@ -56,7 +56,6 @@ class Site extends Component {
           handleLogin={login}
           isAuthenticated={isAuthenticated}
           profile={profile}
-          zDepth={5}
         />
         <Grid style={{marginTop:100}}>
           {children}
