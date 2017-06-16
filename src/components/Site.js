@@ -6,7 +6,8 @@ import Navbar from './navbar/Navbar'
 import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 import SyncUser from './SyncUser'
-import {Grid} from 'react-flexbox-grid'
+import {Grid, Col, Row} from 'react-flexbox-grid'
+import BottomBar from './BottomBar'
 
 class Site extends Component {
 
@@ -59,7 +60,16 @@ class Site extends Component {
         />
         <Grid style={{marginTop:100}}>
           {children}
+          <Row>
+            {/* <Col xsOffset={1} xs={10} lgOffset={3} lg={6} style={{position: "fixed", bottom:"0", marginTop:40}}> */}
+
+
+            {/* </Col> */}
+          </Row>
         </Grid>
+        <div style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
+          <BottomBar/>
+        </div>
       </div>
     )
   }

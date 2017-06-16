@@ -83,7 +83,6 @@ class ChallengeList extends Component {
             { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
           </Col>
         </InfiniteScroll>
-
       )
     }
   }
