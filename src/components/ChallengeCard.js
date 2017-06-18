@@ -30,6 +30,7 @@ class ChallengeCard extends Component {
 
   styles = {
     card: {
+      // marginBottom:5
     },
     actionButtonStyle:{
       color:'#3bc89f'
@@ -122,12 +123,11 @@ class ChallengeCard extends Component {
     return(
       <div>
 
-        <Card style={this.cardStyle()}>
+        <Card style={this.cardStyle()}
+          >
           <CardHeader
             title={title}
             subtitle={description}
-            // actAsExpander={true}
-            // showExpandableButton={true}
           />
           <CardText >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -157,7 +157,6 @@ class ChallengeCard extends Component {
               <Create/>
             </IconButton>
           </CardActions>
-
           {this.renderUpdateForm()}
         </Card>
       </div>

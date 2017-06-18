@@ -53,6 +53,7 @@ class Site extends Component {
     return(
       <div style={this.styles.main}>
         {this.renderSyncUser()}
+        
         <Navbar handleLogout={logout}
           handleLogin={login}
           isAuthenticated={isAuthenticated}
