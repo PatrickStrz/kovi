@@ -3,7 +3,6 @@ import FontIcon from 'material-ui/FontIcon'
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
 import IconLocationOn from 'material-ui/svg-icons/communication/location-on'
-import {muiColors} from '../lib/theme/colors'
 const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>
 const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>
 const nearbyIcon = <IconLocationOn />
@@ -20,12 +19,11 @@ class BottomBar extends Component {
   }
 
   select = (index) => this.setState({selectedIndex: index})
-//
-  render() {
 
+  render() {
     return (
       <Paper zDepth={1} style={this.styles.body}>
-        <BottomNavigation selectedIndex={this.state.selectedIndex} style={{backgroundColor:muiColors.primary1}}>
+        <BottomNavigation selectedIndex={this.state.selectedIndex} >
           <BottomNavigationItem
             label="Recents"
             icon={recentsIcon}

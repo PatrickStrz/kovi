@@ -26,10 +26,6 @@ const Navbar = (props) => {
       width: 30,
       height: 30,
     },
-    loginButton: {
-      backgroundColor: muiColors.primary1,
-      color: '#ffffff'
-    },
   }
 
   const renderUserControls = () => {
