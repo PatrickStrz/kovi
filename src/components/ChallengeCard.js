@@ -30,7 +30,7 @@ class ChallengeCard extends Component {
 
   styles = {
     card: {
-      // marginBottom:5
+      marginBottom:5
     },
     actionButtonStyle:{
       color:'#3bc89f'

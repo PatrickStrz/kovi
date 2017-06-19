@@ -53,7 +53,6 @@ class Site extends Component {
     return(
       <div style={this.styles.main}>
         {this.renderSyncUser()}
-        
         <Navbar handleLogout={logout}
           handleLogin={login}
           isAuthenticated={isAuthenticated}
@@ -61,12 +60,6 @@ class Site extends Component {
         />
         <Grid style={{marginTop:100}}>
           {children}
-          <Row>
-            {/* <Col xsOffset={1} xs={10} lgOffset={3} lg={6} style={{position: "fixed", bottom:"0", marginTop:40}}> */}
-
-
-            {/* </Col> */}
-          </Row>
         </Grid>
         <div style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
           <BottomBar/>
