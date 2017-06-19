@@ -89,8 +89,8 @@ class ChallengeList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
-    apiUserId: state.auth.apiUserId,
+    isAuthenticated: state.app.auth.isAuthenticated,
+    apiUserId: state.app.auth.apiUserId,
   }
 }
 
