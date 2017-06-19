@@ -8,6 +8,7 @@ import authReducer from './reducers/auth-reducer'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import './css/index.css'
 
 
 const networkInterface = createNetworkInterface({
