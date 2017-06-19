@@ -30,6 +30,7 @@ class ChallengeCard extends Component {
 
   styles = {
     card: {
+      marginBottom:5
     },
     actionButtonStyle:{
       color:'#3bc89f'
@@ -122,13 +123,18 @@ class ChallengeCard extends Component {
     return(
       <div>
 
-        <Card style={this.cardStyle()}>
+        <Card style={this.cardStyle()}
+          >
           <CardHeader
             title={title}
             subtitle={description}
-            actAsExpander={true}
-            showExpandableButton={true}
           />
+          <CardText >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+          </CardText>
           <CardActions>
             <ChallengeUpvote
               userDidUpvote={this.props.challenge.userDidUpvote}
@@ -151,12 +157,6 @@ class ChallengeCard extends Component {
               <Create/>
             </IconButton>
           </CardActions>
-          <CardText expandable={true}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-          </CardText>
           {this.renderUpdateForm()}
         </Card>
       </div>

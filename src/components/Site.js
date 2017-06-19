@@ -7,6 +7,8 @@ import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 import SyncUser from './SyncUser'
 import {Grid} from 'react-flexbox-grid'
+import BottomBar from './BottomBar'
+import '../css/layout.css'
 
 class Site extends Component {
 
@@ -60,6 +62,9 @@ class Site extends Component {
         <Grid style={{marginTop:100}}>
           {children}
         </Grid>
+        <div className="visible-xs visible-sm" style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
+          <BottomBar/>
+        </div>
       </div>
     )
   }
