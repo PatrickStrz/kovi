@@ -19,25 +19,28 @@ class ChallengeList extends Component {
     this.setState({formVisible: !this.state.formVisible})
   }
   //so can change query variables in one place and pass to child components:
-  allChallengesQueryVariables = {"filter":{ "id": this.props.apiUserId}}
+  getAllChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
   handleCreateChallengeSubmit = async (values) =>{
+
+
     const {title, description} = values
     const options = {
       variables: {
         title,
         description,
         "filter":{ "id": this.props.apiUserId}
+
       },
       update: (proxy, { data: {createChallenge} }) => {
         const data = proxy.readQuery({
           query: allChallengesQuery,
-          variables: this.allChallengesQueryVariables
+          variables: this.getAllChallengesQueryVariables()
         })
         data.allChallenges.push(createChallenge)
         proxy.writeQuery({
           query:allChallengesQuery,
-          variables: this.allChallengesQueryVariables,
+          variables: this.getAllChallengesQueryVariables(),
           data
         })
       },
@@ -60,7 +63,7 @@ class ChallengeList extends Component {
             challenge={challenge}
             apiUserId={this.props.apiUserId}
             isAuthenticated={this.props.isAuthenticated}
-            allChallengesQueryVariables={this.allChallengesQueryVariables}
+            allChallengesQueryVariables={this.getAllChallengesQueryVariables()}
           />
         </Col>
       )
