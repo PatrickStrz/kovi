@@ -7,3 +7,12 @@
 @media (max-width: 48em) {
     .visible-xs      { display: block !important; }
 }
+@media (min-width: 48em) and (max-width: 62em) {
+    .visible-sm      { display: block !important; }
+}
+@media (min-width: 62em) and (max-width: 75em) {
+    .visible-md      { display: block !important; }
+}
+@media (min-width: 75em) {
+    .visible-lg      { display: block !important; }
+}
