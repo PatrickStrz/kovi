@@ -22,15 +22,12 @@ class ChallengeList extends Component {
   getAllChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
   handleCreateChallengeSubmit = async (values) =>{
-
-
     const {title, description} = values
     const options = {
       variables: {
         title,
         description,
         "filter":{ "id": this.props.apiUserId}
-
       },
       update: (proxy, { data: {createChallenge} }) => {
         const data = proxy.readQuery({
