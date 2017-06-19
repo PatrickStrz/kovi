@@ -1,3 +1,9 @@
-.sup {
-  color:red
+.visible-xs,
+.visible-sm,
+.visible-md,
+.visible-lg {
+  display: none !important;
+}
+@media (max-width: 48em) {
+    .visible-xs      { display: block !important; }
 }
