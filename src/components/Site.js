@@ -8,7 +8,7 @@ import {login} from '../lib/auth'
 import SyncUser from './SyncUser'
 import {Grid} from 'react-flexbox-grid'
 import BottomBar from './BottomBar'
-import './layout.css'
+import '../css/layout.css'
 
 class Site extends Component {
 
