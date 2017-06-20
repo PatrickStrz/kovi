@@ -10,7 +10,6 @@ import { ApolloProvider } from 'react-apollo'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import './css/index.css'
 
-
 const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj2hsn8pvak4o0187k52n2i3l'
 })
@@ -35,7 +34,7 @@ const client = new ApolloClient({ networkInterface })
 const store = createStore(
   combineReducers({
     apollo: client.reducer(),
-
+    //form reducer must be at the root **
     form: formReducer,
     //application reducer, separate from apollo:
     app: appRootReducer

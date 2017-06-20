@@ -46,7 +46,6 @@ class ChallengeList extends Component {
   }
 
   render(){
-
     if (this.props.loading){
       return(<div>
         <h1 style={{color:"#002984"}}>Loading...</h1>

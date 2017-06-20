@@ -31,7 +31,7 @@ export default class Modal extends Component {
   }
 
   render() {
-    const {isOpen, handleClose, children} = this.props
+    const {isOpen, handleClose, children, title} = this.props
 
     const actions = [
       <FlatButton
@@ -44,7 +44,7 @@ export default class Modal extends Component {
     return (
       <div>
         <Dialog
-          title="Create A Challenge"
+          title={title}
           actions={actions}
           modal={true}
           open={isOpen}
@@ -60,5 +60,3 @@ export default class Modal extends Component {
     )
   }
 }
-
-// export default Modal
