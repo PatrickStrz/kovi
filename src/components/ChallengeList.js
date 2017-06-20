@@ -1,15 +1,23 @@
 import React,{Component} from 'react'
-import {graphql, compose} from 'react-apollo'
 import {connect} from 'react-redux'
-import {Row, Col} from 'react-flexbox-grid'
-import ChallengeCard from './ChallengeCard'
+import { bindActionCreators } from 'redux'
+import { hideCreateChallengeView } from '../actions/challenge-actions'
+
+
+import {graphql, compose} from 'react-apollo'
 import {allChallengesQuery, moreChallengesQuery} from '../queries/challenge-queries'
 import {createChallengeMutation} from '../mutations/challenge-mutations'
-import ChallengeCreateForm from './ChallengeCreateForm'
+
 import {requireAuth} from '../lib/auth'
-import RaisedButton from 'material-ui/RaisedButton'
 import {uniqBy} from 'lodash'
+
+import ChallengeCard from './ChallengeCard'
+import ChallengeCreateForm from './ChallengeCreateForm'
+import RaisedButton from 'material-ui/RaisedButton'
+import {Row, Col} from 'react-flexbox-grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import FormDialog from './FormDialog'
+
 
 class ChallengeList extends Component {
 
@@ -74,6 +82,12 @@ class ChallengeList extends Component {
           next={()=>this.props.loadMoreEntries()}
          >
           <Col xsOffset={1} xs={10} lgOffset={3} lg={6}>
+            <FormDialog
+              isOpen={this.props.showCreateChallengeView}
+              handleClose={this.props.hideCreateChallengeView}
+            >
+              <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} />
+            </FormDialog> >
             <Row>
             {challengeCards}
             </Row>
@@ -87,10 +101,17 @@ class ChallengeList extends Component {
     }
   }
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    hideCreateChallengeView
+  }, dispatch)
+}
+
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.app.auth.isAuthenticated,
     apiUserId: state.app.auth.apiUserId,
+    showCreateChallengeView: state.app.challenges.showCreateChallengeView
   }
 }
 
@@ -128,9 +149,8 @@ const ChallengeListApollo = compose(
             },
           })
         },
-    }),
-
-    //original query
+      }),
+    //original query:
       options: (ownProps)=>({
         variables: {
           filter:{
@@ -145,4 +165,4 @@ const ChallengeListApollo = compose(
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
-export default connect(mapStateToProps)(ChallengeListApollo)
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeListApollo)
