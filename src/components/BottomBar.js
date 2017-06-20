@@ -1,4 +1,10 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { showCreateChallengeView } from '../actions/challenge-actions'
+
+import {requireAuth} from '../lib/auth'
+
 import FontIcon from 'material-ui/FontIcon'
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
@@ -25,9 +31,9 @@ class BottomBar extends Component {
       <Paper zDepth={1} style={this.styles.body}>
         <BottomNavigation selectedIndex={this.state.selectedIndex} >
           <BottomNavigationItem
-            label="Recents"
+            label="Create Challenge"
             icon={recentsIcon}
-            onTouchTap={() => this.select(0)}
+            onTouchTap={()=>requireAuth(this.props.showCreateChallengeView)}
           />
           <BottomNavigationItem
             label="Favorites"
@@ -45,4 +51,10 @@ class BottomBar extends Component {
   }
 }
 
-export default BottomBar
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      showCreateChallengeView
+    }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(BottomBar)

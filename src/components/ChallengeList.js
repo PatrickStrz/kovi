@@ -1,23 +1,22 @@
 import React,{Component} from 'react'
-import {graphql, compose} from 'react-apollo'
 import {connect} from 'react-redux'
-import {Row, Col} from 'react-flexbox-grid'
-import ChallengeCard from './ChallengeCard'
+import { bindActionCreators } from 'redux'
+import { hideCreateChallengeView } from '../actions/challenge-actions'
+
+import {graphql, compose} from 'react-apollo'
 import {allChallengesQuery, moreChallengesQuery} from '../queries/challenge-queries'
 import {createChallengeMutation} from '../mutations/challenge-mutations'
-import ChallengeCreateForm from './ChallengeCreateForm'
-import {requireAuth} from '../lib/auth'
-import RaisedButton from 'material-ui/RaisedButton'
+
+// import {requireAuth} from '../lib/auth'
 import {uniqBy} from 'lodash'
+
+import ChallengeCard from './ChallengeCard'
+import ChallengeCreateForm from './ChallengeCreateForm'
+import {Row, Col} from 'react-flexbox-grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import Modal from './Modal'
 
 class ChallengeList extends Component {
-
-  state = {formVisible:false}
-
-  toggleForm = () => {
-    this.setState({formVisible: !this.state.formVisible})
-  }
   //so can change query variables in one place and pass to child components:
   getAllChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
@@ -43,7 +42,7 @@ class ChallengeList extends Component {
       },
     }
     await this.props.createChallengeMutation(options)
-    this.setState({formVisible:false})
+    this.props.hideCreateChallengeView()
   }
 
   render(){
@@ -66,6 +65,10 @@ class ChallengeList extends Component {
       )
     })
 
+    const createChallengeForm = (
+      <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} />
+    )
+
     return(
         <InfiniteScroll
           pageStart={0}
@@ -74,30 +77,25 @@ class ChallengeList extends Component {
           next={()=>this.props.loadMoreEntries()}
          >
           <Col xsOffset={1} xs={10} lgOffset={3} lg={6}>
+            <Modal
+              isOpen={this.props.showCreateChallengeView}
+              handleClose={this.props.hideCreateChallengeView}
+              title='Create A Challenge'
+            >
+              {createChallengeForm}
+            </Modal>
             <Row>
             {challengeCards}
             </Row>
-            <RaisedButton label="Add a new challenge" primary={true}
-                onClick={()=> requireAuth(this.toggleForm)}>
-            </RaisedButton>
-            { this.state.formVisible && <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} /> }
           </Col>
         </InfiniteScroll>
       )
     }
   }
 
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    apiUserId: state.auth.apiUserId,
-  }
-}
-
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
-
       props: ({ ownProps, data: { loading, allChallenges, cursor, fetchMore}}) => ({
         loading,
         allChallenges,
@@ -128,9 +126,8 @@ const ChallengeListApollo = compose(
             },
           })
         },
-    }),
-
-    //original query
+      }),
+    //query:
       options: (ownProps)=>({
         variables: {
           filter:{
@@ -145,4 +142,18 @@ const ChallengeListApollo = compose(
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
-export default connect(mapStateToProps)(ChallengeListApollo)
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    hideCreateChallengeView
+  }, dispatch)
+}
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.app.auth.isAuthenticated,
+    apiUserId: state.app.auth.apiUserId,
+    showCreateChallengeView: state.app.challenges.showCreateChallengeView
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeListApollo)

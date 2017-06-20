@@ -72,9 +72,9 @@ class Site extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
-    userSynced: state.auth.userSynced,
-    profile: state.auth.profile,
+    isAuthenticated: state.app.auth.isAuthenticated,
+    userSynced: state.app.auth.userSynced,
+    profile: state.app.auth.profile,
   }
 }
 
