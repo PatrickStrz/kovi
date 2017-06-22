@@ -1,20 +1,20 @@
 import * as ActionTypes from '../actions/types'
 
 const initialState = {
-  showCreateChallengeView: false,
+  isCreateViewOpen: false,
   openUpdateViewId:''
 }
 
 export default function challengesReducer(state=initialState, action) {
   switch (action.type) {
     case ActionTypes.SHOW_CREATE_CHALLENGE_VIEW:
-      return { ...state, showCreateChallengeView: true }
+      return { ...state, isCreateViewOpen: true }
     case ActionTypes.HIDE_CREATE_CHALLENGE_VIEW:
-      return { ...state, showCreateChallengeView: false }
+      return { ...state, isCreateViewOpen: false }
     case ActionTypes.SHOW_UPDATE_CHALLENGE_VIEW:
-      return { ...state, isUpdateViewOpen: true, openUpdateViewId: action.id }
+      return { ...state, openUpdateViewId: action.id }
     case ActionTypes.HIDE_UPDATE_CHALLENGE_VIEW:
-      return { ...state, isUpdateViewOpen: false, openUpdateViewId:'' }
+      return { ...state, openUpdateViewId:'' }
     default:
       return state
   }

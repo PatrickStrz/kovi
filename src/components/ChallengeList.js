@@ -78,7 +78,7 @@ class ChallengeList extends Component {
          >
           <Col xsOffset={1} xs={10} lgOffset={3} lg={6}>
             <Modal
-              isOpen={this.props.showCreateChallengeView}
+              isOpen={this.props.isCreateViewOpen}
               handleClose={this.props.hideCreateChallengeView}
               title='Create A Challenge'
             >
@@ -146,7 +146,7 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.app.auth.isAuthenticated,
     apiUserId: state.app.auth.apiUserId,
-    showCreateChallengeView: state.app.challenges.showCreateChallengeView
+    isCreateViewOpen: state.app.challenges.isCreateViewOpen
   }
 }
 
