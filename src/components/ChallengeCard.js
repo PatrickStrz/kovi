@@ -1,18 +1,28 @@
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+  hideUpdateChallengeView,
+  showUpdateChallengeView
+} from '../actions/challenge-actions'
+
 import {compose,graphql} from 'react-apollo'
 import {
   deleteChallengeMutation,
   updateChallengeMutation,
 } from '../mutations/challenge-mutations'
+
 import {requireAuth} from '../lib/auth'
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import {allChallengesQuery} from '../queries/challenge-queries'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
-import PropTypes from 'prop-types'
+
 import ChallengeUpvote from './ChallengeUpvote'
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'
-import Create from 'material-ui/svg-icons/content/create'
+import Update from 'material-ui/svg-icons/content/create'
+import Modal from './Modal'
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -23,7 +33,6 @@ class ChallengeCard extends Component {
   }
 
   state = {
-    updateFormVisible: false,
     updateInProgress: false,
     deleteInProgress: false,
   }
@@ -64,7 +73,8 @@ class ChallengeCard extends Component {
     }
     this.setState({updateInProgress: true})
     await updateChallengeMutation(options)
-    this.setState({updateFormVisible: false, updateInProgress: false})
+    this.setState({updateInProgress: false})
+    this.props.hideUpdateChallengeView()
   }
 
   handleDeleteChallenge = async () => {
@@ -105,26 +115,30 @@ class ChallengeCard extends Component {
 
   renderUpdateForm = () => {
     const {id, title, description} = this.props.challenge
-    if(this.state.updateFormVisible){
       return(
+      <Modal
+        title="Update Challenge"
+        isOpen
+        handleClose={this.props.hideUpdateChallengeView}
+      >
         <ChallengeUpdateForm
           form={`challengeUpdateForm${id}`}
           initialValues={{title, description}}
           onSubmit={this.handleUpdateChallengeSubmit}
         />
+      </Modal>
       )
-    }
   }
 
   render(){
     const {title, description, id} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
+    const {showUpdateChallengeView} = this.props
 
+    const showUpdateChallengeViewCb = () => showUpdateChallengeView(id)
     return(
       <div>
-
-        <Card style={this.cardStyle()}
-          >
+        <Card style={this.cardStyle()}>
           <CardHeader
             title={title}
             subtitle={description}
@@ -143,25 +157,35 @@ class ChallengeCard extends Component {
               upvotesCount={upvotesCount}
               style={{paddingBottom:0}}
             />
-
             <IconButton
               onClick={()=> requireAuth(this.handleDeleteChallenge)}
               iconStyle={{color:'#adadad'}}
-              >
+            >
               <Delete />
             </IconButton>
             <IconButton
-              onClick={()=> requireAuth(this.toggleUpdateForm)}
+              onClick={()=> requireAuth(showUpdateChallengeViewCb)}
               iconStyle={this.styles.actionButtonStyle}
-              >
-              <Create/>
+            >
+              <Update/>
             </IconButton>
           </CardActions>
-          {this.renderUpdateForm()}
+          {this.props.openUpdateViewId === id && this.renderUpdateForm() }
         </Card>
       </div>
     )
   }
+}
+
+const mapStateToProps = (state) =>({
+  openUpdateViewId: state.app.challenges.openUpdateViewId
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    showUpdateChallengeView,
+    hideUpdateChallengeView
+  }, dispatch)
 }
 
 const ChallengeCardApollo = compose(
@@ -169,4 +193,4 @@ const ChallengeCardApollo = compose(
   graphql(deleteChallengeMutation, {name: "deleteChallengeMutation"}),
 )(ChallengeCard)
 
-export default ChallengeCardApollo
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo)

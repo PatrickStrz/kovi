@@ -142,18 +142,18 @@ const ChallengeListApollo = compose(
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    hideCreateChallengeView
-  }, dispatch)
-}
-
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.app.auth.isAuthenticated,
     apiUserId: state.app.auth.apiUserId,
     showCreateChallengeView: state.app.challenges.showCreateChallengeView
   }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    hideCreateChallengeView
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChallengeListApollo)

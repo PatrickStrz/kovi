@@ -7,3 +7,12 @@ export const showCreateChallengeView = () => ({
 export const hideCreateChallengeView = () => ({
   type: ActionTypes.HIDE_CREATE_CHALLENGE_VIEW
 })
+
+export const showUpdateChallengeView = (id) => ({
+  type: ActionTypes.SHOW_UPDATE_CHALLENGE_VIEW,
+  id
+})
+
+export const hideUpdateChallengeView = () => ({
+  type: ActionTypes.HIDE_UPDATE_CHALLENGE_VIEW
+})
