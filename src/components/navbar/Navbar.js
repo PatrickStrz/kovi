@@ -53,14 +53,12 @@ const Navbar = (props) => {
   const userControls = renderUserControls()
 
   return(
-  <div style={{zIndex:2}}>
     <AppBar
       title={<span style={styles.title}>KOVI</span>}
       onTitleTouchTap={handleTouchTap}
       style={styles.navbar}
       iconElementRight={userControls}
     />
-  </div>
   )
 }
 

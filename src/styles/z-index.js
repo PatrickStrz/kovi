@@ -1,6 +1,6 @@
 // Z-index values should always be defined in z-index.js
 // allows us to at a glance determine relative layers of our application and prevents bugs
-// arrising from arbitrary z-index values. Do not edit the z-index scale! Only add application
+// arising from arbitrary z-index values. Do not edit the z-index scale! Only add application
 // scoped z-index values.
 
 // Z-Index Scale
