@@ -1,4 +1,8 @@
 # Styling and UI
+## Inline styles/ CSS
+1. Use inline styles
+2. Only use CSS classes when necessary. I.e) When using media queries to hide
+elements based on screen size.
 ## Material-UI
 1. Using [http://www.material-ui.com/](url) library for components
 2. Using a custom theme `lib/theme/mui-theme` for components.
