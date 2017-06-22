@@ -1,14 +1,18 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+
 import { withRouter } from 'react-router-dom'
-import Navbar from './navbar/Navbar'
 import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
+
 import SyncUser from './SyncUser'
-import {Grid} from 'react-flexbox-grid'
 import BottomBar from './BottomBar'
-import '../css/layout.css'
+import Navbar from './navbar/Navbar'
+import {Grid} from 'react-flexbox-grid'
+import Headroom from 'react-headroom'
+import '../styles/css/layout.css'
+import {HEADER_Z_INDEX} from '../styles/z-index'
 
 class Site extends Component {
 
@@ -20,7 +24,9 @@ class Site extends Component {
   styles = {
     body: {
       backgroundColor:"#f6f0f0",
-      // textAlign: "center",
+    },
+    headroom: {
+      zIndex: HEADER_Z_INDEX
     },
     //makes sure that the background fills up the screen
     main: {
@@ -54,11 +60,13 @@ class Site extends Component {
     return(
       <div style={this.styles.main}>
         {this.renderSyncUser()}
+      <Headroom style={this.styles.headroom}>
         <Navbar handleLogout={logout}
           handleLogin={login}
           isAuthenticated={isAuthenticated}
           profile={profile}
         />
+      </Headroom>
         <Grid style={{marginTop:100}}>
           {children}
         </Grid>

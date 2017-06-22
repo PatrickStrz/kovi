@@ -8,7 +8,7 @@ import { reducer as formReducer } from 'redux-form'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import './css/index.css'
+import './styles/css/index.css'
 
 const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj2hsn8pvak4o0187k52n2i3l'
