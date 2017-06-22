@@ -27,19 +27,20 @@ class BottomBar extends Component {
 
   select = (index) => this.setState({selectedIndex: index})
 
-  handleNewChallenge = (index) => {
+  handleNewChallenge = () => {
     this.props.showCreateChallengeView()
-    this.setState({selectedIndex: index})
+    this.setState({selectedIndex: 0})
   }
 
   render() {
+    const handleNewChallengeCb = () => this.handleNewChallenge(0)
     return (
       <Paper zDepth={1} style={this.styles.body}>
         <BottomNavigation selectedIndex={this.state.selectedIndex} >
           <BottomNavigationItem
             label="New Challenge"
             icon={AddIcon}
-            onTouchTap={()=>requireAuth(this.handleNewChallenge(0))}
+            onTouchTap={()=>requireAuth(handleNewChallengeCb)}
           />
           <BottomNavigationItem
             label="Notifications"

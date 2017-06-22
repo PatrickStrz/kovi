@@ -78,7 +78,7 @@ class ChallengeList extends Component {
          >
           <Col xsOffset={1} xs={10} lgOffset={3} lg={6}>
             <Modal
-              isOpen={this.props.showCreateChallengeView}
+              isOpen={this.props.isCreateViewOpen}
               handleClose={this.props.hideCreateChallengeView}
               title='Create A Challenge'
             >
@@ -142,18 +142,18 @@ const ChallengeListApollo = compose(
   graphql(createChallengeMutation, {name:"createChallengeMutation"}),
 )(ChallengeList)
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    hideCreateChallengeView
-  }, dispatch)
-}
-
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.app.auth.isAuthenticated,
     apiUserId: state.app.auth.apiUserId,
-    showCreateChallengeView: state.app.challenges.showCreateChallengeView
+    isCreateViewOpen: state.app.challenges.isCreateViewOpen
   }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    hideCreateChallengeView
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChallengeListApollo)
