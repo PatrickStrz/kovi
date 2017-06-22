@@ -58,14 +58,17 @@ class ChallengeCard extends Component {
     }
   }
 
-  userDidUpvote = this.props.challenge.userDidUpvote.length > 0  ? true : false
-
   handleUpdateChallengeSubmit = async (values) =>{
-    const { updateChallengeMutation, apiUserId} = this.props
+    const {
+      updateChallengeMutation,
+      apiUserId,
+      challenge,
+      hideUpdateChallengeView
+    } = this.props
     const {title, description} = values // values coming from redux form after submit
     const options = {
       variables: {
-        id: this.props.challenge.id,
+        id: challenge.id,
         title,
         description,
         "filter": {id: apiUserId}
@@ -74,18 +77,24 @@ class ChallengeCard extends Component {
     this.setState({updateInProgress: true})
     await updateChallengeMutation(options)
     this.setState({updateInProgress: false})
-    this.props.hideUpdateChallengeView()
+    hideUpdateChallengeView()
   }
 
   handleDeleteChallenge = async () => {
-    const {allChallengesQueryVariables, deleteChallengeMutation} = this.props
+    const {
+      allChallengesQueryVariables,
+      deleteChallengeMutation,
+      challenge
+    } = this.props
+
     const options = {
-      variables: {id: this.props.challenge.id},
+      variables: {id: challenge.id},
       update: (proxy, { data: {deleteChallenge} }) => {
         const data = proxy.readQuery({
           query: allChallengesQuery,
           variables: allChallengesQueryVariables
         })
+
         const filter = (challenge) => challenge.id === deleteChallenge.id
         const index = data.allChallenges.findIndex(filter)
 
@@ -131,11 +140,11 @@ class ChallengeCard extends Component {
   }
 
   render(){
-    const {title, description, id} = this.props.challenge
+    const {title, description, id, userDidUpvote} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
-    const {showUpdateChallengeView} = this.props
-
+    const {apiUserId, showUpdateChallengeView} = this.props
     const showUpdateChallengeViewCb = () => showUpdateChallengeView(id)
+
     return(
       <div>
         <Card style={this.cardStyle()}>
@@ -151,8 +160,8 @@ class ChallengeCard extends Component {
           </CardText>
           <CardActions>
             <ChallengeUpvote
-              userDidUpvote={this.props.challenge.userDidUpvote}
-              apiUserId={this.props.apiUserId}
+              userDidUpvote={userDidUpvote}
+              apiUserId={apiUserId}
               challengeId={id}
               upvotesCount={upvotesCount}
               style={{paddingBottom:0}}
