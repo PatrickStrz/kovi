@@ -67,7 +67,7 @@ class Site extends Component {
           profile={profile}
         />
       </Headroom>
-        <Grid style={{marginTop:100}}>
+        <Grid style={{marginTop:30}}>
           {children}
         </Grid>
         <div className="visible-xs visible-sm" style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>

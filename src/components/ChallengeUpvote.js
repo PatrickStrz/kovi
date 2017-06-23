@@ -19,6 +19,10 @@ class ChallengeUpvote extends Component{
     challengeId: PropTypes.string.isRequired,
   }
 
+  styles={
+    icon: {height: 25, width: 25}
+  }
+
   disableUpvote = () => {
     this.setState({upvoteInProgress: true})
   }
@@ -61,11 +65,11 @@ class ChallengeUpvote extends Component{
     return(
         <IconButton
           onTouchTap={() => requireAuth(this.handleToggleUpvote)}
-          iconStyle={{height: 25, width: 25}}
+          iconStyle={this.styles.icon}
           disabled={this.state.upvoteInProgress}
         >
           <ThumbUp
-            color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1: "#adadad"}
+            color={ this.props.userDidUpvote.length > 0 ? muiColors.secondary1: "#adadad"}
           />
         </IconButton>
     )
