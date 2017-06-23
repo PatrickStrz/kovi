@@ -12,7 +12,6 @@ import FilterList from 'material-ui/svg-icons/content/filter-list'
 import Notifications from 'material-ui/svg-icons/social/notifications'
 import Public from 'material-ui/svg-icons/social/public'
 const NotificationsIcon = <Notifications />
-// const AddIcon = <AddCircle />
 const FilterIcon = <FilterList />
 const PublicIcon = <Public />
 
