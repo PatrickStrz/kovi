@@ -1,4 +1,9 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { showCreateChallengeView } from '../actions/challenge-actions'
+
+import {requireAuth} from '../lib/auth'
 
 import ChallengeList from './ChallengeList'
 import {Row} from 'react-flexbox-grid'
@@ -25,7 +30,8 @@ class Home extends Component{
             backgroundColor='#38c1be'
             mini={true}
             zDepth={2}
-             style={this.styles.actionButton}
+            style={this.styles.actionButton}
+            onTouchTap={() => requireAuth(this.props.showCreateChallengeView)}
           >
             <ContentAdd/>
           </FloatingActionButton>
@@ -35,4 +41,10 @@ class Home extends Component{
   }
 }
 
-export default Home
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      showCreateChallengeView
+    }, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(Home)
