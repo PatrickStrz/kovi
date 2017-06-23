@@ -42,7 +42,7 @@ class ChallengeCard extends Component {
       marginBottom:5
     },
     actionButtonStyle:{
-      color:'#3bc89f'
+      color:'#adadad'
     }
   }
 
@@ -168,7 +168,7 @@ class ChallengeCard extends Component {
             />
             <IconButton
               onClick={()=> requireAuth(this.handleDeleteChallenge)}
-              iconStyle={{color:'#adadad'}}
+              iconStyle={this.styles.actionButtonStyle}
             >
               <Delete />
             </IconButton>

@@ -65,7 +65,7 @@ class ChallengeUpvote extends Component{
           disabled={this.state.upvoteInProgress}
         >
           <ThumbUp
-            color={ this.props.userDidUpvote.length > 0 ? muiColors.primary1: "#adadad"}
+            color={ this.props.userDidUpvote.length > 0 ? muiColors.secondary1: "#adadad"}
           />
         </IconButton>
     )
