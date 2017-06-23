@@ -76,7 +76,12 @@ class ChallengeList extends Component {
           loader={<div className="loader">Loading ...</div>}
           next={()=>this.props.loadMoreEntries()}
          >
-          <Col xsOffset={1} xs={10} lgOffset={3} lg={6}>
+          <Col
+            xsOffset={1} xs={10}
+            smOffset={1} sm={10}
+            mdOffset={3} md={6}
+            lgOffset={3} lg={6}
+          >
             <Modal
               isOpen={this.props.isCreateViewOpen}
               handleClose={this.props.hideCreateChallengeView}
