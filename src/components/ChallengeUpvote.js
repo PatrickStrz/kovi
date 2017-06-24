@@ -58,7 +58,6 @@ class ChallengeUpvote extends Component{
   }
 
   render(){
-    // for dynamic styles put them in the render method.
     const styles = {
       iconColor: this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey,
       icon: {
@@ -73,8 +72,9 @@ class ChallengeUpvote extends Component{
         color: colors.lightGrey
       }
     }
+
     return(
-      //used span so component can be used inline:
+    //used span so component can be used inline:
     <span>
       <IconButton
         onTouchTap={() => requireAuth(this.handleToggleUpvote)}
