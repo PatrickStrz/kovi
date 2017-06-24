@@ -147,7 +147,8 @@ class ChallengeCard extends Component {
 
     return(
       <div>
-        <Card style={this.cardStyle()}>
+        <Card style={this.cardStyle()}
+          >
           <CardHeader
             title={title}
             subtitle={description}
@@ -159,6 +160,9 @@ class ChallengeCard extends Component {
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           </CardText>
           <CardActions>
+
+          </CardActions>
+          <div style={{position:'relative', left:8}}>
             <ChallengeUpvote
               userDidUpvote={userDidUpvote}
               apiUserId={apiUserId}
@@ -178,7 +182,8 @@ class ChallengeCard extends Component {
             >
               <Update/>
             </IconButton>
-          </CardActions>
+          </div>
+          {/* renders form modal */}
           {this.props.openUpdateViewId === id && this.renderUpdateForm() }
         </Card>
       </div>
