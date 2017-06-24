@@ -18,7 +18,7 @@ import ChallengeUpdateForm from './ChallengeUpdateForm'
 import {allChallengesQuery} from '../queries/challenge-queries'
 
 import ChallengeUpvote from './ChallengeUpvote'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
+import {Card, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import Update from 'material-ui/svg-icons/content/create'
@@ -122,7 +122,7 @@ class ChallengeCard extends Component {
     this.setState({updateFormVisible: !this.state.updateFormVisible})
   }
 
-  renderUpdateForm = () => {
+  renderUpdateFormModal = () => {
     const {id, title, description} = this.props.challenge
       return(
       <Modal
@@ -158,7 +158,7 @@ class ChallengeCard extends Component {
             Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
           </CardText>
-          <CardActions>
+          <div style={{position:'relative', left:8}}>
             <ChallengeUpvote
               userDidUpvote={userDidUpvote}
               apiUserId={apiUserId}
@@ -178,8 +178,8 @@ class ChallengeCard extends Component {
             >
               <Update/>
             </IconButton>
-          </CardActions>
-          {this.props.openUpdateViewId === id && this.renderUpdateForm() }
+          </div>
+          {this.props.openUpdateViewId === id && this.renderUpdateFormModal()}
         </Card>
       </div>
     )

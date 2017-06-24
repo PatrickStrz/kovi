@@ -7,7 +7,7 @@ import {
 } from '../mutations/challenge-mutations'
 import IconButton from 'material-ui/IconButton'
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up'
-import {muiColors} from '../lib/theme/colors'
+import {muiColors, colors} from '../lib/theme/colors'
 import PropTypes from 'prop-types'
 
 class ChallengeUpvote extends Component{
@@ -17,10 +17,6 @@ class ChallengeUpvote extends Component{
     upvotesCount: PropTypes.number.isRequired,
     apiUserId: PropTypes.string,
     challengeId: PropTypes.string.isRequired,
-  }
-
-  styles={
-    icon: {height: 25, width: 25}
   }
 
   disableUpvote = () => {
@@ -62,16 +58,35 @@ class ChallengeUpvote extends Component{
   }
 
   render(){
+    const styles = {
+      iconColor: this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey,
+      icon: {
+        height: 25,
+        width: 25
+      },
+      count: {
+        position:'relative',
+        right: 7,
+        bottom: 4,
+        fontSize: 14,
+        color: colors.lightGrey
+      }
+    }
+
     return(
-        <IconButton
-          onTouchTap={() => requireAuth(this.handleToggleUpvote)}
-          iconStyle={this.styles.icon}
-          disabled={this.state.upvoteInProgress}
-        >
-          <ThumbUp
-            color={ this.props.userDidUpvote.length > 0 ? muiColors.secondary1: "#adadad"}
-          />
-        </IconButton>
+    //used span so component can be used inline:
+    <span>
+      <IconButton
+        onTouchTap={() => requireAuth(this.handleToggleUpvote)}
+        iconStyle={styles.icon}
+        disabled={this.state.upvoteInProgress}
+      >
+        <ThumbUp
+          color={styles.iconColor}
+        />
+      </IconButton>
+      <span style={styles.count}>{this.props.upvotesCount}</span>
+    </span>
     )
   }
 }

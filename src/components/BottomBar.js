@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 // import {connect} from 'react-redux'
 // import { bindActionCreators } from 'redux'
-import { showCreateChallengeView } from '../actions/challenge-actions'
 
-import {requireAuth} from '../lib/auth'
+// import {requireAuth} from '../lib/auth'
 
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
