@@ -43,6 +43,7 @@ class Site extends Component {
     const {isAuthenticated, userSynced, userSyncSuccess, profile} = this.props
     if (isAuthenticated && !userSynced ){
       return(<SyncUser
+        logout={logout}
         handleUserSyncSuccess={userSyncSuccess}
         profile={profile}
       />)
@@ -54,16 +55,20 @@ class Site extends Component {
       isAuthenticated,
       logout,
       profile,
+      userSynced,
       children,
     } = this.props
 
     return(
       <div style={this.styles.main}>
+      {/* component that syncs or creates a user depending on redux state: */}
         {this.renderSyncUser()}
       <Headroom style={this.styles.headroom}>
-        <Navbar handleLogout={logout}
+        <Navbar
+          handleLogout={logout}
           handleLogin={login}
           isAuthenticated={isAuthenticated}
+          userSynced={userSynced}
           profile={profile}
         />
       </Headroom>

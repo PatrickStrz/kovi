@@ -10,7 +10,13 @@ import {muiColors} from '../../lib/theme/colors'
 const Navbar = (props) => {
 
   const handleTouchTap = () => props.history.push('/')
-  const {handleLogin, handleLogout, isAuthenticated, profile} = props
+  const {
+    handleLogin,
+    handleLogout,
+    isAuthenticated,
+    profile,
+    userSynced
+  } = props
 
   const styles = {
     title: {
@@ -27,7 +33,7 @@ const Navbar = (props) => {
   }
 
   const renderUserControls = () => {
-    if (isAuthenticated) {
+    if (isAuthenticated && userSynced ) {
       return (
         <UserIconMenu picture={profile.picture} handleLogout={handleLogout}/>
       )
@@ -66,6 +72,7 @@ Navbar.propTypes = {
   handleLogout: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  userSynced: PropTypes.bool.isRequired,
   profile: PropTypes.object.isRequired,
 }
 

@@ -19,6 +19,7 @@ class SyncUser extends Component {
     data: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     handleUserSyncSuccess: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
   }
 
   userProfile = { //without id
@@ -48,10 +49,15 @@ class SyncUser extends Component {
     const options = {
       variables: {idToken, ...this.userProfile,}
     }
-    const response = await this.props.createUserMutation(options)
-
-    if (response.data.createUser.id) {
-      this.props.handleUserSyncSuccess(response.data.createUser.id)
+    try{
+      const response = await this.props.createUserMutation(options)
+      if (response.data.createUser.id) {
+        this.props.handleUserSyncSuccess(response.data.createUser.id)
+      }
+    }
+    catch(error){
+      console.log(error)
+      this.props.logout()
     }
   }
 

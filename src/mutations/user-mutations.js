@@ -42,7 +42,11 @@ export const createUserMutation = gql`
       givenName: $givenName,
       name: $name,
       picture: $picture,
-      pictureLarge: $pictureLarge
+      pictureLarge: $pictureLarge,
+      scorecard:{
+        total:0,
+        communityAggregateId:"cj4g4c9rr4mt80161rbf48gfd",
+      }
     ){
         id
         name
