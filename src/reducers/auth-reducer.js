@@ -37,7 +37,8 @@ export default function authReducer(state=initialState, action) {
         isAuthenticated:false,
         profile: {},
         userSynced: false,
-        apiUserId:''
+        apiUserId:'',
+        apiUserScorecardId: '',
       }
     case ActionTypes.USER_SYNC_SUCCESS:
       return {

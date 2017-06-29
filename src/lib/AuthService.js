@@ -41,6 +41,7 @@ export default class AuthService {
     localStorage.removeItem('auth0_user_id')
     localStorage.removeItem('user_synced')
     localStorage.removeItem('api_user_id')
+    localStorage.removeItem('api_user_scorecard_id')
   }
 
   // ======================================================
@@ -81,7 +82,7 @@ export default class AuthService {
     localStorage.setItem('api_user_id', apiUserId )
   }
 
-  static setUserScorecardId(apiUserScorecardId){
+  static setApiUserScorecardId(apiUserScorecardId){
     localStorage.setItem('api_user_scorecard_id', apiUserScorecardId )
   }
 

@@ -6,9 +6,6 @@ export const userQuery = gql`
   query userQuery{
     user {
       id
-      scorecard{
-        id
-      }
     }
   }
 `
