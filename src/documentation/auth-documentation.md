@@ -1,5 +1,4 @@
-
-
+# Authentication
 
 ## Kovi auth api:
 

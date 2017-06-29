@@ -109,38 +109,40 @@ const ChallengeListApollo = compose(
     allChallengesQuery, {
       props: ({
         ownProps,
-        data: { loading, error, allChallenges, cursor, fetchMore}}) => ({
-        error,
-        loading,
-        allChallenges,
-        cursor,
-        loadMoreEntries: () => {
-          return fetchMore({
-            query: moreChallengesQuery,
-            variables: {
-              filter:{
-                id: ownProps.apiUserId ? ownProps.apiUserId : '',
+        data: { loading, error, allChallenges, cursor, fetchMore},
+      }) => {
+        return ({
+          error,
+          loading,
+          allChallenges,
+          cursor,
+          loadMoreEntries: () => {
+            return fetchMore({
+              query: moreChallengesQuery,
+              variables: {
+                filter:{
+                  id: ownProps.apiUserId ? ownProps.apiUserId : '',
+                },
+                cursor: cursor[0].id,
+                querySize: 3,
               },
-              cursor: cursor[0].id,
-              querySize: 3,
-            },
-            updateQuery: ( previousResult, { fetchMoreResult }) => {
-              const previousChallenges = previousResult.allChallenges
-              const newChallenges = fetchMoreResult.allChallenges
-              //prevents adding duplicate when query overlaps with previously
-              // manually added entry in apollo cache ( using update).
-              const allChallenges = uniqBy(
-                [...previousChallenges, ...newChallenges],
-                'id'
-              )
-              return {
-                allChallenges,
-                cursor: fetchMoreResult.cursor
-              }
-            },
-          })
-        },
-      }),
+              updateQuery: ( previousResult, { fetchMoreResult }) => {
+                const previousChallenges = previousResult.allChallenges
+                const newChallenges = fetchMoreResult.allChallenges
+                //prevents adding duplicate when query overlaps with previously
+                // manually added entry in apollo cache ( using update).
+                const allChallenges = uniqBy(
+                  [...previousChallenges, ...newChallenges],
+                  'id'
+                )
+                return {
+                  allChallenges,
+                  cursor: fetchMoreResult.cursor
+                }
+              },
+            })
+          },
+        })},
     //query:
       options: (ownProps)=>({
         variables: {
