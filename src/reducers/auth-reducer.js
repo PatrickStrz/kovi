@@ -8,6 +8,7 @@ const initialState = {
   userSynced: AuthService.isUserSynced() || false,
   error: null,
   apiUserId: AuthService.getApiUserId(),
+  apiUserScorecardId: AuthService.getApiUserScorecardId(),
 }
 
 export default function authReducer(state=initialState, action) {
@@ -36,10 +37,16 @@ export default function authReducer(state=initialState, action) {
         isAuthenticated:false,
         profile: {},
         userSynced: false,
-        apiUserId:'' 
+        apiUserId:'',
+        apiUserScorecardId: '',
       }
     case ActionTypes.USER_SYNC_SUCCESS:
-      return { ...state, userSynced: true, apiUserId: action.apiUserId }
+      return {
+        ...state,
+        userSynced: true,
+        apiUserId: action.apiUserId,
+        apiUserScorecardId: action.apiUserScorecardId,
+      }
     default:
       return state
   }

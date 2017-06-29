@@ -1,5 +1,14 @@
 import {gql} from 'react-apollo'
 
+export const userPayloadFragment = gql`
+		fragment userPayload on User {
+			id
+      scorecard{
+        id
+      }
+	}
+`
+
 export const updateUserMutation = gql`
   mutation updateUser(
     $id: ID!,
@@ -19,11 +28,10 @@ export const updateUserMutation = gql`
       picture: $picture,
       pictureLarge: $pictureLarge
     ){
-        id
-        name
-        email
-      }
+      ...userPayload
+    }
   }
+  ${userPayloadFragment}
 `
 export const createUserMutation = gql`
   mutation createUser(
@@ -48,9 +56,8 @@ export const createUserMutation = gql`
         communityAggregateId:"cj4g4c9rr4mt80161rbf48gfd",
       }
     ){
-        id
-        name
-        email
-      }
+      ...userPayload
+    }
   }
+  ${userPayloadFragment}
 `

@@ -41,6 +41,7 @@ export default class AuthService {
     localStorage.removeItem('auth0_user_id')
     localStorage.removeItem('user_synced')
     localStorage.removeItem('api_user_id')
+    localStorage.removeItem('api_user_scorecard_id')
   }
 
   // ======================================================
@@ -77,8 +78,12 @@ export default class AuthService {
     localStorage.setItem('user_synced', true)
   }
 
-  static setApiUserId(api_user_id){
-    localStorage.setItem('api_user_id', api_user_id )
+  static setApiUserId(apiUserId){
+    localStorage.setItem('api_user_id', apiUserId )
+  }
+
+  static setApiUserScorecardId(apiUserScorecardId){
+    localStorage.setItem('api_user_scorecard_id', apiUserScorecardId )
   }
 
   static getToken() {
@@ -87,6 +92,10 @@ export default class AuthService {
 
   static getApiUserId() {
     return localStorage.getItem('api_user_id')
+  }
+
+  static getApiUserScorecardId() {
+    return localStorage.getItem('api_user_scorecard_id')
   }
 
   static getTokenExpirationDate() {

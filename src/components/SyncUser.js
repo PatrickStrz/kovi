@@ -22,37 +22,45 @@ class SyncUser extends Component {
     logout: PropTypes.func.isRequired,
   }
 
-  userProfile = { //without id
+  userProfile = () =>({ //auth0 user profile
     "email": this.props.profile.email,
     "familyName": this.props.profile.family_name,
     "givenName": this.props.profile.given_name,
     "name": this.props.profile.name,
     "picture": this.props.profile.picture,
     "pictureLarge": this.props.profile.picture_large
-  }
+  })
 
   handleUpdateUser = async () =>{
     const options = {
-      variables: { id: this.props.data.user.id, ...this.userProfile}
+      //api user id  + auth0 profile:
+      variables: { id: this.props.data.user.id, ...this.userProfile()}
     }
-    const response = await this.props.updateUserMutation(options)
-
-    if (response.data.updateUser.id) {
-      this.props.handleUserSyncSuccess(response.data.updateUser.id)
-      //dispatches action that marks user as synced and sets apiUserId on localStorage
-      // and redux state
+    try{
+      const response = await this.props.updateUserMutation(options)
+      if (response.data) {
+        const user = response.data.updateUser
+        this.props.handleUserSyncSuccess(user.id, user.scorecard.id)
+        //dispatches action that marks user as synced and sets apiUserId +
+        // apiScorecardId on localStorage and redux state
+      }
+    }
+    catch(error){
+      console.log(error)
+      this.props.logout()
     }
   }
 
   handleCreateUser = async () =>{
     const idToken = localStorage.getItem('id_token')
     const options = {
-      variables: {idToken, ...this.userProfile,}
+      variables: {idToken, ...this.userProfile(),}
     }
     try{
       const response = await this.props.createUserMutation(options)
       if (response.data.createUser.id) {
-        this.props.handleUserSyncSuccess(response.data.createUser.id)
+        const user = response.data.createUser
+        this.props.handleUserSyncSuccess(user.id, user.scorecard.id)
       }
     }
     catch(error){
@@ -73,13 +81,11 @@ class SyncUser extends Component {
     //update user if user query returns a user
     if (data.user) {
       this.handleUpdateUser()
-      // alert(data.user.id)
     }
     //if user query returns null create user:
     else {
       this.handleCreateUser()
     }
-
     return(
       <div style={{visibility:"hidden"}}></div>
     )
