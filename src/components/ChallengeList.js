@@ -9,12 +9,14 @@ import {createChallengeMutation} from '../mutations/challenge-mutations'
 
 // import {requireAuth} from '../lib/auth'
 import {uniqBy} from 'lodash'
+import {muiColors} from '../lib/theme/colors'
 
 import ChallengeCard from './ChallengeCard'
 import ChallengeCreateForm from './ChallengeCreateForm'
 import {Row, Col} from 'react-flexbox-grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from './Modal'
+import GenericError from './commons/GenericError'
 
 class ChallengeList extends Component {
   //so can change query variables in one place and pass to child components:
@@ -48,8 +50,12 @@ class ChallengeList extends Component {
   render(){
     if (this.props.loading){
       return(<div>
-        <h1 style={{color:"#002984"}}>Loading...</h1>
+        <h1 style={{color:muiColors.primary1}}>Loading...</h1>
       </div>)
+    }
+
+    if(this.props.error){
+      return <GenericError />
     }
 
     const challengeCards = this.props.allChallenges.map(challenge =>{
@@ -101,7 +107,10 @@ class ChallengeList extends Component {
 const ChallengeListApollo = compose(
   graphql(
     allChallengesQuery, {
-      props: ({ ownProps, data: { loading, allChallenges, cursor, fetchMore}}) => ({
+      props: ({
+        ownProps,
+        data: { loading, error, allChallenges, cursor, fetchMore}}) => ({
+        error,
         loading,
         allChallenges,
         cursor,
