@@ -4,8 +4,12 @@ import { bindActionCreators } from 'redux'
 import { hideCreateChallengeView } from '../actions/challenge-actions'
 
 import {graphql, compose} from 'react-apollo'
-import {allChallengesQuery, moreChallengesQuery} from '../queries/challenge-queries'
-import {createChallengeMutation} from '../mutations/challenge-mutations'
+import {
+  allChallengesQuery,
+  moreChallengesQuery
+} from '../queries/challenge-queries'
+import {createChallengeAndScoreMutation} from '../mutations/challenge-mutations'
+import {CHALLENGE_CREATE_SCORE} from '../gql/score/score-values'
 
 // import {requireAuth} from '../lib/auth'
 import {uniqBy} from 'lodash'
@@ -21,14 +25,18 @@ import GenericError from './commons/GenericError'
 class ChallengeList extends Component {
   //so can change query variables in one place and pass to child components:
   getAllChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
+  createScore = () => {
 
-  handleCreateChallengeSubmit = async (values) =>{
+  }
+  handleCreateChallengeSubmit = async (values) => {
     const {title, description} = values
     const options = {
       variables: {
         title,
         description,
-        "filter":{ "id": this.props.apiUserId}
+        "filter":{ "id": this.props.apiUserId},
+        scorecardId: this.props.apiUserScorecardId,
+        scoreValue: CHALLENGE_CREATE_SCORE.value,
       },
       update: (proxy, { data: {createChallenge} }) => {
         const data = proxy.readQuery({
@@ -43,7 +51,7 @@ class ChallengeList extends Component {
         })
       },
     }
-    await this.props.createChallengeMutation(options)
+    await this.props.createChallengeAndScoreMutation(options)
     this.props.hideCreateChallengeView()
   }
 
@@ -155,14 +163,15 @@ const ChallengeListApollo = compose(
     },
   ),
 
-  graphql(createChallengeMutation, {name:"createChallengeMutation"}),
+  graphql(createChallengeAndScoreMutation, {name:"createChallengeAndScoreMutation"}),
 )(ChallengeList)
 
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.app.auth.isAuthenticated,
     apiUserId: state.app.auth.apiUserId,
-    isCreateViewOpen: state.app.challenges.isCreateViewOpen
+    apiUserScorecardId: state.app.auth.apiUserScorecardId,
+    isCreateViewOpen: state.app.challenges.isCreateViewOpen,
   }
 }
 
