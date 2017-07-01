@@ -6,13 +6,24 @@ import reduxThunk from 'redux-thunk'
 import appRootReducer from './reducers'
 import { reducer as formReducer } from 'redux-form'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
+import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws'
 import { ApolloProvider } from 'react-apollo'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import './styles/css/index.css'
 
+// create websocket client for subscriptions:
+const wsClient = new SubscriptionClient(`wss://subscriptions.graph.cool/v1/cj2hsn8pvak4o0187k52n2i3l
+`, {
+  reconnect: true
+})
 const networkInterface = createNetworkInterface({
   uri: 'https://api.graph.cool/simple/v1/cj2hsn8pvak4o0187k52n2i3l'
 })
+
+const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+  networkInterface,
+  wsClient
+)
 
 // use the auth0IdToken in localStorage for authorized requests:
 networkInterface.use([{
@@ -20,7 +31,6 @@ networkInterface.use([{
     if (!req.options.headers) {
       req.options.headers = {}
     }
-
     // get the authentication token from local storage if it exists:
     if (localStorage.getItem('id_token')) {
       req.options.headers.authorization = `Bearer ${localStorage.getItem('id_token')}`
@@ -29,7 +39,9 @@ networkInterface.use([{
   },
 }])
 
-const client = new ApolloClient({ networkInterface })
+const client = new ApolloClient(
+  { networkInterface: networkInterfaceWithSubscriptions
+  })
 
 const store = createStore(
   combineReducers({
