@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
 
 import {graphql} from 'react-apollo'
 import {userScoreCardQuery} from '../gql/scorecard/queries'
@@ -18,12 +19,18 @@ const UserScoreWithData = graphql(
   userScoreCardQuery,{
   options: (ownProps)=>({
     variables: {
-      id: "cj4h3bqcawi170155j6btqg1i"
+      id: ownProps.apiUserScorecardId,
     },
     fetchPolicy: 'network-only',
+    name: "userScoreCardQuery",
   }),
-  // {name: "updateChallengeMutation"}
 }
 )(UserScore)
 
-export default UserScoreWithData
+const mapStateToProps = (state) => {
+  return {
+    apiUserScorecardId: state.app.auth.apiUserScorecardId,
+  }
+}
+
+export default connect(mapStateToProps)(UserScoreWithData)
