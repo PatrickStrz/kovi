@@ -6,6 +6,8 @@ import {graphql} from 'react-apollo'
 import {USER_SCORECARD_QUERY} from '../gql/scorecard/queries'
 import {UPDATE_USER_SCORECARD_SUBSCRIPTION} from '../gql/scorecard/subscriptions'
 
+import {muiColors} from '../lib/theme/colors'
+
 class UserScore extends Component {
   static propTypes = {
     subscribeToScorecardUpdates: PropTypes.func.isRequired,
@@ -20,7 +22,7 @@ class UserScore extends Component {
       return(<h2>loading...</h2>)
     }
     return(
-      <h1>Score:{this.props.data.Scorecard.total}</h1>
+      <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>Score:{this.props.data.Scorecard.total}</h2>
     )
   }
 }
@@ -38,15 +40,15 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
       subscribeToScorecardUpdates: () => {
         return props.data.subscribeToMore({
           document: UPDATE_USER_SCORECARD_SUBSCRIPTION,
-          variables: {id: "cj4is6f5v5m9r0158ji7iqr8a"},
+          variables: {id: props.apiUserScorecardId},
           updateQuery: (prev, {subscriptionData}) => {
-              if (!subscriptionData.data) {
-                  return prev;
-              }
-              const newFeedItem = subscriptionData.data.Scorecard.node
-              return {
-                  Scorecard: newFeedItem
-              }
+            if (!subscriptionData.data) {
+                return prev;
+            }
+            const newFeedItem = subscriptionData.data.Scorecard.node
+            return {
+                Scorecard: newFeedItem
+            }
           }
         })
       },
