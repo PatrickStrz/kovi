@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 import {graphql, compose} from 'react-apollo'
-import {userQuery} from '../queries/user-queries'
+import {USER_QUERY} from '../gql/User/queries'
 import {
   updateUserMutation,
   createUserMutation,
@@ -95,7 +95,7 @@ class SyncUser extends Component {
 const SyncUserApollo = compose(
   graphql(updateUserMutation, {name: 'updateUserMutation'}),
   graphql(createUserMutation, {name: 'createUserMutation'}),
-  graphql(userQuery, {options: {fetchPolicy: 'network-only'}}),
+  graphql(USER_QUERY, {options: {fetchPolicy: 'network-only'}}),
 )(SyncUser)
 
 export default SyncUserApollo

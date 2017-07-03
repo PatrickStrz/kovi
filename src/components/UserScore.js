@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {graphql} from 'react-apollo'
-import {USER_SCORECARD_QUERY} from '../gql/scorecard/queries'
-import {UPDATE_USER_SCORECARD_SUBSCRIPTION} from '../gql/scorecard/subscriptions'
+import {USER_SCORECARD_QUERY} from '../gql/Scorecard/queries'
+import {UPDATE_USER_SCORECARD_SUBSCRIPTION} from '../gql/Scorecard/subscriptions'
 
 import {muiColors} from '../lib/theme/colors'
 
