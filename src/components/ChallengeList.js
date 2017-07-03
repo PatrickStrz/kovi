@@ -25,9 +25,6 @@ import GenericError from './commons/GenericError'
 class ChallengeList extends Component {
   //so can change query variables in one place and pass to child components:
   getAllChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
-  createScore = () => {
-
-  }
   handleCreateChallengeSubmit = async (values) => {
     const {title, description} = values
     const options = {
