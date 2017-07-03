@@ -7,14 +7,32 @@ export const deleteChallengeMutation = gql`mutation deleteChallenge($id:ID!){
   }
 }`
 
-export const createChallengeMutation = gql`mutation
-  createChallengeMutation($description: String, $title: String, $filter:UserFilter){
+export const createChallengeAndScoreMutation = gql`mutation
+  createChallengeAndScore(
+    $description: String,
+    $title: String,
+    $filter:UserFilter,
+    $scorecardId:ID!,
+    $scoreValue:Int!
+  ){
 	  createChallenge(description:$description,title:$title){
     ...challengeBody
     }
-  }
+    createScore(value:$scoreValue, scorecardId:$scorecardId){
+        value
+      }
+    }
   ${challengeBodyFragment}
 `
+
+// export const createChallengeMutation = gql`mutation
+//   createChallengeMutation($description: String, $title: String, $filter:UserFilter){
+// 	  createChallenge(description:$description,title:$title){
+//     ...challengeBody
+//     }
+//   }
+//   ${challengeBodyFragment}
+// `
 
 export const updateChallengeMutation = gql`mutation
   updateChallengeMutation($id: ID!, $description: String, $title: String, $filter:UserFilter){
