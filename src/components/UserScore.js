@@ -1,10 +1,20 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 
 import {graphql} from 'react-apollo'
-import {userScoreCardQuery} from '../gql/scorecard/queries'
+import {USER_SCORECARD_QUERY} from '../gql/scorecard/queries'
+import {UPDATE_USER_SCORECARD_SUBSCRIPTION} from '../gql/scorecard/subscriptions'
 
 class UserScore extends Component {
+  static propTypes = {
+    subscribeToScorecardUpdates: PropTypes.func.isRequired,
+    apiUserScorecardId: PropTypes.string,
+  }
+  componentWillMount() {
+       this.props.subscribeToScorecardUpdates()
+   }
+
   render(){
     if (this.props.data.loading){
       return(<h2>loading...</h2>)
@@ -15,17 +25,34 @@ class UserScore extends Component {
   }
 }
 
-const UserScoreWithData = graphql(
-  userScoreCardQuery,{
+const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
   options: (ownProps)=>({
     variables: {
       id: ownProps.apiUserScorecardId,
     },
     fetchPolicy: 'network-only',
-    name: "userScoreCardQuery",
   }),
-}
-)(UserScore)
+  props: props => {
+    return {
+      data: props.data,
+      subscribeToScorecardUpdates: () => {
+        return props.data.subscribeToMore({
+          document: UPDATE_USER_SCORECARD_SUBSCRIPTION,
+          variables: {id: "cj4is6f5v5m9r0158ji7iqr8a"},
+          updateQuery: (prev, {subscriptionData}) => {
+              if (!subscriptionData.data) {
+                  return prev;
+              }
+              const newFeedItem = subscriptionData.data.Scorecard.node
+              return {
+                  Scorecard: newFeedItem
+              }
+          }
+        })
+      },
+    }
+  }
+})(UserScore)
 
 const mapStateToProps = (state) => {
   return {
