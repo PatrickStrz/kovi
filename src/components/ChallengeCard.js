@@ -15,7 +15,7 @@ import {
 
 import {requireAuth} from '../lib/auth'
 import ChallengeUpdateForm from './ChallengeUpdateForm'
-import {allChallengesQuery} from '../queries/challenge-queries'
+import {ALL_CHALLENGES_QUERY} from '../gql/Challenge/queries'
 
 import ChallengeUpvote from './ChallengeUpvote'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
@@ -91,7 +91,7 @@ class ChallengeCard extends Component {
       variables: {id: challenge.id},
       update: (proxy, { data: {deleteChallenge} }) => {
         const data = proxy.readQuery({
-          query: allChallengesQuery,
+          query: ALL_CHALLENGES_QUERY,
           variables: allChallengesQueryVariables
         })
 
@@ -107,7 +107,7 @@ class ChallengeCard extends Component {
             data.cursor[0].id = newCursor
           }
           proxy.writeQuery({
-            query:allChallengesQuery,
+            query:ALL_CHALLENGES_QUERY,
             variables: allChallengesQueryVariables,
             data })
         }
