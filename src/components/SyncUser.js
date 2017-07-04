@@ -1,11 +1,12 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
+
 import {graphql, compose} from 'react-apollo'
 import {USER_QUERY} from '../gql/User/queries'
 import {
-  updateUserMutation,
-  createUserMutation,
-} from '../mutations/user-mutations'
+  UPDATE_USER_MUTATION,
+  CREATE_USER_MUTATION,
+} from '../gql/User/mutations'
 
 /*
 This Component is to be rendered ONLY when a user is logged in ( state.auth.isAuthenticated = true)
@@ -93,8 +94,8 @@ class SyncUser extends Component {
 }
 
 const SyncUserApollo = compose(
-  graphql(updateUserMutation, {name: 'updateUserMutation'}),
-  graphql(createUserMutation, {name: 'createUserMutation'}),
+  graphql(UPDATE_USER_MUTATION, {name: 'updateUserMutation'}),
+  graphql(CREATE_USER_MUTATION, {name: 'createUserMutation'}),
   graphql(USER_QUERY, {options: {fetchPolicy: 'network-only'}}),
 )(SyncUser)
 
