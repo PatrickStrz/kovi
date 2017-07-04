@@ -22,7 +22,9 @@ class UserScore extends Component {
       return(<h2>loading...</h2>)
     }
     return(
-      <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>Score:{this.props.data.Scorecard.total}</h2>
+      <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>
+        UserScore:{this.props.data.Scorecard.total}
+      </h2>
     )
   }
 }

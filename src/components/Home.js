@@ -10,6 +10,7 @@ import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import UserScore from './UserScore'
+import CommunityScore from './CommunityScore'
 
 class Home extends Component{
   styles = {
@@ -27,6 +28,9 @@ class Home extends Component{
       <div>
         <Row>
           <UserScore />
+        </Row>
+        <Row>
+          <CommunityScore />
         </Row>
         <Row>
           <ChallengeList />

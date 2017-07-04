@@ -9,7 +9,7 @@ import {
   MORE_CHALLENGES_QUERY,
 } from '../gql/Challenge/queries'
 import {CREATE_CHALLENGE_AND_SCORE_MUTATION} from '../gql/Challenge/mutations'
-import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-values'
+import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
 
 // import {requireAuth} from '../lib/auth'
 import {uniqBy} from 'lodash'
