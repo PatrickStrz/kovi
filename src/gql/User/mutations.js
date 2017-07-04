@@ -1,15 +1,7 @@
 import {gql} from 'react-apollo'
+import {USER_PAYLOAD_FRAGMENT} from './fragments'
 
-export const userPayloadFragment = gql`
-		fragment userPayload on User {
-			id
-      scorecard{
-        id
-      }
-	}
-`
-
-export const updateUserMutation = gql`
+export const UPDATE_USER_MUTATION = gql`
   mutation updateUser(
     $id: ID!,
     $email: String,
@@ -31,9 +23,9 @@ export const updateUserMutation = gql`
       ...userPayload
     }
   }
-  ${userPayloadFragment}
+  ${USER_PAYLOAD_FRAGMENT}
 `
-export const createUserMutation = gql`
+export const CREATE_USER_MUTATION = gql`
   mutation createUser(
     $idToken: String!,
     $email: String,
@@ -59,5 +51,5 @@ export const createUserMutation = gql`
       ...userPayload
     }
   }
-  ${userPayloadFragment}
+  ${USER_PAYLOAD_FRAGMENT}
 `

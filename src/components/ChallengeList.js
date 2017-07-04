@@ -5,10 +5,10 @@ import { hideCreateChallengeView } from '../actions/challenge-actions'
 
 import {graphql, compose} from 'react-apollo'
 import {
-  allChallengesQuery,
-  moreChallengesQuery
-} from '../queries/challenge-queries'
-import {createChallengeAndScoreMutation} from '../mutations/challenge-mutations'
+  ALL_CHALLENGES_QUERY,
+  MORE_CHALLENGES_QUERY,
+} from '../gql/Challenge/queries'
+import {CREATE_CHALLENGE_AND_SCORE_MUTATION} from '../gql/Challenge/mutations'
 import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-values'
 
 // import {requireAuth} from '../lib/auth'
@@ -37,12 +37,12 @@ class ChallengeList extends Component {
       },
       update: (proxy, { data: {createChallenge} }) => {
         const data = proxy.readQuery({
-          query: allChallengesQuery,
+          query: ALL_CHALLENGES_QUERY,
           variables: this.getAllChallengesQueryVariables()
         })
         data.allChallenges.push(createChallenge)
         proxy.writeQuery({
-          query:allChallengesQuery,
+          query:ALL_CHALLENGES_QUERY,
           variables: this.getAllChallengesQueryVariables(),
           data
         })
@@ -111,7 +111,7 @@ class ChallengeList extends Component {
 
 const ChallengeListApollo = compose(
   graphql(
-    allChallengesQuery, {
+    ALL_CHALLENGES_QUERY, {
       props: ({
         ownProps,
         data: { loading, error, allChallenges, cursor, fetchMore},
@@ -123,7 +123,7 @@ const ChallengeListApollo = compose(
           cursor,
           loadMoreEntries: () => {
             return fetchMore({
-              query: moreChallengesQuery,
+              query: MORE_CHALLENGES_QUERY,
               variables: {
                 filter:{
                   id: ownProps.apiUserId ? ownProps.apiUserId : '',
@@ -160,7 +160,10 @@ const ChallengeListApollo = compose(
     },
   ),
 
-  graphql(createChallengeAndScoreMutation, {name:"createChallengeAndScoreMutation"}),
+  graphql(
+    CREATE_CHALLENGE_AND_SCORE_MUTATION,
+    {name:"createChallengeAndScoreMutation"}
+  ),
 )(ChallengeList)
 
 const mapStateToProps = (state) => {

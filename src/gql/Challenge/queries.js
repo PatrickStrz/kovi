@@ -1,5 +1,5 @@
 import {gql} from 'react-apollo'
-
+import {CHALLENGE_BODY_FRAGMENT} from './fragments'
 // use filter 'id' for didUserUpvote, returns empty array if user didn't upvote
 
 export const challengeBodyFragment = gql`
@@ -24,7 +24,7 @@ export const challengeBodyFragment = gql`
 // }
 
 
-export const allChallengesQuery = gql`
+export const ALL_CHALLENGES_QUERY = gql`
 	query allChallenges($filter: UserFilter){
 		allChallenges(first:5){
 			...challengeBody
@@ -33,10 +33,10 @@ export const allChallengesQuery = gql`
     	id
   	}
 	}
-	${challengeBodyFragment}
+	${CHALLENGE_BODY_FRAGMENT}
 `
 
-export const moreChallengesQuery = gql`
+export const MORE_CHALLENGES_QUERY = gql`
 	query allChallenges($filter: UserFilter, $cursor: String){
 		allChallenges(after:$cursor, first:5){
 			...challengeBody
@@ -45,5 +45,5 @@ export const moreChallengesQuery = gql`
     	id
   	}
 	}
-	${challengeBodyFragment}
+	${CHALLENGE_BODY_FRAGMENT}
 `

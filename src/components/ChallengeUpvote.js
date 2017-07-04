@@ -2,9 +2,9 @@ import React,{Component} from 'react'
 import {graphql, compose} from 'react-apollo'
 import {requireAuth} from '../lib/auth'
 import {
-  addChallengeUpvoteMutation,
-  removeChallengeUpvoteMutation,
-} from '../mutations/challenge-mutations'
+  ADD_CHALLENGE_UPVOTE_MUTATION,
+  REMOVE_CHALLENGE_UPVOTE_MUTATION,
+} from '../gql/Challenge/mutations'
 import IconButton from 'material-ui/IconButton'
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import {muiColors, colors} from '../lib/theme/colors'
@@ -92,8 +92,8 @@ class ChallengeUpvote extends Component{
 }
 
 const ChallengeUpvoteApollo = compose(
-  graphql(addChallengeUpvoteMutation, {name: "addChallengeUpvoteMutation"}),
-  graphql(removeChallengeUpvoteMutation, {name: "removeChallengeUpvoteMutation"}),
+  graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
+  graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeUpvote)
 
 export default ChallengeUpvoteApollo
