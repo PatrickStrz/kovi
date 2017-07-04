@@ -9,9 +9,9 @@ import {
 
 import {compose,graphql} from 'react-apollo'
 import {
-  deleteChallengeMutation,
-  updateChallengeMutation,
-} from '../mutations/challenge-mutations'
+  DELETE_CHALLENGE_MUTATION,
+  UPDATE_CHALLENGE_MUTATION,
+} from '../gql/Challenge/mutations'
 
 import {requireAuth} from '../lib/auth'
 import ChallengeUpdateForm from './ChallengeUpdateForm'
@@ -198,8 +198,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const ChallengeCardApollo = compose(
-  graphql(updateChallengeMutation, {name: "updateChallengeMutation"}),
-  graphql(deleteChallengeMutation, {name: "deleteChallengeMutation"}),
+  graphql(UPDATE_CHALLENGE_MUTATION, {name: "updateChallengeMutation"}),
+  graphql(DELETE_CHALLENGE_MUTATION, {name: "deleteChallengeMutation"}),
 )(ChallengeCard)
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo)

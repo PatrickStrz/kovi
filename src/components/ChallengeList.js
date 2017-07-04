@@ -8,7 +8,7 @@ import {
   ALL_CHALLENGES_QUERY,
   MORE_CHALLENGES_QUERY,
 } from '../gql/Challenge/queries'
-import {createChallengeAndScoreMutation} from '../mutations/challenge-mutations'
+import {CREATE_CHALLENGE_AND_SCORE_MUTATION} from '../gql/Challenge/mutations'
 import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-values'
 
 // import {requireAuth} from '../lib/auth'
@@ -160,7 +160,10 @@ const ChallengeListApollo = compose(
     },
   ),
 
-  graphql(createChallengeAndScoreMutation, {name:"createChallengeAndScoreMutation"}),
+  graphql(
+    CREATE_CHALLENGE_AND_SCORE_MUTATION,
+    {name:"createChallengeAndScoreMutation"}
+  ),
 )(ChallengeList)
 
 const mapStateToProps = (state) => {
