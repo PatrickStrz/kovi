@@ -5,7 +5,7 @@ import React,{Component} from 'react'
 import {graphql} from 'react-apollo'
 import {levels} from '../gql/Score/score-system'
 import {COMMUNITY_SCORE_COUNTS_QUERY} from '../gql/Score/queries'
-// import {UPDATE_USER_SCORECARD_SUBSCRIPTION} from '../gql/Scorecard/subscriptions'
+import {SCORE_CREATED_SUBSCRIPTION} from '../gql/Score/subscriptions'
 
 import {muiColors} from '../lib/theme/colors'
 
@@ -14,9 +14,9 @@ class CommunityScore extends Component {
   //   subscribeToScorecardUpdates: PropTypes.func.isRequired,
   //   apiUserScorecardId: PropTypes.string,
   // }
-  // componentWillMount() {
-  //      this.props.subscribeToScorecardUpdates()
-  //  }
+  componentWillMount() {
+       this.props.subscribeToNewScores()
+   }
 
     //this total is calculated based on the scoring system in score-system.js:
   getTotalCommunityScore = () => {
@@ -47,6 +47,7 @@ class CommunityScore extends Component {
 
 
     return(
+
       <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>
         CommunityScore:{this.getTotalCommunityScore()}
       </h2>
@@ -61,26 +62,31 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
     // },
     fetchPolicy: 'network-only',
   }),
-  // props: props => {
-  //   return {
-  //     data: props.data,
-  //     subscribeToScorecardUpdates: () => {
-  //       return props.data.subscribeToMore({
-  //         document: UPDATE_USER_SCORECARD_SUBSCRIPTION,
-  //         variables: {id: props.apiUserScorecardId},
-  //         updateQuery: (prev, {subscriptionData}) => {
-  //           if (!subscriptionData.data) {
-  //               return prev;
-  //           }
-  //           const newFeedItem = subscriptionData.data.Scorecard.node
-  //           return {
-  //               Scorecard: newFeedItem
-  //           }
-  //         }
-  //       })
-  //     },
-  //   }
-  // }
+
+  props: ({ownProps, data}) => {
+    return {
+      data,
+      subscribeToNewScores: () => {
+        // console.log('logging sub data:'+ subscriptionData.data.Score.node.value)
+        return data.subscribeToMore({
+          document: SCORE_CREATED_SUBSCRIPTION,
+          updateQuery: (prev, {subscriptionData}) => {
+            //get console errors for missing fields since this is a different query
+            if (!subscriptionData.data) {
+                return prev;
+            }
+            const newFeedItem = subscriptionData.data.Score.node.value
+            console.log('score increased by:'+ newFeedItem)
+            return {
+                prev,
+            }
+          }
+          // onError: (err) => console.error(err),
+          // return{ console.log('logging sub data:'+ subscriptionData.data.Score.node.value)}
+        })
+      },
+    }
+  }
 })(CommunityScore)
 
 // const mapStateToProps = (state) => {
