@@ -36,17 +36,19 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
     },
     fetchPolicy: 'network-only',
   }),
-  props: props => {
+  props: ({ownProps, data}) => {
     return {
-      data: props.data,
+      data,
       subscribeToScorecardUpdates: () => {
-        return props.data.subscribeToMore({
+        return data.subscribeToMore({
           document: UPDATE_USER_SCORECARD_SUBSCRIPTION,
-          variables: {id: props.apiUserScorecardId},
+          variables: {id: ownProps.apiUserScorecardId},
           updateQuery: (prev, {subscriptionData}) => {
+
             if (!subscriptionData.data) {
                 return prev;
             }
+            // console.log('sub data:'+ subscriptionData.data.Scorecard.node.total)
             const newFeedItem = subscriptionData.data.Scorecard.node
             return {
                 Scorecard: newFeedItem
