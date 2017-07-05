@@ -44,14 +44,12 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
           document: UPDATE_USER_SCORECARD_SUBSCRIPTION,
           variables: {id: ownProps.apiUserScorecardId},
           updateQuery: (prev, {subscriptionData}) => {
-
             if (!subscriptionData.data) {
                 return prev;
             }
-            // console.log('sub data:'+ subscriptionData.data.Scorecard.node.total)
             const newFeedItem = subscriptionData.data.Scorecard.node
             return {
-                Scorecard: newFeedItem
+                Scorecard: newFeedItem,
             }
           }
         })

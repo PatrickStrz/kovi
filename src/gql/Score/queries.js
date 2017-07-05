@@ -3,17 +3,14 @@ import {levels} from './score-system'
 
 export const COMMUNITY_SCORE_COUNTS_QUERY = gql`
   query {
-    fifty: _allScoresMeta(filter:{
-      value: ${levels.one.value}
-    }){
+    ${levels.one.name}: _allScoresMeta(filter:{value: ${levels.one.value}}){
           count
     }
-    hundred: _allScoresMeta(filter:{value:100}){
-          count
+    ${levels.two.name}: _allScoresMeta(filter:{value:${levels.two.value}}){
+      count
     }
-    hundredfifty: _allScoresMeta(filter:{value:
-  150}){
-          count
+    ${levels.three.name}: _allScoresMeta(filter:{value: ${levels.three.value}}){
+      count
     }
   }
 `
