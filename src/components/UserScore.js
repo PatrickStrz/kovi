@@ -1,11 +1,12 @@
+//react+redux
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-
+//gql
 import {graphql} from 'react-apollo'
 import {USER_SCORECARD_QUERY} from '../gql/Scorecard/queries'
-import {UPDATE_USER_SCORECARD_SUBSCRIPTION} from '../gql/Scorecard/subscriptions'
-
+import {USER_SCORE_CREATED_SUBSCRIPTION} from '../gql/Score/subscriptions'
+//other
 import {muiColors} from '../lib/theme/colors'
 
 class UserScore extends Component {
@@ -41,15 +42,18 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
       data,
       subscribeToScorecardUpdates: () => {
         return data.subscribeToMore({
-          document: UPDATE_USER_SCORECARD_SUBSCRIPTION,
+          document: USER_SCORE_CREATED_SUBSCRIPTION,
           variables: {id: ownProps.apiUserScorecardId},
           updateQuery: (prev, {subscriptionData}) => {
             if (!subscriptionData.data) {
-                return prev;
+                return prev
             }
-            const newFeedItem = subscriptionData.data.Scorecard.node
+            const newScoreValue = subscriptionData.data.Score.node.value
+            const newScorecardTotal = prev.Scorecard.total + newScoreValue
+            const newScorecard = {...prev.Scorecard}
+            newScorecard.total = newScorecardTotal
             return {
-                Scorecard: newFeedItem,
+                Scorecard: newScorecard,
             }
           }
         })
