@@ -22,7 +22,9 @@ class UserScore extends Component {
       return(<h2>loading...</h2>)
     }
     return(
-      <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>Score:{this.props.data.Scorecard.total}</h2>
+      <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>
+        UserScore:{this.props.data.Scorecard.total}
+      </h2>
     )
   }
 }
@@ -34,20 +36,20 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
     },
     fetchPolicy: 'network-only',
   }),
-  props: props => {
+  props: ({ownProps, data}) => {
     return {
-      data: props.data,
+      data,
       subscribeToScorecardUpdates: () => {
-        return props.data.subscribeToMore({
+        return data.subscribeToMore({
           document: UPDATE_USER_SCORECARD_SUBSCRIPTION,
-          variables: {id: props.apiUserScorecardId},
+          variables: {id: ownProps.apiUserScorecardId},
           updateQuery: (prev, {subscriptionData}) => {
             if (!subscriptionData.data) {
                 return prev;
             }
             const newFeedItem = subscriptionData.data.Scorecard.node
             return {
-                Scorecard: newFeedItem
+                Scorecard: newFeedItem,
             }
           }
         })

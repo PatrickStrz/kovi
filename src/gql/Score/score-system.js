@@ -10,10 +10,10 @@
 // temporary solution until able to increment community aggregate score
 // on the server
 // --------------------------------------------------
-const levels = {
-  one: {value: 50, name: 'FIFTY'},
-  two: {value: 100, name: 'HUNDRED' },
-  // 3: {value: 150, name: 'ONEFIFTY' },
+export const levels = {
+  one: {value: 50, name: 'fifty'},
+  two: {value: 100, name: 'hundred'},
+  three: {value: 150, name: 'hundredfifty' },
 }
 
 // Score system Applications
