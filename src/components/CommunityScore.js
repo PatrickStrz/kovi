@@ -1,26 +1,37 @@
+//react+redux
 import React,{Component} from 'react'
-// import {connect} from 'react-redux'
-// import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+  initializeCommunityScore,
+  updateCommunityScore,
+} from '../actions/score-actions'
+//gql
 import {graphql} from 'react-apollo'
 import {levels} from '../gql/Score/score-system'
 import {COMMUNITY_SCORE_COUNTS_QUERY} from '../gql/Score/queries'
 import {SCORE_CREATED_SUBSCRIPTION} from '../gql/Score/subscriptions'
-
+//other
 import {muiColors} from '../lib/theme/colors'
 
 class CommunityScore extends Component {
-  // static propTypes = {
-  //   subscribeToScorecardUpdates: PropTypes.func.isRequired,
-  //   apiUserScorecardId: PropTypes.string,
-  // }
+  static propTypes = {
+    subscribeToNewScores: PropTypes.func.isRequired,
+    //redux
+    initializeCommunityScore: PropTypes.func.isRequired,
+    updateCommunityScore:  PropTypes.func.isRequired,
+    communityScore: PropTypes.number,
+  }
+
   componentWillMount() {
+    // debugger
        this.props.subscribeToNewScores()
    }
 
     //this total is calculated based on the scoring system in score-system.js:
-  getTotalCommunityScore = () => {
-    const data = this.props.data
+  getTotalCommunityScore = (data) => {
+    // debugger
     const level1Count = data[levels.one.name].count
     const level2Count = data[levels.two.name].count
     const level3Count = data[levels.three.name].count
@@ -37,19 +48,20 @@ class CommunityScore extends Component {
     return(CommunityTotal)
   }
 
-
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.data.loading && !nextProps.data.loading) {
+      const communityScore = this.getTotalCommunityScore(nextProps.data)
+      this.props.initializeCommunityScore(communityScore)
+    }
+  }
 
   render(){
-
-    if (this.props.data.loading){
+    if (this.props.data.loading || !this.props.communityScore){
       return(<h2>loading...</h2>)
     }
-
-
     return(
-
       <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>
-        CommunityScore:{this.getTotalCommunityScore()}
+        CommunityScore:{this.props.communityScore}
       </h2>
     )
   }
@@ -57,9 +69,6 @@ class CommunityScore extends Component {
 
 const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
   options: (ownProps)=>({
-    // variables: {
-    //   id: ownProps.apiUserScorecardId,
-    // },
     fetchPolicy: 'network-only',
   }),
 
@@ -67,7 +76,6 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
     return {
       data,
       subscribeToNewScores: () => {
-        // console.log('logging sub data:'+ subscriptionData.data.Score.node.value)
         return data.subscribeToMore({
           document: SCORE_CREATED_SUBSCRIPTION,
           updateQuery: (prev, {subscriptionData}) => {
@@ -75,25 +83,30 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
             if (!subscriptionData.data) {
                 return prev;
             }
-            const newFeedItem = subscriptionData.data.Score.node.value
-            console.log('score increased by:'+ newFeedItem)
+            const newScore = subscriptionData.data.Score.node.value
+            ownProps.updateCommunityScore(newScore)
             return {
                 prev,
             }
           }
           // onError: (err) => console.error(err),
-          // return{ console.log('logging sub data:'+ subscriptionData.data.Score.node.value)}
         })
       },
     }
   }
 })(CommunityScore)
 
-// const mapStateToProps = (state) => {
-//   return {
-//     apiUserScorecardId: state.app.auth.apiUserScorecardId,
-//   }
-// }
+const mapStateToProps = (state) => {
+  return {
+    communityScore: state.app.scores.communityScore,
+  }
+}
 
-export default CommunityScoreWithData
-// export default connect(mapStateToProps)(CommunityScoreWithData)
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      initializeCommunityScore,
+      updateCommunityScore,
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommunityScoreWithData)
