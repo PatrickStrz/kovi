@@ -5,14 +5,19 @@ import {bindActionCreators} from 'redux'
 import { withRouter } from 'react-router-dom'
 import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
-
+//own components + stylesheets
 import SyncUser from './SyncUser'
 import BottomBar from './BottomBar'
 import Navbar from './navbar/Navbar'
+import Scoreboard from './scoreboard/Scoreboard'
+import '../styles/css/layout.css'
+import {
+  HEADER_Z_INDEX,
+  SCOREBOARD_Z_INDEX,
+} from '../styles/z-index'
+//external components + styling
 import {Grid} from 'react-flexbox-grid'
 import Headroom from 'react-headroom'
-import '../styles/css/layout.css'
-import {HEADER_Z_INDEX} from '../styles/z-index'
 
 class Site extends Component {
 
@@ -20,13 +25,20 @@ class Site extends Component {
     super(props)
     this.props.checkLogin() // check is Auth0 lock is authenticating after login callback
   }
-
+  // state = {
+  //   scoreboardVisible:false
+  // }
   styles = {
     body: {
       backgroundColor:"#f6f0f0",
     },
     headroom: {
       zIndex: HEADER_Z_INDEX
+    },
+    scoreboardLayout:{
+      position: 'fixed',
+      top: 0,
+      zIndex: SCOREBOARD_Z_INDEX,
     },
     //makes sure that the background fills up the screen
     main: {
@@ -63,7 +75,9 @@ class Site extends Component {
       <div style={this.styles.main}>
       {/* component that syncs or creates a user depending on redux state: */}
         {this.renderSyncUser()}
-      <Headroom style={this.styles.headroom}>
+      <Headroom style={this.styles.headroom}
+        // onUnpin = {()=>this.setState({scoreVisible:true})}
+        >
         <Navbar
           handleLogout={logout}
           handleLogin={login}
@@ -72,6 +86,9 @@ class Site extends Component {
           profile={profile}
         />
       </Headroom>
+      <div style={this.styles.scoreboardLayout}>
+        <Scoreboard />
+      </div>
         <Grid style={{marginTop:30}}>
           {children}
         </Grid>
