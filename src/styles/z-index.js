@@ -6,18 +6,19 @@
 // Z-Index Scale
 // --------------------------------------------------
 const z = {
-  Index1: 100,
-  Index2: 200,
-  Index3: 300,
-  Index4: 400,
-  Index5: 500,
-  Index6: 600,
-  Index7: 700,
-  Index8: 800,
-  Index9: 900,
-  Index10: 1000,
+  index1: 100,
+  index2: 200,
+  index3: 300,
+  index4: 400,
+  index5: 500,
+  index6: 600,
+  index7: 700,
+  index8: 800,
+  index9: 900,
+  index10: 1000,
 }
 
 // Z-Index Applications
 // --------------------------------------------------
-export const HEADER_Z_INDEX = z.Index1
+export const HEADER_Z_INDEX = z.index2
+export const SCOREBOARD_Z_INDEX = z.index1

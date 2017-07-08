@@ -6,14 +6,13 @@ import { bindActionCreators } from 'redux'
 import {
   initializeCommunityScore,
   updateCommunityScore,
-} from '../actions/score-actions'
+} from '../../actions/score-actions'
 //gql
 import {graphql} from 'react-apollo'
-import {levels} from '../gql/Score/score-system'
-import {COMMUNITY_SCORE_COUNTS_QUERY} from '../gql/Score/queries'
-import {SCORE_CREATED_SUBSCRIPTION} from '../gql/Score/subscriptions'
+import {levels} from '../../gql/Score/score-system'
+import {COMMUNITY_SCORE_COUNTS_QUERY} from '../../gql/Score/queries'
+import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
-import {muiColors} from '../lib/theme/colors'
 
 class CommunityScore extends Component {
   static propTypes = {
@@ -22,16 +21,14 @@ class CommunityScore extends Component {
     initializeCommunityScore: PropTypes.func.isRequired,
     updateCommunityScore:  PropTypes.func.isRequired,
     communityScore: PropTypes.number,
+    style: PropTypes.object.isRequired,
   }
 
   componentWillMount() {
-    // debugger
        this.props.subscribeToNewScores()
    }
-
     //this total is calculated based on the scoring system in score-system.js:
   getTotalCommunityScore = (data) => {
-    // debugger
     const level1Count = data[levels.one.name].count
     const level2Count = data[levels.two.name].count
     const level3Count = data[levels.three.name].count
@@ -60,9 +57,9 @@ class CommunityScore extends Component {
       return(<h2>loading...</h2>)
     }
     return(
-      <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>
-        CommunityScore:{this.props.communityScore}
-      </h2>
+      <span style={this.props.style}>
+        {this.props.communityScore}
+      </span>
     )
   }
 }
