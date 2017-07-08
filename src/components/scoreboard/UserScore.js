@@ -4,16 +4,17 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 //gql
 import {graphql} from 'react-apollo'
-import {USER_SCORECARD_QUERY} from '../gql/Scorecard/queries'
-import {USER_SCORE_CREATED_SUBSCRIPTION} from '../gql/Score/subscriptions'
+import {USER_SCORECARD_QUERY} from '../../gql/Scorecard/queries'
+import {USER_SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
-import {muiColors} from '../lib/theme/colors'
 
 class UserScore extends Component {
   static propTypes = {
     subscribeToScorecardUpdates: PropTypes.func.isRequired,
     apiUserScorecardId: PropTypes.string,
+    style: PropTypes.object.isRequired,
   }
+
   componentWillMount() {
        this.props.subscribeToScorecardUpdates()
    }
@@ -23,9 +24,9 @@ class UserScore extends Component {
       return(<h2>loading...</h2>)
     }
     return(
-      <h2 style={{position:'relative',textAlign:'centre',color:muiColors.primary1}}>
-        UserScore:{this.props.data.Scorecard.total}
-      </h2>
+      <span style={this.props.style}>
+        {this.props.data.Scorecard.total}
+      </span>
     )
   }
 }

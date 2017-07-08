@@ -25,30 +25,9 @@ class Site extends Component {
     super(props)
     this.props.checkLogin() // check is Auth0 lock is authenticating after login callback
   }
-  // state = {
-  //   scoreboardVisible:false
-  // }
-  styles = {
-    body: {
-      backgroundColor:"#f6f0f0",
-    },
-    headroom: {
-      zIndex: HEADER_Z_INDEX
-    },
-    scoreboardLayout:{
-      position: 'fixed',
-      top: 0,
-      zIndex: SCOREBOARD_Z_INDEX,
-    },
-    //makes sure that the background fills up the screen
-    main: {
-      //Make sure background fills screen -->
-      display: 'flex',
-      minHeight: '100vh',
-      flexDirection: 'column',
-    //<---
-      backgroundColor:"#f6f0f0",
-    },
+
+  state = {
+    scoreboardVisible:false
   }
 
   renderSyncUser = () => {
@@ -71,12 +50,37 @@ class Site extends Component {
       children,
     } = this.props
 
+    const styles = {
+      body: {
+        backgroundColor:"#f6f0f0",
+      },
+      headroom: {
+        zIndex: HEADER_Z_INDEX
+      },
+      scoreboardLayout:{
+        position: 'fixed',
+        top: 0,
+        display: this.state.scorecardVisible ? 'block' : 'none',
+        zIndex: SCOREBOARD_Z_INDEX,
+      },
+      //makes sure that the background fills up the screen
+      main: {
+        //Make sure background fills screen -->
+        display: 'flex',
+        minHeight: '100vh',
+        flexDirection: 'column',
+      //<---
+        backgroundColor:"#f6f0f0",
+      },
+    }
+
     return(
-      <div style={this.styles.main}>
+      <div style={styles.main}>
       {/* component that syncs or creates a user depending on redux state: */}
         {this.renderSyncUser()}
-      <Headroom style={this.styles.headroom}
-        // onUnpin = {()=>this.setState({scoreVisible:true})}
+      <Headroom style={styles.headroom}
+        onPin={()=>this.setState({scorecardVisible:false})}
+        onUnpin={()=>this.setState({scorecardVisible:true})}
         >
         <Navbar
           handleLogout={logout}
@@ -86,7 +90,7 @@ class Site extends Component {
           profile={profile}
         />
       </Headroom>
-      <div style={this.styles.scoreboardLayout}>
+      <div style={styles.scoreboardLayout}>
         <Scoreboard />
       </div>
         <Grid style={{marginTop:30}}>
