@@ -51,9 +51,6 @@ class Site extends Component {
     } = this.props
 
     const styles = {
-      body: {
-        backgroundColor:"#f6f0f0",
-      },
       headroom: {
         zIndex: HEADER_Z_INDEX
       },
