@@ -1,22 +1,21 @@
 import React,{Component} from 'react'
-import Paper from 'material-ui/Paper'
-
 import {muiColors} from '../../lib/theme/colors'
 
 import CommunityScore from './CommunityScore'
 import UserScore from './UserScore'
 
 class Scoreboard extends Component{
-  state={animate:false}
 
   render(){
-
     const styles = {
-      paper:{
+      scoreboard:{
+        position: 'fixed',
+        top:0,
         width: '100vw',
         height: 65,
         backgroundColor: '#ffffff',
-        top:0
+        //to match zDepth 1 of material-ui library:
+        boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px"
       },
       scores:{
         fontSize:30,
@@ -34,17 +33,14 @@ class Scoreboard extends Component{
     }
 
     return(
-      <Paper
-        style={styles.paper}
-        zDepth={2}
-        >
+    <div style={styles.scoreboard}>
         <CommunityScore
           style={{...styles.scores, ...styles.communityScore }}
          />
          <UserScore
            style={{...styles.scores, ...styles.userScore}}
          />
-      </Paper>
+    </div>
     )
   }
 }

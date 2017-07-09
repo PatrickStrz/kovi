@@ -57,9 +57,7 @@ class Site extends Component {
       headroom: {
         zIndex: HEADER_Z_INDEX
       },
-      scoreboardLayout:{
-        position: 'fixed',
-        top: 0,
+      scoreboard:{
         display: this.state.scorecardVisible ? 'block' : 'none',
         zIndex: SCOREBOARD_Z_INDEX,
       },
@@ -90,7 +88,7 @@ class Site extends Component {
           profile={profile}
         />
       </Headroom>
-      <div style={styles.scoreboardLayout}>
+      <div style={styles.scoreboard}>
         <Scoreboard />
       </div>
         <Grid style={{marginTop:30}}>
