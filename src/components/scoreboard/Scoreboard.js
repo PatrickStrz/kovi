@@ -15,7 +15,7 @@ class Scoreboard extends Component{
         height: 65,
         backgroundColor: '#ffffff',
         //to match zDepth 1 of material-ui library:
-        boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px"
+        // boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px"
       },
       scores:{
         fontSize:30,
