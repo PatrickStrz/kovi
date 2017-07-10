@@ -1,5 +1,6 @@
 import Auth0Lock from 'auth0-lock'
 import jwtDecode from 'jwt-decode'
+import {muiColors} from './theme/colors'
 
 const ROOT_ROUTE = '/'
 
@@ -17,10 +18,10 @@ export default class AuthService {
       },
       theme: {
       //   logo: LogoImg,
-        primaryColor: "#5f38b4"
+        primaryColor: muiColors.primary1
       },
       languageDictionary: {
-        title: 'Collab App'
+        title: 'KOVI'
       }
     })
     // binds login functions to keep this context
@@ -68,14 +69,6 @@ export default class AuthService {
   static setToken(idToken) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken)
-  }
-
-  static setUserNotSynced() {
-    localStorage.setItem('user_synced', false)
-  }
-
-  static setUserSynced(){
-    localStorage.setItem('user_synced', true)
   }
 
   static setApiUserId(apiUserId){
