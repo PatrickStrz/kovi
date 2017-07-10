@@ -1,8 +1,9 @@
+//react+redux
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { hideCreateChallengeView } from '../actions/challenge-actions'
-
+//gql
 import {graphql, compose} from 'react-apollo'
 import {
   ALL_CHALLENGES_QUERY,
@@ -10,11 +11,10 @@ import {
 } from '../gql/Challenge/queries'
 import {CREATE_CHALLENGE_AND_SCORE_MUTATION} from '../gql/Challenge/mutations'
 import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
-
-// import {requireAuth} from '../lib/auth'
+//helpers+other
 import {uniqBy} from 'lodash'
 import {muiColors} from '../lib/theme/colors'
-
+//components
 import ChallengeCard from './ChallengeCard'
 import ChallengeCreateForm from './ChallengeCreateForm'
 import {Row, Col} from 'react-flexbox-grid'
@@ -69,7 +69,6 @@ class ChallengeList extends Component {
           <ChallengeCard
             challenge={challenge}
             apiUserId={this.props.apiUserId}
-            isAuthenticated={this.props.isAuthenticated}
             allChallengesQueryVariables={this.getAllChallengesQueryVariables()}
           />
         </Col>
@@ -168,7 +167,6 @@ const ChallengeListApollo = compose(
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.app.auth.isAuthenticated,
     apiUserId: state.app.auth.apiUserId,
     apiUserScorecardId: state.app.auth.apiUserScorecardId,
     isCreateViewOpen: state.app.challenges.isCreateViewOpen,

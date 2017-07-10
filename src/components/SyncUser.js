@@ -9,7 +9,7 @@ import {
 } from '../gql/User/mutations'
 
 /*
-This Component is to be rendered ONLY when a user is logged in ( state.auth.isAuthenticated = true)
+This Component is to be rendered ONLY when a user is logged in ( state.auth.auth0Authenticated = true)
 and the user is not Synced with the graphQL api.
 User query is performed to check if user exists. If user exists it will return an id otherwise it will
 return null.

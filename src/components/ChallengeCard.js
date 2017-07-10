@@ -1,3 +1,4 @@
+//react+redux
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -6,17 +7,17 @@ import {
   hideUpdateChallengeView,
   showUpdateChallengeView
 } from '../actions/challenge-actions'
-
+//gql
 import {compose,graphql} from 'react-apollo'
 import {
   DELETE_CHALLENGE_MUTATION,
   UPDATE_CHALLENGE_MUTATION,
 } from '../gql/Challenge/mutations'
-
-import {requireAuth} from '../lib/auth'
-import ChallengeUpdateForm from './ChallengeUpdateForm'
 import {ALL_CHALLENGES_QUERY} from '../gql/Challenge/queries'
-
+//helpers+other
+import {requireAuth} from '../lib/auth'
+//components+styles
+import ChallengeUpdateForm from './ChallengeUpdateForm'
 import ChallengeUpvote from './ChallengeUpvote'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
@@ -28,7 +29,6 @@ class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.object.isRequired,
     apiUserId: PropTypes.string,
-    isAuthenticated: PropTypes.bool.isRequired,
     allChallengesQueryVariables: PropTypes.object.isRequired,
   }
 

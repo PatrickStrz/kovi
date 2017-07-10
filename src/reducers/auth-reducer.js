@@ -2,7 +2,7 @@ import * as ActionTypes from '../actions/types'
 import AuthService from '../lib/AuthService'
 
 const initialState = {
-  isAuthenticated: !AuthService.isTokenExpired(),
+  auth0Authenticated: !AuthService.isTokenExpired(),
   isFetching: false,
   profile: AuthService.getProfile(),
   userSynced: AuthService.isUserSynced() || false,
@@ -19,14 +19,14 @@ export default function authReducer(state=initialState, action) {
       return {
         ...state,
         isFetching: false,
-        isAuthenticated: true,
+        auth0Authenticated: true,
         profile: action.profile
       }
     case ActionTypes.LOGIN_ERROR:
       return {
         ...state,
         isFetching: false,
-        isAuthenticated: false,
+        auth0Authenticated: false,
         profile: {},
         error: action.error
       }
@@ -34,7 +34,7 @@ export default function authReducer(state=initialState, action) {
       return {
         ...state,
         ...initialState,
-        isAuthenticated:false,
+        auth0Authenticated:false,
         profile: {},
         userSynced: false,
         apiUserId:'',
