@@ -1,6 +1,9 @@
+//react+redux
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
+// helpers+other
 import {muiColors} from '../../lib/theme/colors'
-
+//components
 import CommunityScore from './CommunityScore'
 import UserScore from './UserScore'
 
@@ -32,17 +35,25 @@ class Scoreboard extends Component{
       },
     }
 
+    const renderUserScore = () => (
+      <UserScore
+        style={{...styles.scores, ...styles.userScore}}
+      />
+    )
+
     return(
     <div style={styles.scoreboard}>
         <CommunityScore
           style={{...styles.scores, ...styles.communityScore }}
-         />
-         <UserScore
-           style={{...styles.scores, ...styles.userScore}}
-         />
+        />
+        {this.props.isAuthenticated && renderUserScore()}
     </div>
     )
   }
 }
 
-export default Scoreboard
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.app.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps)(Scoreboard)
