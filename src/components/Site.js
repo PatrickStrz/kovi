@@ -30,14 +30,12 @@ class Site extends Component {
     scoreboardVisible:false
   }
 
-  renderSyncUser = () => {
-    const {auth0Authenticated, userSynced, userSyncSuccess, profile} = this.props
-    if (auth0Authenticated && !userSynced ){
-      return(<SyncUser
-        logout={logout}
-        handleUserSyncSuccess={userSyncSuccess}
-        profile={profile}
-      />)
+  shouldSyncUser = () => {
+    if (this.props.auth0Authenticated && !this.props.userSynced){
+      return true
+    }
+    else {
+      return false
     }
   }
 
@@ -47,8 +45,18 @@ class Site extends Component {
       logout,
       profile,
       userSynced,
+      userSyncSuccess,
       children,
     } = this.props
+
+    const renderSyncUser = () => {
+        return(
+          <SyncUser
+          logout={logout}
+          handleUserSyncSuccess={userSyncSuccess}
+          profile={profile}
+        />)
+      }
 
     const styles = {
       headroom: {
@@ -72,7 +80,8 @@ class Site extends Component {
     return(
       <div style={styles.main}>
       {/* component that syncs or creates a user depending on redux state: */}
-        {this.renderSyncUser()}
+      { this.shouldSyncUser() && alert('should Render sync user') }
+      { this.shouldSyncUser() && renderSyncUser() }
       <Headroom style={styles.headroom}
         onPin={()=>this.setState({scorecardVisible:false})}
         onUnpin={()=>this.setState({scorecardVisible:true})}
