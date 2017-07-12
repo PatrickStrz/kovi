@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-
+//helpers + other
 import { withRouter } from 'react-router-dom'
 import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
@@ -80,7 +80,6 @@ class Site extends Component {
     return(
       <div style={styles.main}>
       {/* component that syncs or creates a user depending on redux state: */}
-      { this.shouldSyncUser() && alert('should Render sync user') }
       { this.shouldSyncUser() && renderSyncUser() }
       <Headroom style={styles.headroom}
         onPin={()=>this.setState({scorecardVisible:false})}

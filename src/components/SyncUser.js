@@ -9,10 +9,14 @@ import {
 } from '../gql/User/mutations'
 
 /*
-This Component is to be rendered ONLY when a user is logged in ( state.auth.auth0Authenticated = true)
-and the user is not Synced with the graphQL api.
-User query is performed to check if user exists. If user exists it will return an id otherwise it will
-return null.
+This Component is to be rendered ONLY when a user is logged in
+( state.auth.auth0Authenticated = true)
+and the user is not Synced with the graphQL api ( stat.auth.userSynced == false).
+User query is performed to check if user exists, it will return
+an id if the auth0Authenticated user exists, otherwise returns null. User query
+automatically returns a user without providing query variables because the
+custom middleware in index.js provides the auth0 user jwt token in each request
+header if it is saved to local storage (localStorage.id_token)
 */
 
 class SyncUser extends Component {
@@ -27,14 +31,11 @@ class SyncUser extends Component {
     if (this.props.data.loading && !nextProps.data.loading) {
       const profile = this.userProfile(nextProps.profile)
       const props = nextProps
-      debugger
       if (nextProps.data.user) {
-        debugger
         const userId = nextProps.data.user.id
         this.handleUpdateUser(props, userId,profile)
       }
       else if (nextProps.data.user == null){
-        debugger
         this.handleCreateUser(props, profile)
       }
     }
@@ -56,16 +57,17 @@ class SyncUser extends Component {
     }
     try{
       const response = await props.updateUserMutation(options)
-      if (response.data) {
+      if (response.data.updateUser) {
         const user = response.data.updateUser
         props.handleUserSyncSuccess(user.id, user.scorecard.id)
         //dispatches action that marks user as synced and sets apiUserId +
         // apiScorecardId on localStorage and redux state
       }
+      console.log('error: userSynced action not dispatched.')
     }
     catch(error){
       console.log(error)
-      // props.logout()
+      props.logout()
     }
   }
 
@@ -76,6 +78,7 @@ class SyncUser extends Component {
     }
     try{
       const response = await props.createUserMutation(options)
+
       if (response.data.createUser.id) {
         const user = response.data.createUser
         props.handleUserSyncSuccess(user.id, user.scorecard.id)
@@ -83,7 +86,8 @@ class SyncUser extends Component {
     }
     catch(error){
       console.log(error)
-      // props.logout()
+      //dispatch action --> Error reporting here.
+      props.logout()
     }
   }
 
