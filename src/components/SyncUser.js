@@ -9,10 +9,14 @@ import {
 } from '../gql/User/mutations'
 
 /*
-This Component is to be rendered ONLY when a user is logged in ( state.auth.auth0Authenticated = true)
-and the user is not Synced with the graphQL api.
-User query is performed to check if user exists. If user exists it will return an id otherwise it will
-return null.
+This Component is to be rendered ONLY when a user is logged in
+( state.auth.auth0Authenticated = true)
+and the user is not Synced with the graphQL api ( stat.auth.userSynced == false).
+User query is performed to check if user exists, it will return
+an id if the auth0Authenticated user exists, otherwise returns null. User query
+automatically returns a user without providing query variables because the
+custom middleware in index.js provides the auth0 user jwt token in each request
+header if it is saved to local storage (localStorage.id_token)
 */
 
 class SyncUser extends Component {
@@ -23,50 +27,67 @@ class SyncUser extends Component {
     logout: PropTypes.func.isRequired,
   }
 
-  userProfile = () =>({ //auth0 user profile
-    "email": this.props.profile.email,
-    "familyName": this.props.profile.family_name,
-    "givenName": this.props.profile.given_name,
-    "name": this.props.profile.name,
-    "picture": this.props.profile.picture,
-    "pictureLarge": this.props.profile.picture_large
-  })
-
-  handleUpdateUser = async () =>{
-    const options = {
-      //api user id  + auth0 profile:
-      variables: { id: this.props.data.user.id, ...this.userProfile()}
-    }
-    try{
-      const response = await this.props.updateUserMutation(options)
-      if (response.data) {
-        const user = response.data.updateUser
-        this.props.handleUserSyncSuccess(user.id, user.scorecard.id)
-        //dispatches action that marks user as synced and sets apiUserId +
-        // apiScorecardId on localStorage and redux state
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.data.loading && !nextProps.data.loading) {
+      const profile = this.userProfile(nextProps.profile)
+      const props = nextProps
+      if (nextProps.data.user) {
+        const userId = nextProps.data.user.id
+        this.handleUpdateUser(props, userId,profile)
       }
-    }
-    catch(error){
-      console.log(error)
-      this.props.logout()
+      else if (nextProps.data.user == null){
+        this.handleCreateUser(props, profile)
+      }
     }
   }
 
-  handleCreateUser = async () =>{
-    const idToken = localStorage.getItem('id_token')
+  userProfile = (profile) => ({ //auth0 user profile
+    "email": profile.email,
+    "familyName": profile.family_name,
+    "givenName": profile.given_name,
+    "name": profile.name,
+    "picture": profile.picture,
+    "pictureLarge": profile.picture_large
+  })
+
+  handleUpdateUser = async (props, userId, profile) => {
     const options = {
-      variables: {idToken, ...this.userProfile(),}
+      //api user id  + auth0 profile:
+      variables: { id: userId, ...profile}
     }
     try{
-      const response = await this.props.createUserMutation(options)
+      const response = await props.updateUserMutation(options)
+      if (response.data.updateUser) {
+        const user = response.data.updateUser
+        props.handleUserSyncSuccess(user.id, user.scorecard.id)
+        //dispatches action that marks user as synced and sets apiUserId +
+        // apiScorecardId on localStorage and redux state
+      }
+      console.log('error: userSynced action not dispatched.')
+    }
+    catch(error){
+      console.log(error)
+      props.logout()
+    }
+  }
+
+  handleCreateUser = async (props, profile) => {
+    const idToken = localStorage.getItem('id_token')
+    const options = {
+      variables: {idToken, ...profile}
+    }
+    try{
+      const response = await props.createUserMutation(options)
+
       if (response.data.createUser.id) {
         const user = response.data.createUser
-        this.props.handleUserSyncSuccess(user.id, user.scorecard.id)
+        props.handleUserSyncSuccess(user.id, user.scorecard.id)
       }
     }
     catch(error){
       console.log(error)
-      this.props.logout()
+      //dispatch action --> Error reporting here.
+      props.logout()
     }
   }
 
@@ -78,14 +99,6 @@ class SyncUser extends Component {
         <div style={{visibility:"hidden"}}></div>
         //temporary hack needed to move user queries and mutations outside of <Site />
       )
-    }
-    //update user if user query returns a user
-    if (data.user) {
-      this.handleUpdateUser()
-    }
-    //if user query returns null create user:
-    else {
-      this.handleCreateUser()
     }
     return(
       <div style={{visibility:"hidden"}}></div>

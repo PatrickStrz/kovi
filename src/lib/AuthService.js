@@ -103,10 +103,6 @@ export default class AuthService {
     return date
   }
 
-  static isUserSynced() {
-    return JSON.parse(localStorage.getItem('user_synced'))
-  }
-
   static isTokenExpired() {
     const token = AuthService.getToken()
     if (!token) return true
