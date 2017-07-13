@@ -8,6 +8,7 @@ import {
   CREATE_USER_MUTATION,
 } from '../gql/User/mutations'
 
+import {logException} from '../config'
 /*
 This Component is to be rendered ONLY when a user is logged in
 ( state.auth.auth0Authenticated = true)
@@ -63,10 +64,10 @@ class SyncUser extends Component {
         //dispatches action that marks user as synced and sets apiUserId +
         // apiScorecardId on localStorage and redux state
       }
-      console.log('error: userSynced action not dispatched.')
     }
-    catch(error){
-      console.log(error)
+    catch(err){
+      console.log(err)
+      logException(err)
       props.logout()
     }
   }
@@ -84,8 +85,9 @@ class SyncUser extends Component {
         props.handleUserSyncSuccess(user.id, user.scorecard.id)
       }
     }
-    catch(error){
-      console.log(error)
+    catch(err){
+      console.log(err)
+      logException(err)
       //dispatch action --> Error reporting here.
       props.logout()
     }
