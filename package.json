@@ -10,6 +10,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.18.0",
     "prop-types": "^15.5.8",
+    "raven-js": "^3.16.1",
     "react": "^15.5.4",
     "react-apollo": "^1.2.0",
     "react-dom": "^15.5.4",

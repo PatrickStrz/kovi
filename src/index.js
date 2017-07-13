@@ -10,6 +10,7 @@ import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-trans
 import { ApolloProvider } from 'react-apollo'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import './styles/css/index.css'
+import Raven from 'raven-js' // for Sentry error logging
 
 // create websocket client for subscriptions:
 const wsClient = new SubscriptionClient(`wss://subscriptions.graph.cool/v1/cj2hsn8pvak4o0187k52n2i3l
@@ -59,6 +60,7 @@ const store = createStore(
 )
 
 injectTapEventPlugin() //for material-ui onclick events
+Raven.config('https://190caa1c5da9498c9ba578fe4726a696@sentry.io/190960').install()
 
 ReactDOM.render((
   <ApolloProvider store={store} client={client}>
