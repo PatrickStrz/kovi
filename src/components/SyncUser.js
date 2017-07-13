@@ -67,7 +67,7 @@ class SyncUser extends Component {
     }
     catch(err){
       console.log(err)
-      logException(err)
+      logException(err, { action:"updating user in SyncUser", })
       props.logout()
     }
   }
@@ -87,7 +87,7 @@ class SyncUser extends Component {
     }
     catch(err){
       console.log(err)
-      logException(err)
+      logException(err, { action: "creating user in SyncUser", })
       //dispatch action --> Error reporting here.
       props.logout()
     }
