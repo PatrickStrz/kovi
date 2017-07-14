@@ -14,8 +14,9 @@ export const CREATE_CHALLENGE_AND_SCORE_MUTATION = gql`mutation
     $filter:UserFilter,
     $scorecardId:ID!,
     $scoreValue:Int!
+    $authorId:ID,
   ){
-	  createChallenge(description:$description,title:$title){
+	  createChallenge(description:$description, title:$title, authorId:$authorId){
     ...challengeBody
     }
     createScore(value:$scoreValue, scorecardId:$scorecardId){
