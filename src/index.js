@@ -13,12 +13,12 @@ import './styles/css/index.css'
 import Raven from 'raven-js' // for Sentry error logging
 
 // create websocket client for subscriptions:
-const wsClient = new SubscriptionClient(`wss://subscriptions.graph.cool/v1/cj2hsn8pvak4o0187k52n2i3l
+const wsClient = new SubscriptionClient(`wss://subscriptions.us-west-2.graph.cool/v1/cj541g35wjwqc01754kb4rfvk
 `, {
   reconnect: true
 })
 const networkInterface = createNetworkInterface({
-  uri: 'https://api.graph.cool/simple/v1/cj2hsn8pvak4o0187k52n2i3l'
+  uri: 'https://api.graph.cool/simple/v1/cj541g35wjwqc01754kb4rfvk'
 })
 
 const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
