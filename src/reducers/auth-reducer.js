@@ -1,6 +1,17 @@
 import * as ActionTypes from '../actions/types'
 import AuthService from '../lib/AuthService'
 
+const isAuthenticated = () => {
+  if (!AuthService.isTokenExpired() &&
+      AuthService.getApiUserId() &&
+      AuthService.getApiUserScorecardId()) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
 const initialState = {
   auth0Authenticated: !AuthService.isTokenExpired(),
   isFetching: false,
@@ -9,17 +20,7 @@ const initialState = {
   error: null,
   apiUserId: AuthService.getApiUserId(),
   apiUserScorecardId: AuthService.getApiUserScorecardId(),
-  isAuthenticated: (
-    !AuthService.isTokenExpired()
-    &&
-    AuthService.getApiUserId()
-    &&
-    AuthService.getApiUserScorecardId()
-    &&
-    true
-    //returns true if all conditions are met.
-  )
-    ,
+  isAuthenticated: isAuthenticated()
 }
 
 export default function authReducer(state=initialState, action) {

@@ -1,3 +1,0 @@
-Things to test for:
-
--User authed, user synced
