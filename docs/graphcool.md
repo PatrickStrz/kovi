@@ -1,5 +1,10 @@
 # Graphcool
 
+## Making changes
+
+- Any changes to the api that are not show in the schema file must be recorded
+here ! ( i.e new permission or function)
+
 ## Migrating to new api
 
 1. Change api and subscription uri in index.js
@@ -42,4 +47,10 @@
 - Graphcool API is extended using serverless functions that are invoked in response
 to server events (SSS: Server Side Subscriptions) or as a part of the request pipeline.
 [https://www.graph.cool/docs/reference/functions/overview-boo6uteemo/](url)
-- Repository for Serverless webtask functions [https://github.com/PatrickStrz/kovi-webtasks](url)
+### Repository for Serverless webtask functions:
+ [https://github.com/PatrickStrz/kovi-webtasks](url)
+
+### SSS
+1. `Event:` new Score created. `function brief:` update total field on Scorecard type
+for user.
+`file:` update-scorecard-totals.js
