@@ -55,7 +55,6 @@ class ChallengeList extends Component {
       this.props.hideCreateChallengeView()
     }
     catch(err){
-      console.log(err)
       logException(err, {
       action: "mutation in handleCreateChallengeSubmit in ChallengeList.js"
       })
