@@ -14,6 +14,7 @@ import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
 //helpers+other
 import {uniqBy} from 'lodash'
 import {muiColors} from '../lib/theme/colors'
+import {logException} from '../config'
 //components
 import ChallengeCard from './ChallengeCard'
 import ChallengeCreateForm from './ChallengeCreateForm'
@@ -49,8 +50,16 @@ class ChallengeList extends Component {
         })
       },
     }
-    await this.props.createChallengeAndScoreMutation(options)
-    this.props.hideCreateChallengeView()
+    try{
+      await this.props.createChallengeAndScoreMutation(options)
+      this.props.hideCreateChallengeView()
+    }
+    catch(err){
+      console.log(err)
+      logException(err, {
+      action: "mutation in handleCreateChallengeSubmit in ChallengeList.js"
+      })
+    }
   }
 
   render(){
