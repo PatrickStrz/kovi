@@ -16,6 +16,7 @@ import {
 import {ALL_CHALLENGES_QUERY} from '../gql/Challenge/queries'
 //helpers+other
 import {requireAuth} from '../lib/auth'
+import {logException} from '../config'
 //components+styles
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import ChallengeUpvote from './ChallengeUpvote'
@@ -75,7 +76,12 @@ class ChallengeCard extends Component {
       }
     }
     this.setState({updateInProgress: true})
-    await updateChallengeMutation(options)
+    try{
+      await updateChallengeMutation(options)
+    }
+    catch(err){
+      logException(err, {action: 'handleUpdateChallengeSubmit in ChallengeCard.js'})
+    }
     this.setState({updateInProgress: false})
     hideUpdateChallengeView()
   }
@@ -114,8 +120,13 @@ class ChallengeCard extends Component {
       },
     }
     this.setState({deleteInProgress: true})
-    await deleteChallengeMutation(options)
-    // todo: if error deleting setState --> this.setState({deleteInProgress: false})
+    try{
+      await deleteChallengeMutation(options)
+    }
+    catch(err){
+      logException(err, {action: 'handleDeleteChallenge in ChallengeCard.js'})
+      this.setState({deleteInProgress: false})
+    }
   }
 
   toggleUpdateForm = () => {
