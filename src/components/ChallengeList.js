@@ -34,6 +34,7 @@ class ChallengeList extends Component {
         "filter":{ "id": this.props.apiUserId},
         scorecardId: this.props.apiUserScorecardId,
         scoreValue: CHALLENGE_CREATE_SCORE.value,
+        authorId: this.props.apiUserId,
       },
       update: (proxy, { data: {createChallenge} }) => {
         const data = proxy.readQuery({
