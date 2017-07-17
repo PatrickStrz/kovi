@@ -10,10 +10,7 @@ class Editor extends Component {
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired, //redux state
   }
-  // constructor (props) {
-  //   super(props)
-  //   this.handleChange = this.props.handleChange
-  // }
+
   handleChange = this.props.handleChange
 
   render () {

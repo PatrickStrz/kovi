@@ -6,6 +6,8 @@ export default function editorReducer(state=initialState, action){
   switch (action.type) {
   case ActionTypes.EDITOR_CHANGE:
     return { ...state, editorHtml: action.html }
+  case ActionTypes.CLEAR_EDITOR:
+    return { ...state, editorHtml: '' }
   default:
     return state
   }

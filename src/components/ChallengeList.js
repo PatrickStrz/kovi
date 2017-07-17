@@ -3,7 +3,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { hideCreateChallengeView } from '../actions/challenge-actions'
-import { handleEditorChange } from '../actions/editor-actions'
+import { handleEditorChange, clearEditor } from '../actions/editor-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -56,6 +56,7 @@ class ChallengeList extends Component {
     try{
       await this.props.createChallengeAndScoreMutation(options)
       this.props.hideCreateChallengeView()
+      this.props.clearEditor()
     }
     catch(err){
       logException(err, {
@@ -195,6 +196,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     hideCreateChallengeView,
     handleEditorChange,
+    clearEditor,
   }, dispatch)
 }
 
