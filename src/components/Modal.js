@@ -19,11 +19,6 @@ export default class Modal extends Component {
   }
 
   styles = {
-    container: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     title: {
       textAlign: 'center',
       color: muiColors.primary1
@@ -52,7 +47,7 @@ export default class Modal extends Component {
           autoScrollBodyContent={true}
           titleStyle={this.styles.title}
         >
-          <div style={this.styles.container}>
+          <div>
             {children}
           </div>
         </Dialog>
