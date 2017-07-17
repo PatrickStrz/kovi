@@ -3,6 +3,7 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { hideCreateChallengeView } from '../actions/challenge-actions'
+import { handleEditorChange } from '../actions/editor-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -22,6 +23,7 @@ import {Row, Col} from 'react-flexbox-grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from './Modal'
 import GenericError from './commons/GenericError'
+import Editor from './Editor'
 
 class ChallengeList extends Component {
   //so can change query variables in one place and pass to child components:
@@ -32,6 +34,7 @@ class ChallengeList extends Component {
       variables: {
         title,
         description,
+        body: this.props.editorHtml,
         "filter":{ "id": this.props.apiUserId},
         scorecardId: this.props.apiUserScorecardId,
         scoreValue: CHALLENGE_CREATE_SCORE.value,
@@ -107,6 +110,11 @@ class ChallengeList extends Component {
               title='Create A Challenge'
             >
               {createChallengeForm}
+              <Editor
+                handleChange={this.props.handleEditorChange}
+                value={this.props.editorHtml}
+                // placeholder="Give us some body..."
+              />
             </Modal>
             <Row>
             {challengeCards}
@@ -179,12 +187,14 @@ const mapStateToProps = (state) => {
     apiUserId: state.app.auth.apiUserId,
     apiUserScorecardId: state.app.auth.apiUserScorecardId,
     isCreateViewOpen: state.app.challenges.isCreateViewOpen,
+    editorHtml: state.app.editor.editorHtml,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    hideCreateChallengeView
+    hideCreateChallengeView,
+    handleEditorChange,
   }, dispatch)
 }
 
