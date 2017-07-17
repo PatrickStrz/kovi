@@ -89,7 +89,13 @@ class ChallengeList extends Component {
     })
 
     const createChallengeForm = (
-      <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit} />
+      <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit}>
+        <Editor
+          handleChange={this.props.handleEditorChange}
+          value={this.props.editorHtml}
+          // placeholder="Give us some body..."
+        />
+      </ChallengeCreateForm>
     )
 
     return(
@@ -111,11 +117,6 @@ class ChallengeList extends Component {
               title='Create A Challenge'
             >
               {createChallengeForm}
-              <Editor
-                handleChange={this.props.handleEditorChange}
-                value={this.props.editorHtml}
-                // placeholder="Give us some body..."
-              />
             </Modal>
             <Row>
             {challengeCards}

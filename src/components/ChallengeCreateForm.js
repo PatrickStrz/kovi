@@ -3,6 +3,11 @@ import { Field,reduxForm, } from 'redux-form'
 import {TextField} from 'redux-form-material-ui'
 import FlatButton from 'material-ui/FlatButton';
 
+  const styles = {
+    input: {
+      width: '55vw'
+    }
+  }
   const validate = (values) =>{
     const errors = {}
     if (!values.title){
@@ -15,12 +20,28 @@ import FlatButton from 'material-ui/FlatButton';
   }
 
   const ChallengeCreateForm = (props) => {
-    const {handleSubmit, submitting, error} = props
+    const {handleSubmit, submitting, error, children} = props
     return(
         <form onSubmit={handleSubmit}>
-          <Field floatingLabelText="title" name="title" component={TextField}/>
+          <div style={styles.childrenContainer}>
+          <Field
+            style={styles.input}
+            floatingLabelText="title"
+            name="title"
+            component={TextField}/>
           <br />
-          <Field floatingLabelText="description" name="description" component={TextField} type="text"/>
+          <Field
+            style={styles.input}
+            floatingLabelText="description"
+            name="description"
+            component={TextField}
+            type=""/>
+        </div>
+          <br />
+          <br />
+          <div style={styles.childrenContainer}>
+            {children}
+          </div>
           <br />
           <br />
           <FlatButton label="Submit" secondary={true} type="submit" disabled={submitting}/>
