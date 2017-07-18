@@ -27,7 +27,7 @@ Automatically deploys to Heroku when admin merges to master.
 * Redux
 * create react app
 * Apollo client
-* GraphQl: [graph.cool](url) ( graphql backend as a service) +
+* GraphQL: [graph.cool](url) ( graphql backend as a service) +
 Webtask ( serverless functions)
 * Sentry
 * Heroku
