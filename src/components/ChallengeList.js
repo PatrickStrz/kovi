@@ -115,6 +115,7 @@ class ChallengeList extends Component {
               isOpen={this.props.isCreateViewOpen}
               handleClose={this.props.hideCreateChallengeView}
               title='Create A Challenge'
+              repositionOnUpdate={false}
             >
               {createChallengeForm}
             </Modal>
