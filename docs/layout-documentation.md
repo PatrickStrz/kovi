@@ -5,7 +5,7 @@
 - Layout mapped out in `components/dev/Layout.js`
 - Make changes to dev layout outline before changing layout in the app so that
   docs are synced and development is easier.
-- **Hide elements** based on screen size using `layout.css`
+- **Hide elements** based on screen size using `layout.css` ( uses css media queries)
 
 ## Hiding/Showing elements based on size
 1. Using media css media queries, and classes defined in `layout.css`
