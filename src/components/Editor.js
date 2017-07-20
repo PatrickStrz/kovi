@@ -11,18 +11,24 @@ class Editor extends Component {
     value: PropTypes.string.isRequired, //redux state
   }
 
-  handleChange = this.props.handleChange
+  state = { editorHtml:''}
+
+  // handleChange = this.props.handleChange
+  handleChange = html => this.setState({editorHtml:html})
 
   render () {
     return (
       <ReactQuill
         theme={'snow'}
         onChange={this.handleChange}
-        value={this.props.value}
+        // value={this.props.value}
+        value={this.state.editorHtml}
         modules={Editor.modules}
         formats={Editor.formats}
         placeholder={this.props.placeholder}
-       />
+       >
+         <div style={{fontSize:16}}></div>
+       </ReactQuill>
      )
   }
 }
