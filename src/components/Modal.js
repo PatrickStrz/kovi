@@ -25,6 +25,12 @@ export default class Modal extends Component {
     }
   }
 
+  customContentStyle = {
+  width: '100%',
+  maxWidth: 'none',
+  height: '100%'
+  }
+
   render() {
     const {isOpen, handleClose, children, title} = this.props
 
@@ -46,6 +52,7 @@ export default class Modal extends Component {
           onRequestClose={handleClose}
           autoScrollBodyContent={true}
           titleStyle={this.styles.title}
+          contentStyle={this.customContentStyle}
         >
           <div>
             {children}
