@@ -22,7 +22,6 @@ import ChallengeCreateForm from './ChallengeCreateForm'
 import {Row, Col} from 'react-flexbox-grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from './Modal'
-import Modal2 from './Modal2'
 import GenericError from './commons/GenericError'
 import Editor from './Editor'
 
@@ -65,6 +64,7 @@ class ChallengeList extends Component {
       })
     }
   }
+
   render(){
     if (this.props.loading){
       return(<div>
@@ -111,20 +111,14 @@ class ChallengeList extends Component {
             mdOffset={3} md={6}
             lgOffset={3} lg={6}
           >
-            {/* <Modal
+            <Modal
               isOpen={this.props.isCreateViewOpen}
               handleClose={this.props.hideCreateChallengeView}
               title='Create A Challenge'
               repositionOnUpdate={false}
             >
               {createChallengeForm}
-            </Modal> */}
-            {this.props.isCreateViewOpen && <Modal2
-              handleClose={this.props.hideCreateChallengeView}
-             >
-               {createChallengeForm}
-             </Modal2> }
-
+            </Modal>
             <Row>
             {challengeCards}
             </Row>
