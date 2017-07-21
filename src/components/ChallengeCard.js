@@ -24,7 +24,7 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import Update from 'material-ui/svg-icons/content/create'
-import Modal from './Modal'
+import DialogOverlay from './DialogOverlay'
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -136,17 +136,18 @@ class ChallengeCard extends Component {
   renderUpdateFormModal = () => {
     const {id, title, description} = this.props.challenge
       return(
-      <Modal
+      <DialogOverlay
         title="Update Challenge"
         isOpen
         handleClose={this.props.hideUpdateChallengeView}
+        modal={true}
       >
         <ChallengeUpdateForm
           form={`challengeUpdateForm${id}`}
           initialValues={{title, description}}
           onSubmit={this.handleUpdateChallengeSubmit}
         />
-      </Modal>
+      </DialogOverlay>
       )
   }
 

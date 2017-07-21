@@ -21,7 +21,7 @@ import ChallengeCard from './ChallengeCard'
 import ChallengeCreateForm from './ChallengeCreateForm'
 import {Row, Col} from 'react-flexbox-grid'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import Modal from './Modal'
+import DialogOverlay from './DialogOverlay'
 import GenericError from './commons/GenericError'
 import Editor from './Editor'
 
@@ -111,14 +111,15 @@ class ChallengeList extends Component {
             mdOffset={3} md={6}
             lgOffset={3} lg={6}
           >
-            <Modal
+            <DialogOverlay
               isOpen={this.props.isCreateViewOpen}
               handleClose={this.props.hideCreateChallengeView}
               title='Create A Challenge'
               repositionOnUpdate={false}
+              modal={true}
             >
               {createChallengeForm}
-            </Modal>
+            </DialogOverlay>
             <Row>
             {challengeCards}
             </Row>
