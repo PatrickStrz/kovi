@@ -22,7 +22,9 @@ class Editor extends Component {
         modules={Editor.modules}
         formats={Editor.formats}
         placeholder={this.props.placeholder}
-       />
+       >
+         <div style={{fontSize:16}}></div>
+      </ReactQuill>
      )
   }
 }
