@@ -2,7 +2,7 @@ import * as ActionTypes from '../actions/types'
 
 const initialState = {communityScore: null, }
 
-export default function challengesReducer(state=initialState, action) {
+export default function scoreReducer(state=initialState, action) {
   switch (action.type) {
     case ActionTypes.INITIAL_COMMUNITY_SCORE:
       return {...state, communityScore: action.value}
