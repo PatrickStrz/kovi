@@ -32,11 +32,11 @@ export const CHALLENGE_DETAIL_QUERY = gql`
 			id
 			title
 			description
-			# body
-			# author{
-			# 	id
-			# 	picture
-			# }
+			body
+			author{
+				id
+				picture
+			}
 		}
 	}
 `

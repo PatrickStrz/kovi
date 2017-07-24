@@ -8,6 +8,8 @@ import {
   CHALLENGE_DETAIL_QUERY,
   ALL_CHALLENGES,
 } from '../gql/Challenge/queries'
+//other
+import DOMPurify from 'dompurify' //prevents XSS
 
 export class ChallengeDetail extends Component {
   static propTypes = {
@@ -17,10 +19,18 @@ export class ChallengeDetail extends Component {
     if (this.props.data.loading){
       return(<p>...Loading</p>)
     }
+
+    const {id, title, body} = this.props.data.Challenge
+
     return(
       <div>
-        <h1>ChallengeDetail for: {this.props.id}</h1>
-        <h2>title:{this.props.data.Challenge.title}</h2>
+        <h1>ChallengeDetail for: {id}</h1>
+        <h2>title:{title}</h2>
+        <div
+          className="content"
+          dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
+        />
+
       </div>
     )
   }

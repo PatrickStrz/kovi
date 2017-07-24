@@ -5,6 +5,7 @@
   "dependencies": {
     "apollo-client": "^1.2.2",
     "auth0-lock": "^10.16.0",
+    "dompurify": "^0.9.0",
     "dotenv": "^4.0.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
