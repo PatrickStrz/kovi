@@ -16,3 +16,13 @@ export const showUpdateChallengeView = (id) => ({
 export const hideUpdateChallengeView = () => ({
   type: ActionTypes.HIDE_UPDATE_CHALLENGE_VIEW
 })
+
+export const showChallengeDetailView = (id) => ({
+  type: ActionTypes.SHOW_CHALLENGE_DETAIL_VIEW,
+  id
+})
+
+export const hideChallengeDetailView = (id) => ({
+  type: ActionTypes.HIDE_CHALLENGE_DETAIL_VIEW,
+  id
+})

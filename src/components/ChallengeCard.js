@@ -5,7 +5,8 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   hideUpdateChallengeView,
-  showUpdateChallengeView
+  showUpdateChallengeView,
+  showChallengeDetailView,
 } from '../actions/challenge-actions'
 //gql
 import {compose,graphql} from 'react-apollo'
@@ -154,12 +155,16 @@ class ChallengeCard extends Component {
   render(){
     const {title, description, id, userDidUpvote} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
-    const {apiUserId, showUpdateChallengeView} = this.props
+    const {
+      apiUserId,
+      showUpdateChallengeView,
+      showChallengeDetailView
+    } = this.props
     const showUpdateChallengeViewCb = () => showUpdateChallengeView(id)
 
     return(
       <div>
-        <Card style={this.cardStyle()}>
+        <Card style={this.cardStyle()} onClick={()=> showChallengeDetailView(id)}>
           <CardHeader
             title={title}
             subtitle={description}
@@ -205,7 +210,8 @@ const mapStateToProps = (state) =>({
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     showUpdateChallengeView,
-    hideUpdateChallengeView
+    hideUpdateChallengeView,
+    showChallengeDetailView,
   }, dispatch)
 }
 

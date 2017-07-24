@@ -6,6 +6,7 @@ import { showCreateChallengeView } from '../actions/challenge-actions'
 import {requireAuth} from '../lib/auth'
 
 import ChallengeList from './ChallengeList'
+import ChallengeDetail from './ChallengeDetail'
 import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -25,6 +26,7 @@ class Home extends Component{
     return(
       <div>
         <Row>
+          <ChallengeDetail />
           <ChallengeList />
           <FloatingActionButton
             backgroundColor='#38c1be'
