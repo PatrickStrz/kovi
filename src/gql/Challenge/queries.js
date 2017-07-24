@@ -25,3 +25,27 @@ export const MORE_CHALLENGES_QUERY = gql`
 	}
 	${CHALLENGE_BODY_FRAGMENT}
 `
+
+export const CHALLENGE_DETAIL_QUERY = gql`
+	query Challenge($id:ID!){
+		Challenge(id:$id){
+			id
+			title
+			description
+			# body
+			# author{
+			# 	id
+			# 	picture
+			# }
+		}
+	}
+`
+
+export const ALL_CHALLENGES = gql`
+	query {
+		allChallenges{
+			id
+			title
+		}
+	}
+`
