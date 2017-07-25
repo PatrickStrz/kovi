@@ -21,11 +21,13 @@ import {logException} from '../config'
 //components+styles
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import ChallengeUpvote from './ChallengeUpvote'
+import DialogOverlay from './DialogOverlay'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import Update from 'material-ui/svg-icons/content/create'
-import DialogOverlay from './DialogOverlay'
+import FlatButton from 'material-ui/FlatButton'
+
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -164,7 +166,7 @@ class ChallengeCard extends Component {
 
     return(
       <div>
-        <Card style={this.cardStyle()} onClick={()=> showChallengeDetailView(id)}>
+        <Card style={this.cardStyle()}>
           <CardHeader
             title={title}
             subtitle={description}
@@ -195,6 +197,12 @@ class ChallengeCard extends Component {
             >
               <Update/>
             </IconButton>
+            <FlatButton
+              style={{paddingBottom:20}}
+              onClick={()=> showChallengeDetailView(id)}
+              label="Open"
+              primary={true}
+            />
           </div>
           {this.props.openUpdateViewId === id && this.renderUpdateFormModal()}
         </Card>
