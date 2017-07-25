@@ -1,15 +1,17 @@
 // react+redux
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 //apollo
 import {graphql} from 'react-apollo'
 import {
   CHALLENGE_DETAIL_QUERY,
-  ALL_CHALLENGES,
 } from '../gql/Challenge/queries'
 //other
 import DOMPurify from 'dompurify' //prevents XSS
+//components
+import GenericError from './commons/GenericError'
+
 
 export class ChallengeDetail extends Component {
   static propTypes = {
@@ -18,6 +20,9 @@ export class ChallengeDetail extends Component {
   render(){
     if (this.props.data.loading){
       return(<p>...Loading</p>)
+    }
+    if (this.props.data.error){
+      return <GenericError />
     }
 
     const {id, title, body} = this.props.data.Challenge
@@ -36,12 +41,9 @@ export class ChallengeDetail extends Component {
   }
 }
 
-// const ChallengeDetailApollo = graphql(ALL_CHALLENGES)(ChallengeDetail)
-
 const ChallengeDetailApollo = graphql(
 CHALLENGE_DETAIL_QUERY,{
   options: ({ id }) => ({ variables: { id } }), // coming from own props
-  // name:"CHALLENGE_DETAIL_QUERY"
 })(ChallengeDetail)
 
 export default ChallengeDetailApollo

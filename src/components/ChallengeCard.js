@@ -198,9 +198,8 @@ class ChallengeCard extends Component {
               <Update/>
             </IconButton>
             <FlatButton
-              style={{paddingBottom:20}}
-              onClick={()=> showChallengeDetailView(id)}
-              label="Open"
+              onTouchTap={()=> showChallengeDetailView(id)}
+              label="Show"
               primary={true}
             />
           </div>

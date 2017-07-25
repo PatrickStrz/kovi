@@ -2,8 +2,12 @@ import React from 'react'
 import {muiColors} from '../../lib/theme/colors'
 
 const GenericError = () =>
+<div>
   <h1 style={{color:muiColors.primary1}}>
-    There was an error performing your request
+    Request Error (¬▂¬)
   </h1>
+  <h4>Please check your connection</h4>
+</div>
+
 
 export default GenericError
