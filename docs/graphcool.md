@@ -11,6 +11,7 @@ here ! ( i.e new permission or function)
 2. Add SSS in graphcool console.
 3. redo permissions in graphcool console.
 4. Set up auth in graphcool console.
+5. Set up integrations (Algolia...)
 
 --------------------------------------------------------------------------------
 ## Permissions
