@@ -5,7 +5,8 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   hideUpdateChallengeView,
-  showUpdateChallengeView
+  showUpdateChallengeView,
+  showChallengeDetailView,
 } from '../actions/challenge-actions'
 //gql
 import {compose,graphql} from 'react-apollo'
@@ -20,11 +21,13 @@ import {logException} from '../config'
 //components+styles
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import ChallengeUpvote from './ChallengeUpvote'
+import DialogOverlay from './DialogOverlay'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import Update from 'material-ui/svg-icons/content/create'
-import DialogOverlay from './DialogOverlay'
+import FlatButton from 'material-ui/FlatButton'
+
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -154,7 +157,11 @@ class ChallengeCard extends Component {
   render(){
     const {title, description, id, userDidUpvote} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
-    const {apiUserId, showUpdateChallengeView} = this.props
+    const {
+      apiUserId,
+      showUpdateChallengeView,
+      showChallengeDetailView
+    } = this.props
     const showUpdateChallengeViewCb = () => showUpdateChallengeView(id)
 
     return(
@@ -190,6 +197,11 @@ class ChallengeCard extends Component {
             >
               <Update/>
             </IconButton>
+            <FlatButton
+              onTouchTap={()=> showChallengeDetailView(id)}
+              label="Show"
+              primary={true}
+            />
           </div>
           {this.props.openUpdateViewId === id && this.renderUpdateFormModal()}
         </Card>
@@ -205,7 +217,8 @@ const mapStateToProps = (state) =>({
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     showUpdateChallengeView,
-    hideUpdateChallengeView
+    hideUpdateChallengeView,
+    showChallengeDetailView,
   }, dispatch)
 }
 

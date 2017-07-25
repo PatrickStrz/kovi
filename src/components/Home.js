@@ -1,11 +1,16 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { showCreateChallengeView } from '../actions/challenge-actions'
+import {
+  showCreateChallengeView,
+  hideChallengeDetailView,
+} from '../actions/challenge-actions'
 
 import {requireAuth} from '../lib/auth'
 
 import ChallengeList from './ChallengeList'
+import ChallengeDetail from './ChallengeDetail'
+import DialogOverlay from './DialogOverlay'
 import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -21,9 +26,25 @@ class Home extends Component{
     }
   }
 
+  renderChallengeDetailView = () =>(
+    <DialogOverlay
+      title={'ChallengeDetail'}
+      isOpen={true}
+      handleClose={this.props.hideChallengeDetailView}
+    >
+      <ChallengeDetail id={this.props.openChallengeDetailViewId}/>
+    </DialogOverlay>
+  )
+
+
   render(){
+    const {
+        openChallengeDetailViewId,
+        showCreateChallengeView
+      } = this.props
     return(
       <div>
+        { openChallengeDetailViewId && this.renderChallengeDetailView()}
         <Row>
           <ChallengeList />
           <FloatingActionButton
@@ -31,7 +52,8 @@ class Home extends Component{
             mini={true}
             zDepth={2}
             style={this.styles.actionButton}
-            onTouchTap={() => requireAuth(this.props.showCreateChallengeView)}
+            //requireAuth accepts a callback:
+            onTouchTap={() => requireAuth(showCreateChallengeView)}
           >
             <ContentAdd/>
           </FloatingActionButton>
@@ -43,8 +65,13 @@ class Home extends Component{
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-      showCreateChallengeView
+      showCreateChallengeView,
+      hideChallengeDetailView,
     }, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(Home)
+const mapStateToProps = (state) => ({
+  openChallengeDetailViewId: state.app.challenges.openChallengeDetailViewId
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

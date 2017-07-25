@@ -12,6 +12,10 @@ export default function challengesReducer(state=initialState, action) {
       return {...state, openUpdateViewId: action.id}
     case ActionTypes.HIDE_UPDATE_CHALLENGE_VIEW:
       return {...state, openUpdateViewId:''}
+    case ActionTypes.SHOW_CHALLENGE_DETAIL_VIEW:
+      return {...state, openChallengeDetailViewId: action.id}
+    case ActionTypes.HIDE_CHALLENGE_DETAIL_VIEW:
+      return {...state, openChallengeDetailViewId:''}
     default:
       return state
   }
