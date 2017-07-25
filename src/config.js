@@ -8,3 +8,13 @@ export function logException(ex, context) {
   /*eslint no-console:0*/
   window.console && console.error && console.error(ex);
 }
+
+export function logExceptionWithReport(ex, context) {
+  Raven.captureException(ex, {
+    extra: context
+  })
+  Raven.showReportDialog()
+  /*eslint no-console:0*/
+  window.console && console.error && console.error(ex);
+  debugger
+}
