@@ -27,6 +27,7 @@
     "redux-form": "^6.6.3",
     "redux-form-material-ui": "^4.2.0",
     "redux-thunk": "^2.2.0",
+    "styled-components": "^2.1.1",
     "subscriptions-transport-ws": "^0.7.3"
   },
   "devDependencies": {
