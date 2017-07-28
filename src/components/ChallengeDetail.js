@@ -11,7 +11,17 @@ import {
 import DOMPurify from 'dompurify' //prevents XSS
 //components
 import GenericError from './commons/GenericError'
+import styled from 'styled-components'
 
+
+const MarkdownBox = styled.div`
+  background-color: #d2fffc;
+  border-radius: 3px;
+  padding: 20px;
+`
+const Title = styled.h2`
+  text-align: center;
+`
 
 export class ChallengeDetail extends Component {
   static propTypes = {
@@ -29,13 +39,13 @@ export class ChallengeDetail extends Component {
 
     return(
       <div>
-        <h1>ChallengeDetail for: {id}</h1>
-        <h2>title:{title}</h2>
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
-        />
-
+        <Title>{title}</Title>
+        <MarkdownBox>
+          <div
+            className="content"
+            dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
+          />
+        </MarkdownBox>
       </div>
     )
   }
