@@ -10,6 +10,7 @@ import SyncUser from './SyncUser'
 import BottomBar from './BottomBar'
 import Navbar from './navbar/Navbar'
 import Scoreboard from './scoreboard/Scoreboard'
+import TestScroll from './TestScroll'
 import '../styles/css/layout.css'
 import {
   HEADER_Z_INDEX,
@@ -59,6 +60,9 @@ class Site extends Component {
       }
 
     const styles = {
+      app:{
+
+      },
       headroom: {
         zIndex: HEADER_Z_INDEX
       },
@@ -74,10 +78,29 @@ class Site extends Component {
         flexDirection: 'column',
       //<---
         backgroundColor:"#f6f0f0",
+        zIndex: this.props.isScreenVisible ? '1' : '1'
       },
+      fullscreen:{
+        display: 'flex',
+        minHeight: '100vh',
+        flexDirection: 'column',
+        position: 'fixed',
+        top: 0,
+      //<---
+        backgroundColor:"#f6f0f0",
+        zIndex: 2000,
+
+      }
+    }
+
+    const renderChallengeDetail = () =>{
+      if(!this.props.isScreenVisible && this.props.openChallengeDetailViewId ){
+        return(<TestScroll/>)
+      }
     }
 
     return(
+    <div>
       <div style={styles.main}>
       {/* component that syncs or creates a user depending on redux state: */}
       { this.shouldSyncUser() && renderSyncUser() }
@@ -103,6 +126,12 @@ class Site extends Component {
           <BottomBar/>
         </div>
       </div>
+      <div style={styles.fullscreen}>
+        { renderChallengeDetail() }
+        {!this.props.isScreenVisible && <TestScroll/>}
+      </div>
+    </div>
+
     )
   }
 }
@@ -112,6 +141,8 @@ const mapStateToProps = (state) => {
     auth0Authenticated: state.app.auth.auth0Authenticated,
     userSynced: state.app.auth.userSynced,
     profile: state.app.auth.profile,
+    openChallengeDetailViewId: state.app.challenges.openChallengeDetailViewId,
+    isScreenVisible: state.app.layout.isScreenVisible,
   }
 }
 

@@ -1,8 +1,7 @@
 import * as ActionTypes from './types'
 
-export const hideScreen = (html) => ({
+export const hideScreen = () => ({
   type: ActionTypes.HIDE_SCREEN,
-  html
 })
 
 export const showScreen = () => ({
