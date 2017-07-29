@@ -21,3 +21,6 @@ export const INITIAL_COMMUNITY_SCORE = 'INITIAL_COMMUNITY_SCORE'
 // Editor
 export const EDITOR_CHANGE = 'EDITOR_CHANGE'
 export const CLEAR_EDITOR = 'CLEAR_EDITOR'
+// layout
+export const  HIDE_SCREEN = 'HIDE_SCREEN'
+export const  SHOW_SCREEN = 'SHOW_SCREEN'
