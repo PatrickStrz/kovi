@@ -7,6 +7,7 @@ import {graphql} from 'react-apollo'
 import {USER_SCORECARD_QUERY} from '../../gql/Scorecard/queries'
 import {USER_SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
+import {logException} from '../../config'
 
 class UserScore extends Component {
   static propTypes = {
@@ -22,6 +23,11 @@ class UserScore extends Component {
   render(){
     if (this.props.data.loading){
       return(<h2>loading...</h2>)
+    }
+    if (this.props.data.error){
+      logException(this.props.data.error, {
+      action: "UserScore query in UserScore.js"
+      })
     }
     return(
       <span style={this.props.style}>
