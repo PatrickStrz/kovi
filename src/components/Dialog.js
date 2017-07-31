@@ -2,18 +2,14 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 
 import {muiColors} from '../lib/theme/colors'
-import {MODAL_Z_INDEX} from '../styles/z-index'
+import {DIALOG_Z_INDEX} from '../styles/z-index'
 import {XS_MAX} from '../styles/screen-sizes'
 import styled from 'styled-components'
-import '../styles/css/misc.css'
+//stylesheet to prevent body scroll:
+import '../styles/css/react-modal.css'
 
-
-// import FlatButton from 'material-ui/FlatButton'
 import Media from 'react-media'
 import Modal from 'react-modal'
-
-
-//Wrapper component for react modal:
 
 const Exit = styled.span`
   cursor: pointer;
@@ -26,6 +22,7 @@ const ChildrenContainer = styled.div`
   padding-bottom: 5vh;
 `
 
+//Wrapper component for react modal:
 export default class Dialog extends Component {
 
   static propTypes = {
@@ -41,45 +38,36 @@ export default class Dialog extends Component {
   }
 
   styles = (isMobile) => ({
-  overlay : {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(19, 19, 19, 0.75)',
-    zIndex: MODAL_Z_INDEX,
-  },
-  content : {
-    position: 'absolute',
-    //positition values set conditionaly based on media query
-    top: isMobile ? '2vh': '10vh',
-    left: isMobile ? 0: '10vh',
-    right: isMobile ? 0: '10vh',
-    border: '1px solid #ccc',
-    background: '#ffffff',
-    height: isMobile ? '90vh' : '80vh',
-    overflow: 'scroll',
-    WebkitOverflowScrolling: 'touch',
-    borderRadius: '3px',
-    outline: 'none',
-    margin:0,
-  }
-})
+    overlay : {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(19, 19, 19, 0.75)',
+      zIndex: DIALOG_Z_INDEX,
+    },
+    content : {
+      position: 'absolute',
+      top: isMobile ? '2vh': '10vh',
+      left: isMobile ? 0: '10vh',
+      right: isMobile ? 0: '10vh',
+      border: '1px solid #ccc',
+      background: '#ffffff',
+      height: isMobile ? '90vh' : '80vh',
+      overflow: 'scroll',
+      WebkitOverflowScrolling: 'touch',
+      borderRadius: '3px',
+      outline: 'none',
+      margin:0,
+    }
+  })
 
-  //renders responsive modal. matches passed from media query component:
-  // matches returns true if viewport is mobile size ( < XS_MAX )
+  //renders responsive modal. matches (boolean) passed from media query component
+  // matches = true if viewport is mobile size ( < XS_MAX )
   renderModal = (matches) => {
     const {isOpen, handleClose, children, title, modal} = this.props
     const styles = this.styles(matches)
-
-    // const actions = [
-    //   <FlatButton
-    //     label="Cancel"
-    //     primary={true}
-    //     onTouchTap={this.props.handleClose}
-    //   />
-    // ]
 
     return(
       <Modal
@@ -88,7 +76,7 @@ export default class Dialog extends Component {
         isOpen={isOpen}
         onRequestClose={handleClose}
         shouldCloseOnOverlayClick={!modal}
-        >
+      >
         <Exit onClick={()=> handleClose()}>x</Exit>
         <ChildrenContainer>
           {children}
@@ -96,7 +84,6 @@ export default class Dialog extends Component {
       </Modal>
     )
   }
-
 
   render() {
     Modal.setAppElement(root)

@@ -22,4 +22,4 @@ const z = {
 // --------------------------------------------------
 export const SCOREBOARD_Z_INDEX = z.index1 //Scoreboard.js
 export const HEADER_Z_INDEX = z.index2
-export const MODAL_Z_INDEX = z.index9 // so modal always stays on top.
+export const DIALOG_Z_INDEX = z.index9 //Dialog.js - so dialog always stays on top.
