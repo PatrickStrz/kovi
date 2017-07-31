@@ -10,7 +10,7 @@ import {requireAuth} from '../lib/auth'
 
 import ChallengeList from './ChallengeList'
 import ChallengeDetail from './ChallengeDetail'
-// import DialogOverlay from './DialogOverlay'
+// import MaterialDialog from './MaterialDialog'
 import Dialog from './Dialog'
 import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'

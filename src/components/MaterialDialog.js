@@ -9,7 +9,7 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
 
-export default class DialogOverlay extends Component {
+export default class MaterialDialog extends Component {
 
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,

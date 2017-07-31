@@ -21,7 +21,7 @@ import {logException} from '../config'
 //components+styles
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import ChallengeUpvote from './ChallengeUpvote'
-import DialogOverlay from './DialogOverlay'
+import MaterialDialog from './MaterialDialog'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'
@@ -139,7 +139,7 @@ class ChallengeCard extends Component {
   renderUpdateFormModal = () => {
     const {id, title, description} = this.props.challenge
       return(
-      <DialogOverlay
+      <MaterialDialog
         title="Update Challenge"
         isOpen
         handleClose={this.props.hideUpdateChallengeView}
@@ -150,7 +150,7 @@ class ChallengeCard extends Component {
           initialValues={{title, description}}
           onSubmit={this.handleUpdateChallengeSubmit}
         />
-      </DialogOverlay>
+      </MaterialDialog>
       )
   }
 
