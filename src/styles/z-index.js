@@ -20,5 +20,6 @@ const z = {
 
 // Z-Index Applications
 // --------------------------------------------------
+export const SCOREBOARD_Z_INDEX = z.index1 //Scoreboard.js
 export const HEADER_Z_INDEX = z.index2
-export const SCOREBOARD_Z_INDEX = z.index1
+export const MODAL_Z_INDEX = z.index9 // so modal always stays on top.

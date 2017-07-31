@@ -1,0 +1,4 @@
+/*to prevent background scroll for react modal: */
+.ReactModal__Body--open {
+    overflow: hidden;
+} 
