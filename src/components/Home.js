@@ -10,7 +10,8 @@ import {requireAuth} from '../lib/auth'
 
 import ChallengeList from './ChallengeList'
 import ChallengeDetail from './ChallengeDetail'
-import DialogOverlay from './DialogOverlay'
+// import MaterialDialog from './MaterialDialog'
+import Dialog from './Dialog'
 import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -27,13 +28,13 @@ class Home extends Component{
   }
 
   renderChallengeDetailView = () =>(
-    <DialogOverlay
+    <Dialog
       title={'ChallengeDetail'}
       isOpen={true}
       handleClose={this.props.hideChallengeDetailView}
     >
       <ChallengeDetail id={this.props.openChallengeDetailViewId}/>
-    </DialogOverlay>
+    </Dialog>
   )
 
 
