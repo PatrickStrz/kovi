@@ -18,9 +18,20 @@ import FlatButton from 'material-ui/FlatButton';
     const {handleSubmit, submitting, error} = props
     return(
         <form onSubmit={handleSubmit}>
-          <Field floatingLabelText="title" name="title" component={TextField}/>
+          <Field
+            floatingLabelText="title"
+            name="title"
+            component={TextField}
+            multiLine={true}
+          />
           <br />
-          <Field floatingLabelText="description" name="description" component={TextField} type="text"/>
+          <Field
+            floatingLabelText="description"
+            name="description"
+            component={TextField}
+            type="text"
+            multiLine={true}
+          />
           <br />
           <br />
           <FlatButton label="Submit" secondary={true} type="submit" disabled={submitting}/>
