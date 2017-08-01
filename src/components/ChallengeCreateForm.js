@@ -28,14 +28,18 @@ import FlatButton from 'material-ui/FlatButton';
             style={styles.input}
             floatingLabelText="title"
             name="title"
-            component={TextField}/>
+            component={TextField}
+            multiLine={true}
+          />
           <br />
           <Field
             style={styles.input}
             floatingLabelText="description"
             name="description"
             component={TextField}
-            type=""/>
+            multiLine={true}
+            type=""
+          />
         </div>
           <br />
           <br />
