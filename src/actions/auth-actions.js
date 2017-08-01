@@ -58,9 +58,11 @@ export function logout() {
 export function userSyncSuccess(apiUserId, apiUserScorecardId) {
   AuthService.setApiUserId(apiUserId)
   AuthService.setApiUserScorecardId(apiUserScorecardId)
-  return {
-    type: ActionTypes.USER_SYNC_SUCCESS,
-    apiUserId,
-    apiUserScorecardId,
+  return dispatch => {
+    dispatch({
+      type: ActionTypes.USER_SYNC_SUCCESS,
+      apiUserId,
+      apiUserScorecardId,
+    })
   }
 }
