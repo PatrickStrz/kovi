@@ -11,7 +11,9 @@ import {
 import DOMPurify from 'dompurify' //prevents XSS
 //components
 import GenericError from './commons/GenericError'
+import ChallengeCommentsContainer from './ChallengeCommentsContainer'
 import styled from 'styled-components'
+
 
 
 const MarkdownBox = styled.div`
@@ -46,6 +48,7 @@ export class ChallengeDetail extends Component {
             dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
           />
         </MarkdownBox>
+        <ChallengeCommentsContainer challengeId={id}/>
       </div>
     )
   }
