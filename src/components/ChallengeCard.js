@@ -8,6 +8,7 @@ import {
   showUpdateChallengeView,
   showChallengeDetailView,
 } from '../actions/challenge-actions'
+import {hideScreen} from '../actions/layout-actions'
 //gql
 import {compose,graphql} from 'react-apollo'
 import {
@@ -154,6 +155,11 @@ class ChallengeCard extends Component {
       )
   }
 
+  showDetail = () => {
+    this.props.hideScreen()
+    this.props.showChallengeDetailView(this.props.id)
+  }
+
   render(){
     const {title, description, id, userDidUpvote} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
@@ -198,7 +204,7 @@ class ChallengeCard extends Component {
               <Update/>
             </IconButton>
             <FlatButton
-              onTouchTap={()=> showChallengeDetailView(id)}
+              onTouchTap={this.showDetail}
               label="Show"
               primary={true}
             />
@@ -219,6 +225,7 @@ const mapDispatchToProps = (dispatch) => {
     showUpdateChallengeView,
     hideUpdateChallengeView,
     showChallengeDetailView,
+    hideScreen,
   }, dispatch)
 }
 
