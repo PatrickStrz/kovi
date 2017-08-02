@@ -9,9 +9,11 @@ import IconButton from 'material-ui/IconButton'
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import {muiColors, colors} from '../lib/theme/colors'
 import PropTypes from 'prop-types'
+import MoUpvote from './MoUpvote'
+import '../styles/css/mo-upvote.css'
 
 class ChallengeUpvote extends Component{
-  state = { upvoteInProgress: false}
+  state = { upvoteInProgress: false, animate: false}
   static propTypes = {
     userDidUpvote: PropTypes.array.isRequired,
     upvotesCount: PropTypes.number.isRequired,
@@ -45,17 +47,16 @@ class ChallengeUpvote extends Component{
       this.disableUpvote()
       await removeChallengeUpvoteMutation({variables})
       this.enableUpvote()
-
+      this.setState({animate:false})
     }
     else {
       this.disableUpvote()
       await addChallengeUpvoteMutation({variables})
       this.enableUpvote()
+      this.setState({animate:true})
     }
   }
-  handleToggleUpvoteCallback = () => {
-    this.handleToggleUpvote()
-  }
+
 
   render(){
     const styles = {
@@ -73,10 +74,19 @@ class ChallengeUpvote extends Component{
       }
     }
 
+    const userDidUpvote = this.props.userDidUpvote.length > 0 ? true : false
+
     return(
     //used span so component can be used inline:
-    <span>
-      <IconButton
+
+    <div>
+      <MoUpvote
+        userDidUpvote={userDidUpvote}
+        animate={this.state.animate}
+        uniqueId={`challenge-like-${this.props.challengeId}`}
+        handleClick={() =>{requireAuth(this.handleToggleUpvote)} }
+        ></MoUpvote>
+      {/* <IconButton
         onTouchTap={() => requireAuth(this.handleToggleUpvote)}
         iconStyle={styles.icon}
         disabled={this.state.upvoteInProgress}
@@ -84,9 +94,10 @@ class ChallengeUpvote extends Component{
         <ThumbUp
           color={styles.iconColor}
         />
-      </IconButton>
+      </IconButton> */}
+
       <span style={styles.count}>{this.props.upvotesCount}</span>
-    </span>
+    </div>
     )
   }
 }
