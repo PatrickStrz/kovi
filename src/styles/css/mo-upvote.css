@@ -1,16 +1,25 @@
+
 .upvote{
-  position: absolute;
-  transform: translate( -50%, -50% );
-  top: 50%;
-  left: 50%;
-  font-size: 30px;
+  font-size:26px;
   cursor: pointer;
-  border: none;
   color: #bdc1c1;
   transition: all, .1s ease-out;
-/*   font-size: 100px ; */
+  /* so don't move up and left on transition: */
+  transform: translate( -50%, -50% );
 }
 
 .upvote.hidden {
   font-size: 0;
+}
+
+.container{
+  margin:0px;
+  padding:0px;
+  position: relative;
+  top:50%;
+  left:50%;
+}
+
+.icon-container {
+  position: fixed;
 }
