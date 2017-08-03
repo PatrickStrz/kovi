@@ -1,6 +1,7 @@
 import Auth0Lock from 'auth0-lock'
 import jwtDecode from 'jwt-decode'
 import {muiColors} from './theme/colors'
+import logo from '../../logo.svg'
 
 const ROOT_ROUTE = '/'
 
@@ -17,11 +18,11 @@ export default class AuthService {
         responseType: 'token'
       },
       theme: {
-      //   logo: LogoImg,
+        logo: logo,
         primaryColor: muiColors.primary1
       },
       languageDictionary: {
-        title: 'KOVI'
+        title: ''
       }
     })
     // binds login functions to keep this context
