@@ -31,7 +31,7 @@ class Site extends Component {
   }
 
   shouldSyncUser = () => {
-    if (this.props.auth0Authenticated && !this.props.userSynced){
+    if (this.props.auth0Authenticated && this.props.userSyncRequired){
       return true
     }
     else {
@@ -41,10 +41,9 @@ class Site extends Component {
 
   render(){
     const {
-      auth0Authenticated,
+      isAuthenticated,
       logout,
       profile,
-      userSynced,
       userSyncSuccess,
       children,
     } = this.props
@@ -88,8 +87,7 @@ class Site extends Component {
         <Navbar
           handleLogout={logout}
           handleLogin={login}
-          auth0Authenticated={auth0Authenticated}
-          userSynced={userSynced}
+          isAuthenticated={isAuthenticated}
           profile={profile}
         />
       </Headroom>
@@ -111,6 +109,8 @@ const mapStateToProps = (state) => {
   return {
     auth0Authenticated: state.app.auth.auth0Authenticated,
     userSynced: state.app.auth.userSynced,
+    userSyncRequired: state.app.auth.userSyncRequired,
+    isAuthenticated: state.app.auth.isAuthenticated,
     profile: state.app.auth.profile,
   }
 }

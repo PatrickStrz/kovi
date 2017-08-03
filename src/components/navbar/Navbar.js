@@ -13,9 +13,8 @@ const Navbar = (props) => {
   const {
     handleLogin,
     handleLogout,
-    auth0Authenticated,
     profile,
-    userSynced
+    isAuthenticated
   } = props
 
   const styles = {
@@ -33,7 +32,7 @@ const Navbar = (props) => {
   }
 
   const renderUserControls = () => {
-    if (auth0Authenticated && userSynced ) {
+    if (isAuthenticated) {
       return (
         <UserIconMenu picture={profile.picture} handleLogout={handleLogout}/>
       )
@@ -71,8 +70,7 @@ const Navbar = (props) => {
 Navbar.propTypes = {
   handleLogout: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired,
-  auth0Authenticated: PropTypes.bool.isRequired,
-  userSynced: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   profile: PropTypes.object.isRequired,
 }
 
