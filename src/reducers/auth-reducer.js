@@ -12,11 +12,26 @@ const isAuthenticated = () => {
   }
 }
 
+const isUserSyncRequired = () => {
+  if(
+    !AuthService.loggedIn() ||
+    !AuthService.getApiUserId() ||
+    !AuthService.getApiUserId()
+  ){
+    return true
+  }
+  else {
+    return false
+  }
+}
+
+//------------- reducer code -------------//
+
 const initialState = {
-  auth0Authenticated: !AuthService.isTokenExpired(),
+  auth0Authenticated: AuthService.loggedIn(),
   isFetching: false,
   profile: AuthService.getProfile(),
-  userSynced: AuthService.getApiUserId() ? true : false ,
+  userSyncRequired: isUserSyncRequired(),
   error: null,
   apiUserId: AuthService.getApiUserId(),
   apiUserScorecardId: AuthService.getApiUserScorecardId(),
@@ -56,8 +71,8 @@ export default function authReducer(state=initialState, action) {
     case ActionTypes.USER_SYNC_SUCCESS:
       return {
         ...state,
-        userSynced: true,
         apiUserId: action.apiUserId,
+        userSyncRequired: false,
         apiUserScorecardId: action.apiUserScorecardId,
         isAuthenticated: true
       }

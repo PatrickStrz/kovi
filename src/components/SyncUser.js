@@ -9,10 +9,11 @@ import {
 } from '../gql/User/mutations'
 
 import {logException} from '../config'
+
 /*
 This Component is to be rendered ONLY when a user is logged in
 ( state.auth.auth0Authenticated = true)
-and the user is not Synced with the graphQL api ( stat.auth.userSynced == false).
+and the user is not Synced with the GraphQL api.
 User query is performed to check if user exists, it will return
 an id if the auth0Authenticated user exists, otherwise returns null. User query
 automatically returns a user without providing query variables because the
