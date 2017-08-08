@@ -2,7 +2,7 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 // helpers+other
-import {muiColors} from '../../lib/theme/colors'
+import {muiColors} from 'lib/theme/colors'
 //components
 import CommunityScore from './CommunityScore'
 import UserScore from './UserScore'
