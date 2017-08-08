@@ -8,11 +8,12 @@ import {COMMENTS_ON_CHALLENGE} from '../gql/Comment/queries'
 // import {muiColors} from '../lib/theme/colors'
 import {logException} from '../config'
 import styled from 'styled-components'
+import {muiColors} from 'lib/theme/colors'
 //components
 import GenericError from './commons/GenericError'
 
 const ShowChildrenButton = styled.a`
-  color: #907da8;
+  color: ${muiColors.primary1};
   cursor: pointer;
 `
 
