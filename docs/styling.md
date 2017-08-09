@@ -1,10 +1,23 @@
 # Styling and UI
+
+## Styled-Components Library
+- Using [styled components library](https://www.styled-components.com) to have
+the benefits of inline styles while writing real css. Also helps reinforce reusable
+component architecture.
+- Use styled components wherever possible.
+- Keep styled components small, handling one concern only. Create a new file in
+ui-components for any component that will be reused throughout the application.
+- Use 'local' styled components that are not exported for composed components that
+require smaller one-off pieces.
+
 ## Inline styles/ CSS
-1. Use inline styles
-2. Only use CSS classes when necessary. I.e) When using media queries to hide
-elements based on screen size.
+1. Only Use inline styles for material-ui library components.
+2. Only use CSS classes when absolutely necessary. I.e) overriding or supplying
+a css class when using components from external libraries.
+
 ## Material-UI
-1. Using [http://www.material-ui.com/](url) library for components
+1. Using [http://www.material-ui.com/](url) library for certain components, but
+replacing with custom elements.
 2. Using a custom theme `lib/theme/mui-theme` for components.
 3. When it is necessary to override the mui-theme:
     - If possible use the style props documented at [http://www.material-ui.com/](url)

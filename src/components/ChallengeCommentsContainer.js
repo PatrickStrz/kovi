@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import {muiColors} from 'lib/theme/colors'
 //components
 import GenericError from './commons/GenericError'
+import Avatar from 'ui-components/Avatar'
 
 const ShowChildrenButton = styled.p`
   color: ${muiColors.secondary1};
@@ -37,16 +38,16 @@ const UserBox = styled.div`
   position: relative;
 `
 
-const Avatar = styled.div`
-  background-image: url('http://i.stack.imgur.com/Dj7eP.jpg');
-  width: 30px;
-  height: 30px;
-  background-size: cover;
-  /* center the image vertically and horizontally */
-  background-position: center;
-  border-radius: 50%;
-  display: inline-block;
-`
+// const Avatar = styled.div`
+//   background-image: url('http://i.stack.imgur.com/Dj7eP.jpg');
+//   width: 30px;
+//   height: 30px;
+//   background-size: cover;
+//   /* center the image vertically and horizontally */
+//   background-position: center;
+//   border-radius: 50%;
+//   display: inline-block;
+// `
 
 class ChallengeCommentsContainer extends Component{
   static propTypes = {
@@ -63,7 +64,7 @@ class ChallengeCommentsContainer extends Component{
       return(
         <div key={'comment'+comment.id}>
         <UserBox>
-          <Avatar/>
+          <Avatar imageUrl={comment.user.picture}/>
           <UserName>
             {comment.user.name}
           </UserName>
