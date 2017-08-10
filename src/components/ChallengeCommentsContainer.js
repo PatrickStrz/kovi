@@ -6,27 +6,9 @@ import {graphql} from 'react-apollo'
 import {COMMENTS_ON_CHALLENGE} from '../gql/Comment/queries'
 //helpers+other
 import {logException} from '../config'
-import styled from 'styled-components'
-import {muiColors} from 'lib/theme/colors'
 //components
 import GenericError from './commons/GenericError'
-import UserHeader from 'ui-components/UserHeader'
-
-const ShowChildrenButton = styled.p`
-  color: ${muiColors.secondary1};
-  cursor: pointer;
-`
-
-const CommentText = styled.p`
-  color: #545252;
-  word-wrap: break-word;
-`
-
-const CommentSectionContainer = styled.div`
-  margin: auto;
-  justify-content: center;
-  width: 80%;
-`
+import CommentSection from 'components/CommentSection'
 
 class ChallengeCommentsContainer extends Component{
   static propTypes = {
@@ -35,39 +17,6 @@ class ChallengeCommentsContainer extends Component{
 
   state = {
     showChildComments:false
-  }
-
-  renderComments = () => {
-    const comments = this.props.data.allComments
-    return (comments.map(comment =>{
-      return(
-          <CommentSectionContainer key={'comment'+comment.id}>
-            <UserHeader
-              imageUrl={comment.user.picture}
-              userName={comment.user.name}
-            />
-            <CommentText>dfkmlsdfaklnkldsafnklndasklfnklsdnafklnsdklfnklsdaflknsdaklfndsklfnldksnflkdsnflkdsnfklndslkfndkfnkdfkdkfkdfkdfkndkfdkfnkdfnkdnfkdnfkdnfkdnfkndkls</CommentText>
-            <ShowChildrenButton
-              onClick={()=>{this.setState({showChildComments:true})}}
-            >
-              Show Children
-            </ShowChildrenButton>
-            {this.state.showChildComments && this.renderChildComments(comment.childComments)}
-
-          </CommentSectionContainer>
-      )
-    }))
-  }
-
-  renderChildComments = (comments) => {
-    return(comments.map( comment =>{
-      return(
-      <div key={'subcomment' + comment.id}>
-        <CommentText>{comment.text}</CommentText>
-      </div>
-        )
-      })
-    )
   }
 
   render(){
@@ -84,9 +33,7 @@ class ChallengeCommentsContainer extends Component{
       )
     }
     return(
-      <div>
-        {this.renderComments()}
-      </div>
+      <CommentSection comments={this.props.data.allComments} />
     )
   }
 }

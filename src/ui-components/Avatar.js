@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 //Profile avatar that displays inline
-
 const StyledAvatar = styled.div`
   background-image: url(${props => props.imageUrl});
-  ${props => props.getSize}
-  width: 35px;
-  height: 35px;
+  ${props => `
+      width: ${props.size}px;
+      height: ${props.size}px;
+    `}
   background-size: cover;
   /* center the image vertically and horizontally */
   background-position: center;
@@ -18,10 +18,15 @@ const StyledAvatar = styled.div`
   display: inline-block;
 `
 
-const Avatar = (props) => <StyledAvatar imageUrl={props.imageUrl}/>
+const Avatar = (props) => {
+  return(
+    <StyledAvatar size={props.size} imageUrl={props.imageUrl}/>
+  )
+}
 
 Avatar.propTypes = {
   imageUrl: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired,
 }
 
 export default Avatar
