@@ -5,8 +5,6 @@ import PropTypes from 'prop-types'
 import Avatar from 'ui-components/Avatar'
 import {muiColors} from 'lib/theme/colors'
 
-
-
 const OuterContainer = styled.div`
   display: flex;
   align-items: center;
@@ -30,7 +28,7 @@ const UserHeader = (props) => {
 UserHeader.propTypes = {
   userName: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
-  avatarSize: PropTypes.number.isRequired,
+  avatarSize: PropTypes.string.isRequired,
 }
 
 export default UserHeader
