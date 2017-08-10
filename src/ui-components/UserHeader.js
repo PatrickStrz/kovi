@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 //components
 import Avatar from 'ui-components/Avatar'
-import {muiColors, colors} from 'lib/theme/colors'
+import {muiColors} from 'lib/theme/colors'
 
 
 
@@ -14,28 +14,15 @@ const OuterContainer = styled.div`
 
 const UserName = styled.div`
   color: ${muiColors.primary1};
-`
-
-const Date = styled.div`
-  color: ${colors.lightGrey};
-  font-size: 14px;
-`
-
-const TextContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
   margin-left: 5px;
 `
+
 // Component that consists of user avatar with user name beside
 const UserHeader = (props) => {
  return(
    <OuterContainer>
-     <Avatar imageUrl={props.imageUrl} />
-     <TextContainer>
+     <Avatar imageUrl={props.imageUrl} size={props.avatarSize} />
        <UserName>{props.userName}</UserName>
-       <Date>Jun 1</Date>
-     </TextContainer>
    </OuterContainer>
  )
 }
@@ -43,6 +30,7 @@ const UserHeader = (props) => {
 UserHeader.propTypes = {
   userName: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
+  avatarSize: PropTypes.number.isRequired,
 }
 
 export default UserHeader

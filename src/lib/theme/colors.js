@@ -4,5 +4,6 @@ export const muiColors = {
 }
 //uncategorized colors
 export const colors = {
-  lightGrey: '#adadad'
+  faintGrey: '#ece8e8',
+  lightGrey: '#adadad',
 }

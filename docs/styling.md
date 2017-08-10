@@ -3,7 +3,7 @@
 ## Styled-Components Library
 - Using [styled components library](https://www.styled-components.com) to have
 the benefits of inline styles while writing real css. Also helps reinforce reusable
-component architecture.
+component architecture. CSS is automatically vendor prefixed.
 - Use styled components wherever possible.
 - Keep styled components small, handling one concern only. Create a new file in
 ui-components for any component that will be reused throughout the application.
