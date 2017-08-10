@@ -8,8 +8,8 @@ import styled from 'styled-components'
 const StyledAvatar = styled.div`
   background-image: url(${props => props.imageUrl});
   ${props => `
-      width: ${props.size}px;
-      height: ${props.size}px;
+      width: ${props.size};
+      height: ${props.size};
     `}
   background-size: cover;
   /* center the image vertically and horizontally */
@@ -26,7 +26,7 @@ const Avatar = (props) => {
 
 Avatar.propTypes = {
   imageUrl: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
+  size: PropTypes.string.isRequired,
 }
 
 export default Avatar

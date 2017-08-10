@@ -9,6 +9,7 @@ import {
 } from '../gql/Challenge/queries'
 //other
 import DOMPurify from 'dompurify' //prevents XSS
+import {colors} from 'lib/theme/colors'
 //components
 import GenericError from './commons/GenericError'
 import ChallengeCommentsContainer from './ChallengeCommentsContainer'
@@ -20,9 +21,14 @@ const MarkdownBox = styled.div`
   padding: 20px;
 `
 const Title = styled.h2`
-  text-align: center;
+  color: #49494a;
 `
-
+const CommentsHeading = styled.h4`
+  color: ${colors.lightGrey};
+`
+const LineBreak = styled.hr`
+  border: solid 1px ${colors.faintGrey};
+`
 export class ChallengeDetail extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired
@@ -46,6 +52,8 @@ export class ChallengeDetail extends Component {
             dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
           />
         </MarkdownBox>
+        <CommentsHeading>Discussion</CommentsHeading>
+        <LineBreak />
         <ChallengeCommentsContainer challengeId={id}/>
       </div>
     )
