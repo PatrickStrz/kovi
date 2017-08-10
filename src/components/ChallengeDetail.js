@@ -14,8 +14,6 @@ import GenericError from './commons/GenericError'
 import ChallengeCommentsContainer from './ChallengeCommentsContainer'
 import styled from 'styled-components'
 
-
-
 const MarkdownBox = styled.div`
   background-color: #d2fffc;
   border-radius: 3px;

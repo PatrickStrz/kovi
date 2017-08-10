@@ -1,12 +1,16 @@
+//react
 import React from 'react'
+import PropTypes from 'prop-types'
+//other
 import styled from 'styled-components'
 
-// Profile avatar that displays inline
+//Profile avatar that displays inline
 
 const StyledAvatar = styled.div`
   background-image: url(${props => props.imageUrl});
-  width: 30px;
-  height: 30px;
+  ${props => props.getSize}
+  width: 35px;
+  height: 35px;
   background-size: cover;
   /* center the image vertically and horizontally */
   background-position: center;
@@ -15,5 +19,9 @@ const StyledAvatar = styled.div`
 `
 
 const Avatar = (props) => <StyledAvatar imageUrl={props.imageUrl}/>
+
+Avatar.propTypes = {
+  imageUrl: PropTypes.string.isRequired,
+}
 
 export default Avatar
