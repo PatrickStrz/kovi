@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 //lib + other
 import styled from 'styled-components'
 import {colors} from 'lib/theme/colors'
 //components
 import UserHeader from 'ui-components/UserHeader'
+import CommentCreate from 'ui-components/CommentCreate'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -34,7 +36,7 @@ const SubCommentSectionContainer = styled.div`
   flex-direction: column;
 `
 
-export default class CommentSection extends Component {
+class CommentSection extends Component {
 
   static propTypes = {
     comments: PropTypes.array.isRequired,
@@ -56,14 +58,14 @@ export default class CommentSection extends Component {
   renderComments = (comments) => {
     return (comments.map(comment =>{
       return(
-          <CommentSectionContainer key={'comment' + comment.id}>
+          <div key={'comment' + comment.id}>
             {this.renderComment(comment)}
             <SubCommentSectionWrapper>
               <SubCommentSectionContainer>
                 {this.renderChildComments(comment.childComments)}
               </SubCommentSectionContainer>
             </SubCommentSectionWrapper>
-          </CommentSectionContainer>
+          </div>
           )
         }
       )
@@ -80,9 +82,16 @@ export default class CommentSection extends Component {
 
   render(){
     return(
-      <div>
+      <CommentSectionContainer>
         {this.renderComments(this.props.comments)}
-      </div>
+        <CommentCreate avatarImageUrl={this.props.userImageUrl} />
+      </CommentSectionContainer>
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  userImageUrl: state.app.auth.profile.picture,
+})
+
+export default connect(mapStateToProps)(CommentSection)
