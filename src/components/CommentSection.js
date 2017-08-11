@@ -49,6 +49,7 @@ class CommentSection extends Component {
 
   static propTypes = {
     comments: PropTypes.array.isRequired,
+    handleCommentCreate: PropTypes.func.isRequired,
   }
 
   renderComment = (comment, subcomment='') => {

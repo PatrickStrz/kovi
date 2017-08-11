@@ -2,8 +2,9 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //gql
-import {graphql} from 'react-apollo'
-import {COMMENTS_ON_CHALLENGE} from '../gql/Comment/queries'
+import {graphql, compose} from 'react-apollo'
+import {COMMENTS_ON_CHALLENGE_QUERY} from '../gql/Comment/queries'
+import {CREATE_COMMENT_ON_CHALLENGE_MUTATION} from 'gql/Comment/mutations'
 //helpers+other
 import {logException} from '../config'
 //components
@@ -17,6 +18,24 @@ class ChallengeCommentsContainer extends Component{
 
   state = {
     showChildComments:false
+  }
+
+  handleCommentCreate = async (userId, challengeId, text) => {
+    const options = {
+      variables: {
+        challengeId,
+        userId,
+        text,
+      }
+    }
+    try{
+      await this.props.createCommentOnChallengeMutation(options)
+    }
+    catch(err){
+      logException(err, {
+      action: "handleCommentCreate function in ChallengeCommentsContainer"
+      })
+    }
   }
 
   render(){
@@ -33,14 +52,20 @@ class ChallengeCommentsContainer extends Component{
       )
     }
     return(
-      <CommentSection comments={this.props.data.allComments} />
+      <CommentSection
+        handleCommentCreate={this.handleCommentCreate} 
+        comments={this.props.data.allComments}
+      />
     )
   }
 }
 
-const ChallengeCommentsApollo = graphql(
-  COMMENTS_ON_CHALLENGE,{
-    options: ({challengeId}) => ({ variables: {challengeId}})
-  })(ChallengeCommentsContainer)
+const ChallengeCommentsApollo = compose(
+  graphql(
+    COMMENTS_ON_CHALLENGE_QUERY,{
+      options: ({challengeId}) => ({ variables: {challengeId}})
+    }),
+  graphql(CREATE_COMMENT_ON_CHALLENGE_MUTATION, {name: 'createCommentOnChallengeMutation'}),
+)(ChallengeCommentsContainer)
 
 export default ChallengeCommentsApollo
