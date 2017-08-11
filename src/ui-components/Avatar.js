@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 //other
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 //Profile avatar that displays inline
 const StyledAvatar = styled.div`
@@ -16,6 +16,10 @@ const StyledAvatar = styled.div`
   background-position: center;
   border-radius: 50%;
   display: inline-block;
+  ${props => css`
+      min-width: ${props.size};
+      max-width: ${props.size};
+    `}
 `
 
 const Avatar = (props) => {
