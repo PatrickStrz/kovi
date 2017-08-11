@@ -28,6 +28,8 @@ export default class CommentCreate extends Component {
   static propTypes = {
     avatarImageUrl: PropTypes.string.isRequired,
     avatarSize: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
   }
 
   state = {
@@ -51,7 +53,7 @@ export default class CommentCreate extends Component {
   }
 
   render(){
-    const {avatarImageUrl, avatarSize, placeholder} = this.props
+    const {avatarImageUrl, avatarSize, placeholder, handleSubmit} = this.props
     return(
       <Container>
         <Avatar size={avatarSize} imageUrl={avatarImageUrl}/>
@@ -60,7 +62,7 @@ export default class CommentCreate extends Component {
           style={this.styles.createComment}
           onChange={(e)=> this.handleInput(e)}
         />
-        <Button>Post</Button>
+        <Button onClick={() => handleSubmit()}>Post</Button>
       </Container>
     )
   }
