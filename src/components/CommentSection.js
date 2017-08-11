@@ -4,9 +4,10 @@ import {connect} from 'react-redux'
 //lib + other
 import styled from 'styled-components'
 import {colors} from 'lib/theme/colors'
+import {XS_MAX} from 'styles/screen-sizes'
 //components
 import UserHeader from 'ui-components/UserHeader'
-import CommentCreate from 'ui-components/CommentCreate'
+import InputWithProfile from 'ui-components/InputWithProfile'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -34,6 +35,14 @@ const SubCommentSectionWrapper = styled.div`
 const SubCommentSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
+`
+
+const CreateCommentContainer = styled.div`
+  position: relative;
+  width: 70%;
+  @media (max-width: ${XS_MAX}) {
+    width: 90%
+  }
 `
 
 class CommentSection extends Component {
@@ -84,7 +93,13 @@ class CommentSection extends Component {
     return(
       <CommentSectionContainer>
         {this.renderComments(this.props.comments)}
-        <CommentCreate avatarImageUrl={this.props.userImageUrl} />
+        <CreateCommentContainer>
+          <InputWithProfile
+            avatarImageUrl={this.props.userImageUrl}
+            avatarSize="25px"
+            placeholder="Write a comment..."
+          />
+        </CreateCommentContainer>
       </CommentSectionContainer>
     )
   }
