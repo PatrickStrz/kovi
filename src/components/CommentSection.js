@@ -1,13 +1,17 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+//gql
+import {COMMENTS_ON_CHALLENGE_QUERY} from '../gql/Comment/queries'
 //lib + other
 import styled from 'styled-components'
 import {colors} from 'lib/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
+import {logException} from '../config'
 //components
 import UserHeader from 'ui-components/UserHeader'
 import InputWithProfile from 'ui-components/InputWithProfile'
+import TextButton from 'ui-components/TextButton'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -49,7 +53,12 @@ class CommentSection extends Component {
 
   static propTypes = {
     comments: PropTypes.array.isRequired,
-    handleCommentCreate: PropTypes.func.isRequired,
+    commentCreateMutation: PropTypes.func.isRequired,
+    challengeId: PropTypes.string.isRequired,
+  }
+
+  state = {
+    commentText: ''
   }
 
   renderComment = (comment, subcomment='') => {
@@ -82,6 +91,38 @@ class CommentSection extends Component {
     )
   }
 
+  handleCommentInput = (text) => {
+    this.setState({commentText:text})
+  }
+
+  handleCommentSubmit = async () => {
+    /* todo make conditional options based on what Type comments are created for
+    i.e challenge, tool, post ...
+    */
+    const {challengeId, apiUserId} = this.props
+
+    const options = {
+      variables: {
+        challengeId,
+        userId: apiUserId,
+        text: this.state.commentText,
+      },
+      refetchQueries: [{
+        query: COMMENTS_ON_CHALLENGE_QUERY,
+        variables: {challengeId},
+      }],
+    }
+    try{
+      await this.props.commentCreateMutation(options)
+      this.setState({commentText:''}) //clears input
+    }
+    catch(err){
+      logException(err, {
+      action: "handleCommentCreate function in ChallengeCommentsContainer"
+      })
+    }
+  }
+
   renderChildComments = (comments) => {
     return(comments.map( comment =>{
         return(this.renderComment(comment, 'subcomment'))
@@ -99,7 +140,10 @@ class CommentSection extends Component {
             avatarImageUrl={this.props.userImageUrl}
             avatarSize="25px"
             placeholder="Write a comment..."
+            handleChange={text => this.handleCommentInput(text)}
+            value={this.state.commentText}
           />
+          <TextButton label="Post" handleSubmit={()=> this.handleCommentSubmit()}/>
         </CreateCommentContainer>
       </CommentSectionContainer>
     )
@@ -108,6 +152,7 @@ class CommentSection extends Component {
 
 const mapStateToProps = (state) => ({
   userImageUrl: state.app.auth.profile.picture,
+  apiUserId: state.app.auth.apiUserId
 })
 
 export default connect(mapStateToProps)(CommentSection)

@@ -16,36 +16,16 @@ class ChallengeCommentsContainer extends Component{
     challengeId: PropTypes.string.isRequired
   }
 
-  state = {
-    showChildComments:false
-  }
-
-  handleCommentCreate = async (userId, challengeId, text) => {
-    const options = {
-      variables: {
-        challengeId,
-        userId,
-        text,
-      }
-    }
-    try{
-      await this.props.createCommentOnChallengeMutation(options)
-    }
-    catch(err){
-      logException(err, {
-      action: "handleCommentCreate function in ChallengeCommentsContainer"
-      })
-    }
-  }
-
   render(){
-    const data = this.props.data
+    const data = this.props.data // apollo client data
+    const {createCommentOnChallengeMutation, challengeId} = this.props
+
     if (data.loading){
       return(<div>...loading</div>)
     }
     if (data.error){
-      logException(this.props.data.error, {
-      action: "UserScore query in UserScore.js"
+      logException(data.error, {
+        action: "COMMENTS_ON_CHALLENGE_QUERY query in ChallengeCommentsContainer"
       })
       return(
         <GenericError/>
@@ -53,8 +33,9 @@ class ChallengeCommentsContainer extends Component{
     }
     return(
       <CommentSection
-        handleCommentCreate={this.handleCommentCreate} 
-        comments={this.props.data.allComments}
+        commentCreateMutation={createCommentOnChallengeMutation}
+        comments={data.allComments}
+        challengeId={challengeId}
       />
     )
   }
@@ -63,7 +44,7 @@ class ChallengeCommentsContainer extends Component{
 const ChallengeCommentsApollo = compose(
   graphql(
     COMMENTS_ON_CHALLENGE_QUERY,{
-      options: ({challengeId}) => ({ variables: {challengeId}})
+      options: ({challengeId}) => ({variables: {challengeId}})
     }),
   graphql(CREATE_COMMENT_ON_CHALLENGE_MUTATION, {name: 'createCommentOnChallengeMutation'}),
 )(ChallengeCommentsContainer)
