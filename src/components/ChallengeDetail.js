@@ -30,9 +30,11 @@ const LineBreak = styled.hr`
   border: solid 1px ${colors.faintGrey};
 `
 export class ChallengeDetail extends Component {
+
   static propTypes = {
     id: PropTypes.string.isRequired
   }
+
   render(){
     if (this.props.data.loading){
       return(<p>...Loading</p>)

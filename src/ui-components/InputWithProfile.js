@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
-import {muiColors} from 'lib/theme/colors'
 
 import TextareaAutosize from 'react-autosize-textarea';
 import Avatar from 'ui-components/Avatar'
@@ -13,13 +12,9 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
 `
-const Button = styled.a`
-	color: ${muiColors.primary1};
-  font-size: 14px;
-  cursor: pointer;
-`
+
 /*
-Controlled input with avatar on left side. Component spans the full width
+input with avatar on left side. Component spans the full width
 of parent component to change size wrap in a sized element
 */
 
@@ -29,11 +24,7 @@ export default class CommentCreate extends Component {
     avatarImageUrl: PropTypes.string.isRequired,
     avatarSize: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-  }
-
-  state = {
-    text:'default'
+    handleChange: PropTypes.func.isRequired,
   }
 
   styles = {
@@ -48,21 +39,22 @@ export default class CommentCreate extends Component {
     }
   }
 
-  handleInput = (e) => {
-    this.setState({text: e.target.value})
+  handleChange = (e) => {
+      const text = e.target.value
+      this.props.handleChange(text)
   }
 
   render(){
-    const {avatarImageUrl, avatarSize, placeholder, handleSubmit} = this.props
+    const {avatarImageUrl, avatarSize, placeholder, value} = this.props
     return(
       <Container>
         <Avatar size={avatarSize} imageUrl={avatarImageUrl}/>
         <TextareaAutosize
           placeholder={placeholder}
           style={this.styles.createComment}
-          onChange={(e)=> this.handleInput(e)}
+          onChange={(e)=> this.handleChange(e)}
+          value={value}
         />
-        <Button onClick={() => handleSubmit()}>Post</Button>
       </Container>
     )
   }
