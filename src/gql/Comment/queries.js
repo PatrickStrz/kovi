@@ -3,7 +3,7 @@ import {COMMENT_BODY_FRAGMENT} from './fragments'
 
 export const COMMENTS_ON_CHALLENGE_QUERY = gql`
   query commentsForChallenge($challengeId:ID){
-    allComments(first:15,filter:{challenge:{id:$challengeId}}){
+    allComments(filter:{challenge:{id:$challengeId}}){
       ...commentBody
       childComments{
         ...commentBody
