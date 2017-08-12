@@ -42,6 +42,9 @@ const SubCommentSectionContainer = styled.div`
 `
 
 const CreateCommentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   position: relative;
   width: 70%;
   @media (max-width: ${XS_MAX}) {
