@@ -13,7 +13,12 @@ import CommentSection from 'components/CommentSection'
 
 class ChallengeCommentsContainer extends Component{
   static propTypes = {
-    challengeId: PropTypes.string.isRequired
+    challengeId: PropTypes.string.isRequired,
+    data: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      error: PropTypes.string,
+      allComments: PropTypes.array,
+    }).isRequired,
   }
 
   render(){
