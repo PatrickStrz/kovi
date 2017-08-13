@@ -29,9 +29,14 @@ export default class CommentCreate extends Component {
 
   styles = {
     createComment: {
+      /* Appearance: none removes inner shadow in iOS */
+      WebkitAppearance: 'none',
+      MozAppearance: 'none',
+      appearance: 'none',
+      background: 'transparent',
       border: 'solid 1px rgb(181, 181, 181)',
       borderRadius: '3px',
-      fontSize: 14,
+      fontSize: 16,
       resize: 'none', //to hide resize handle
       marginLeft: 5,
       marginRight: 5,
