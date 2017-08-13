@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import {colors} from 'lib/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
 import {logException} from '../config'
+import {login} from 'lib/auth'
 //components
 import UserHeader from 'ui-components/UserHeader'
 import InputWithProfile from 'ui-components/InputWithProfile'
@@ -134,20 +135,44 @@ class CommentSection extends Component {
     )
   }
 
+  renderCommentCreate = () => {
+    let placeholder
+    let handleSubmit
+    let label
+    let disabled
+
+    if (this.props.isAuthenticated){
+      placeholder = "write a comment"
+      disabled = false
+      label = "Post"
+      handleSubmit = () => this.handleCommentSubmit()
+    }
+    else {
+      placeholder = "login to write a comment"
+      disabled = true
+      label = "Login"
+      handleSubmit = () => login()
+    }
+    return(
+      <CreateCommentContainer>
+        <InputWithProfile
+          avatarImageUrl={this.props.userImageUrl}
+          avatarSize="25px"
+          placeholder={placeholder}
+          handleChange={text => this.handleCommentInput(text)}
+          value={this.state.commentText}
+          disabled={disabled}
+        />
+        <TextButton label={label} handleSubmit={handleSubmit}/>
+      </CreateCommentContainer>
+    )
+  }
+
   render(){
     return(
       <CommentSectionContainer>
         {this.renderComments(this.props.comments)}
-        <CreateCommentContainer>
-          <InputWithProfile
-            avatarImageUrl={this.props.userImageUrl}
-            avatarSize="25px"
-            placeholder="Write a comment..."
-            handleChange={text => this.handleCommentInput(text)}
-            value={this.state.commentText}
-          />
-          <TextButton label="Post" handleSubmit={()=> this.handleCommentSubmit()}/>
-        </CreateCommentContainer>
+        {this.renderCommentCreate()}
       </CommentSectionContainer>
     )
   }
@@ -155,7 +180,8 @@ class CommentSection extends Component {
 
 const mapStateToProps = (state) => ({
   userImageUrl: state.app.auth.profile.picture,
-  apiUserId: state.app.auth.apiUserId
+  apiUserId: state.app.auth.apiUserId,
+  isAuthenticated: state.app.auth.isAuthenticated,
 })
 
 export default connect(mapStateToProps)(CommentSection)
