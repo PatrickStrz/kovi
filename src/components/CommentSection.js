@@ -54,6 +54,9 @@ const CreateCommentContainer = styled.div`
     width: 90%
   }
 `
+const Delete = styled.a`
+  cursor: pointer;
+`
 
 class CommentSection extends Component {
 
@@ -76,7 +79,7 @@ class CommentSection extends Component {
           avatarSize={ subcomment ? childCommentAvatarSize : commentAvatarSize }
         />
         <CommentText>{comment.text}</CommentText>
-        <a onClick={()=>{this.handleDeleteComment(comment.id)}}>x</a>
+        <Delete onClick={()=>{this.handleDeleteComment(comment.id)}}>x</Delete>
       </div>
     )
   }
