@@ -16,6 +16,14 @@ export const CREATE_CHILD_COMMENT_MUTATION = gql`
   }
 `
 
+export const DELETE_COMMENT_MUTATION = gql`
+  mutation deleteComment($commentId:ID!){
+    deleteComment(id:$commentId){
+      id
+    }
+  }
+`
+
 export const CREATE_COMMENT_ON_CHALLENGE_MUTATION = gql`
   mutation createComment($challengeId: ID, $userId: ID, $text: String){
     createComment(

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 //gql
 import {COMMENTS_ON_CHALLENGE_QUERY} from '../gql/Comment/queries'
+import {graphql, compose} from 'react-apollo'
+import {DELETE_COMMENT_MUTATION} from 'gql/Comment/mutations'
 //lib + other
 import styled from 'styled-components'
 import {colors} from 'lib/theme/colors'
@@ -74,7 +76,16 @@ class CommentSection extends Component {
           avatarSize={ subcomment ? childCommentAvatarSize : commentAvatarSize }
         />
         <CommentText>{comment.text}</CommentText>
+        <a onClick={()=>{this.handleDeleteComment(comment.id)}}>x</a>
       </div>
+    )
+  }
+
+  renderChildComments = (comments) => {
+    return(comments.map( comment =>{
+        return(this.renderComment(comment, 'subcomment'))
+        }
+      )
     )
   }
 
@@ -90,46 +101,6 @@ class CommentSection extends Component {
             </SubCommentSectionWrapper>
           </div>
           )
-        }
-      )
-    )
-  }
-
-  handleCommentInput = (text) => {
-    this.setState({commentText:text})
-  }
-
-  handleCommentSubmit = async () => {
-    /* todo make conditional options based on what Type comments are created for
-    i.e challenge, tool, post ...
-    */
-    const {challengeId, apiUserId} = this.props
-
-    const options = {
-      variables: {
-        challengeId,
-        userId: apiUserId,
-        text: this.state.commentText,
-      },
-      refetchQueries: [{
-        query: COMMENTS_ON_CHALLENGE_QUERY,
-        variables: {challengeId},
-      }],
-    }
-    try{
-      await this.props.commentCreateMutation(options)
-      this.setState({commentText:''}) //clears input
-    }
-    catch(err){
-      logException(err, {
-      action: "handleCommentCreate function in ChallengeCommentsContainer"
-      })
-    }
-  }
-
-  renderChildComments = (comments) => {
-    return(comments.map( comment =>{
-        return(this.renderComment(comment, 'subcomment'))
         }
       )
     )
@@ -168,6 +139,93 @@ class CommentSection extends Component {
     )
   }
 
+  // handler functions:
+
+  handleCommentInput = (text) => {
+    this.setState({commentText:text})
+  }
+
+  handleCommentSubmit = async () => {
+    /* todo make conditional options based on what Type comments are created for
+    i.e challenge, tool, post ...
+    */
+    const {challengeId, apiUserId} = this.props
+
+    const options = {
+      variables: {
+        challengeId,
+        userId: apiUserId,
+        text: this.state.commentText,
+      },
+      refetchQueries: [{
+        query: COMMENTS_ON_CHALLENGE_QUERY,
+        variables: {challengeId},
+      }],
+    }
+    try{
+      await this.props.commentCreateMutation(options)
+      this.setState({commentText:''}) //clears input
+    }
+    catch(err){
+      logException(err, {
+      action: "handleCommentCreate function in ChallengeCommentsContainer"
+      })
+    }
+  }
+
+  handleCommentSubmit = async () => {
+    /* todo make conditional options based on what Type comments are created for
+    i.e challenge, tool, post ...
+    */
+    const {challengeId, apiUserId} = this.props
+
+    const options = {
+      variables: {
+        challengeId,
+        userId: apiUserId,
+        text: this.state.commentText,
+      },
+      refetchQueries: [{
+        query: COMMENTS_ON_CHALLENGE_QUERY,
+        variables: {challengeId},
+      }],
+    }
+    try{
+      await this.props.commentCreateMutation(options)
+      this.setState({commentText:''}) //clears input
+    }
+    catch(err){
+      logException(err, {
+      action: "handleCommentCreate function in ChallengeCommentsContainer"
+      })
+    }
+  }
+
+  handleDeleteComment = async (commentId) => {
+    /* todo make conditional options based on what Type comments are created for
+    i.e challenge, tool, post ...
+    */
+
+    const options = {
+      variables: {
+        commentId
+      },
+      refetchQueries: [{
+        query: COMMENTS_ON_CHALLENGE_QUERY,
+        variables: { challengeId: this.props.challengeId},
+      }],
+    }
+    try{
+      await this.props.deleteCommentMutation(options)
+      this.setState({commentText:''}) //clears input
+    }
+    catch(err){
+      logException(err, {
+      action: "handleCommentDelete function in ChallengeCommentsContainer"
+      })
+    }
+  }
+
   render(){
     return(
       <CommentSectionContainer>
@@ -178,10 +236,14 @@ class CommentSection extends Component {
   }
 }
 
+const CommentSectionWithMutations = compose(
+  graphql(DELETE_COMMENT_MUTATION, {name: 'deleteCommentMutation'}),
+)(CommentSection)
+
 const mapStateToProps = (state) => ({
   userImageUrl: state.app.auth.profile.picture,
   apiUserId: state.app.auth.apiUserId,
   isAuthenticated: state.app.auth.isAuthenticated,
 })
 
-export default connect(mapStateToProps)(CommentSection)
+export default connect(mapStateToProps)(CommentSectionWithMutations)
