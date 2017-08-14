@@ -21,10 +21,15 @@ of parent component to change size wrap in a sized element
 export default class CommentCreate extends Component {
 
   static propTypes = {
-    avatarImageUrl: PropTypes.string.isRequired,
+    avatarImageUrl: PropTypes.string,
     avatarSize: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    disabled: false
   }
 
   styles = {
@@ -53,12 +58,13 @@ export default class CommentCreate extends Component {
     const {avatarImageUrl, avatarSize, placeholder, value} = this.props
     return(
       <Container>
-        <Avatar size={avatarSize} imageUrl={avatarImageUrl}/>
+        {avatarImageUrl && <Avatar size={avatarSize} imageUrl={avatarImageUrl}/>}
         <TextareaAutosize
           placeholder={placeholder}
           style={this.styles.createComment}
           onChange={(e)=> this.handleChange(e)}
           value={value}
+          disabled={this.props.disabled}
         />
       </Container>
     )

@@ -17,7 +17,7 @@ const TextButton = (props) => {
   }
 
   return(
-    <Button onClick={() => handleSubmit()}>Post</Button>
+    <Button onClick={() => handleSubmit()}>{props.label}</Button>
   )
 }
 

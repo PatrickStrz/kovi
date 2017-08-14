@@ -2,13 +2,13 @@
 
 ## Kovi auth api:
 
-- **To protect actions within the application** :
+- Auth `helper methods` available in `lib/auth.js`
+- **To wrap actions within the application** (i.e `onClick` event for a button) :
  use the `requireAuth` helper in `lib/auth.js` it takes a callback
  (the protected action) that will execute only if the user is
  authenticated, otherwise it will trigger an Auth0Lock login/Register modal to render.
-- Users are synced with the graphcool api when a user is created and whenever a user
-logs in. This ensures that the graphcool api is synced with facebook data. (I.e has a
-users most up to date facebook profile picture).
+- to render a login modal use `login` helper method.
+- To extend the auth api use `lib/authService.js`
 
 ## Auth flow
 - Using Auth0 lock https://auth0.com/docs/libraries/lock/v10
@@ -48,7 +48,11 @@ depend on localStorage to persist these states after refreshes.
 - Previous application state is not preserved after login.
   The user is redirected to '/' and the page is rerendered.
 
-
+- Users are synced with the graphcool api when a user is created and whenever a user
+  logs in. This ensures that the graphcool api is synced with facebook data. (I.e has a
+  users most up to date facebook profile picture).
 
 ### Todo:
 - Clear out user query from apollo store when not logged in.
+- Return user to the same position in the
+application after login.
