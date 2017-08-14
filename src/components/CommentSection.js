@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -16,6 +17,7 @@ import UserHeader from 'ui-components/UserHeader'
 import InputWithProfile from 'ui-components/InputWithProfile'
 import TextButton from 'ui-components/TextButton'
 import FaTrash from 'ui-components/icons/FaTrash'
+import WarningDialog from 'ui-components/WarningDialog'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -76,7 +78,8 @@ class CommentSection extends Component {
   }
 
   state = {
-    commentText: ''
+    commentText: '',
+    deleteCommentId: ''
   }
 
   //pass in true for subcomment parameter if rendering subcomment
@@ -90,7 +93,7 @@ class CommentSection extends Component {
             avatarSize={ subcomment ? childCommentAvatarSize : commentAvatarSize }
           />
           <FaTrash
-            handleClick={()=>requireAuth(this.returnHandleDeleteCb(comment.id))}>
+            handleClick={()=>requireAuth(()=> this.setState({deleteCommentId: comment.id}))}>
           </FaTrash>
         </CommentHeader>
         <CommentText>{comment.text}</CommentText>
@@ -222,7 +225,6 @@ class CommentSection extends Component {
     /* todo make conditional options based on what Type comments are created for
     i.e challenge, tool, post ...
     */
-
     const options = {
       variables: {
         commentId
@@ -234,7 +236,8 @@ class CommentSection extends Component {
     }
     try{
       await this.props.deleteCommentMutation(options)
-      this.setState({commentText:''}) //clears input
+      //clear input and close delte modal
+      this.setState({commentText: '', deleteCommentId: ''})
     }
     catch(err){
       logException(err, {
@@ -243,17 +246,23 @@ class CommentSection extends Component {
     }
   }
 
-  // to pass to authRequired
-  returnHandleDeleteCb = (commentId) => {
-    return () => this.handleDeleteComment(commentId)
-  }
-
   render(){
     return(
+    <div>
       <CommentSectionBox>
         {this.renderComments(this.props.comments)}
         {this.renderCommentCreate()}
       </CommentSectionBox>
+      <WarningDialog
+        isOpen={this.state.deleteCommentId ? true : false}
+        handleClose={()=> this.setState({deleteCommentId: ''})}
+        handleCompleteAction={()=> this.handleDeleteComment(this.state.deleteCommentId)}
+        title="Delete Comment"
+        description="are you sure you want to delete this comment?"
+        actionName="Delete"
+      />
+    </div>
+
     )
   }
 }
