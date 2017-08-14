@@ -166,6 +166,7 @@ class ChallengeCard extends Component {
 
     return(
       <div>
+
         <Card style={this.cardStyle()}>
           <CardHeader
             title={title}

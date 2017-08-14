@@ -1,0 +1,17 @@
+
+.upvote{
+  font-size:26px;
+  cursor: pointer;
+  color: #bdc1c1;
+  transition: all, .1s ease-out;
+  transform: translate( -50%, -50% );
+}
+
+.upvote.hidden {
+  font-size: 0;
+}
+
+
+.icon-container {
+  position: absolute;
+}
