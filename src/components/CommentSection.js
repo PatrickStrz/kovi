@@ -57,7 +57,9 @@ const CreateCommentContainer = styled.div`
 `
 
 const CommentBox = styled.div`
-  background-color: colors.faintGrey;
+  background-color: ${colors.whiteGrey};
+  padding: 15px;
+  border-radius: 3px;
 `
 
 const CommentHeader = styled.div`
