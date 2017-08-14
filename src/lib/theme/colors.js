@@ -6,4 +6,5 @@ export const muiColors = {
 export const colors = {
   faintGrey: '#ece8e8',
   lightGrey: '#adadad',
+  errorRed: '#e94545',
 }

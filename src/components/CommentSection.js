@@ -10,11 +10,12 @@ import styled from 'styled-components'
 import {colors} from 'lib/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
 import {logException} from '../config'
-import {login} from 'lib/auth'
+import {login, requireAuth} from 'lib/auth'
 //components
 import UserHeader from 'ui-components/UserHeader'
 import InputWithProfile from 'ui-components/InputWithProfile'
 import TextButton from 'ui-components/TextButton'
+import FaTrash from 'ui-components/icons/FaTrash'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -24,7 +25,7 @@ const CommentText = styled.p`
   word-wrap: break-word;
 `
 
-const CommentSectionContainer = styled.div`
+const CommentSectionBox = styled.div`
   /* horizonally center: */
   margin: auto;
   margin-top: 21px;
@@ -54,8 +55,14 @@ const CreateCommentContainer = styled.div`
     width: 90%
   }
 `
-const Delete = styled.a`
-  cursor: pointer;
+
+const CommentBox = styled.div`
+  background-color: colors.faintGrey;
+`
+
+const CommentHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 class CommentSection extends Component {
@@ -70,17 +77,22 @@ class CommentSection extends Component {
     commentText: ''
   }
 
+  //pass in true for subcomment parameter if rendering subcomment
   renderComment = (comment, subcomment='') => {
     return(
-      <div key={'comment' + comment.id}>
-        <UserHeader
-          imageUrl={comment.user.picture}
-          userName={comment.user.name}
-          avatarSize={ subcomment ? childCommentAvatarSize : commentAvatarSize }
-        />
+      <CommentBox key={'comment' + comment.id}>
+        <CommentHeader>
+          <UserHeader
+            imageUrl={comment.user.picture}
+            userName={comment.user.name}
+            avatarSize={ subcomment ? childCommentAvatarSize : commentAvatarSize }
+          />
+          <FaTrash
+            handleClick={()=>requireAuth(this.returnHandleDeleteCb(comment.id))}>
+          </FaTrash>
+        </CommentHeader>
         <CommentText>{comment.text}</CommentText>
-        <Delete onClick={()=>{this.handleDeleteComment(comment.id)}}>x</Delete>
-      </div>
+      </CommentBox>
     )
   }
 
@@ -229,12 +241,17 @@ class CommentSection extends Component {
     }
   }
 
+  // to pass to authRequired
+  returnHandleDeleteCb = (commentId) => {
+    return () => this.handleDeleteComment(commentId)
+  }
+
   render(){
     return(
-      <CommentSectionContainer>
+      <CommentSectionBox>
         {this.renderComments(this.props.comments)}
         {this.renderCommentCreate()}
-      </CommentSectionContainer>
+      </CommentSectionBox>
     )
   }
 }
