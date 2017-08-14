@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -163,34 +162,6 @@ class CommentSection extends Component {
 
   handleCommentInput = (text) => {
     this.setState({commentText:text})
-  }
-
-  handleCommentSubmit = async () => {
-    /* todo make conditional options based on what Type comments are created for
-    i.e challenge, tool, post ...
-    */
-    const {challengeId, apiUserId} = this.props
-
-    const options = {
-      variables: {
-        challengeId,
-        userId: apiUserId,
-        text: this.state.commentText,
-      },
-      refetchQueries: [{
-        query: COMMENTS_ON_CHALLENGE_QUERY,
-        variables: {challengeId},
-      }],
-    }
-    try{
-      await this.props.commentCreateMutation(options)
-      this.setState({commentText:''}) //clears input
-    }
-    catch(err){
-      logException(err, {
-      action: "handleCommentCreate function in ChallengeCommentsContainer"
-      })
-    }
   }
 
   handleCommentSubmit = async () => {
