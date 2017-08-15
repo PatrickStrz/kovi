@@ -8,4 +8,5 @@ export const colors = {
   lightGrey: '#adadad',
   whiteGrey: '#f9f7f7',
   errorRed: '#ed5151',
+  warningRed: '#df4a4a'
 }
