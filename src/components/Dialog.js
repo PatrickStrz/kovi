@@ -1,21 +1,33 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 
-import {muiColors} from '../lib/theme/colors'
+import {muiColors, colors} from 'lib/theme/colors'
 import {DIALOG_Z_INDEX} from '../styles/z-index'
 import {XS_MAX} from '../styles/screen-sizes'
 import styled from 'styled-components'
 //stylesheet to prevent body scroll:
 import '../styles/css/react-modal.css'
 
+
 import Media from 'react-media'
 import Modal from 'react-modal'
+import ExitIcon from 'ui-components/icons/ExitIcon'
 
-const Exit = styled.span`
-  cursor: pointer;
-  font-size: 5vh;
-  color: ${muiColors.primary1};
+const ExitBox = styled.div`
   position: fixed;
+  right:0px;
+  top:0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height:45px;
+  width:45px;
+  text-align: center;
+  background-color: ${muiColors.secondary1};
+  opacity: 80%;
+  overflow: auto;
+  z-index: 1000
 `
 
 const ChildrenContainer = styled.div`
@@ -39,7 +51,8 @@ export default class Dialog extends Component {
 
   styles = (isMobile) => ({
     overlay : {
-      position: 'fixed',
+      // position: 'fixed'  --> prevents scrolling body when forcefully scroll
+      // past bottom
       top: 0,
       left: 0,
       right: 0,
@@ -49,12 +62,12 @@ export default class Dialog extends Component {
     },
     content : {
       position: 'absolute',
-      top: isMobile ? '2vh': '10vh',
+      top: isMobile ? 0: '10vh',
       left: isMobile ? 0: '10vh',
       right: isMobile ? 0: '10vh',
       border: '1px solid #ccc',
       background: '#ffffff',
-      height: isMobile ? '90vh' : '80vh',
+      height: isMobile ? '100vh' : '80vh',
       overflow: 'scroll',
       WebkitOverflowScrolling: 'touch',
       borderRadius: '3px',
@@ -70,18 +83,29 @@ export default class Dialog extends Component {
     const styles = this.styles(matches)
 
     return(
-      <Modal
-        style={styles}
-        contentLabel={title}
-        isOpen={isOpen}
-        onRequestClose={handleClose}
-        shouldCloseOnOverlayClick={!modal}
-      >
-        <Exit onClick={()=> handleClose()}>x</Exit>
-        <ChildrenContainer>
-          {children}
-        </ChildrenContainer>
-      </Modal>
+      <div>
+        <ExitBox>
+          <ExitIcon
+            color={colors.lightGrey}
+            hoverColor={colors.errorRed}
+            size={'2x'}
+            handleClick={() => handleClose()}
+          />
+        </ExitBox>
+        <Modal
+          style={styles}
+          contentLabel={title}
+          isOpen={isOpen}
+          onRequestClose={handleClose}
+          shouldCloseOnOverlayClick={!modal}
+        >
+          {/* <Exit onClick={()=> handleClose()}>x</Exit> */}
+          <ChildrenContainer>
+            {children}
+            <div style={{MarginTop:25, MarginBottom:25}}>No more to see</div>
+          </ChildrenContainer>
+        </Modal>
+      </div>
     )
   }
 
