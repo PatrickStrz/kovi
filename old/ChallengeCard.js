@@ -1,3 +1,7 @@
+/*
+Keeping this file for reference
+*/
+
 //react+redux
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
@@ -165,21 +169,9 @@ class ChallengeCard extends Component {
     } = this.props
     const showUpdateChallengeViewCb = () => showUpdateChallengeView(id)
 
-    const getUpvote = () => {
-      return(<ChallengeUpvote
-        userDidUpvote={userDidUpvote}
-        apiUserId={apiUserId}
-        challengeId={id}
-        upvotesCount={upvotesCount}
-        style={{paddingBottom:0}}
-      />)
-    }
-
-
-
     return(
       <div>
-        <ChallengeCardUi text={title} upvote={getUpvote()}></ChallengeCardUi>
+        <ChallengeCardUi text={title}></ChallengeCardUi>
         <Card style={this.cardStyle()}>
           <CardHeader
             title={title}
