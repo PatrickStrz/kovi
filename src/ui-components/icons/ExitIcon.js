@@ -1,7 +1,6 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 import PropTypes from 'prop-types'
-import {colors} from 'lib/theme/colors'
 
 const Container = styled.div`
   cursor: pointer;
@@ -28,7 +27,7 @@ const ExitIcon = (props) => {
 }
 
 ExitIcon.propTypes = {
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
   color: PropTypes.string.isRequired,
   hoverColor: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired, //1x,2x,3x,4x,5x

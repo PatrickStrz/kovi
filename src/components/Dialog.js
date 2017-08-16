@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {muiColors, colors} from 'lib/theme/colors'
 import {DIALOG_Z_INDEX} from '../styles/z-index'
 import {XS_MAX} from '../styles/screen-sizes'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 //stylesheet to prevent body scroll:
 import '../styles/css/react-modal.css'
 
@@ -15,25 +15,41 @@ import ExitIcon from 'ui-components/icons/ExitIcon'
 
 const ExitBox = styled.div`
   position: fixed;
-  right:0px;
-  top:0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  height:45px;
-  width:45px;
   text-align: center;
-  background-color: ${muiColors.secondary1};
+  ${props =>{
+    if (props.isMobile){
+      return css`
+        background-color: rgb(69, 69, 69);
+        height: 45px;
+        width: 45px;
+        right: 0px;
+        top: 20px;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+      `
+    }
+    else {
+      return css`
+        background-color: white;
+        height: 45px;
+        width: 45px;
+        right: 2vh;
+        top: 2vh;
+        border-radius: 50%;
+      `
+      }
+    }
+  }
   opacity: 80%;
   overflow: auto;
   z-index: 1000
 `
-
 const ChildrenContainer = styled.div`
   padding-bottom: 5vh;
 `
-
 //Wrapper component for react modal:
 export default class Dialog extends Component {
 
@@ -78,18 +94,21 @@ export default class Dialog extends Component {
 
   //renders responsive modal. matches (boolean) passed from media query component
   // matches = true if viewport is mobile size ( < XS_MAX )
-  renderModal = (matches) => {
+  renderModal = (isMobile) => {
     const {isOpen, handleClose, children, title, modal} = this.props
-    const styles = this.styles(matches)
-
+    const styles = this.styles(isMobile)
+    /*
+    using 2 click handlers below to make exit smoother on mobile ( can clicK
+    on icon or container to close) :
+    */
     return(
       <div>
-        <ExitBox>
+        <ExitBox isMobile={isMobile} onClick={()=> handleClose()}>
           <ExitIcon
             color={colors.lightGrey}
-            hoverColor={colors.errorRed}
+            hoverColor={muiColors.primary1}
             size={'2x'}
-            handleClick={() => handleClose()}
+            onClick={()=> handleClose()}
           />
         </ExitBox>
         <Modal
@@ -99,10 +118,8 @@ export default class Dialog extends Component {
           onRequestClose={handleClose}
           shouldCloseOnOverlayClick={!modal}
         >
-          {/* <Exit onClick={()=> handleClose()}>x</Exit> */}
           <ChildrenContainer>
             {children}
-            <div style={{MarginTop:25, MarginBottom:25}}>No more to see</div>
           </ChildrenContainer>
         </Modal>
       </div>
