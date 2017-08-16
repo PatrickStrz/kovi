@@ -5,13 +5,19 @@ import styled from 'styled-components'
 const CardBox = styled.div`
   background-color: white;
   width:100%;
-  border: solid 2px rgb(128, 128, 128);
-  border-radius: 3px;
   padding: 10px;
   :hover{
     background-color: #f6f0f0;
   }
   cursor: pointer;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  border-radius: 2px;
+  z-index: 1;
+  margin-bottom: 5px;"
 `
 const Text = styled.p`
   font-size: 16px;
@@ -34,16 +40,14 @@ Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
     Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
     Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.`
 
-    const {text, upvote} = this.props
+    const {text, upvote, onClick} = this.props
     return(
-      <div>
-      <CardBox>
+      <CardBox onClick={()=>onClick()}>
         <Text>{lorem}</Text>
         <ActionsBox>
           {upvote}
         </ActionsBox>
       </CardBox>
-      </div>
     )
   }
 }

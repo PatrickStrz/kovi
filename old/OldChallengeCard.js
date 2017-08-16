@@ -31,7 +31,6 @@ import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import Update from 'material-ui/svg-icons/content/create'
 import FlatButton from 'material-ui/FlatButton'
-import ChallengeCardUi from 'components/ChallengeCardUi'
 
 
 class ChallengeCard extends Component {
@@ -171,7 +170,6 @@ class ChallengeCard extends Component {
 
     return(
       <div>
-        <ChallengeCardUi text={title}></ChallengeCardUi>
         <Card style={this.cardStyle()}>
           <CardHeader
             title={title}

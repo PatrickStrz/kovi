@@ -179,7 +179,11 @@ class ChallengeCard extends Component {
 
     return(
       <div>
-        <ChallengeCardUi text={title} upvote={getUpvote()}></ChallengeCardUi>
+        <ChallengeCardUi
+          text={title}
+          upvote={getUpvote()}
+          onClick={()=> showChallengeDetailView(id)}
+        />
         <Card style={this.cardStyle()}>
           <CardHeader
             title={title}
