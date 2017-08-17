@@ -2,11 +2,11 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 
 import {muiColors, colors} from 'lib/theme/colors'
-import {DIALOG_Z_INDEX} from '../styles/z-index'
-import {XS_MAX} from '../styles/screen-sizes'
+import {DIALOG_Z_INDEX} from 'styles/z-index'
+import {XS_MAX} from 'styles/screen-sizes'
 import styled, {css} from 'styled-components'
 //stylesheet to prevent body scroll:
-import '../styles/css/react-modal.css'
+import 'styles/css/react-modal.css'
 
 
 import Media from 'react-media'

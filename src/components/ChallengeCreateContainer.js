@@ -13,8 +13,8 @@ import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
 import {logException} from '../config'
 //components
 import ChallengeCreateForm from './ChallengeCreateForm'
-import MaterialDialog from './MaterialDialog'
-import Editor from './Editor'
+import MaterialDialog from 'ui-kit/MaterialDialog'
+import Editor from 'ui-kit/Editor'
 
 class ChallengeCreateContainer extends Component {
   //so can change query variables in one place and pass to child components:
