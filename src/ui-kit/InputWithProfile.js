@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import TextareaAutosize from 'react-autosize-textarea';
-import Avatar from 'ui-components/Avatar'
+import Avatar from 'ui-kit/Avatar'
 
 const Container = styled.div`
   display: flex;
