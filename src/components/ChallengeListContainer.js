@@ -19,8 +19,6 @@ import {logException} from '../config'
 //components
 import ChallengeList from 'components/ChallengeList'
 import ChallengeCreateForm from './ChallengeCreateForm'
-import {Row, Col} from 'react-flexbox-grid'
-import InfiniteScroll from 'react-infinite-scroll-component'
 import MaterialDialog from './MaterialDialog'
 import GenericError from './commons/GenericError'
 import Editor from './Editor'
@@ -88,36 +86,22 @@ class ChallengeListContainer extends Component {
 
     return(
       <div>
-        <InfiniteScroll
-          pageStart={0}
+        <MaterialDialog
+          isOpen={this.props.isCreateViewOpen}
+          handleClose={this.props.hideCreateChallengeView}
+          title='Create A Challenge'
+          repositionOnUpdate={false}
+          modal={true}
+        >
+          {createChallengeForm}
+        </MaterialDialog>
+        <ChallengeList
+          challenges={this.props.allChallenges}
+          allChallengesQueryVariables={this.getAllChallengesQueryVariables()}
+          apiUserId={this.props.apiUserId}
           hasMore={this.props.cursor.length === 0 ? false : true}
-          loader={<div className="loader">Loading ...</div>}
-          next={()=>this.props.loadMoreEntries()}
-         >
-          <Col
-            xsOffset={1} xs={10}
-            smOffset={1} sm={10}
-            mdOffset={3} md={6}
-            lgOffset={3} lg={6}
-          >
-            <MaterialDialog
-              isOpen={this.props.isCreateViewOpen}
-              handleClose={this.props.hideCreateChallengeView}
-              title='Create A Challenge'
-              repositionOnUpdate={false}
-              modal={true}
-            >
-              {createChallengeForm}
-            </MaterialDialog>
-            <Row>
-              <ChallengeList
-                challenges={this.props.allChallenges}
-                allChallengesQueryVariables={this.getAllChallengesQueryVariables()}
-                apiUserId={this.props.apiUserId}
-              />
-            </Row>
-          </Col>
-        </InfiniteScroll>
+          loadMoreEntries={()=>this.props.loadMoreEntries()}
+        />
       </div>
       )
     }
