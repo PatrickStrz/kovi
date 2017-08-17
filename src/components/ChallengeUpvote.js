@@ -7,7 +7,7 @@ import {
 } from '../gql/Challenge/mutations'
 import IconButton from 'material-ui/IconButton'
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up'
-import {muiColors, colors} from '../lib/theme/colors'
+import {muiColors, colors} from 'styles/theme/colors'
 import PropTypes from 'prop-types'
 
 class ChallengeUpvote extends Component{

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {colors} from 'lib/theme/colors'
+import {colors} from 'styles/theme/colors'
 
 const Container = styled.div`
   cursor: pointer;

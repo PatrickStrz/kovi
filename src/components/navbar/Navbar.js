@@ -5,7 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import UserIconMenu from './UserIconMenu'
 import IconButton from 'material-ui/IconButton'
 import AccountCircle from 'material-ui/svg-icons/action/account-circle'
-import {muiColors} from '../../lib/theme/colors'
+import {muiColors} from 'styles/theme/colors'
 
 const Navbar = (props) => {
 

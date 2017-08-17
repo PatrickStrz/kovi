@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import {muiTheme} from '../lib/theme/mui-theme'
+import {muiTheme} from 'styles/theme/mui-theme'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from './Site'
 import Home from './Home'

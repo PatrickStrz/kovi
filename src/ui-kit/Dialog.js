@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 
-import {muiColors, colors} from 'lib/theme/colors'
+import {muiColors, colors} from 'styles/theme/colors'
 import {DIALOG_Z_INDEX} from 'styles/z-index'
 import {XS_MAX} from 'styles/screen-sizes'
 import styled, {css} from 'styled-components'

@@ -9,7 +9,7 @@ import {
 } from '../gql/Challenge/queries'
 //helpers+other
 import {uniqBy} from 'lodash'
-import {muiColors} from '../lib/theme/colors'
+import {muiColors} from 'styles/theme/colors'
 import {logException} from '../config'
 //components
 import ChallengeList from 'components/ChallengeList'

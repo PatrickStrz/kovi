@@ -18,23 +18,23 @@ a css class when using components from external libraries.
 ## Material-UI
 1. Using [http://www.material-ui.com/](url) library for certain components, but
 replacing with custom elements.
-2. Using a custom theme `lib/theme/mui-theme` for components.
+2. Using a custom theme `styles/theme/mui-theme` for components.
 3. When it is necessary to override the mui-theme:
     - If possible use the style props documented at [http://www.material-ui.com/](url)
     - For components that
 do not have the necessary style props, create a new mui-theme and
 wrap the component in a new theme provider. i.e)
 `
-import {muiThemeBottom} from 'lib/theme/mui-theme-bottom-bar'
+import {muiThemeBottom} from 'styles/theme/mui-theme-bottom-bar'
 <MuiThemeProvider muiTheme={muiThemeBottom}>
   <BottomNavigationItem>
 </MuiThemeProvider>`
-4. colors imported from `lib/theme/colors.js`
+4. colors imported from `styles/theme/colors.js`
 
 ##Colors
-1. All colors are stored in `lib/theme/colors.js`
+1. All colors are stored in `styles/theme/colors.js`
 2. DO NOT use one of colors within components, define all colors in
-`lib/theme/colors.js`
+`styles/theme/colors.js`
 3. all material-ui colors are listed in colors.js as 1 object and are imported
 into mui-theme for use.
 

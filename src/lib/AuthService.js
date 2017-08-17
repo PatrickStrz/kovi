@@ -1,13 +1,12 @@
 import Auth0Lock from 'auth0-lock'
 import jwtDecode from 'jwt-decode'
-import {muiColors} from './theme/colors'
-import logo from '../logo.svg'
+import {muiColors} from 'styles/theme/colors'
+import logo from 'logo.svg'
 
 const ROOT_ROUTE = '/'
 
 // extension of: https://github.com/amaurymartiny/react-redux-auth0-kit
 
-// import LogoImg from 'images/test-icon.png';
 
 export default class AuthService {
   constructor(clientId, domain) {

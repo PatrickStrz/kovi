@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 
-import {muiColors} from '../lib/theme/colors'
+import {muiColors} from 'styles/theme/colors'
 import Media from 'react-media'
 import {XS_MAX} from '../styles/screen-sizes'
 

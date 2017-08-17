@@ -7,7 +7,7 @@ import {graphql, compose} from 'react-apollo'
 import {DELETE_COMMENT_MUTATION} from 'gql/Comment/mutations'
 //lib + other
 import styled, {css} from 'styled-components'
-import {colors} from 'lib/theme/colors'
+import {colors} from 'styles/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
 import {logException} from '../config'
 import {login, requireAuth} from 'lib/auth'
