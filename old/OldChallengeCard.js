@@ -25,7 +25,7 @@ import {logException} from '../config'
 //components+styles
 import ChallengeUpdateForm from './ChallengeUpdateForm'
 import ChallengeUpvote from './ChallengeUpvote'
-import MaterialDialog from './MaterialDialog'
+import MaterialDialog from 'ui-kit/MaterialDialog'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Delete from 'material-ui/svg-icons/action/delete'

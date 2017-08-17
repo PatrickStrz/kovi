@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
-import {muiColors} from 'lib/theme/colors'
+import {muiColors} from 'styles/theme/colors'
 
 const Button = styled.a`
 	color: ${muiColors.primary1};

@@ -11,7 +11,7 @@ import {requireAuth} from '../lib/auth'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetail from './ChallengeDetail'
-import Dialog from './Dialog'
+import Dialog from 'ui-kit/Dialog'
 import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'

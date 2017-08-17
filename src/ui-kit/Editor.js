@@ -5,8 +5,8 @@ import ReactQuill from 'react-quill'
 
 class Editor extends Component {
   static propTypes = {
+    //func must accept a string as an argument:
     handleChange: PropTypes.func.isRequired,
-    //func must accept a string as an argument
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired, //redux state
   }

@@ -7,7 +7,7 @@ import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 //own components + stylesheets
 import SyncUser from './SyncUser'
-import BottomBar from './BottomBar'
+import BottomBar from 'ui-kit/BottomBar'
 import Navbar from './navbar/Navbar'
 import Scoreboard from './scoreboard/Scoreboard'
 import '../styles/css/layout.css'

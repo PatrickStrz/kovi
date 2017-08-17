@@ -9,7 +9,7 @@ import {
 } from '../gql/Challenge/queries'
 //other
 import DOMPurify from 'dompurify' //prevents XSS
-import {colors} from 'lib/theme/colors'
+import {colors} from 'styles/theme/colors'
 //components
 import GenericError from './commons/GenericError'
 import ChallengeCommentsContainer from './ChallengeCommentsContainer'

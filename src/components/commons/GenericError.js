@@ -1,5 +1,5 @@
 import React from 'react'
-import {muiColors} from '../../lib/theme/colors'
+import {muiColors} from 'styles/theme/colors'
 
 const GenericError = () =>
 <div>

@@ -1,9 +1,5 @@
 import React, {Component} from 'react'
-// import {connect} from 'react-redux'
-// import { bindActionCreators } from 'redux'
-
-// import {requireAuth} from '../lib/auth'
-
+//components
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
 import FilterList from 'material-ui/svg-icons/content/filter-list'
