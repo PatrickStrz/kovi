@@ -1,3 +1,4 @@
+//react + redux
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -5,16 +6,16 @@ import {
   showCreateChallengeView,
   hideChallengeDetailView,
 } from '../actions/challenge-actions'
-
+//lib + other
 import {requireAuth} from '../lib/auth'
-
+//Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetail from './ChallengeDetail'
-// import MaterialDialog from './MaterialDialog'
 import Dialog from './Dialog'
 import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+import ChallengeCreateContainer from 'components/ChallengeCreateContainer'
 
 class Home extends Component{
   styles = {
@@ -59,6 +60,7 @@ class Home extends Component{
             <ContentAdd/>
           </FloatingActionButton>
         </Row>
+        <ChallengeCreateContainer/>
       </div>
     )
   }
