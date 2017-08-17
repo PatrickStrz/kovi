@@ -8,7 +8,7 @@ import {
 
 import {requireAuth} from '../lib/auth'
 
-import ChallengeList from './ChallengeList'
+import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetail from './ChallengeDetail'
 // import MaterialDialog from './MaterialDialog'
 import Dialog from './Dialog'
@@ -47,7 +47,7 @@ class Home extends Component{
       <div>
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
         <Row>
-          <ChallengeList />
+          <ChallengeListContainer />
           <FloatingActionButton
             backgroundColor='#38c1be'
             mini={true}
