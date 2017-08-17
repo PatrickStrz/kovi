@@ -40,7 +40,7 @@ export class ChallengeDetail extends Component {
       return(<p>...Loading</p>)
     }
     if (this.props.data.error){
-      return <GenericError />
+      return <GenericError error={this.props.data.error} />
     }
 
     const {id, title, body} = this.props.data.Challenge
