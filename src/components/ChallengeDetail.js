@@ -11,7 +11,7 @@ import {
 import DOMPurify from 'dompurify' //prevents XSS
 import {colors} from 'styles/theme/colors'
 //components
-import GenericError from './commons/GenericError'
+import GenericError from 'ui-kit/GenericError'
 import ChallengeCommentsContainer from './ChallengeCommentsContainer'
 import styled from 'styled-components'
 

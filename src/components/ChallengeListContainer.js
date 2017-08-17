@@ -13,7 +13,7 @@ import {muiColors} from 'styles/theme/colors'
 import {logException} from '../config'
 //components
 import ChallengeList from 'components/ChallengeList'
-import GenericError from './commons/GenericError'
+import GenericError from 'ui-kit/GenericError'
 
 class ChallengeListContainer extends Component {
   render(){
