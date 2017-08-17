@@ -18,7 +18,7 @@ class ChallengeCard extends Component {
     const upvotesCount = this.props.challenge._upvotesMeta.count
     const {
       apiUserId,
-      showChallengeDetailView
+      showChallengeDetailView,
     } = this.props
 
     const getUpvote = () => {
