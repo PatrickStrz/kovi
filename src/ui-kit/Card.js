@@ -28,22 +28,24 @@ const Text = styled.p`
 const ActionsBox = styled.div`
 `
 
-export default class ChallengeCardUi extends Component{
+export default class Card extends Component{
 
   static propTypes = {
     text: PropTypes.string.isRequired,
-    onUpvoteClick: PropTypes.func,
+    onBodyClick: PropTypes.func.isRequired,
+    bottomSection: PropTypes.node.isRequired,
   }
 
   render(){
-    const {text, upvote, onClick} = this.props
+
+    const {text, onBodyClick, bottomSection} = this.props
     return(
       <CardBox>
-        <CardBody onClick={onClick}>
+        <CardBody onClick={onBodyClick}>
           <Text>{text}</Text>
         </CardBody>
         <ActionsBox>
-          {upvote}
+          {bottomSection}
         </ActionsBox>
       </CardBox>
     )
