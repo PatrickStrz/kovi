@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {showChallengeDetailView,} from '../actions/challenge-actions'
 import ChallengeUpvote from './ChallengeUpvote'
-import ChallengeCardUi from 'components/ChallengeCardUi'
+import Card from 'ui-kit/Card'
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -22,13 +22,15 @@ class ChallengeCard extends Component {
     } = this.props
 
     const getUpvote = () => {
-      return(<ChallengeUpvote
-        userDidUpvote={userDidUpvote}
-        apiUserId={apiUserId}
-        challengeId={id}
-        upvotesCount={upvotesCount}
-        style={{paddingBottom:0}}
-      />)
+      return(
+        <ChallengeUpvote
+          userDidUpvote={userDidUpvote}
+          apiUserId={apiUserId}
+          challengeId={id}
+          upvotesCount={upvotesCount}
+          style={{paddingBottom:0}}
+        />
+      )
     }
 
     const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -38,10 +40,10 @@ class ChallengeCard extends Component {
 
     return(
       <div>
-        <ChallengeCardUi
+        <Card
           text={lorem}
-          upvote={getUpvote()}
-          onClick={()=>{showChallengeDetailView(id)}}
+          bottomSection={<div>{getUpvote()}</div>}
+          onBodyClick={()=>{showChallengeDetailView(id)}}
         />
       </div>
     )
