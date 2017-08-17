@@ -24,6 +24,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import MaterialDialog from './MaterialDialog'
 import GenericError from './commons/GenericError'
 import Editor from './Editor'
+import Dialog from 'components/Dialog'
 
 class ChallengeList extends Component {
   //so can change query variables in one place and pass to child components:
@@ -111,15 +112,22 @@ class ChallengeList extends Component {
             mdOffset={3} md={6}
             lgOffset={3} lg={6}
           >
-            <MaterialDialog
+            {/* <MaterialDialog
               isOpen={this.props.isCreateViewOpen}
               handleClose={this.props.hideCreateChallengeView}
-              title='Create A Challenge'
+
               repositionOnUpdate={false}
               modal={true}
             >
               {createChallengeForm}
-            </MaterialDialog>
+            </MaterialDialog> */}
+            <Dialog
+              isOpen={this.props.isCreateViewOpen}
+              handleClose={this.props.hideCreateChallengeView}
+              title='Create A Challenge'
+            >
+              {createChallengeForm}
+            </Dialog>
             <Row>
             {challengeCards}
             </Row>

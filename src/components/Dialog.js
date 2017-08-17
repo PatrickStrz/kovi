@@ -49,6 +49,8 @@ const ExitBox = styled.div`
 `
 const ChildrenContainer = styled.div`
   padding-bottom: 5vh;
+  display: flex;
+  justify-content: center;
 `
 //Wrapper component for react modal:
 export default class Dialog extends Component {
