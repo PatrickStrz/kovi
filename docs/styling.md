@@ -6,7 +6,7 @@ the benefits of inline styles while writing real css. Also helps reinforce reusa
 component architecture. CSS is automatically vendor prefixed.
 - Use styled components wherever possible.
 - Keep styled components small, handling one concern only. Create a new file in
-ui-components for any component that will be reused throughout the application.
+ui-kit for any component that will be reused throughout the application.
 - Use 'local' styled components that are not exported for composed components that
 require smaller one-off pieces.
 

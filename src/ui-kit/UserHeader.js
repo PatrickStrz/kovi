@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 //components
-import Avatar from 'ui-components/Avatar'
+import Avatar from 'ui-kit/Avatar'
 import {muiColors} from 'lib/theme/colors'
 
 const OuterContainer = styled.div`
