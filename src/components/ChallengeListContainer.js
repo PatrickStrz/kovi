@@ -9,11 +9,11 @@ import {
 } from '../gql/Challenge/queries'
 //helpers+other
 import {uniqBy} from 'lodash'
-import {muiColors} from 'styles/theme/colors'
 import {logException} from '../config'
 //components
 import ChallengeList from 'components/ChallengeList'
 import GenericError from 'ui-kit/GenericError'
+import GenericLoader from 'ui-kit/GenericLoader'
 
 class ChallengeListContainer extends Component {
   render(){
@@ -21,9 +21,7 @@ class ChallengeListContainer extends Component {
     const allChallengesQueryVariables = {"filter":{ "id": this.props.apiUserId}}
 
     if (this.props.loading){
-      return(<div>
-        <h1 style={{color:muiColors.primary1}}>Loading...</h1>
-      </div>)
+      return <GenericLoader />
     }
 
     if(this.props.error){

@@ -10,7 +10,7 @@ import {
 import {requireAuth} from '../lib/auth'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
-import ChallengeDetail from './ChallengeDetail'
+import ChallengeDetailContainer from './ChallengeDetailContainer'
 import Dialog from 'ui-kit/Dialog'
 import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -34,7 +34,7 @@ class Home extends Component{
       isOpen={true}
       handleClose={this.props.hideChallengeDetailView}
     >
-      <ChallengeDetail id={this.props.openChallengeDetailViewId}/>
+      <ChallengeDetailContainer id={this.props.openChallengeDetailViewId}/>
     </Dialog>
   )
 
