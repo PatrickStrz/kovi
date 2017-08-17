@@ -8,7 +8,7 @@ import {CREATE_COMMENT_ON_CHALLENGE_MUTATION} from 'gql/Comment/mutations'
 //helpers+other
 import {logException} from '../config'
 //components
-import GenericError from './commons/GenericError'
+import GenericError from 'ui-kit/GenericError'
 import CommentSection from 'components/CommentSection'
 
 class ChallengeCommentsContainer extends Component{

@@ -1,20 +1,18 @@
-// react+redux
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-// import {connect} from 'react-redux'
-//apollo
-import {graphql} from 'react-apollo'
-import {
-  CHALLENGE_DETAIL_QUERY,
-} from '../gql/Challenge/queries'
-//other
+//lib + other
+import styled from 'styled-components'
 import DOMPurify from 'dompurify' //prevents XSS
 import {colors} from 'styles/theme/colors'
 //components
-import GenericError from './commons/GenericError'
-import ChallengeCommentsContainer from './ChallengeCommentsContainer'
-import styled from 'styled-components'
+import ChallengeCommentsContainer from 'components/ChallengeCommentsContainer'
 
+/*
+ Note: Because rendering <ChallengingCommentContainer/> in this element,
+commentsquery is only performed after query in ChallengeDetailContainer 
+container completes.For this use case it works since we do not want comments to
+render before the body.
+*/
 const MarkdownBox = styled.div`
   background-color: #d2fffc;
   border-radius: 3px;
@@ -29,22 +27,15 @@ const CommentsHeading = styled.h4`
 const LineBreak = styled.hr`
   border: solid 1px ${colors.faintGrey};
 `
-export class ChallengeDetail extends Component {
 
+export default class ChallengeDetail extends Component{
   static propTypes = {
-    id: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired, //html string
+    id: PropTypes.string.isRequired,
   }
-
   render(){
-    if (this.props.data.loading){
-      return(<p>...Loading</p>)
-    }
-    if (this.props.data.error){
-      return <GenericError />
-    }
-
-    const {id, title, body} = this.props.data.Challenge
-
+    const {title, body, id} = this.props
     return(
       <div>
         <Title>{title}</Title>
@@ -61,10 +52,3 @@ export class ChallengeDetail extends Component {
     )
   }
 }
-
-const ChallengeDetailApollo = graphql(
-CHALLENGE_DETAIL_QUERY,{
-  options: ({ id }) => ({ variables: { id } }), // coming from own props
-})(ChallengeDetail)
-
-export default ChallengeDetailApollo
