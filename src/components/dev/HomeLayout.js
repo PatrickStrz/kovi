@@ -1,62 +1,51 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const styles = {
-  grid: {
-    backgroundColor:'#716e6e',
-  },
-  col:{
-    borderStyle:'solid',
-    borderColor:'#3d6ff2',
-  },
-  col1: {
-    backgroundColor:'#ffe640',
-  },
-  col2: {
-    backgroundColor:'#40cbff',
-    height:150,
-    borderRadius:5,
-  },
-  row: {
-    borderStyle: "solid",
-    borderWidth: 3,
-    borderColor: "#2e2e2d"
-  }
-}
-
-const AppBox = styled.div`
+const LayoutAppBox = styled.div`
   min-height:100vh;
   width:100%;
   ${''/* height:100%; */}
   display: flex;
   flex-basis: auto;
-  background-color: #716e6e;
+  background-color: #dddddd;
   flex-direction: row;
 `
-const LeftPanel = styled.div`
+const LayoutLeftPanel = styled.div`
  width: 20%;
- background-color: #ee6662;
+ border: solid 6px #ee6662;
 `
 
-const CenterPanel = styled.div`
+const LayoutCenterPanel = styled.div`
  width: 60%;
- background-color: #7be1eb;
+ border: solid 6px #7be1eb;
+ display: flex;
+ flex-direction: column;
 `
 
 
-const RightPanel = styled.div`
+const LayoutRightPanel = styled.div`
   width: 20%;
-  background-color: #d9dd3f;
+  border: solid 6px #ee6662;
+`
+
+const Card = styled.div`
+  display: flex;
+  background-color: #40cbff;
+  height: 150px;
+  border-radius: 5;
+  margin: 5px;
 `
 const cards = [1,2,3,4,5]
 
 const HomeLayout = () => {
   return(
-    <AppBox>
-      <LeftPanel/>
-      <CenterPanel/>
-      <RightPanel/>
-    </AppBox>
+    <LayoutAppBox>
+      <LayoutLeftPanel/>
+        <LayoutCenterPanel>
+          {cards.map(card => <Card key={card}>card:{card}</Card>)}
+        </LayoutCenterPanel>
+      <LayoutRightPanel/>
+    </LayoutAppBox>
   )
 }
 

@@ -83,7 +83,7 @@ class Site extends Component {
         // backgroundColor: '#716e6e',
         flexDirection: 'row',
       //<---
-        backgroundColor:"#f6f0f0",
+        // backgroundColor:"#f6f0f0",
       },
     }
 
@@ -103,18 +103,18 @@ class Site extends Component {
       <div style={styles.scoreboard}>
         <Scoreboard />
       </div>
-      <div style={styles.main}>
+      {/* <div style={styles.main}> */}
       {/* component that syncs or creates a user depending on redux state: */}
       { this.shouldSyncUser() && renderSyncUser() }
 
-        <Grid style={{marginTop:30}}>
+        {/* <Grid style={{marginTop:30}}> */}
           {children}
-        </Grid>
+        {/* </Grid> */}
         <div className="visible-xs visible-sm" style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
           <BottomBar/>
         </div>
       </div>
-    </div>
+    // </div>
     )
   }
 }
