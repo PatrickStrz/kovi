@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import {media} from 'styles/media-queries'
 
 const LayoutAppBox = styled.div`
   min-height:100vh;
   width:100%;
-  ${''/* height:100%; */}
   display: flex;
   flex-basis: auto;
   background-color: #dddddd;
@@ -13,19 +13,22 @@ const LayoutAppBox = styled.div`
 const LayoutLeftPanel = styled.div`
  width: 20%;
  border: solid 6px #ee6662;
+ ${media.md`display:none;`}
 `
 
 const LayoutCenterPanel = styled.div`
  width: 60%;
+ ${media.md`width: 100%`}
  border: solid 6px #7be1eb;
  display: flex;
  flex-direction: column;
-`
+ `
 
 
 const LayoutRightPanel = styled.div`
   width: 20%;
   border: solid 6px #ee6662;
+  ${media.md`display:none;`}
 `
 
 const Card = styled.div`
