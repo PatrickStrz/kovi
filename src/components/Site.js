@@ -66,20 +66,29 @@ class Site extends Component {
         zIndex: SCOREBOARD_Z_INDEX,
       },
       //makes sure that the background fills up the screen
+      // main: {
+      //   //Make sure background fills screen -->
+      //   display: 'flex',
+      //   minHeight: '100vh',
+      //   flexDirection: 'column',
+      // //<---
+      //   backgroundColor:"#f6f0f0",
+      // },
       main: {
         //Make sure background fills screen -->
+        minHeight:'100vh',
+        width:'100%',
         display: 'flex',
-        minHeight: '100vh',
-        flexDirection: 'column',
+        flexBasis: 'auto',
+        // backgroundColor: '#716e6e',
+        flexDirection: 'row',
       //<---
         backgroundColor:"#f6f0f0",
       },
     }
 
     return(
-      <div style={styles.main}>
-      {/* component that syncs or creates a user depending on redux state: */}
-      { this.shouldSyncUser() && renderSyncUser() }
+    <div>
       <Headroom style={styles.headroom}
         onPin={()=>this.setState({scorecardVisible:false})}
         onUnpin={()=>this.setState({scorecardVisible:true})}
@@ -94,6 +103,10 @@ class Site extends Component {
       <div style={styles.scoreboard}>
         <Scoreboard />
       </div>
+      <div style={styles.main}>
+      {/* component that syncs or creates a user depending on redux state: */}
+      { this.shouldSyncUser() && renderSyncUser() }
+
         <Grid style={{marginTop:30}}>
           {children}
         </Grid>
@@ -101,6 +114,7 @@ class Site extends Component {
           <BottomBar/>
         </div>
       </div>
+    </div>
     )
   }
 }
