@@ -116,9 +116,9 @@ class Site extends Component {
       {/* <div style={styles.main}> */}
       {/* component that syncs or creates a user depending on redux state: */}
       { this.shouldSyncUser() && renderSyncUser() }
-      <LayoutAppBox>
+      <div>
         {children}
-      </LayoutAppBox>
+      </div>
       </div>
         <div className="visible-xs visible-sm" style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
           <BottomBar/>

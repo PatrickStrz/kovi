@@ -25,7 +25,7 @@ export default class ChallengeList extends Component {
 
     return challenges.map(challenge => {
       return(
-        <div key={'challengelist'+challenge.id} xs={12}>
+        <div key={'challengelist'+challenge.id}>
           <ChallengeCard
             challenge={challenge}
             apiUserId={apiUserId}
