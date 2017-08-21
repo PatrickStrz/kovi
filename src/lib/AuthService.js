@@ -7,7 +7,6 @@ const ROOT_ROUTE = '/'
 
 // extension of: https://github.com/amaurymartiny/react-redux-auth0-kit
 
-
 export default class AuthService {
   constructor(clientId, domain) {
     // Configure Auth0 lock

@@ -8,7 +8,6 @@ import styled, {css} from 'styled-components'
 //stylesheet to prevent body scroll:
 import 'styles/css/react-modal.css'
 
-
 import Media from 'react-media'
 import Modal from 'react-modal'
 import ExitIcon from 'ui-kit/icons/ExitIcon'

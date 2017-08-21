@@ -22,7 +22,8 @@ class Site extends Component {
 
   constructor(props) {
     super(props)
-    this.props.checkLogin() // check is Auth0 lock is authenticating after login callback
+    /* check is Auth0 lock is authenticating after calling AuthService login: */
+    this.props.checkLogin()
   }
 
   state = {
@@ -64,6 +65,7 @@ class Site extends Component {
 
     return(
       <div>
+        {/* Header hidden on down scroll: */}
         <Headroom style={styles.headroom}
           onPin={()=>this.setState({scorecardVisible:false})}
           onUnpin={()=>this.setState({scorecardVisible:true})}
@@ -75,6 +77,7 @@ class Site extends Component {
             profile={profile}
           />
         </Headroom>
+        {/* Scoreboard visible only on scroll down */}
         <Scoreboard
           zIndex={SCOREBOARD_Z_INDEX}
           isVisible={this.state.scorecardVisible ? true : false}
