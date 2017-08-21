@@ -8,7 +8,6 @@ import styled, {css} from 'styled-components'
 //stylesheet to prevent body scroll:
 import 'styles/css/react-modal.css'
 
-
 import Media from 'react-media'
 import Modal from 'react-modal'
 import ExitIcon from 'ui-kit/icons/ExitIcon'
@@ -48,7 +47,9 @@ const ExitBox = styled.div`
   z-index: 1000
 `
 const ChildrenContainer = styled.div`
+  display: flex;
   padding-bottom: 5vh;
+  justify-content: center;
 `
 //Wrapper component for react modal:
 export default class Dialog extends Component {
@@ -101,16 +102,20 @@ export default class Dialog extends Component {
     using 2 click handlers below to make exit smoother on mobile ( can clicK
     on icon or container to close) :
     */
+    const exit = (
+      <ExitBox isMobile={isMobile} onClick={()=> handleClose()}>
+        <ExitIcon
+          color={colors.lightGrey}
+          hoverColor={muiColors.primary1}
+          size={'2x'}
+          onClick={()=> handleClose()}
+        />
+      </ExitBox>
+    )
+
     return(
       <div>
-        <ExitBox isMobile={isMobile} onClick={()=> handleClose()}>
-          <ExitIcon
-            color={colors.lightGrey}
-            hoverColor={muiColors.primary1}
-            size={'2x'}
-            onClick={()=> handleClose()}
-          />
-        </ExitBox>
+        {isOpen && exit}
         <Modal
           style={styles}
           contentLabel={title}
