@@ -4,7 +4,6 @@ import {muiTheme} from 'styles/theme/mui-theme'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from './Site'
 import Home from './Home'
-// import HomeLayout from './dev/HomeLayout'
 
 class App extends Component {
   devRoute = `/${process.env.REACT_APP_DEV_ROUTE}/`

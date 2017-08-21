@@ -77,7 +77,7 @@ class Site extends Component {
         </Headroom>
         <Scoreboard
           zIndex={SCOREBOARD_Z_INDEX}
-          isVisible={this.state.scorecardVisible}
+          isVisible={this.state.scorecardVisible ? true : false}
         />
         {/* component that syncs or creates a user depending on redux state: */}
         { this.shouldSyncUser() && renderSyncUser() }

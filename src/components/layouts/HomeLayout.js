@@ -13,21 +13,25 @@ const AppBox = styled.div`
   flex-direction: row;
 `
 const LeftPanel = styled.div`
- width: 20%;
+ width: 27.5%;
  ${ props => props.showLines && css`border: solid 6px #ee6662;`}
  ${media.md`display:none;`}
 `
 
 const CenterPanel = styled.div`
- width: 60%;
- ${media.md`width: 100%`}
+ width: 45%;
+ ${media.md`
+   position: relative;
+   width: 80%;
+   left:10%;
+   `} /* Center element when in mobile view ( < md )*/
  ${ props => props.showLines && css`border: solid 6px #7be1eb;`}
  display: flex;
  flex-direction: column;
  `
 
 const RightPanel = styled.div`
-  width: 20%;
+  width: 27.5%;
   ${ props => props.showLines && css`border: solid 6px #ee6662;`}
   ${media.md`display:none;`}
 `
@@ -46,9 +50,9 @@ const HomeLayout = (props) => {
 }
 
 HomeLayout.propTypes = {
-  centerPanelContent: PropTypes.node.isRequired,
-  leftPanelContent: PropTypes.node,
-  rightPanelContent: PropTypes.node,
+  centerPanelContent: PropTypes.element.isRequired,
+  leftPanelContent: PropTypes.element,
+  rightPanelContent: PropTypes.element,
   // See colored borders of layout components for development:
   showLines: PropTypes.bool,
 }
