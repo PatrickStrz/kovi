@@ -9,6 +9,7 @@ component architecture. CSS is automatically vendor prefixed.
 ui-kit for any component that will be reused throughout the application.
 - Use 'local' styled components that are not exported for composed components that
 require smaller one-off pieces.
+- For media queries use the `media` custom template literal in `styles/media-queries`
 
 ## Inline styles/ CSS
 1. Only Use inline styles for material-ui library components.

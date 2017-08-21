@@ -11,13 +11,13 @@ import {requireAuth} from '../lib/auth'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
+import ChallengeCreateContainer from 'components/ChallengeCreateContainer'
 import Dialog from 'ui-kit/Dialog'
-import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
-import ChallengeCreateContainer from 'components/ChallengeCreateContainer'
+import HomeLayout from 'components/layouts/HomeLayout'
 
-class Home extends Component{
+class Home extends Component {
   styles = {
     actionButton:{
       position: 'fixed',
@@ -38,29 +38,33 @@ class Home extends Component{
     </Dialog>
   )
 
-
   render(){
     const {
         openChallengeDetailViewId,
         showCreateChallengeView
       } = this.props
+
+    const centerContent = (
+      <div>
+        <ChallengeListContainer />
+        <ChallengeCreateContainer />
+      </div>
+    )
+
     return(
       <div>
+        <HomeLayout centerPanelContent={centerContent} showLines={false}/>
+        <FloatingActionButton
+          backgroundColor='#38c1be'
+          mini={true}
+          zDepth={2}
+          style={this.styles.actionButton}
+          //requireAuth accepts a callback:
+          onTouchTap={() => requireAuth(showCreateChallengeView)}
+        >
+          <ContentAdd/>
+        </FloatingActionButton>
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
-        <Row>
-          <ChallengeListContainer />
-          <FloatingActionButton
-            backgroundColor='#38c1be'
-            mini={true}
-            zDepth={2}
-            style={this.styles.actionButton}
-            //requireAuth accepts a callback:
-            onTouchTap={() => requireAuth(showCreateChallengeView)}
-          >
-            <ContentAdd/>
-          </FloatingActionButton>
-        </Row>
-        <ChallengeCreateContainer/>
       </div>
     )
   }

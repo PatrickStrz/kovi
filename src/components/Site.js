@@ -15,8 +15,7 @@ import {
   HEADER_Z_INDEX,
   SCOREBOARD_Z_INDEX,
 } from '../styles/z-index'
-//external components + styling
-import {Grid} from 'react-flexbox-grid'
+//external components
 import Headroom from 'react-headroom'
 
 class Site extends Component {
@@ -61,43 +60,33 @@ class Site extends Component {
       headroom: {
         zIndex: HEADER_Z_INDEX
       },
-      scoreboard:{
-        display: this.state.scorecardVisible ? 'block' : 'none',
-        zIndex: SCOREBOARD_Z_INDEX,
-      },
-      //makes sure that the background fills up the screen
-      main: {
-        //Make sure background fills screen -->
-        display: 'flex',
-        minHeight: '100vh',
-        flexDirection: 'column',
-      //<---
-        backgroundColor:"#f6f0f0",
-      },
     }
 
     return(
-      <div style={styles.main}>
-      {/* component that syncs or creates a user depending on redux state: */}
-      { this.shouldSyncUser() && renderSyncUser() }
-      <Headroom style={styles.headroom}
-        onPin={()=>this.setState({scorecardVisible:false})}
-        onUnpin={()=>this.setState({scorecardVisible:true})}
-        >
-        <Navbar
-          handleLogout={logout}
-          handleLogin={login}
-          isAuthenticated={isAuthenticated}
-          profile={profile}
+      <div>
+        <Headroom style={styles.headroom}
+          onPin={()=>this.setState({scorecardVisible:false})}
+          onUnpin={()=>this.setState({scorecardVisible:true})}
+          >
+          <Navbar
+            handleLogout={logout}
+            handleLogin={login}
+            isAuthenticated={isAuthenticated}
+            profile={profile}
+          />
+        </Headroom>
+        <Scoreboard
+          zIndex={SCOREBOARD_Z_INDEX}
+          isVisible={this.state.scorecardVisible ? true : false}
         />
-      </Headroom>
-      <div style={styles.scoreboard}>
-        <Scoreboard />
-      </div>
-        <Grid style={{marginTop:30}}>
+        {/* component that syncs or creates a user depending on redux state: */}
+        { this.shouldSyncUser() && renderSyncUser() }
+        <div>
           {children}
-        </Grid>
-        <div className="visible-xs visible-sm" style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
+        </div>
+        <div className="visible-xs visible-sm"
+          style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}
+        >
           <BottomBar/>
         </div>
       </div>
