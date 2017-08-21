@@ -12,7 +12,6 @@ import {requireAuth} from '../lib/auth'
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
 import Dialog from 'ui-kit/Dialog'
-import {Row} from 'react-flexbox-grid'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import ChallengeCreateContainer from 'components/ChallengeCreateContainer'
@@ -47,7 +46,6 @@ class Home extends Component{
     return(
       <div>
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
-        <Row>
           <ChallengeListContainer />
           <FloatingActionButton
             backgroundColor='#38c1be'
@@ -59,7 +57,6 @@ class Home extends Component{
           >
             <ContentAdd/>
           </FloatingActionButton>
-        </Row>
         <ChallengeCreateContainer/>
       </div>
     )

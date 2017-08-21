@@ -15,9 +15,18 @@ import {
   HEADER_Z_INDEX,
   SCOREBOARD_Z_INDEX,
 } from '../styles/z-index'
+import styled from 'styled-components'
 //external components + styling
-import {Grid} from 'react-flexbox-grid'
 import Headroom from 'react-headroom'
+
+const LayoutAppBox = styled.div`
+  min-height:100vh;
+  width:100%;
+  display: flex;
+  flex-basis: auto;
+  background-color: #f6f0f0;
+  flex-direction: row;
+`
 
 class Site extends Component {
 
@@ -88,6 +97,7 @@ class Site extends Component {
     }
 
     return(
+  <div>
     <div>
       <Headroom style={styles.headroom}
         onPin={()=>this.setState({scorecardVisible:false})}
@@ -106,15 +116,14 @@ class Site extends Component {
       {/* <div style={styles.main}> */}
       {/* component that syncs or creates a user depending on redux state: */}
       { this.shouldSyncUser() && renderSyncUser() }
-
-        {/* <Grid style={{marginTop:30}}> */}
-          {children}
-        {/* </Grid> */}
+      <LayoutAppBox>
+        {children}
+      </LayoutAppBox>
+      </div>
         <div className="visible-xs visible-sm" style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
           <BottomBar/>
         </div>
-      </div>
-    // </div>
+    </div>
     )
   }
 }
