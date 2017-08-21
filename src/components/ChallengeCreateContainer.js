@@ -13,8 +13,8 @@ import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
 import {logException} from '../config'
 //components
 import ChallengeCreateForm from './ChallengeCreateForm'
-import MaterialDialog from 'ui-kit/MaterialDialog'
 import Editor from 'ui-kit/Editor'
+import Dialog from 'ui-kit/Dialog'
 
 class ChallengeCreateContainer extends Component {
   //so can change query variables in one place and pass to child components:
@@ -70,15 +70,14 @@ class ChallengeCreateContainer extends Component {
     )
 
     return(
-        <MaterialDialog
+        <Dialog
           isOpen={this.props.isCreateViewOpen}
           handleClose={this.props.hideCreateChallengeView}
           title='Create A Challenge'
-          repositionOnUpdate={false}
           modal={true}
         >
           {createChallengeForm}
-        </MaterialDialog>
+        </Dialog>
       )
     }
   }

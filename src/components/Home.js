@@ -64,6 +64,7 @@ class Home extends Component {
         >
           <ContentAdd/>
         </FloatingActionButton>
+        {/* conditionally rendering modal helps reduce number of DOM nodes: */}
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
       </div>
     )
