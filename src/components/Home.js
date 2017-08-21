@@ -15,7 +15,7 @@ import ChallengeCreateContainer from 'components/ChallengeCreateContainer'
 import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
-import LayoutHome from 'components/layouts/LayoutHome'
+import HomeLayout from 'components/layouts/HomeLayout'
 
 class Home extends Component {
   styles = {
@@ -53,7 +53,7 @@ class Home extends Component {
 
     return(
       <div>
-        <LayoutHome centerPanelContent={centerContent} showLines={false}/>
+        <HomeLayout centerPanelContent={centerContent} showLines={false}/>
         <FloatingActionButton
           backgroundColor='#38c1be'
           mini={true}

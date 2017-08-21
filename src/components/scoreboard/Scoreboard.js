@@ -1,6 +1,7 @@
 //react+redux
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 // helpers+other
 import {muiColors} from 'styles/theme/colors'
 //components
@@ -9,6 +10,10 @@ import UserScore from './UserScore'
 
 class Scoreboard extends Component{
 
+  static propTypes = {
+    zIndex: PropTypes.number.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+  }
   render(){
     const styles = {
       scoreboard:{
@@ -17,6 +22,8 @@ class Scoreboard extends Component{
         width: '100vw',
         height: 65,
         backgroundColor: '#ffffff',
+        zIndex: this.props.zIndex,
+        display: this.props.isVisible ? 'block' : 'none',
         //to match zDepth 1 of material-ui library:
         // boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px"
       },

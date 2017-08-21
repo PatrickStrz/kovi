@@ -60,10 +60,6 @@ class Site extends Component {
       headroom: {
         zIndex: HEADER_Z_INDEX
       },
-      scoreboard:{
-        display: this.state.scorecardVisible ? 'block' : 'none',
-        zIndex: SCOREBOARD_Z_INDEX,
-      },
     }
 
     return(
@@ -79,9 +75,10 @@ class Site extends Component {
             profile={profile}
           />
         </Headroom>
-        <div style={styles.scoreboard}>
-          <Scoreboard />
-        </div>
+        <Scoreboard
+          zIndex={SCOREBOARD_Z_INDEX}
+          isVisible={this.state.scorecardVisible}
+        />
         {/* component that syncs or creates a user depending on redux state: */}
         { this.shouldSyncUser() && renderSyncUser() }
         <div>

@@ -9,7 +9,7 @@ const AppBox = styled.div`
   width:100%;
   display: flex;
   flex-basis: auto;
-  background-color: colors.mainBackground;
+  background-color: ${colors.mainBackground};
   flex-direction: row;
 `
 const LeftPanel = styled.div`
@@ -32,7 +32,7 @@ const RightPanel = styled.div`
   ${media.md`display:none;`}
 `
 
-const LayoutHome = (props) => {
+const HomeLayout = (props) => {
   const {showLines} = props
   return(
     <AppBox>
@@ -45,7 +45,7 @@ const LayoutHome = (props) => {
   )
 }
 
-LayoutHome.propTypes = {
+HomeLayout.propTypes = {
   centerPanelContent: PropTypes.node.isRequired,
   leftPanelContent: PropTypes.node,
   rightPanelContent: PropTypes.node,
@@ -53,8 +53,8 @@ LayoutHome.propTypes = {
   showLines: PropTypes.bool,
 }
 
-LayoutHome.defaultProps = {
+HomeLayout.defaultProps = {
   showLines: false,
 }
 
-export default LayoutHome
+export default HomeLayout
