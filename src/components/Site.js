@@ -15,18 +15,8 @@ import {
   HEADER_Z_INDEX,
   SCOREBOARD_Z_INDEX,
 } from '../styles/z-index'
-import styled from 'styled-components'
-//external components + styling
+//external components
 import Headroom from 'react-headroom'
-
-const LayoutAppBox = styled.div`
-  min-height:100vh;
-  width:100%;
-  display: flex;
-  flex-basis: auto;
-  background-color: #f6f0f0;
-  flex-direction: row;
-`
 
 class Site extends Component {
 
@@ -74,56 +64,35 @@ class Site extends Component {
         display: this.state.scorecardVisible ? 'block' : 'none',
         zIndex: SCOREBOARD_Z_INDEX,
       },
-      //makes sure that the background fills up the screen
-      // main: {
-      //   //Make sure background fills screen -->
-      //   display: 'flex',
-      //   minHeight: '100vh',
-      //   flexDirection: 'column',
-      // //<---
-      //   backgroundColor:"#f6f0f0",
-      // },
-      main: {
-        //Make sure background fills screen -->
-        minHeight:'100vh',
-        width:'100%',
-        display: 'flex',
-        flexBasis: 'auto',
-        // backgroundColor: '#716e6e',
-        flexDirection: 'row',
-      //<---
-        // backgroundColor:"#f6f0f0",
-      },
     }
 
     return(
-  <div>
-    <div>
-      <Headroom style={styles.headroom}
-        onPin={()=>this.setState({scorecardVisible:false})}
-        onUnpin={()=>this.setState({scorecardVisible:true})}
-        >
-        <Navbar
-          handleLogout={logout}
-          handleLogin={login}
-          isAuthenticated={isAuthenticated}
-          profile={profile}
-        />
-      </Headroom>
-      <div style={styles.scoreboard}>
-        <Scoreboard />
-      </div>
-      {/* <div style={styles.main}> */}
-      {/* component that syncs or creates a user depending on redux state: */}
-      { this.shouldSyncUser() && renderSyncUser() }
       <div>
-        {children}
-      </div>
-      </div>
-        <div className="visible-xs visible-sm" style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}>
+        <Headroom style={styles.headroom}
+          onPin={()=>this.setState({scorecardVisible:false})}
+          onUnpin={()=>this.setState({scorecardVisible:true})}
+          >
+          <Navbar
+            handleLogout={logout}
+            handleLogin={login}
+            isAuthenticated={isAuthenticated}
+            profile={profile}
+          />
+        </Headroom>
+        <div style={styles.scoreboard}>
+          <Scoreboard />
+        </div>
+        {/* component that syncs or creates a user depending on redux state: */}
+        { this.shouldSyncUser() && renderSyncUser() }
+        <div>
+          {children}
+        </div>
+        <div className="visible-xs visible-sm"
+          style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}
+        >
           <BottomBar/>
         </div>
-    </div>
+      </div>
     )
   }
 }

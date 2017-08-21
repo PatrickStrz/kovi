@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, {css} from 'styled-components'
+import {colors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
 
 const AppBox = styled.div`
@@ -8,7 +9,7 @@ const AppBox = styled.div`
   width:100%;
   display: flex;
   flex-basis: auto;
-  background-color: #dddddd;
+  background-color: colors.mainBackground;
   flex-direction: row;
 `
 const LeftPanel = styled.div`
@@ -32,9 +33,7 @@ const RightPanel = styled.div`
 `
 
 const LayoutHome = (props) => {
-
   const {showLines} = props
-
   return(
     <AppBox>
       <LeftPanel showLines={showLines}/>
@@ -50,7 +49,7 @@ LayoutHome.propTypes = {
   centerPanelContent: PropTypes.node.isRequired,
   leftPanelContent: PropTypes.node,
   rightPanelContent: PropTypes.node,
-  // See colored borders of layout components for development.
+  // See colored borders of layout components for development:
   showLines: PropTypes.bool,
 }
 

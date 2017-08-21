@@ -24,7 +24,6 @@ const LayoutCenterPanel = styled.div`
  flex-direction: column;
  `
 
-
 const LayoutRightPanel = styled.div`
   width: 20%;
   border: solid 6px #ee6662;
