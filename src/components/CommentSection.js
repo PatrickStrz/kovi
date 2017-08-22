@@ -17,6 +17,7 @@ import InputWithProfile from 'ui-kit/InputWithProfile'
 import TextButton from 'ui-kit/TextButton'
 import FaTrash from 'ui-kit/icons/FaTrash'
 import WarningDialog from 'ui-kit/WarningDialog'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -32,6 +33,7 @@ const CommentSectionBox = styled.div`
   margin-top: 21px;
   justify-content: center;
   width: 80%;
+  margin-bottom: 30px;
 `
 
 const SubCommentSectionWrapper = styled.div`
@@ -82,6 +84,7 @@ class CommentSection extends Component {
     commentText: '',
     deleteCommentId: '',
     deleteInProgress: false,
+    createInProgress: false,
   }
 
   //pass in true for subcomment parameter if rendering subcomment
@@ -133,36 +136,31 @@ class CommentSection extends Component {
   }
 
   renderCommentCreate = () => {
-    let placeholder
-    let handleSubmit
-    let label
-    let disabled
 
     if (this.props.isAuthenticated){
-      placeholder = "write a comment"
-      disabled = false
-      label = "Post"
-      handleSubmit = () => this.handleCommentSubmit()
-    }
-    else {
-      placeholder = "login to write a comment"
-      disabled = true
-      label = "Login"
-      handleSubmit = () => login()
-    }
-    return(
-      <CreateCommentContainer>
-        <InputWithProfile
-          avatarImageUrl={this.props.userImageUrl}
-          avatarSize="25px"
-          placeholder={placeholder}
-          handleChange={text => this.handleCommentInput(text)}
-          value={this.state.commentText}
-          disabled={disabled}
+      return(
+        <CreateCommentContainer>
+          <InputWithProfile
+            avatarImageUrl={this.props.userImageUrl}
+            avatarSize="25px"
+            placeholder="write a comment"
+            handleChange={text => this.handleCommentInput(text)}
+            value={this.state.commentText}
+          />
+        <TextButton
+          label="Post"
+          onClick={() => this.handleCommentSubmit()}
+          inProgress={this.state.createInProgress}
         />
-        <TextButton label={label} handleSubmit={handleSubmit}/>
-      </CreateCommentContainer>
-    )
+        </CreateCommentContainer>
+      )
+    }
+
+    else {
+      const label = "log in to write a comment"
+      const handleClick = () => login()
+      return <RaisedButton primary={true} label={label} onClick={handleClick} />
+    }
   }
 
   // handler functions:
@@ -189,10 +187,12 @@ class CommentSection extends Component {
       }],
     }
     try{
+      this.setState({createInProgress:true})
       await this.props.commentCreateMutation(options)
-      this.setState({commentText:''}) //clears input
+      this.setState({commentText:'', createInProgress:false}) //clears input
     }
     catch(err){
+      this.setState({createInProgress:false})
       logException(err, {
       action: "handleCommentCreate function in ChallengeCommentsContainer"
       })

@@ -3,27 +3,35 @@ import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
+import CircularProgress from 'material-ui/CircularProgress';
 
 const Button = styled.a`
 	color: ${muiColors.primary1};
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
 `
 
 const TextButton = (props) => {
 
-  const handleSubmit = () => {
-    props.handleSubmit()
+  const handleClick = () => {
+    props.onClick()
   }
 
+	if (props.inProgress){
+		return <CircularProgress size={20}/>
+	}
+
   return(
-    <Button onClick={() => handleSubmit()}>{props.label}</Button>
+		<div>
+    <Button onClick={() => handleClick()}>{props.label}</Button>
+		</div>
   )
 }
 
 TextButton.propTypes = {
   label: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+	inProgress: PropTypes.bool,
 }
 
 export default TextButton
