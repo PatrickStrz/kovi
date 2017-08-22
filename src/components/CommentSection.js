@@ -33,6 +33,7 @@ const CommentSectionBox = styled.div`
   margin-top: 21px;
   justify-content: center;
   width: 80%;
+  margin-bottom: 30px;
 `
 
 const SubCommentSectionWrapper = styled.div`
@@ -137,7 +138,6 @@ class CommentSection extends Component {
   renderCommentCreate = () => {
 
     if (this.props.isAuthenticated){
-      const handleSubmit = () => this.handleCommentSubmit()
       return(
         <CreateCommentContainer>
           <InputWithProfile
@@ -147,7 +147,11 @@ class CommentSection extends Component {
             handleChange={text => this.handleCommentInput(text)}
             value={this.state.commentText}
           />
-          <TextButton label="Post" onClick={handleSubmit}/>
+        <TextButton
+          label="Post"
+          onClick={() => this.handleCommentSubmit()}
+          inProgress={this.state.createInProgress}
+        />
         </CreateCommentContainer>
       )
     }
@@ -183,10 +187,12 @@ class CommentSection extends Component {
       }],
     }
     try{
+      this.setState({createInProgress:true})
       await this.props.commentCreateMutation(options)
-      this.setState({commentText:''}) //clears input
+      this.setState({commentText:'', createInProgress:false}) //clears input
     }
     catch(err){
+      this.setState({createInProgress:false})
       logException(err, {
       action: "handleCommentCreate function in ChallengeCommentsContainer"
       })
