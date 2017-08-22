@@ -6,24 +6,24 @@ import {muiColors} from 'styles/theme/colors'
 
 const Button = styled.a`
 	color: ${muiColors.primary1};
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
 `
 
 const TextButton = (props) => {
 
-  const handleSubmit = () => {
-    props.handleSubmit()
+  const handleClick = () => {
+    props.onClick()
   }
 
   return(
-    <Button onClick={() => handleSubmit()}>{props.label}</Button>
+    <Button onClick={() => handleClick()}>{props.label}</Button>
   )
 }
 
 TextButton.propTypes = {
   label: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 }
 
 export default TextButton

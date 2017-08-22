@@ -17,6 +17,7 @@ import InputWithProfile from 'ui-kit/InputWithProfile'
 import TextButton from 'ui-kit/TextButton'
 import FaTrash from 'ui-kit/icons/FaTrash'
 import WarningDialog from 'ui-kit/WarningDialog'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -82,6 +83,7 @@ class CommentSection extends Component {
     commentText: '',
     deleteCommentId: '',
     deleteInProgress: false,
+    createInProgress: false,
   }
 
   //pass in true for subcomment parameter if rendering subcomment
@@ -133,36 +135,28 @@ class CommentSection extends Component {
   }
 
   renderCommentCreate = () => {
-    let placeholder
-    let handleSubmit
-    let label
-    let disabled
 
     if (this.props.isAuthenticated){
-      placeholder = "write a comment"
-      disabled = false
-      label = "Post"
-      handleSubmit = () => this.handleCommentSubmit()
+      const handleSubmit = () => this.handleCommentSubmit()
+      return(
+        <CreateCommentContainer>
+          <InputWithProfile
+            avatarImageUrl={this.props.userImageUrl}
+            avatarSize="25px"
+            placeholder="write a comment"
+            handleChange={text => this.handleCommentInput(text)}
+            value={this.state.commentText}
+          />
+          <TextButton label="Post" onClick={handleSubmit}/>
+        </CreateCommentContainer>
+      )
     }
+
     else {
-      placeholder = "login to write a comment"
-      disabled = true
-      label = "Login"
-      handleSubmit = () => login()
+      const label = "log in to write a comment"
+      const handleClick = () => login()
+      return <RaisedButton primary={true} label={label} onClick={handleClick} />
     }
-    return(
-      <CreateCommentContainer>
-        <InputWithProfile
-          avatarImageUrl={this.props.userImageUrl}
-          avatarSize="25px"
-          placeholder={placeholder}
-          handleChange={text => this.handleCommentInput(text)}
-          value={this.state.commentText}
-          disabled={disabled}
-        />
-        <TextButton label={label} handleSubmit={handleSubmit}/>
-      </CreateCommentContainer>
-    )
   }
 
   // handler functions:
