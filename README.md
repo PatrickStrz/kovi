@@ -14,7 +14,9 @@ REACT_APP_AUTH0_CLIENT_ID='XXXX' //from auth0 console
 REACT_APP_AUTH0_DOMAIN='XXXX' //from auth0 console
 REACT_APP_DEV_ROUTE='XXXX' //to view development only routes. i.e) mockup of
 app layout is available for developers that know this secret
-NODE_PATH = 'src' //to allow absolute imports
+REACT_APP_GRAPHCOOL_ENDPOINT='wss://XXXX' //use dev api in development
+REACT_APP_GRAPHCOOL_WSS_ENDPOINT='https://XXXX' //use dev api wss in development.
+NODE_PATH = 'src' //to enable absolute imports
 ```
  3. install dependencies `npm install`
 
