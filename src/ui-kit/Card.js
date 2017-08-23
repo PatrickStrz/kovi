@@ -6,9 +6,6 @@ import {CARD_Z_INDEX} from 'styles/z-index'
 
 const CardBox = styled.div`
   background-color: white;
-  :hover{
-    background-color: #f6f0f0;
-  }
   width:100%;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   box-sizing: border-box;
@@ -24,6 +21,9 @@ const CardBox = styled.div`
 `
 const CardBody = styled.div`
   cursor: pointer;
+  :hover{
+    opacity: 0.5;
+  }
 `
 const Text = styled.p`
   font-size: 16px;

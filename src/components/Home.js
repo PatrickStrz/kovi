@@ -8,6 +8,7 @@ import {
 } from '../actions/challenge-actions'
 //lib + other
 import {requireAuth} from '../lib/auth'
+import styled from 'styled-components'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
@@ -16,6 +17,11 @@ import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
+
+const ChallengeListBox = styled.div`
+  margin-top: 35px; 
+  margin-bottom: 70px; /* so can see bottom of infinite scroll list */
+`
 
 class Home extends Component {
   styles = {
@@ -45,11 +51,12 @@ class Home extends Component {
       } = this.props
 
     const centerContent = (
-      <div>
+      <ChallengeListBox>
         <ChallengeListContainer />
-        <ChallengeCreateContainer />
-      </div>
+      </ChallengeListBox>
     )
+
+    /*--------- render return --------*/
 
     return(
       <div>
@@ -64,6 +71,7 @@ class Home extends Component {
         >
           <ContentAdd/>
         </FloatingActionButton>
+        <ChallengeCreateContainer />
         {/* conditionally rendering modal helps reduce number of DOM nodes: */}
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
       </div>
