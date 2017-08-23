@@ -21,6 +21,7 @@ const z = {
 // Z-Index Applications
 // --------------------------------------------------
 //so that mui like button does not float over top:
-export const SCOREBOARD_Z_INDEX = z.index1
-export const HEADER_Z_INDEX = z.index2
+export const CARD_Z_INDEX = z.index1
+export const SCOREBOARD_Z_INDEX = z.index2
+export const HEADER_Z_INDEX = z.index3
 export const DIALOG_Z_INDEX = z.index9 //Dialog.js - so dialog always stays on top.
