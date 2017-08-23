@@ -10,7 +10,8 @@ const CardBox = styled.div`
   width:100%;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   box-sizing: border-box;
-  font-family: Roboto, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  color: rgb(54, 54, 54);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   border-radius: 2px;
