@@ -22,10 +22,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
 
-const CommentText = styled.p`
-  color: #545252;
-  word-wrap: break-word;
-`
 const CommentSectionBox = styled.div`
   margin: auto;
   margin-top: 21px;
@@ -43,6 +39,11 @@ const CommentsBox = styled.div`
   border-radius: 5px;
   background-color: ${colors.whiteGrey};
   padding: 15px;
+`
+
+const CommentText = styled.p`
+  color: #545252;
+  word-wrap: break-word;
 `
 
 const SubCommentSectionWrapper = styled.div`
