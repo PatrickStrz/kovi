@@ -1,6 +1,8 @@
 import React from 'react'
 import {muiColors} from 'styles/theme/colors'
+import {loadingOpacityKeyframes} from 'styles/animations/keyframes'
 import styled from 'styled-components'
+
 
 const Box = styled.div`
   width: 100%;
@@ -9,13 +11,15 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
 `
+const Loader = styled.h1`
+  color: ${muiColors.primary1};
+  animation: ${loadingOpacityKeyframes} 1.25s infinite;
+`
 
 const GenericError = () => {
   return(
     <Box>
-      <div>
-        <h1 style={{color:muiColors.primary1}}>Loading...</h1>
-      </div>
+      <Loader>...Loading</Loader>
     </Box>
   )
 }
