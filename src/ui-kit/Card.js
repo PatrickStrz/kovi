@@ -15,7 +15,7 @@ const CardBox = styled.div`
   font-family: 'Open Sans', sans-serif;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   border-radius: 2px;
-  z-index: CARD_Z_INDEX;
+  z-index: ${CARD_Z_INDEX};
   margin-bottom: 5px;
   padding-top: 10px;
   padding-right: 20px;

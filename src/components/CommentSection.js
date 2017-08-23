@@ -26,14 +26,23 @@ const CommentText = styled.p`
   color: #545252;
   word-wrap: break-word;
 `
-
 const CommentSectionBox = styled.div`
-  /* horizonally center: */
   margin: auto;
   margin-top: 21px;
   justify-content: center;
-  width: 80%;
+  width: 90%;
   margin-bottom: 30px;
+`
+const CommentCreateBox = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`
+
+const CommentsBox = styled.div`
+  /* horizonally center: */
+  border-radius: 5px;
+  background-color: ${colors.whiteGrey};
+  padding: 15px;
 `
 
 const SubCommentSectionWrapper = styled.div`
@@ -233,11 +242,18 @@ class CommentSection extends Component {
   }
 
   render(){
+
+    /*--------------- render return -----------------*/
+
     return(
       <div>
         <CommentSectionBox>
-          {this.renderComments(this.props.comments)}
-          {this.renderCommentCreate()}
+          <CommentsBox>
+            {this.renderComments(this.props.comments)}
+          </CommentsBox>
+          <CommentCreateBox>
+            {this.renderCommentCreate()}
+          </CommentCreateBox>
         </CommentSectionBox>
         <WarningDialog
           isOpen={this.state.deleteCommentId ? true : false}
