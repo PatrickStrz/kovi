@@ -15,9 +15,9 @@ import {login, requireAuth} from 'lib/auth'
 import UserHeader from 'ui-kit/UserHeader'
 import InputWithProfile from 'ui-kit/InputWithProfile'
 import TextButton from 'ui-kit/TextButton'
-import FaTrash from 'ui-kit/icons/FaTrash'
 import WarningDialog from 'ui-kit/WarningDialog'
 import RaisedButton from 'material-ui/RaisedButton'
+import FaIconButton from 'ui-kit/icons/FaIconButton'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -109,11 +109,14 @@ class CommentSection extends Component {
             userName={comment.user.name}
             avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
           />
-          <FaTrash
-            handleClick={()=>requireAuth(
+          <FaIconButton
+            onClick={()=>requireAuth(
               ()=> this.setState({deleteCommentId: comment.id})
-            )}>
-          </FaTrash>
+            )}
+            color={colors.lightGrey}
+            hoverColor={colors.errorRed}
+            faClassName="fa-trash"
+          />
         </CommentHeader>
         <CommentText>{comment.text}</CommentText>
       </CommentBox>
