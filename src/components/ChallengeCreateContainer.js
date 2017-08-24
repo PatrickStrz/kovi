@@ -15,13 +15,23 @@ import {logException} from '../config'
 import ChallengeCreateForm from './ChallengeCreateForm'
 import Editor from 'ui-kit/Editor'
 import Dialog from 'ui-kit/Dialog'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class ChallengeCreateContainer extends Component {
   //so can change query variables in one place and pass to child components:
+  state = {
+    title: "",
+    description: "",
+    titleError:""
+  }
+
   allChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
-  handleCreateChallengeSubmit = async (values) => {
-    const {title, description} = values
+  charTotal = 100
+
+  handleCreateChallengeSubmit = async () => {
+    const {title, description} = this.state
     const options = {
       variables: {
         title,
@@ -57,6 +67,33 @@ class ChallengeCreateContainer extends Component {
     }
   }
 
+  // const validate = (title) =>{
+  //   const errors = {}
+  //   if (!title){
+  //     errors.title = 'required'
+  //   }
+  //   if (!values.text){
+  //     errors.text = 'required'
+  //   }
+  //   return errors
+  // }
+
+  titleError = () => {
+    const title = this.state.title
+    const titleLength = this.state.title.length
+    if (titleLength > this.charTotal){
+      return "exceeded max"
+    }
+    else {
+      return ""
+    }
+  }
+
+  handleTitleChange = e => {
+    this.setState({title: e.target.value})
+    this.setState({titleError: this.titleError()})
+  }
+
   render(){
 
     const createChallengeForm = (
@@ -64,10 +101,15 @@ class ChallengeCreateContainer extends Component {
         <Editor
           handleChange={this.props.handleEditorChange}
           value={this.props.editorHtml}
-          // placeholder="Give us some body..."
         />
       </ChallengeCreateForm>
     )
+    const renderCharCount = () => {
+      const charCount = this.state.title.length
+      return(
+        <p>{`${charCount}/${this.charTotal}`}</p>
+      )
+    }
 
     return(
         <Dialog
@@ -76,7 +118,19 @@ class ChallengeCreateContainer extends Component {
           title='Create A Challenge'
           modal={true}
         >
-          {createChallengeForm}
+        <TextField
+          hint="write a concise title"
+          onChange={this.handleTitleChange}
+          value={this.state.title}
+          errorText={this.state.titleError}
+        />
+        {renderCharCount()}
+        <Editor
+          handleChange={this.props.handleEditorChange}
+          value={this.props.editorHtml}
+        />
+        <br/>
+        <RaisedButton label="submit challenge" onClick={this.handleCreateChallengeSubmit}/>
         </Dialog>
       )
     }
