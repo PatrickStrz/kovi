@@ -5,10 +5,10 @@ import {
   ADD_CHALLENGE_UPVOTE_MUTATION,
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
-import IconButton from 'material-ui/IconButton'
-import ThumbUp from 'material-ui/svg-icons/action/thumb-up'
 import {muiColors, colors} from 'styles/theme/colors'
 import PropTypes from 'prop-types'
+//components
+import FaIconButton from 'ui-kit/icons/FaIconButton'
 
 class ChallengeUpvote extends Component{
   state = { upvoteInProgress: false}
@@ -58,35 +58,33 @@ class ChallengeUpvote extends Component{
   }
 
   render(){
-    const styles = {
-      iconColor: this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey,
-      icon: {
-        height: 25,
-        width: 25
-      },
-      count: {
-        position:'relative',
-        right: 7,
-        bottom: 4,
-        fontSize: 14,
-        color: colors.lightGrey
-      }
-    }
+    // const styles = {
+    //   iconColor: this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey,
+    //   icon: {
+    //     height: 25,
+    //     width: 25
+    //   },
+    //   count: {
+    //     position:'relative',
+    //     right: 7,
+    //     bottom: 4,
+    //     fontSize: 14,
+    //     color: colors.lightGrey
+    //   }
+    // }
 
     return(
-    //used span so component can be used inline:
-    <span>
-      <IconButton
-        onTouchTap={() => requireAuth(this.handleToggleUpvote)}
-        iconStyle={styles.icon}
-        disabled={this.state.upvoteInProgress}
-      >
-        <ThumbUp
-          color={styles.iconColor}
-        />
-      </IconButton>
-      <span style={styles.count}>{this.props.upvotesCount}</span>
-    </span>
+      <div>
+      <FaIconButton
+        inline={true}
+        size="30px"
+        onClick={() => requireAuth(this.handleToggleUpvote)}
+        color={this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey}
+        hoverColor="none"
+        faClassName="fa-chevron-up"
+      />
+      <span>{this.props.upvotesCount}</span>
+      </div>
     )
   }
 }

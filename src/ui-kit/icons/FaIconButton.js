@@ -8,17 +8,21 @@ const Container = styled.div`
       .fa{
         font-size: ${props.size};
         color: ${props.color};
+        ${props.inline && `display:inline;`}
         :hover{
           color: ${props.hoverColor};
         }
-     ` }
+      }
+    `
   }
+  ${props => props.inline && css`display: inline`}
 `
 
 const FaIconButton = (props) => {
-  const {size, color, hoverColor, onClick, faClassName} = props
+  const {size, color, hoverColor, onClick, faClassName, inline} = props
   return(
     <Container
+      inline={inline}
       size={size}
       color={color}
       hoverColor={hoverColor}
