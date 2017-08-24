@@ -11,13 +11,30 @@ import {ALL_CHALLENGES_QUERY} from 'gql/Challenge/queries'
 import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
 //helpers+other
 import {logException} from '../config'
+import styled from 'styled-components'
+import {colors} from 'styles/theme/colors'
+import {media} from 'styles/media-queries'
 //components
-import ChallengeCreateForm from './ChallengeCreateForm'
 import Editor from 'ui-kit/Editor'
 import Dialog from 'ui-kit/Dialog'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
+const CharCount = styled.p`
+    color: ${props => props.color };
+`
+const FormBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  margin-left: 15%;
+   ${media.md`width:90%; margin-left: 5%`}
+`
+const EditorBox = styled.div`
+  width:100%
+`
 class ChallengeCreateContainer extends Component {
   //so can change query variables in one place and pass to child components:
   state = {
@@ -28,7 +45,7 @@ class ChallengeCreateContainer extends Component {
 
   allChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
-  charTotal = 100
+  charMax = 100
 
   handleCreateChallengeSubmit = async () => {
     const {title, description} = this.state
@@ -57,6 +74,7 @@ class ChallengeCreateContainer extends Component {
     }
     try{
       await this.props.createChallengeAndScoreMutation(options)
+      this.setState({title:""}) //clear field on success.
       this.props.hideCreateChallengeView()
       this.props.clearEditor()
     }
@@ -67,49 +85,44 @@ class ChallengeCreateContainer extends Component {
     }
   }
 
-  // const validate = (title) =>{
-  //   const errors = {}
-  //   if (!title){
-  //     errors.title = 'required'
-  //   }
-  //   if (!values.text){
-  //     errors.text = 'required'
-  //   }
-  //   return errors
-  // }
+  setTitleError = () => {
+    // const title = this.state.title
+    // this is the previous state so must add 1 char to get the correct length:
+    const titleLength = this.state.title.length + 1
 
-  titleError = () => {
-    const title = this.state.title
-    const titleLength = this.state.title.length
-    if (titleLength > this.charTotal){
-      return "exceeded max"
+    if (titleLength > (this.charMax)){
+      return "exceeded max characters"
     }
     else {
       return ""
     }
   }
 
+  checkRequiredFields = () => {
+    const {title} = this.state
+    if (!title){
+      this.setState({titleError:"title is required"})
+    }
+  }
+
   handleTitleChange = e => {
     this.setState({title: e.target.value})
-    this.setState({titleError: this.titleError()})
+    this.setState({titleError: this.setTitleError()})
   }
 
   render(){
 
-    const createChallengeForm = (
-      <ChallengeCreateForm onSubmit={this.handleCreateChallengeSubmit}>
-        <Editor
-          handleChange={this.props.handleEditorChange}
-          value={this.props.editorHtml}
-        />
-      </ChallengeCreateForm>
-    )
-    const renderCharCount = () => {
+    const renderRemainingCharCount = () => {
       const charCount = this.state.title.length
+      const remainingChars = this.charMax - charCount
       return(
-        <p>{`${charCount}/${this.charTotal}`}</p>
+        <CharCount color={remainingChars < 5 ? "red" : colors.lightGrey}>
+          {remainingChars}
+        </CharCount>
       )
     }
+
+    /*-------------- render return ----------------*/
 
     return(
         <Dialog
@@ -118,19 +131,32 @@ class ChallengeCreateContainer extends Component {
           title='Create A Challenge'
           modal={true}
         >
-        <TextField
-          hint="write a concise title"
-          onChange={this.handleTitleChange}
-          value={this.state.title}
-          errorText={this.state.titleError}
-        />
-        {renderCharCount()}
-        <Editor
-          handleChange={this.props.handleEditorChange}
-          value={this.props.editorHtml}
-        />
-        <br/>
-        <RaisedButton label="submit challenge" onClick={this.handleCreateChallengeSubmit}/>
+          <FormBox>
+            <TextField
+              id="challengeCreateTitle"
+              fullWidth={true}
+              hintText="write a concise title"
+              onChange={this.handleTitleChange}
+              value={this.state.title}
+              errorText={this.state.titleError}
+              multiLine={true}
+            />
+            {renderRemainingCharCount()}
+          <br />
+            <EditorBox>
+              <Editor
+                handleChange={this.props.handleEditorChange}
+                value={this.props.editorHtml}
+              />
+            </EditorBox>
+            <br/>
+            <br/>
+            <RaisedButton
+              label="submit challenge"
+              onClick={this.handleCreateChallengeSubmit}
+              primary={true}
+            />
+          </FormBox>
         </Dialog>
       )
     }
