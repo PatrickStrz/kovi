@@ -6,6 +6,7 @@ const Container = styled.div`
   cursor: pointer;
    ${ props => css`
       .fa{
+        font-size: ${props.size};
         color: ${props.color};
         :hover{
           color: ${props.hoverColor};
@@ -15,9 +16,10 @@ const Container = styled.div`
 `
 
 const FaIconButton = (props) => {
-  const {color, hoverColor, onClick, faClassName} = props
+  const {size, color, hoverColor, onClick, faClassName} = props
   return(
     <Container
+      size={size}
       color={color}
       hoverColor={hoverColor}
       onClick={onClick}
@@ -28,6 +30,7 @@ const FaIconButton = (props) => {
 }
 
 FaIconButton.propTypes = {
+  size: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   color: PropTypes.string.isRequired,
   hoverColor: PropTypes.string.isRequired,

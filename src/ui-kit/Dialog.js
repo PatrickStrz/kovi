@@ -7,10 +7,10 @@ import {XS_MAX} from 'styles/screen-sizes'
 import styled, {css} from 'styled-components'
 //stylesheet to prevent body scroll:
 import 'styles/css/react-modal.css'
-
+//components
 import Media from 'react-media'
 import Modal from 'react-modal'
-import ExitIcon from 'ui-kit/icons/ExitIcon'
+import FaIconButton from 'ui-kit/icons/FaIconButton'
 
 const ExitBox = styled.div`
   position: fixed;
@@ -102,11 +102,12 @@ export default class Dialog extends Component {
     */
     const exit = (
       <ExitBox isMobile={isMobile} onClick={()=> handleClose()}>
-        <ExitIcon
+        <FaIconButton
           color={colors.lightGrey}
           hoverColor={muiColors.primary1}
-          size={'2x'}
+          size="35px"
           onClick={()=> handleClose()}
+          faClassName="fa fa-remove"
         />
       </ExitBox>
     )
