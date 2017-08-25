@@ -19,10 +19,25 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 
 const ChallengeListBox = styled.div`
-  margin-top: 35px; 
+  margin-top: 70px;
   margin-bottom: 70px; /* so can see bottom of infinite scroll list */
 `
-
+const Box = styled.div`
+  overflow: hidden;
+`
+const RightContent = styled.div`
+  top:15vh;
+  height:70vh;
+  position:fixed;
+  background-color: rgb(213, 213, 213);
+  width: 25vw;
+  right:0px;
+  border-radius: 3px;
+  overflow-y:auto;
+  ::-webkit-scrollbar {
+    display: none;
+  } /* hides scrollbar*/
+`
 class Home extends Component {
   styles = {
     actionButton:{
@@ -60,7 +75,14 @@ class Home extends Component {
 
     return(
       <div>
-        <HomeLayout centerPanelContent={centerContent} showLines={false}/>
+        <HomeLayout
+          centerPanelContent={centerContent}
+          rightPanelContent={
+          <Box>
+            <RightContent>
+          </RightContent></Box>}
+          showLines={false}
+        />
         <FloatingActionButton
           backgroundColor='#38c1be'
           mini={true}
