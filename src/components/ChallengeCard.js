@@ -11,7 +11,7 @@ import {
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
 //components
-import ChallengeUpvote from './ChallengeUpvote'
+import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
 
 class ChallengeCard extends Component {
@@ -21,8 +21,6 @@ class ChallengeCard extends Component {
     addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
   }
-
-
 
   render(){
     const {id, userDidUpvote} = this.props.challenge
@@ -42,10 +40,9 @@ class ChallengeCard extends Component {
         }
       }
 
-    const getUpvote = () => {
-      return(
-        <ChallengeUpvote
-          userDidUpvote={userDidUpvote}
+    const upvote = (
+        <Upvote
+          userDidUpvote={userDidUpvote.length > 0 && true}
           apiUserId={apiUserId}
           challengeId={id}
           upvotesCount={upvotesCount}
@@ -55,7 +52,6 @@ class ChallengeCard extends Component {
           mutationVariables={upvoteMutationVariables}
         />
       )
-    }
 
     const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
@@ -66,7 +62,7 @@ class ChallengeCard extends Component {
       <div>
         <Card
           text={lorem}
-          bottomSection={<div>{getUpvote()}</div>}
+          bottomSection={upvote}
           onBodyClick={()=>{showChallengeDetailView(id)}}
         />
       </div>

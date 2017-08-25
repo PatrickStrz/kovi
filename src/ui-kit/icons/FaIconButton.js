@@ -48,7 +48,7 @@ const FaIconButton = (props) => {
       size={size}
       color={color}
       hoverColor={hoverColor}
-      onClick={ !disabled && onClick}
+      onClick={!disabled && onClick}
     >
       <i className={`fa ${faClassName}`} aria-hidden="true"></i>
     </Container>

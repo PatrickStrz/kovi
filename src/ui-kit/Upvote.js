@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import {requireAuth} from '../lib/auth'
 import styled from 'styled-components'
 import {muiColors, colors} from 'styles/theme/colors'
+//components
+import FaIconButton from 'ui-kit/icons/FaIconButton'
 
 const Box = styled.div`
   display:flex;
@@ -16,16 +18,14 @@ const Count = styled.p`
   margin-left: 5px;
 `
 //components
-import FaIconButton from 'ui-kit/icons/FaIconButton'
 
-class ChallengeUpvote extends Component{
+class Upvote extends Component{
   state = { upvoteInProgress: false}
 
   static propTypes = {
-    userDidUpvote: PropTypes.array.isRequired,
+    faIconClassName: PropTypes.string, // http://fontawesome.io/cheatsheet/
+    userDidUpvote: PropTypes.bool.isRequired,
     upvotesCount: PropTypes.number.isRequired,
-    apiUserId: PropTypes.string,
-    challengeId: PropTypes.string.isRequired,
     addUpvoteMutation: PropTypes.func.isRequired,
     removeUpvoteMutation: PropTypes.func.isRequired,
     mutationVariables: PropTypes.object.isRequired,
@@ -45,8 +45,8 @@ class ChallengeUpvote extends Component{
     } = this.props
 
     const variables = this.props.mutationVariables
-      //userDidUpvote array empty if user did not upvote:
-    if (userDidUpvote.length > 0) {
+
+    if (userDidUpvote) {
       this.disableUpvote()
       await removeUpvoteMutation({variables})
       this.enableUpvote()
@@ -63,22 +63,22 @@ class ChallengeUpvote extends Component{
   }
 
   render(){
+    const {userDidUpvote, upvotesCount, faIconClassName} = this.props
     return(
     <Box>
       <FaIconButton
         inline={true}
         size="25px"
-        // onClick={() => requireAuth(this.onClick)}
         onClick={() => requireAuth(this.handleToggleUpvote)}
-        color={this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey}
+        color={userDidUpvote ? muiColors.secondary1 : colors.lightGrey}
         hoverColor="none"
-        faClassName="fa-arrow-circle-up"
+        faClassName={faIconClassName ? faIconClassName : "fa-arrow-circle-up"}
         disabled={this.state.upvoteInProgress}
       />
-      <Count>{this.props.upvotesCount}</Count>
+      <Count>{upvotesCount}</Count>
     </Box>
     )
   }
 }
 
-export default ChallengeUpvote
+export default Upvote
