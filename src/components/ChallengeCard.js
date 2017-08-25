@@ -4,6 +4,13 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {showChallengeDetailView,} from '../actions/challenge-actions'
+//gql
+import {graphql, compose} from 'react-apollo'
+import {
+  ADD_CHALLENGE_UPVOTE_MUTATION,
+  REMOVE_CHALLENGE_UPVOTE_MUTATION,
+} from '../gql/Challenge/mutations'
+//components
 import ChallengeUpvote from './ChallengeUpvote'
 import Card from 'ui-kit/Card'
 
@@ -11,7 +18,11 @@ class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.object.isRequired,
     apiUserId: PropTypes.string,
+    addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
+    removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
   }
+
+
 
   render(){
     const {id, userDidUpvote} = this.props.challenge
@@ -19,7 +30,17 @@ class ChallengeCard extends Component {
     const {
       apiUserId,
       showChallengeDetailView,
+      addChallengeUpvoteMutation,
+      removeChallengeUpvoteMutation,
     } = this.props
+
+    const upvoteMutationVariables = {
+        "userId": apiUserId ,
+        "challengeId": id,
+        "filter":{
+          "id": apiUserId
+        }
+      }
 
     const getUpvote = () => {
       return(
@@ -29,6 +50,9 @@ class ChallengeCard extends Component {
           challengeId={id}
           upvotesCount={upvotesCount}
           style={{paddingBottom:0}}
+          addUpvoteMutation={addChallengeUpvoteMutation}
+          removeUpvoteMutation={removeChallengeUpvoteMutation}
+          mutationVariables={upvoteMutationVariables}
         />
       )
     }
@@ -56,4 +80,9 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(ChallengeCard)
+const ChallengeCardApollo = compose(
+  graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
+  graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
+)(ChallengeCard)
+
+export default connect(null,mapDispatchToProps)(ChallengeCardApollo)

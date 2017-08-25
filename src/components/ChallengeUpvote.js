@@ -1,11 +1,5 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-//gql
-import {graphql, compose} from 'react-apollo'
-import {
-  ADD_CHALLENGE_UPVOTE_MUTATION,
-  REMOVE_CHALLENGE_UPVOTE_MUTATION,
-} from '../gql/Challenge/mutations'
 //other
 import {requireAuth} from '../lib/auth'
 import styled from 'styled-components'
@@ -26,11 +20,15 @@ import FaIconButton from 'ui-kit/icons/FaIconButton'
 
 class ChallengeUpvote extends Component{
   state = { upvoteInProgress: false}
+
   static propTypes = {
     userDidUpvote: PropTypes.array.isRequired,
     upvotesCount: PropTypes.number.isRequired,
     apiUserId: PropTypes.string,
     challengeId: PropTypes.string.isRequired,
+    addUpvoteMutation: PropTypes.func.isRequired,
+    removeUpvoteMutation: PropTypes.func.isRequired,
+    mutationVariables: PropTypes.object.isRequired,
   }
 
   disableUpvote = () => {
@@ -41,29 +39,22 @@ class ChallengeUpvote extends Component{
   }
   handleToggleUpvote = async () => {
     const {
-      apiUserId,
-      challengeId,
       userDidUpvote, //returns an array with the current user if user upvoted
-      removeChallengeUpvoteMutation,
-      addChallengeUpvoteMutation
+      addUpvoteMutation,
+      removeUpvoteMutation
     } = this.props
-    const variables = {
-        "userId": apiUserId ,
-        "challengeId": challengeId,
-        "filter":{
-          "id": apiUserId
-        }
-      }
+
+    const variables = this.props.mutationVariables
       //userDidUpvote array empty if user did not upvote:
     if (userDidUpvote.length > 0) {
       this.disableUpvote()
-      await removeChallengeUpvoteMutation({variables})
+      await removeUpvoteMutation({variables})
       this.enableUpvote()
 
     }
     else {
       this.disableUpvote()
-      await addChallengeUpvoteMutation({variables})
+      await addUpvoteMutation({variables})
       this.enableUpvote()
     }
   }
@@ -72,26 +63,12 @@ class ChallengeUpvote extends Component{
   }
 
   render(){
-    // const styles = {
-    //   iconColor: this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey,
-    //   icon: {
-    //     height: 25,
-    //     width: 25
-    //   },
-    //   count: {
-    //     position:'relative',
-    //     right: 7,
-    //     bottom: 4,
-    //     fontSize: 14,
-    //     color: colors.lightGrey
-    //   }
-    // }
-
     return(
     <Box>
       <FaIconButton
         inline={true}
         size="25px"
+        // onClick={() => requireAuth(this.onClick)}
         onClick={() => requireAuth(this.handleToggleUpvote)}
         color={this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey}
         hoverColor="none"
@@ -104,9 +81,4 @@ class ChallengeUpvote extends Component{
   }
 }
 
-const ChallengeUpvoteApollo = compose(
-  graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
-  graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
-)(ChallengeUpvote)
-
-export default ChallengeUpvoteApollo
+export default ChallengeUpvote
