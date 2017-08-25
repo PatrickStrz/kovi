@@ -4,13 +4,22 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {showChallengeDetailView,} from '../actions/challenge-actions'
-import ChallengeUpvote from './ChallengeUpvote'
+//gql
+import {graphql, compose} from 'react-apollo'
+import {
+  ADD_CHALLENGE_UPVOTE_MUTATION,
+  REMOVE_CHALLENGE_UPVOTE_MUTATION,
+} from '../gql/Challenge/mutations'
+//components
+import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
 
 class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.object.isRequired,
     apiUserId: PropTypes.string,
+    addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
+    removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
   }
 
   render(){
@@ -19,19 +28,30 @@ class ChallengeCard extends Component {
     const {
       apiUserId,
       showChallengeDetailView,
+      addChallengeUpvoteMutation,
+      removeChallengeUpvoteMutation,
     } = this.props
 
-    const getUpvote = () => {
-      return(
-        <ChallengeUpvote
-          userDidUpvote={userDidUpvote}
+    const upvoteMutationVariables = {
+        "userId": apiUserId ,
+        "challengeId": id,
+        "filter":{
+          "id": apiUserId
+        }
+      }
+
+    const upvote = (
+        <Upvote
+          userDidUpvote={userDidUpvote.length > 0 && true}
           apiUserId={apiUserId}
           challengeId={id}
           upvotesCount={upvotesCount}
           style={{paddingBottom:0}}
+          addUpvoteMutation={addChallengeUpvoteMutation}
+          removeUpvoteMutation={removeChallengeUpvoteMutation}
+          mutationVariables={upvoteMutationVariables}
         />
       )
-    }
 
     const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
@@ -42,7 +62,7 @@ class ChallengeCard extends Component {
       <div>
         <Card
           text={lorem}
-          bottomSection={<div>{getUpvote()}</div>}
+          bottomSection={upvote}
           onBodyClick={()=>{showChallengeDetailView(id)}}
         />
       </div>
@@ -56,4 +76,9 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(ChallengeCard)
+const ChallengeCardApollo = compose(
+  graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
+  graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
+)(ChallengeCard)
+
+export default connect(null,mapDispatchToProps)(ChallengeCardApollo)
