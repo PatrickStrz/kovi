@@ -9,7 +9,7 @@ import ChallengeCommentsContainer from 'components/ChallengeCommentsContainer'
 
 /*
  Note: Because rendering <ChallengingCommentContainer/> in this element,
-commentsquery is only performed after query in ChallengeDetailContainer 
+commentsquery is only performed after query in ChallengeDetailContainer
 container completes.For this use case it works since we do not want comments to
 render before the body.
 */
