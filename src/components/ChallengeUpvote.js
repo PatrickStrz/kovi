@@ -1,12 +1,26 @@
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+//gql
 import {graphql, compose} from 'react-apollo'
-import {requireAuth} from '../lib/auth'
 import {
   ADD_CHALLENGE_UPVOTE_MUTATION,
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
+//other
+import {requireAuth} from '../lib/auth'
+import styled from 'styled-components'
 import {muiColors, colors} from 'styles/theme/colors'
-import PropTypes from 'prop-types'
+
+const Box = styled.div`
+  display:flex;
+  justify-content: center;
+  align-items: center;
+`
+const Count = styled.p`
+  color: rgb(166, 163, 163);
+  font-size: 14px;
+  margin-left: 5px;
+`
 //components
 import FaIconButton from 'ui-kit/icons/FaIconButton'
 
@@ -74,18 +88,18 @@ class ChallengeUpvote extends Component{
     // }
 
     return(
-      <div>
+    <Box>
       <FaIconButton
         inline={true}
-        size="30px"
+        size="25px"
         onClick={() => requireAuth(this.handleToggleUpvote)}
         color={this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey}
         hoverColor="none"
-        faClassName="fa-chevron-up"
+        faClassName="fa-arrow-circle-up"
         disabled={this.state.upvoteInProgress}
       />
-      <span>{this.props.upvotesCount}</span>
-      </div>
+      <Count>{this.props.upvotesCount}</Count>
+    </Box>
     )
   }
 }

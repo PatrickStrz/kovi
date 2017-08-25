@@ -30,6 +30,9 @@ const Text = styled.p`
   color: ${colors.medGrey};
 `
 const ActionsBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
 `
 
 export default class Card extends Component{
