@@ -23,17 +23,25 @@ import RaisedButton from 'material-ui/RaisedButton'
 const CharCount = styled.p`
     color: ${props => props.color };
 `
+
 const FormBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   justify-content: center;
   width: 70%;
   margin-left: 15%;
-   ${media.md`width:90%; margin-left: 5%`}
+   ${media.md`
+     width:90%;
+     margin-left: 5%;
+     align-items: left;
+     `}
 `
 const EditorBox = styled.div`
   width:100%
+`
+const TitleBox = styled.div`
+  width:90%;
 `
 class ChallengeCreateContainer extends Component {
   //so can change query variables in one place and pass to child components:
@@ -85,17 +93,16 @@ class ChallengeCreateContainer extends Component {
     }
   }
 
-  setTitleError = () => {
-    // const title = this.state.title
-    // this is the previous state so must add 1 char to get the correct length:
-    const titleLength = this.state.title.length + 1
+  setTitleError = (value) => {
+    let error = "" // clears error
 
-    if (titleLength > (this.charMax)){
-      return "exceeded max characters"
+    if (!value){
+      error = "Please write a title"
     }
-    else {
-      return ""
+    if (value.length > (this.charMax)){
+      error = "Above character limit"
     }
+    this.setState({titleError:error})
   }
 
   checkRequiredFields = () => {
@@ -106,8 +113,9 @@ class ChallengeCreateContainer extends Component {
   }
 
   handleTitleChange = e => {
-    this.setState({title: e.target.value})
-    this.setState({titleError: this.setTitleError()})
+    const {value} = e.target
+    this.setState({title: value})
+    this.setTitleError(value)
   }
 
   render(){
@@ -116,7 +124,7 @@ class ChallengeCreateContainer extends Component {
       const charCount = this.state.title.length
       const remainingChars = this.charMax - charCount
       return(
-        <CharCount color={remainingChars < 5 ? "red" : colors.lightGrey}>
+        <CharCount color={remainingChars < 15 ? "red" : colors.lightGrey}>
           {remainingChars}
         </CharCount>
       )
@@ -132,16 +140,18 @@ class ChallengeCreateContainer extends Component {
           modal={true}
         >
           <FormBox>
-            <TextField
-              id="challengeCreateTitle"
-              fullWidth={true}
-              hintText="write a concise title"
-              onChange={this.handleTitleChange}
-              value={this.state.title}
-              errorText={this.state.titleError}
-              multiLine={true}
-            />
-            {renderRemainingCharCount()}
+            <TitleBox>
+              <TextField
+                id="challengeCreateTitle"
+                fullWidth={true}
+                hintText="write a concise title"
+                onChange={this.handleTitleChange}
+                value={this.state.title}
+                errorText={this.state.titleError}
+                multiLine={true}
+              />
+              {renderRemainingCharCount()}
+            </TitleBox>
           <br />
             <EditorBox>
               <Editor
@@ -155,6 +165,7 @@ class ChallengeCreateContainer extends Component {
               label="submit challenge"
               onClick={this.handleCreateChallengeSubmit}
               primary={true}
+              disabled={(this.state.titleError || !this.state.title) && true}
             />
           </FormBox>
         </Dialog>
