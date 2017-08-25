@@ -2,12 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, {css} from 'styled-components'
 
+ const getColor = props => {
+  const {disabled, disabledColor, color} = props
+  if (disabledColor && disabled === true){
+    return disabledColor
+  }
+  else{
+    return color
+  }
+}
+
 const Container = styled.div`
   cursor: pointer;
    ${ props => css`
       .fa{
         font-size: ${props.size};
-        color: ${props.color};
+        color: ${getColor(props)};
         ${props.inline && `display:inline;`}
         :hover{
           color: ${props.hoverColor};
@@ -19,14 +29,26 @@ const Container = styled.div`
 `
 
 const FaIconButton = (props) => {
-  const {size, color, hoverColor, onClick, faClassName, inline} = props
+  const {
+    size,
+    color,
+    hoverColor,
+    onClick,
+    faClassName,
+    inline,
+    disabled,
+    disabledColor,
+  } = props
+
   return(
     <Container
       inline={inline}
+      disabled={disabled}
+      disabledColor={disabledColor}
       size={size}
       color={color}
       hoverColor={hoverColor}
-      onClick={onClick}
+      onClick={ !disabled && onClick}
     >
       <i className={`fa ${faClassName}`} aria-hidden="true"></i>
     </Container>
@@ -34,6 +56,8 @@ const FaIconButton = (props) => {
 }
 
 FaIconButton.propTypes = {
+  disabled: PropTypes.bool,
+  inline: PropTypes.bool,
   size: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   color: PropTypes.string.isRequired,

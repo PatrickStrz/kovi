@@ -82,6 +82,7 @@ class ChallengeUpvote extends Component{
         color={this.props.userDidUpvote.length > 0 ? muiColors.secondary1 : colors.lightGrey}
         hoverColor="none"
         faClassName="fa-chevron-up"
+        disabled={this.state.upvoteInProgress}
       />
       <span>{this.props.upvotesCount}</span>
       </div>
