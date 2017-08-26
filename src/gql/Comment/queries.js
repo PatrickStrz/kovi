@@ -14,7 +14,7 @@ export const COMMENTS_ON_CHALLENGE_QUERY = gql`
 `
 
 export const COMMENTS_ON_DISCUSSION_QUERY = gql`
-  query commentsForChallenge($challengeId:ID){
+  query commentsForDiscussion($discussionId:ID){
     allComments(filter:{discussion:{id:$discussionId}}){
       ...commentBody
       childComments{

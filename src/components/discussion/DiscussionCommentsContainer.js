@@ -3,27 +3,28 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //gql
 import {graphql, compose} from 'react-apollo'
-import {COMMENTS_ON_DISCUSSION_QUERY} from '../gql/Comment/queries'
+import {COMMENTS_ON_DISCUSSION_QUERY} from 'gql/Comment/queries'
 import {CREATE_COMMENT_ON_DISCUSSION_MUTATION} from 'gql/Comment/mutations'
 //helpers+other
-import {logException} from '../config'
+import {logException} from 'config'
 //components
 import GenericError from 'ui-kit/GenericError'
 import CommentSection from 'components/CommentSection'
 
 class DiscussionCommentsContainer extends Component{
   static propTypes = {
-    challengeId: PropTypes.string.isRequired,
+    discussionId: PropTypes.string.isRequired,
     data: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
       error: PropTypes.string,
       allComments: PropTypes.array,
-    }).isRequired,
+    }).isRequired, // apollo
+    createCommentOnDiscussionMutation: PropTypes.func.isRequired, // apollo
   }
 
   render(){
     const data = this.props.data // apollo client data
-    const {createCommentOnChallengeMutation, discussionId} = this.props
+    const {createCommentOnDiscussionMutation, discussionId} = this.props
 
     if (data.loading){
       return(<div>...loading</div>)
@@ -38,9 +39,10 @@ class DiscussionCommentsContainer extends Component{
     }
     return(
       <CommentSection
-        commentCreateMutation={createCommentOnChallengeMutation}
+        commentCreateMutation={createCommentOnDiscussionMutation}
+        refetchQuery={COMMENTS_ON_DISCUSSION_QUERY}
         comments={data.allComments}
-        discussionId={discussionId}
+        commentTypeId={{discussionId}}
       />
     )
   }
@@ -48,10 +50,10 @@ class DiscussionCommentsContainer extends Component{
 
 const DiscussionCommentsApollo = compose(
   graphql(
-    COMMENTS_ON_CHALLENGE_QUERY,{
-      options: ({challengeId}) => ({variables: {challengeId}})
+    COMMENTS_ON_DISCUSSION_QUERY,{
+      options: ({discussionId}) => ({variables: {discussionId}})
     }),
-  graphql(CREATE_COMMENT_ON_CHALLENGE_MUTATION, {name: 'createCommentOnChallengeMutation'}),
-)(ChallengeCommentsContainer)
+  graphql(CREATE_COMMENT_ON_DISCUSSION_MUTATION, {name: 'createCommentOnDiscussionMutation'}),
+)(DiscussionCommentsContainer)
 
 export default DiscussionCommentsApollo
