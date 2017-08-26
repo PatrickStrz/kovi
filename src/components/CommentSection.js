@@ -87,7 +87,8 @@ class CommentSection extends Component {
   static propTypes = {
     comments: PropTypes.array.isRequired,
     commentCreateMutation: PropTypes.func.isRequired,
-    challengeId: PropTypes.string.isRequired,
+    challengeId: PropTypes.string,
+    discussionId: PropTypes.string,
   }
 
   state = {
@@ -186,11 +187,11 @@ class CommentSection extends Component {
     /* todo make conditional options based on what Type comments are created for
     i.e challenge, tool, post ...
     */
-    const {challengeId, apiUserId} = this.props
+    const {challengeId, discussionId, apiUserId, idVariable} = this.props
 
     const options = {
       variables: {
-        challengeId,
+        // challengeId,
         userId: apiUserId,
         text: this.state.commentText,
       },
