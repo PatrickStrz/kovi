@@ -7,3 +7,17 @@ export const loadingOpacityKeyframes = keyframes`
   75%  {opacity:0.5}
   100% {opacity:1;}
 `
+
+export const bounceInKeyframes = keyframes`
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+`

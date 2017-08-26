@@ -13,6 +13,8 @@ import styled, {css} from 'styled-components'
 }
 
 const Container = styled.div`
+  /* remove background highlight on mobile click: */
+  -webkit-tap-highlight-color:transparent;
   cursor: pointer;
    ${ props => css`
       .fa{
