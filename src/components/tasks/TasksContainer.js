@@ -27,7 +27,6 @@ import TasksList from './TasksList'
      return(
        <div>
          <TasksList tasks={data.allTasks}/>
-         yooo
        </div>
      )
    }

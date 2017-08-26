@@ -40,7 +40,7 @@ export default class Card extends Component{
   static propTypes = {
     text: PropTypes.string.isRequired,
     onBodyClick: PropTypes.func.isRequired,
-    bottomSection: PropTypes.node.isRequired,
+    bottomSection: PropTypes.node,
   }
 
   render(){

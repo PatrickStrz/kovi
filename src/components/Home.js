@@ -28,9 +28,9 @@ const RightContent = styled.div`
   top:15vh;
   height:76vh;
   position:fixed;
-  background-color: rgb(213, 213, 213);
-  width: 25vw;
-  right:10px;
+  ${''/* background-color: #ffffff; */}
+  width: 20vw;
+  right:20px;
   border-radius: 3px;
   overflow-y:auto;
   ::-webkit-scrollbar {
@@ -78,6 +78,7 @@ class Home extends Component {
           centerPanelContent={centerContent}
           rightPanelContent={
             <RightContent>
+              <h3>Help Build The App</h3>
               <TasksContainer/>
             </RightContent>}
           showLines={false}

@@ -56,7 +56,7 @@ export default class Dialog extends Component {
     isOpen: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
-    // title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired, //for Modal content label
     modal: PropTypes.bool, //if true, can't close by clicking outside
   }
 
