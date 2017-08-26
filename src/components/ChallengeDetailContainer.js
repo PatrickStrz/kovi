@@ -22,7 +22,7 @@ export class ChallengeDetailContainer extends Component {
 
   render(){
     if (this.props.data.loading){
-      return <GenericLoader/>
+      return <GenericLoader text="loading..." />
     }
     if (this.props.data.error){
       return <GenericError />
