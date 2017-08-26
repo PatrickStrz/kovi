@@ -24,8 +24,6 @@ const Count = styled.p`
 //components
 
 class Upvote extends Component{
-  state = { upvoteInProgress: false, animate:false}
-
   static propTypes = {
     faIconClassName: PropTypes.string, // http://fontawesome.io/cheatsheet/
     userDidUpvote: PropTypes.bool.isRequired,
@@ -33,6 +31,19 @@ class Upvote extends Component{
     addUpvoteMutation: PropTypes.func.isRequired,
     removeUpvoteMutation: PropTypes.func.isRequired,
     mutationVariables: PropTypes.object.isRequired,
+  }
+
+  state = { upvoteInProgress: false, animate:false}
+
+  componentWillReceiveProps = (nextProps) =>{
+    const prevProps = this.props
+    if (!prevProps.userDidUpvote && nextProps.userDidUpvote){
+      this.setState({animate:true})
+    }
+    //resets animation
+    if (prevProps.userDidUpvote && !nextProps.userDidUpvote){
+      this.setState({animate:false})
+    }
   }
 
   disableUpvote = () => {
