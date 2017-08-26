@@ -1,4 +1,10 @@
 import React, {Component} from 'react'
+import {
+  showNotificationsMobile,
+  hideNotificationsMobile,
+  showFilterMobile,
+  hideFilterMobile,
+}
 //components
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
@@ -47,10 +53,13 @@ class BottomBar extends Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     return bindActionCreators({
-//       showCreateChallengeView
-//     }, dispatch)
-// }
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      showNotificationsMobile,
+      hideNotificationsMobile,
+      showFilterMobile,
+      hideFilterMobile,
+    }, dispatch)
+}
 
 export default BottomBar
