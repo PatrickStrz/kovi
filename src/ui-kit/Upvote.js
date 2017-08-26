@@ -2,8 +2,9 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //other
 import {requireAuth} from '../lib/auth'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {muiColors, colors} from 'styles/theme/colors'
+import {bounceInKeyframes} from 'styles/animations/keyframes'
 //components
 import FaIconButton from 'ui-kit/icons/FaIconButton'
 
@@ -11,6 +12,9 @@ const Box = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
+  ${ props => (props.animate) && css`
+      animation: ${bounceInKeyframes} 0.5s
+    `}
 `
 const Count = styled.p`
   color: rgb(166, 163, 163);
@@ -20,7 +24,7 @@ const Count = styled.p`
 //components
 
 class Upvote extends Component{
-  state = { upvoteInProgress: false}
+  state = { upvoteInProgress: false, animate:false}
 
   static propTypes = {
     faIconClassName: PropTypes.string, // http://fontawesome.io/cheatsheet/
@@ -55,6 +59,7 @@ class Upvote extends Component{
     else {
       this.disableUpvote()
       await addUpvoteMutation({variables})
+      this.setState({animate:true})
       this.enableUpvote()
     }
   }
@@ -65,7 +70,7 @@ class Upvote extends Component{
   render(){
     const {userDidUpvote, upvotesCount, faIconClassName} = this.props
     return(
-    <Box>
+    <Box animate={this.state.animate}>
       <FaIconButton
         inline={true}
         size="25px"
