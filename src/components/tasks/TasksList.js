@@ -9,13 +9,30 @@ import { showDiscussionView, hideDiscussionView} from 'actions/community-actions
 // import {muiColors} from 'styles/theme/colors'
 //components
 import Card from 'ui-kit/Card'
+import Dialog from 'ui-kit/Dialog'
 
 class TasksList extends Component {
   static propTypes = {
     tasks: PropTypes.array.isRequired,
     showDiscussionView: PropTypes.func.isRequired, // redux action
-    hideDiscussionView: PropTypes.func.isRequired // redux action
+    hideDiscussionView: PropTypes.func.isRequired, // redux action
+    state: PropTypes.shape({
+      openDiscusionId: PropTypes.string.isRequired,
+    }).isRequired,
   }
+
+  renderDiscussionView = () =>(
+    <Dialog
+      title={'Discussion'}
+      isOpen={true}
+      handleClose={this.props.hideDiscussionView}
+    >
+      <div>
+        <h2>Discussion:{this.props.state.openDiscusionId}</h2>
+      </div>
+
+    </Dialog>
+  )
 
   renderTaskCards = () => {
   const {tasks} = this.props
@@ -35,6 +52,7 @@ class TasksList extends Component {
     return(
       <div>
         {this.renderTaskCards()}
+        {this.props.state.openDiscusionId && this.renderDiscussionView()}
       </div>
     )
   }
@@ -47,4 +65,10 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(TasksList)
+const mapStateToProps = state => ({
+  state:{
+    openDiscusionId: state.app.community.openDiscusionId,
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TasksList)

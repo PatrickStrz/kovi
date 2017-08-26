@@ -7,7 +7,7 @@ export default function(state=initialState, action){
     case ActionTypes.SHOW_DISCUSSION_VIEW:
       return {...state, openDiscusionId: action.id }
     case ActionTypes.HIDE_DISCUSSION_VIEW:
-      return {...state, openDiscusionId: action.id }
+      return {...state, openDiscusionId: '' }
     default:
       return state
   }

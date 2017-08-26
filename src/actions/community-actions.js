@@ -5,7 +5,6 @@ export const showDiscussionView = (discussionId) => ({
   id: discussionId
 })
 
-export const hideDiscussionView = (discussionId) => ({
+export const hideDiscussionView = () => ({
   type: ActionTypes.HIDE_DISCUSSION_VIEW,
-  id: discussionId
 })
