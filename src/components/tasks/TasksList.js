@@ -10,6 +10,7 @@ import { showDiscussionView, hideDiscussionView} from 'actions/community-actions
 //components
 import Card from 'ui-kit/Card'
 import Dialog from 'ui-kit/Dialog'
+import DiscussionContainer from 'components/discussion/DiscussionContainer'
 import DiscussionCommentsContainer from 'components/discussion/DiscussionCommentsContainer'
 
 class TasksList extends Component {
@@ -31,7 +32,7 @@ class TasksList extends Component {
         handleClose={this.props.hideDiscussionView}
       >
         <div>
-          <h2>Discussion:{discussionId}</h2>
+          <DiscussionContainer discussionId={discussionId}/>
           <DiscussionCommentsContainer discussionId={discussionId} />
         </div>
       </Dialog>
@@ -40,15 +41,17 @@ class TasksList extends Component {
 
   renderTaskCards = () => {
   const {tasks} = this.props
-
     return tasks.map(task => {
-      return(
-          <Card
-            key={'tasklist'+task.id}
-            text={task.discussion.topic ? task.discussion.topic : "no text"}
-            onBodyClick={()=>{this.props.showDiscussionView(task.discussion.id)}}
-          />
-        )
+      if (task.type === 'Discussion'){
+        return(
+            <Card
+              key={'tasklist'+task.id}
+              text={task.discussion.topic}
+              onBodyClick={()=>{this.props.showDiscussionView(task.discussion.id)}}
+            />
+          )
+        }
+        else return ''
       }
     )
   }

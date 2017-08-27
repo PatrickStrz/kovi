@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import {graphql} from 'react-apollo'
 import {ALL_TASKS_QUERY} from 'gql/Task/queries'
 // other
-import styled from 'styled-components'
 import {logException} from 'config'
 //components
 import GenericError from 'ui-kit/GenericError'
@@ -12,6 +11,14 @@ import GenericLoader from 'ui-kit/GenericLoader'
 import TasksList from './TasksList'
 
  class TasksContainer extends Component {
+   static propTypes = {
+     data: PropTypes.shape({
+       loading: PropTypes.bool.isRequired,
+       error: PropTypes.string,
+       discussion: PropTypes.object,
+     }).isRequired, // apollo
+   }
+
    render(){
      const {data} = this.props
 

@@ -1,9 +1,6 @@
 // React
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-// lib + other
-import styled from 'styled-components'
-import {muiColors} from 'styles/theme/colors'
 //components
 import ChallengeCard from './ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'

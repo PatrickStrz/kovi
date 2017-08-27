@@ -9,6 +9,7 @@ import {CREATE_COMMENT_ON_DISCUSSION_MUTATION} from 'gql/Comment/mutations'
 import {logException} from 'config'
 //components
 import GenericError from 'ui-kit/GenericError'
+import GenericLoader from 'ui-kit/GenericLoader'
 import CommentSection from 'components/CommentSection'
 
 class DiscussionCommentsContainer extends Component{
@@ -27,7 +28,7 @@ class DiscussionCommentsContainer extends Component{
     const {createCommentOnDiscussionMutation, discussionId} = this.props
 
     if (data.loading){
-      return(<div>...loading</div>)
+      return(<GenericLoader text="..."/>)
     }
     if (data.error){
       logException(data.error, {

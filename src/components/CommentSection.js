@@ -82,7 +82,7 @@ const CommentHeader = styled.div`
 `
 
 /*
-    * Component with comments + subcomments + operation (create/delete comments)
+    * Component with comments + subcomments + operations (create/delete comments)
     * Completely reusable, can use with any gql Type that is commentable.
 */
 class CommentSection extends Component {
@@ -91,9 +91,7 @@ class CommentSection extends Component {
     comments: PropTypes.array.isRequired,
     commentCreateMutation: PropTypes.func.isRequired,
     commentTypeId: PropTypes.object.isRequired, //for gql i.e DiscussionId: id
-    refetchQuery: PropTypes.string.isRequired, //gql query
-    discussionId: PropTypes.string,
-
+    refetchQuery: PropTypes.object.isRequired, //gql query
   }
 
   state = {
@@ -190,7 +188,6 @@ class CommentSection extends Component {
 
   handleCommentSubmit = async () => {
     const {
-      discussionId,
       apiUserId,
       commentTypeId,
       refetchQuery
@@ -233,7 +230,7 @@ class CommentSection extends Component {
     }
     try{
       this.setState({deleteInProgress:true})
-      await this.props.deleteCommentMutation(options)
+      await deleteCommentMutation(options)
       //clear input, close delete modal
       this.setState({
         commentText: '',
