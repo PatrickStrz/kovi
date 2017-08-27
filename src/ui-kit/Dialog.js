@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 
 import {muiColors, colors} from 'styles/theme/colors'
-import {DIALOG_Z_INDEX} from 'styles/z-index'
+import {DIALOG_Z_INDEX, DIALOG_EXIT_Z_INDEX} from 'styles/z-index'
 import {XS_MAX} from 'styles/screen-sizes'
 import styled, {css} from 'styled-components'
 //stylesheet to prevent body scroll:
@@ -44,7 +44,7 @@ const ExitBox = styled.div`
   }
   opacity: 80%;
   overflow: auto;
-  z-index: 1000
+  z-index: ${DIALOG_EXIT_Z_INDEX}
 `
 const ChildrenContainer = styled.div`
   padding-bottom: 5vh;
@@ -56,7 +56,7 @@ export default class Dialog extends Component {
     isOpen: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
-    // title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired, //for Modal content label
     modal: PropTypes.bool, //if true, can't close by clicking outside
   }
 
@@ -114,7 +114,7 @@ export default class Dialog extends Component {
 
     return(
       <div>
-        {isOpen && exit}
+
         <Modal
           style={styles}
           contentLabel={title}
@@ -122,6 +122,7 @@ export default class Dialog extends Component {
           onRequestClose={handleClose}
           shouldCloseOnOverlayClick={!modal}
         >
+          {isOpen && exit}
           <ChildrenContainer>
             {children}
           </ChildrenContainer>

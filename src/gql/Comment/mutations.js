@@ -35,3 +35,15 @@ export const CREATE_COMMENT_ON_CHALLENGE_MUTATION = gql`
   }
   ${COMMENT_BODY_FRAGMENT}
 `
+
+export const CREATE_COMMENT_ON_DISCUSSION_MUTATION = gql`
+  mutation createComment($discussionId: ID, $userId: ID, $text: String){
+    createComment(
+      discussionId: $discussionId,
+      userId: $userId
+      text: $text){
+      ...commentBody
+    }
+  }
+  ${COMMENT_BODY_FRAGMENT}
+`

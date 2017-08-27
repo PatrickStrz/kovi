@@ -1,5 +1,6 @@
 import React from 'react'
 import {muiColors} from 'styles/theme/colors'
+import PropTypes from 'prop-types'
 import {loadingOpacityKeyframes} from 'styles/animations/keyframes'
 import styled from 'styled-components'
 
@@ -16,12 +17,16 @@ const Loader = styled.h1`
   animation: ${loadingOpacityKeyframes} 1.25s infinite;
 `
 
-const GenericError = () => {
+const GenericError = (props) => {
   return(
     <Box>
-      <Loader>...Loading</Loader>
+      <Loader>{props.text}</Loader>
     </Box>
   )
+}
+
+GenericError.PropTypes = {
+  text: PropTypes.string.isRequired
 }
 
 export default GenericError

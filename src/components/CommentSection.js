@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 //gql
-import {COMMENTS_ON_CHALLENGE_QUERY} from '../gql/Comment/queries'
 import {graphql, compose} from 'react-apollo'
 import {DELETE_COMMENT_MUTATION} from 'gql/Comment/mutations'
 //lib + other
@@ -58,7 +57,7 @@ const SubCommentSectionBox = styled.div`
   flex-direction: column;
 `
 
-const CreateCommentContainer = styled.div`
+const CreateCommentBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -82,12 +81,17 @@ const CommentHeader = styled.div`
   justify-content: space-between;
 `
 
+/*
+    * Component with comments + subcomments + operations (create/delete comments)
+    * Completely reusable, can use with any gql Type that is commentable.
+*/
 class CommentSection extends Component {
 
   static propTypes = {
     comments: PropTypes.array.isRequired,
     commentCreateMutation: PropTypes.func.isRequired,
-    challengeId: PropTypes.string.isRequired,
+    commentTypeId: PropTypes.object.isRequired, //for gql i.e DiscussionId: id
+    refetchQuery: PropTypes.object.isRequired, //gql query
   }
 
   state = {
@@ -152,7 +156,7 @@ class CommentSection extends Component {
 
     if (this.props.isAuthenticated){
       return(
-        <CreateCommentContainer>
+        <CreateCommentBox>
           <InputWithProfile
             avatarImageUrl={this.props.userImageUrl}
             avatarSize="25px"
@@ -165,7 +169,7 @@ class CommentSection extends Component {
           onClick={() => this.handleCommentSubmit()}
           inProgress={this.state.createInProgress}
         />
-        </CreateCommentContainer>
+      </CreateCommentBox>
       )
     }
 
@@ -183,20 +187,23 @@ class CommentSection extends Component {
   }
 
   handleCommentSubmit = async () => {
-    /* todo make conditional options based on what Type comments are created for
-    i.e challenge, tool, post ...
-    */
-    const {challengeId, apiUserId} = this.props
+    const {
+      apiUserId,
+      commentTypeId,
+      refetchQuery
+    } = this.props
 
     const options = {
       variables: {
-        challengeId,
+        ...commentTypeId,
         userId: apiUserId,
         text: this.state.commentText,
       },
       refetchQueries: [{
-        query: COMMENTS_ON_CHALLENGE_QUERY,
-        variables: {challengeId},
+        query: refetchQuery,
+        variables: {
+          ...commentTypeId
+        },
       }],
     }
     try{
@@ -207,24 +214,23 @@ class CommentSection extends Component {
     catch(err){
       this.setState({createInProgress:false})
       logException(err, {
-      action: "handleCommentCreate function in ChallengeCommentsContainer"
+      action: "handleCommentCreate function in CommentsContainer"
       })
     }
   }
 
   handleDeleteComment = async (commentId) => {
+    const {deleteCommentMutation, commentTypeId, refetchQuery} = this.props
     const options = {
-      variables: {
-        commentId
-      },
+      variables: {commentId},
       refetchQueries: [{
-        query: COMMENTS_ON_CHALLENGE_QUERY,
-        variables: { challengeId: this.props.challengeId},
+        query: refetchQuery,
+        variables: {...commentTypeId},
       }],
     }
     try{
       this.setState({deleteInProgress:true})
-      await this.props.deleteCommentMutation(options)
+      await deleteCommentMutation(options)
       //clear input, close delete modal
       this.setState({
         commentText: '',
@@ -234,7 +240,7 @@ class CommentSection extends Component {
     }
     catch(err){
       logException(err, {
-      action: "handleCommentDelete function in ChallengeCommentsContainer"
+      action: "handleCommentDelete function in CommentsContainer"
       })
       //stop deleteProgress
       this.setState({deleteInProgress:false})

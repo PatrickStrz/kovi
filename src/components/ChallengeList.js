@@ -1,19 +1,10 @@
 // React
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-// lib + other
-import styled from 'styled-components'
-import {muiColors} from 'styles/theme/colors'
-import {loadingOpacityKeyframes} from 'styles/animations/keyframes'
 //components
 import ChallengeCard from './ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
-
-const Loader = styled.h1`
-  color: ${muiColors.primary1};
-  text-align: center;
-  animation: ${loadingOpacityKeyframes} 1.25s infinite;
-`
+import GenericLoader from 'ui-kit/GenericLoader'
 
 export default class ChallengeList extends Component {
   static propTypes = {
@@ -56,7 +47,7 @@ export default class ChallengeList extends Component {
       <InfiniteScroll
         pageStart={0}
         hasMore={hasMore}
-        loader={<Loader>...</Loader>}
+        loader={<GenericLoader text="..."/>}
         next={loadMoreEntries}
        >
         {this.renderChallengeCards()}

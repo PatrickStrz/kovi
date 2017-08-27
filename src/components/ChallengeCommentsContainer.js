@@ -3,10 +3,10 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //gql
 import {graphql, compose} from 'react-apollo'
-import {COMMENTS_ON_CHALLENGE_QUERY} from '../gql/Comment/queries'
+import {COMMENTS_ON_CHALLENGE_QUERY} from 'gql/Comment/queries'
 import {CREATE_COMMENT_ON_CHALLENGE_MUTATION} from 'gql/Comment/mutations'
 //helpers+other
-import {logException} from '../config'
+import {logException} from 'config'
 //components
 import GenericError from 'ui-kit/GenericError'
 import CommentSection from 'components/CommentSection'
@@ -39,8 +39,9 @@ class ChallengeCommentsContainer extends Component{
     return(
       <CommentSection
         commentCreateMutation={createCommentOnChallengeMutation}
+        refetchQuery={COMMENTS_ON_CHALLENGE_QUERY}
         comments={data.allComments}
-        challengeId={challengeId}
+        commentTypeId={{challengeId}}
       />
     )
   }

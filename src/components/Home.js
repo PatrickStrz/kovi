@@ -17,12 +17,26 @@ import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
+import TasksContainer from 'components/tasks/TasksContainer'
 
 const ChallengeListBox = styled.div`
-  margin-top: 35px; 
+  margin-top: 70px;
   margin-bottom: 70px; /* so can see bottom of infinite scroll list */
 `
 
+const RightContent = styled.div`
+  top:15vh;
+  height:76vh;
+  position:fixed;
+  ${''/* background-color: #ffffff; */}
+  width: 20vw;
+  right:20px;
+  border-radius: 3px;
+  overflow-y:auto;
+  ::-webkit-scrollbar {
+    display: none;
+  } /* hides scrollbar*/
+`
 class Home extends Component {
   styles = {
     actionButton:{
@@ -60,7 +74,15 @@ class Home extends Component {
 
     return(
       <div>
-        <HomeLayout centerPanelContent={centerContent} showLines={false}/>
+        <HomeLayout
+          centerPanelContent={centerContent}
+          rightPanelContent={
+            <RightContent>
+              <h3>Help Build The App</h3>
+              <TasksContainer/>
+            </RightContent>}
+          showLines={false}
+        />
         <FloatingActionButton
           backgroundColor='#38c1be'
           mini={true}

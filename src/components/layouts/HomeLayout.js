@@ -40,11 +40,15 @@ const HomeLayout = (props) => {
   const {showLines} = props
   return(
     <AppBox>
-      <LeftPanel showLines={showLines}/>
+      <LeftPanel showLines={showLines}>
+        {props.leftPanelContent}
+      </LeftPanel>
         <CenterPanel showLines={showLines}>
           {props.centerPanelContent}
         </CenterPanel>
-      <RightPanel showLines={showLines}/>
+      <RightPanel showLines={showLines}>
+        {props.rightPanelContent}
+      </RightPanel>
     </AppBox>
   )
 }
