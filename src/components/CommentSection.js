@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+//redux
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {showAlert} from 'actions/alert-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {DELETE_COMMENT_MUTATION} from 'gql/Comment/mutations'
@@ -92,6 +95,11 @@ class CommentSection extends Component {
     commentCreateMutation: PropTypes.func.isRequired,
     commentTypeId: PropTypes.object.isRequired, //for gql i.e DiscussionId: id
     refetchQuery: PropTypes.object.isRequired, //gql query
+    //redux
+    userImageUrl: PropTypes.string.isRequired,
+    apiUserId: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    showAlert: PropTypes.func.isRequired,
   }
 
   state = {
@@ -190,7 +198,8 @@ class CommentSection extends Component {
     const {
       apiUserId,
       commentTypeId,
-      refetchQuery
+      refetchQuery,
+      showAlert,
     } = this.props
 
     const options = {
@@ -213,6 +222,7 @@ class CommentSection extends Component {
     }
     catch(err){
       this.setState({createInProgress:false})
+      showAlert("Failed to create comment")
       logException(err, {
       action: "handleCommentCreate function in CommentsContainer"
       })
@@ -283,10 +293,16 @@ const CommentSectionWithMutations = compose(
   graphql(DELETE_COMMENT_MUTATION, {name: 'deleteCommentMutation'}),
 )(CommentSection)
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    showAlert
+  }, dispatch)
+}
+
 const mapStateToProps = (state) => ({
   userImageUrl: state.app.auth.profile.picture,
   apiUserId: state.app.auth.apiUserId,
   isAuthenticated: state.app.auth.isAuthenticated,
 })
 
-export default connect(mapStateToProps)(CommentSectionWithMutations)
+export default connect(mapStateToProps, mapDispatchToProps)(CommentSectionWithMutations)

@@ -5,13 +5,16 @@ import scores from './score-reducer'
 import editor from './editor-reducer'
 import community from './community-reducer'
 import bottomBar from './bottombar-reducer'
+import alerts from './alert-reducer'
+
 const appRootReducer = combineReducers({
+  alerts,
   auth,
-  challenges,
-  scores,
-  editor,
-  community,
   bottomBar,
+  challenges,
+  community,
+  editor,
+  scores,
 })
 
 export default appRootReducer
