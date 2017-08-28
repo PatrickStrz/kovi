@@ -5,8 +5,6 @@ import {bindActionCreators} from 'redux'
 import { withRouter } from 'react-router-dom'
 import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
-import styled from 'styled-components'
-import {media} from 'styles/media-queries'
 //own components + stylesheets
 import SyncUser from './SyncUser'
 import BottomBar from 'ui-kit/BottomBar'
@@ -18,15 +16,7 @@ import {
 } from '../styles/z-index'
 //external components
 import Headroom from 'react-headroom'
-import MuiDrawer from 'ui-kit/MuiDrawer'
 
-const BottomBarBox = styled.div`
-  display:none;
-  ${media.md`display:block;`}
-  position: fixed;
-  bottom:0;
-  margin-top:40;
-`
 class Site extends Component {
 
   constructor(props) {
@@ -93,10 +83,9 @@ class Site extends Component {
         />
         {/* component that syncs or creates a user depending on redux state: */}
         { this.shouldSyncUser() && renderSyncUser() }
-        {/* <div> */}
+        <div>
           {children}
-        {/* </div> */}
-
+        </div>
         {/* bottom bar sticks to bottom */}
         <BottomBar/>
       </div>

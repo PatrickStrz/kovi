@@ -1,15 +1,46 @@
 # React Style Guide
 
-1. Enclose variables in es7 property initializers (class body) with arrow functions
-so that values are set when the variables are used.
-2. Define style objects in the render method to prevent dynamic styles from
-having stale values.
-3. Omit 'px' when styling.
+
+## Binding Callbacks
+
+Do not bind in props or use arrow functions in props to avoid
+creating a new function on every render. Instead use arrow functions when defining
+class properties to preserve 'this'.
+
+ ```
+ //bad
+
+<ChildComponent onClick={( )=> this.handleClick()}>
+
+//bad
+
+<ChildComponent onClick={this.handleClick.bind(this)}>
+
+
+//good
+
+class Parent extends Component{
+  handleClick => {
+  	console.log(’handling click’)
+  }
+	render(){
+    return(
+    	<ChildComponent  onClick={this.handleClick}/>
+    )
+  }
+}
+ ```
+
+## Inline styles
+
+- Only use when nessessary, otherwise use styled components library.
+
+- Omit 'px'
   i.e)
   ```
   //bad:
   {marginBottom: '15px'}
-  
+
   //good:
   {marginBottom: 15}
   ```

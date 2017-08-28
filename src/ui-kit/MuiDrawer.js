@@ -1,8 +1,10 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
+//lib+other
+import {DRAWER_BODY_Z_INDEX, DRAWER_OVERLAY_Z_INDEX} from 'styles/z-index'
+//components
 import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
-import RaisedButton from 'material-ui/RaisedButton'
 
 export default class MuiDrawer extends Component {
 
@@ -29,7 +31,9 @@ export default class MuiDrawer extends Component {
 
     return (
       <div>
-        <Drawer width={300}
+        <Drawer
+          overlayStyle={{zIndex: DRAWER_OVERLAY_Z_INDEX}}
+          containerStyle={{zIndex: DRAWER_BODY_Z_INDEX}}
           openSecondary={true}
           open={isOpen}
           docked={docked}
