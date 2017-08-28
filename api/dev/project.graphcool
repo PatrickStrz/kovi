@@ -1,5 +1,5 @@
 # project: cj6o9kpt72gao017850frjw3q
-# version: 1
+# version: 12
 
 type Challenge implements Node {
   author: User! @relation(name: "AuthorForChallenge")
@@ -22,6 +22,7 @@ type Comment implements Node {
   text: String! @defaultValue(value: "")
   updatedAt: DateTime!
   user: User! @relation(name: "CommentAuthor")
+  discussion: Discussion @relation(name: "CommentsOnDiscussion")
 }
 
 type CommunityAggregate implements Node {
@@ -29,6 +30,15 @@ type CommunityAggregate implements Node {
   id: ID! @isUnique
   scoreTotal: Int
   updatedAt: DateTime!
+}
+
+type Discussion implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  topic: String!
+  updatedAt: DateTime!
+  task: Task @relation(name: "DiscussionTask")
+  comments: [Comment!]! @relation(name: "CommentsOnDiscussion")
 }
 
 type File implements Node {
@@ -74,4 +84,17 @@ type User implements Node {
   scorecard: Scorecard! @relation(name: "ScorecardForUser")
   updatedAt: DateTime!
   upvotedChallenges: [Challenge!]! @relation(name: "ChallengeUpvotes")
+}
+
+type Task implements Node {
+  createdAt: DateTime!
+  discussion: Discussion @relation(name: "DiscussionTask")
+  id: ID! @isUnique
+  type: TaskName!
+  updatedAt: DateTime!
+}
+
+enum TaskName {
+  Discussion
+  Brainstorm
 }

@@ -1,16 +1,28 @@
 # project: cj541g35wjwqc01754kb4rfvk
-# version: 66
+# version: 67
 
 type Challenge implements Node {
   author: User! @relation(name: "AuthorForChallenge")
+  body: String
+  comments: [Comment!]! @relation(name: "CommentOnChallenge")
   createdAt: DateTime!
   description: String
   id: ID! @isUnique
   title: String
   updatedAt: DateTime!
   upvotes: [User!]! @relation(name: "ChallengeUpvotes")
-  body: String
-  comments: [Comment!]! @relation(name: "CommentOnChallenge")
+}
+
+type Comment implements Node {
+  challenge: Challenge @relation(name: "CommentOnChallenge")
+  childComments: [Comment!]! @relation(name: "SubComments")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  parentComment: Comment @relation(name: "SubComments")
+  text: String! @defaultValue(value: "")
+  updatedAt: DateTime!
+  user: User! @relation(name: "CommentAuthor")
+  discussion: Discussion @relation(name: "CommentsOnDiscussion")
 }
 
 type CommunityAggregate implements Node {
@@ -18,6 +30,15 @@ type CommunityAggregate implements Node {
   id: ID! @isUnique
   scoreTotal: Int
   updatedAt: DateTime!
+}
+
+type Discussion implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  topic: String!
+  updatedAt: DateTime!
+  task: Task @relation(name: "DiscussionTask")
+  comments: [Comment!]! @relation(name: "CommentsOnDiscussion")
 }
 
 type File implements Node {
@@ -49,7 +70,9 @@ type Scorecard implements Node {
 }
 
 type User implements Node {
+  auth0UserId: String @isUnique
   challenges: [Challenge!]! @relation(name: "AuthorForChallenge")
+  comments: [Comment!]! @relation(name: "CommentAuthor")
   createdAt: DateTime!
   email: String
   familyName: String
@@ -61,17 +84,17 @@ type User implements Node {
   scorecard: Scorecard! @relation(name: "ScorecardForUser")
   updatedAt: DateTime!
   upvotedChallenges: [Challenge!]! @relation(name: "ChallengeUpvotes")
-  auth0UserId: String @isUnique
-  comments: [Comment!]! @relation(name: "CommentAuthor")
 }
 
-type Comment implements Node {
-  challenge: Challenge @relation(name: "CommentOnChallenge")
-  childComments: [Comment!]! @relation(name: "SubComments")
+type Task implements Node {
   createdAt: DateTime!
+  discussion: Discussion @relation(name: "DiscussionTask")
   id: ID! @isUnique
-  parentComment: Comment @relation(name: "SubComments")
-  text: String! @defaultValue(value: "")
+  type: TaskName!
   updatedAt: DateTime!
-  user: User! @relation(name: "CommentAuthor")
+}
+
+enum TaskName {
+  Discussion
+  Brainstorm
 }
