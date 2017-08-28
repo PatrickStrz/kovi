@@ -20,6 +20,7 @@ import FilterList from 'material-ui/svg-icons/content/filter-list'
 import Notifications from 'material-ui/svg-icons/social/notifications'
 import Public from 'material-ui/svg-icons/social/public'
 import Dialog from 'ui-kit/Dialog'
+import MuiDrawer from 'ui-kit/MuiDrawer'
 
 const NotificationsIcon = <Notifications />
 const FilterIcon = <FilterList />
@@ -84,11 +85,11 @@ class BottomBar extends Component {
       title = 'Notifications'
       handleClose = () => hideNotificationsMobile()
     }
-    if (isCommunityMobileOpen){
-      view = <Community>Community</Community>
-      title = 'Community'
-      handleClose = () => hideCommunityMobile()
-    }
+    // if (isCommunityMobileOpen){
+    //   view = <Community>Community</Community>
+    //   title = 'Community'
+    //   handleClose = () => hideCommunityMobile()
+    // }
     if (isFilterMobileOpen){
       view = <Filter>Filter</Filter>
       title = "Filter"
@@ -134,6 +135,9 @@ class BottomBar extends Component {
           />
         </BottomNavigation>
         {this.renderDialog()}
+        <MuiDrawer isOpen={this.props.isCommunityMobileOpen}>
+          <h1>Community yall</h1>
+        </MuiDrawer>
       </Paper>
     )
   }
