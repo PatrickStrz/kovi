@@ -24,5 +24,7 @@ const z = {
 export const CARD_Z_INDEX = z.index1
 export const SCOREBOARD_Z_INDEX = z.index2
 export const HEADER_Z_INDEX = z.index3
+export const DRAWER_OVERLAY_Z_INDEX = z.index4
+export const DRAWER_BODY_Z_INDEX = z.index5
 export const DIALOG_Z_INDEX = z.index9 //Dialog.js - so dialog always stays on top.
 export const DIALOG_EXIT_Z_INDEX = z.index10 //Dialog.js - so dialog always stays on top.

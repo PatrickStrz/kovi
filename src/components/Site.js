@@ -7,10 +7,9 @@ import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
 //own components + stylesheets
 import SyncUser from './SyncUser'
-import BottomBar from 'ui-kit/BottomBar'
+import BottomBar from 'components/BottomBar'
 import Navbar from './navbar/Navbar'
 import Scoreboard from './scoreboard/Scoreboard'
-import '../styles/css/layout.css'
 import {
   HEADER_Z_INDEX,
   SCOREBOARD_Z_INDEX,
@@ -87,11 +86,8 @@ class Site extends Component {
         <div>
           {children}
         </div>
-        <div className="visible-xs visible-sm"
-          style={{position: "fixed", bottom:"0", marginTop:40, zIndex:1}}
-        >
-          <BottomBar/>
-        </div>
+        {/* bottom bar sticks to bottom */}
+        <BottomBar/>
       </div>
     )
   }
