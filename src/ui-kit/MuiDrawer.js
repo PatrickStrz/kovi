@@ -6,23 +6,39 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 export default class MuiDrawer extends Component {
 
-  PropTypes = {
+  static propTypes = {
     isOpen: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
+    docked: PropTypes.bool,
+    handleClose: PropTypes.func,
+  }
+
+  static defaultProps ={
+    docked: true
   }
 
   handleToggle = () => this.setState({open: !this.state.open});
 
+  //called when click away from drawer (onto overlay)
+  handleClickAway = () =>{
+    this.props.handleClose()
+  }
+
   render() {
-    const {isOpen, children} = this.props
+    const {isOpen, children, docked} = this.props
 
     return (
       <div>
-        <Drawer style={{zIndex:10000}} width={200} openSecondary={true} open={this.props.isOpen} >
+        <Drawer width={300}
+          openSecondary={true}
+          open={isOpen}
+          docked={docked}
+          onRequestChange={this.handleClickAway}
+        >
           <AppBar title="Community" />
           {children}
         </Drawer>
       </div>
-    );
+    )
   }
 }

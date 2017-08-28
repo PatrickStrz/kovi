@@ -13,6 +13,7 @@ import {
 } from 'actions/bottombar-actions'
 //helpers + other
 import styled from 'styled-components'
+import {media} from 'styles/media-queries'
 //components
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
@@ -32,8 +33,13 @@ const NotificationsView = styled.h1`
 const Filter = styled.h1`
   color: rgb(40, 125, 120);
 `
-const Community = styled.h1`
-  color: rgb(40, 125, 120);
+//Hides Bottom Bar for screens larger than md.
+const BottomBarBox = styled.div`
+  display:none;
+  ${media.md`display:block;`}
+  position: fixed;
+  bottom:0;
+  margin-top:40;
 `
 
 class BottomBar extends Component {
@@ -65,15 +71,13 @@ class BottomBar extends Component {
     this.select(index) // Animates/ focuses on button
     action()
   }
-
+  handleCommunityClose = () => this.props.hideCommunityMobile()
   renderDialog = () => {
     const {
       isNotificationMobileOpen,
       isFilterMobileOpen,
-      isCommunityMobileOpen,
       hideNotificationsMobile,
       hideFilterMobile,
-      hideCommunityMobile,
     } = this.props
 
     let view
@@ -85,11 +89,6 @@ class BottomBar extends Component {
       title = 'Notifications'
       handleClose = () => hideNotificationsMobile()
     }
-    // if (isCommunityMobileOpen){
-    //   view = <Community>Community</Community>
-    //   title = 'Community'
-    //   handleClose = () => hideCommunityMobile()
-    // }
     if (isFilterMobileOpen){
       view = <Filter>Filter</Filter>
       title = "Filter"
@@ -116,6 +115,8 @@ class BottomBar extends Component {
     } = this.props
 
     return (
+    <div>
+      <BottomBarBox>
       <Paper zDepth={1} style={this.styles.body}>
         <BottomNavigation selectedIndex={this.state.selectedIndex} >
           <BottomNavigationItem
@@ -135,10 +136,17 @@ class BottomBar extends Component {
           />
         </BottomNavigation>
         {this.renderDialog()}
-        <MuiDrawer isOpen={this.props.isCommunityMobileOpen}>
-          <h1>Community yall</h1>
-        </MuiDrawer>
       </Paper>
+      </BottomBarBox>
+      <MuiDrawer
+        style={{zIndex:1000}}
+        isOpen={this.props.isCommunityMobileOpen}
+        docked={false}
+        handleClose={this.handleCommunityClose}
+        >
+        <h1>Community yall</h1>
+      </MuiDrawer>
+    </div>
     )
   }
 }
