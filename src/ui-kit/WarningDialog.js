@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import CircularProgress from 'material-ui/CircularProgress';
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import CircularProgress from 'material-ui/CircularProgress'
 
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
@@ -10,7 +10,7 @@ import CircularProgress from 'material-ui/CircularProgress';
  *
  * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
  */
-export default class WarningDialog extends React.Component {
+export default class WarningDialog extends Component {
 
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
