@@ -1,6 +1,5 @@
 # React Style Guide
 
-
 ## Binding Callbacks
 
 Do not bind in props or use arrow functions in props to avoid
@@ -16,11 +15,10 @@ class properties to preserve 'this'.
 
 <ChildComponent onClick={this.handleClick.bind(this)}>
 
-
 //good
 
 class Parent extends Component{
-  handleClick => {
+  handleClick = () => {
   	console.log(’handling click’)
   }
 	render(){

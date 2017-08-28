@@ -23,17 +23,12 @@ import Public from 'material-ui/svg-icons/social/public'
 import Dialog from 'ui-kit/Dialog'
 import MuiDrawer from 'ui-kit/MuiDrawer'
 import TasksContainer from 'components/tasks/TasksContainer'
+import Placeholder from 'components/Placeholder'
 
 const NotificationsIcon = <Notifications />
 const FilterIcon = <FilterList />
 const PublicIcon = <Public />
 
-const NotificationsView = styled.h1`
-  color: rgb(40, 125, 120);
-`
-const Filter = styled.h1`
-  color: rgb(40, 125, 120);
-`
 //Hides Bottom Bar for screens larger than md.
 const BottomBarBox = styled.div`
   display:none;
@@ -81,28 +76,28 @@ class BottomBar extends Component {
       hideFilterMobile,
     } = this.props
 
-    let view
-    let handleClose
     let title
+    let content
+    let handleClose
 
     if (isNotificationMobileOpen){
-      view = <NotificationsView>Notifications</NotificationsView>
       title = 'Notifications'
+      content = "No new notifications"
       handleClose = () => hideNotificationsMobile()
     }
     if (isFilterMobileOpen){
-      view = <Filter>Filter</Filter>
       title = "Filter"
+      content = "Coming Soon!"
       handleClose = () => hideFilterMobile()
     }
     return(
-      view && (
+      title && (
       <Dialog
         isOpen={true}
         handleClose={handleClose}
         title={title}
       >
-        {view}
+        <Placeholder title={title} content={content}/>
       </Dialog>
       )
     )
