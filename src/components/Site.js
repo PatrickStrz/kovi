@@ -5,16 +5,18 @@ import {bindActionCreators} from 'redux'
 import { withRouter } from 'react-router-dom'
 import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
 import {login} from '../lib/auth'
+import {
+  HEADER_Z_INDEX,
+  SCOREBOARD_Z_INDEX,
+} from '../styles/z-index'
+import '../styles/css/layout.css'
 //own components + stylesheets
 import SyncUser from './SyncUser'
 import BottomBar from 'ui-kit/BottomBar'
 import Navbar from './navbar/Navbar'
 import Scoreboard from './scoreboard/Scoreboard'
-import '../styles/css/layout.css'
-import {
-  HEADER_Z_INDEX,
-  SCOREBOARD_Z_INDEX,
-} from '../styles/z-index'
+import SecondaryDrawer from 'components/SecondaryDrawer'
+
 //external components
 import Headroom from 'react-headroom'
 
@@ -62,7 +64,7 @@ class Site extends Component {
         zIndex: HEADER_Z_INDEX
       },
     }
-
+    /*---------- render return ----------*/
     return(
       <div>
         {/* Header hidden on down scroll: */}
@@ -82,6 +84,7 @@ class Site extends Component {
           zIndex={SCOREBOARD_Z_INDEX}
           isVisible={this.state.scorecardVisible ? true : false}
         />
+        <SecondaryDrawer />
         {/* component that syncs or creates a user depending on redux state: */}
         { this.shouldSyncUser() && renderSyncUser() }
         <div>
