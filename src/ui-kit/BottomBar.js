@@ -1,25 +1,53 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 //redux
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   showNotificationsMobile,
-  // hideNotificationsMobile,
+  hideNotificationsMobile,
   showFilterMobile,
-  // hideFilterMobile,
+  hideFilterMobile,
   showCommunityMobile,
+  hideCommunityMobile,
 } from 'actions/bottombar-actions'
+//helpers + other
+import styled from 'styled-components'
 //components
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
 import Paper from 'material-ui/Paper'
 import FilterList from 'material-ui/svg-icons/content/filter-list'
 import Notifications from 'material-ui/svg-icons/social/notifications'
 import Public from 'material-ui/svg-icons/social/public'
+import Dialog from 'ui-kit/Dialog'
+
 const NotificationsIcon = <Notifications />
 const FilterIcon = <FilterList />
 const PublicIcon = <Public />
 
+const NotificationsView = styled.h1`
+  color: rgb(40, 125, 120);
+`
+const Filter = styled.h1`
+  color: rgb(40, 125, 120);
+`
+const Community = styled.h1`
+  color: rgb(40, 125, 120);
+`
+
 class BottomBar extends Component {
+
+  static propTypes = {
+     /* redux */
+    showNotificationsMobile: PropTypes.func.isRequired,
+    showFilterMobile: PropTypes.func.isRequired,
+    showCommunityMobile: PropTypes.func.isRequired,
+    isNotificationMobileOpen: PropTypes.bool.isRequired,
+    isFilterMobileOpen: PropTypes.bool.isRequired,
+    isCommunityMobileOpen: PropTypes.bool.isRequired,
+    /* redux */
+  }
+
   state = {
     selectedIndex: 0,
   }
@@ -35,6 +63,48 @@ class BottomBar extends Component {
   handleItemClick = (index, action) => {
     this.select(index) // Animates/ focuses on button
     action()
+  }
+
+  renderDialog = () => {
+    const {
+      isNotificationMobileOpen,
+      isFilterMobileOpen,
+      isCommunityMobileOpen,
+      hideNotificationsMobile,
+      hideFilterMobile,
+      hideCommunityMobile,
+    } = this.props
+
+    let view
+    let handleClose
+    let title
+
+    if (isNotificationMobileOpen){
+      view = <NotificationsView>Notifications</NotificationsView>
+      title = 'Notifications'
+      handleClose = () => hideNotificationsMobile()
+    }
+    if (isCommunityMobileOpen){
+      view = <Community>Community</Community>
+      title = 'Community'
+      handleClose = () => hideCommunityMobile()
+    }
+    if (isFilterMobileOpen){
+      view = <Filter>Filter</Filter>
+      title = "Filter"
+      handleClose = () => hideFilterMobile()
+    }
+    return(
+      view && (
+      <Dialog
+        isOpen={true}
+        handleClose={handleClose}
+        title={title}
+      >
+        {view}
+      </Dialog>
+      )
+    )
   }
 
   render() {
@@ -63,6 +133,7 @@ class BottomBar extends Component {
             onTouchTap={()=> this.handleItemClick(2,showCommunityMobile)}
           />
         </BottomNavigation>
+        {this.renderDialog()}
       </Paper>
     )
   }
@@ -71,11 +142,18 @@ class BottomBar extends Component {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       showNotificationsMobile,
-      // hideNotificationsMobile,
+      hideNotificationsMobile,
       showFilterMobile,
-      // hideFilterMobile,
+      hideFilterMobile,
       showCommunityMobile,
+      hideCommunityMobile,
     }, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(BottomBar)
+const mapStateToProps = (state) => ({
+  isNotificationMobileOpen: state.app.bottomBar.isNotificationMobileOpen,
+  isFilterMobileOpen: state.app.bottomBar.isFilterMobileOpen,
+  isCommunityMobileOpen: state.app.bottomBar.isCommunityMobileOpen,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BottomBar)
