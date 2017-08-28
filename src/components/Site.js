@@ -2,19 +2,19 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 //helpers + other
-import { withRouter } from 'react-router-dom'
-import {checkLogin, logout, userSyncSuccess} from '../actions/auth-actions'
-import {login} from '../lib/auth'
-//own components + stylesheets
-import SyncUser from './SyncUser'
-import BottomBar from 'components/BottomBar'
-import Navbar from './navbar/Navbar'
-import Scoreboard from './scoreboard/Scoreboard'
+import {withRouter} from 'react-router-dom'
+import {checkLogin, logout, userSyncSuccess} from 'actions/auth-actions'
+import {login} from 'lib/auth'
 import {
   HEADER_Z_INDEX,
   SCOREBOARD_Z_INDEX,
-} from '../styles/z-index'
-//external components
+} from 'styles/z-index'
+//components
+import SyncUser from 'components/SyncUser'
+import Alert from 'components/Alert'
+import BottomBar from 'components/BottomBar'
+import Navbar from 'components/navbar/Navbar'
+import Scoreboard from 'components/scoreboard/Scoreboard'
 import Headroom from 'react-headroom'
 
 class Site extends Component {
@@ -88,6 +88,7 @@ class Site extends Component {
         </div>
         {/* bottom bar sticks to bottom */}
         <BottomBar/>
+        <Alert />
       </div>
     )
   }
