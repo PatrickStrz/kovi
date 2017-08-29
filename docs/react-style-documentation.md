@@ -13,7 +13,7 @@ class properties to preserve 'this'.
 
 <ChildComponent onClick={( ) => this.handleClick()}>
 
-//bad8
+//bad
 
 <ChildComponent onClick={this.handleClick.bind(this)}>
 
