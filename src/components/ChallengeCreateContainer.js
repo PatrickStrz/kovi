@@ -1,9 +1,11 @@
-//react+redux
+//react
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+//redux
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { hideCreateChallengeView } from '../actions/challenge-actions'
-import { handleEditorChange, clearEditor } from '../actions/editor-actions'
+import {bindActionCreators} from 'redux'
+import {hideCreateChallengeView, challengeCreated} from '../actions/challenge-actions'
+import {handleEditorChange, clearEditor} from '../actions/editor-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {CREATE_CHALLENGE_AND_SCORE_MUTATION} from 'gql/Challenge/mutations'
@@ -45,6 +47,18 @@ const TitleBox = styled.div`
 `
 class ChallengeCreateContainer extends Component {
   //so can change query variables in one place and pass to child components:
+  static propTypes = {
+    // redux:
+    hideCreateChallengeView: PropTypes.func.isRequired,
+    handleEditorChange: PropTypes.func.isRequired,
+    clearEditor: PropTypes.func.isRequired,
+    challengeCreated: PropTypes.func.isRequired,
+    apiUserId: PropTypes.string.isRequired,
+    apiUserScorecardId: PropTypes.string.isRequired,
+    isCreateViewOpen: PropTypes.bool.isRequired,
+    editorHtml: PropTypes.string.isRequired,
+  }
+
   state = {
     title: "",
     description: "",
@@ -56,6 +70,12 @@ class ChallengeCreateContainer extends Component {
   charMax = 100
 
   handleCreateChallengeSubmit = async () => {
+    const {
+      createChallengeAndScoreMutation,
+      hideCreateChallengeView,
+      clearEditor,
+      challengeCreated,
+    } = this.props
     const {title, description} = this.state
     const options = {
       variables: {
@@ -67,12 +87,14 @@ class ChallengeCreateContainer extends Component {
         scoreValue: CHALLENGE_CREATE_SCORE.value,
         authorId: this.props.apiUserId,
       },
-      update: (proxy, { data: {createChallenge} }) => {
+      /* updates query in apollo store without performing network request,
+      appends to beginning of list: */
+      update: (proxy, {data: {createChallenge}}) => {
         const data = proxy.readQuery({
           query: ALL_CHALLENGES_QUERY,
           variables: this.allChallengesQueryVariables()
         })
-        data.allChallenges.push(createChallenge)
+        data.allChallenges.unshift(createChallenge)
         proxy.writeQuery({
           query:ALL_CHALLENGES_QUERY,
           variables: this.allChallengesQueryVariables(),
@@ -81,10 +103,17 @@ class ChallengeCreateContainer extends Component {
       },
     }
     try{
-      await this.props.createChallengeAndScoreMutation(options)
+      const response = await createChallengeAndScoreMutation(options)
       this.setState({title:""}) //clear field on success.
-      this.props.hideCreateChallengeView()
-      this.props.clearEditor()
+      hideCreateChallengeView()
+      clearEditor()
+      /*
+      let other components know which challenge was recently created
+      (So user can easily see where their new addition is in a list):
+      */
+      challengeCreated(response.data.createChallenge.id)
+      // scroll to top so user can see newly added challenge:
+      window.scrollTo(0,0)
     }
     catch(err){
       logException(err, {
@@ -194,6 +223,7 @@ const mapDispatchToProps = (dispatch) => {
     hideCreateChallengeView,
     handleEditorChange,
     clearEditor,
+    challengeCreated,
   }, dispatch)
 }
 

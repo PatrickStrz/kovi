@@ -1,5 +1,6 @@
-//react + redux
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+// redux
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -38,6 +39,14 @@ const RightContent = styled.div`
   } /* hides scrollbar*/
 `
 class Home extends Component {
+
+  static propTypes = {
+    //redux:
+    showCreateChallengeView: PropTypes.func.isRequired,
+    hideChallengeDetailView: PropTypes.func.isRequired,
+    openChallengeDetailViewId: PropTypes.string,
+  }
+
   styles = {
     actionButton:{
       position: 'fixed',
@@ -109,7 +118,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => ({
-  openChallengeDetailViewId: state.app.challenges.openChallengeDetailViewId
+  openChallengeDetailViewId: state.app.challenges.openChallengeDetailViewId,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

@@ -10,6 +10,8 @@ import {
   ADD_CHALLENGE_UPVOTE_MUTATION,
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
+// lib + other
+import {colors} from 'styles/theme/colors'
 //components
 import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
@@ -20,6 +22,19 @@ class ChallengeCard extends Component {
     apiUserId: PropTypes.string,
     addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
+    //redux:
+    showChallengeDetailView: PropTypes.func.isRequired,
+    newUserChallenges: PropTypes.array.isRequired,
+  }
+
+  // check if challenge was created by user in this session:
+  isNewlyCreated = (challengeId) => {
+    if (this.props.newUserChallenges.indexOf(challengeId) >= 0){
+        return true
+    }
+    else {
+      return false
+    }
   }
 
   render(){
@@ -61,6 +76,8 @@ class ChallengeCard extends Component {
     return(
       <div>
         <Card
+          highlight={this.isNewlyCreated(id)}
+          highlightColor={colors.faintTeal}
           text={lorem}
           bottomSection={upvote}
           onBodyClick={()=>{showChallengeDetailView(id)}}
@@ -76,9 +93,13 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
+const mapStateToProps = (state) => ({
+  newUserChallenges: state.app.challenges.newUserChallenges,
+})
+
 const ChallengeCardApollo = compose(
   graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeCard)
 
-export default connect(null,mapDispatchToProps)(ChallengeCardApollo)
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo)

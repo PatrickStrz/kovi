@@ -26,3 +26,8 @@ export const hideChallengeDetailView = (id) => ({
   type: ActionTypes.HIDE_CHALLENGE_DETAIL_VIEW,
   id
 })
+
+export const challengeCreated = (id) => ({
+  type: ActionTypes.CHALLENGE_CREATED,
+  id
+})

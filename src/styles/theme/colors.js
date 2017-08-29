@@ -8,6 +8,7 @@ export const colors = {
   lightGrey: '#adadad',
   whiteGrey: '#f9f7f7',
   medGrey: '#4d4e4e',
+  faintTeal: '#d2fffc',
   errorRed: '#ed5151',
   warningRed: '#df4a4a',
   mainBackground: '#f6f0f0',

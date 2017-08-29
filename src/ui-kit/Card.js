@@ -5,7 +5,10 @@ import {colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
 
 const CardBox = styled.div`
-  background-color: white;
+  background-color: ${props =>{
+    return props.highlight ? props.highlightColor : `#ffffff`
+    }
+  };
   width:100%;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   box-sizing: border-box;
@@ -41,13 +44,15 @@ export default class Card extends Component{
     text: PropTypes.string.isRequired,
     onBodyClick: PropTypes.func.isRequired,
     bottomSection: PropTypes.node,
+    highlight: PropTypes.bool,
+    highlightColor: PropTypes.string,
   }
 
   render(){
 
-    const {text, onBodyClick, bottomSection} = this.props
+    const {text, onBodyClick, bottomSection, highlight, highlightColor} = this.props
     return(
-      <CardBox>
+      <CardBox highlight={highlight} highlightColor={highlightColor}>
         <CardBody onClick={onBodyClick}>
           <Text>{text}</Text>
         </CardBody>
