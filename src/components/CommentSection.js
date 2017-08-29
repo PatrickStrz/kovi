@@ -21,16 +21,10 @@ import WarningDialog from 'ui-kit/WarningDialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import FaIconButton from 'ui-kit/icons/FaIconButton'
 import Popover from 'ui-kit/Popover'
+import ProfilePopoverContainer from 'components/ProfilePopoverContainer'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
-
-const Body = styled.div`
-  background-color: rgb(255, 255, 255);
-  height: 75px;
-  width: 250px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  `
 
 const CommentSectionBox = styled.div`
   margin: auto;
@@ -142,8 +136,10 @@ class CommentSection extends Component {
         willDelete={this.state.deleteCommentId === comment.id}
         key={'comment' + comment.id}>
         <CommentHeader>
-          <Popover renderedInDialog={true} body={<Body><h1>bodyContent
-          </h1></Body>}>
+          <Popover
+            renderedInDialog={true}
+            body={<ProfilePopoverContainer userId={comment.user.id}/>}
+          >
             <UserHeader
               imageUrl={comment.user.picture}
               userName={comment.user.name}

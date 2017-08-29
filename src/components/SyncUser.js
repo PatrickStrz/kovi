@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 
 import {graphql, compose} from 'react-apollo'
-import {USER_QUERY} from '../gql/User/queries'
+import {CURRENT_USER_QUERY} from '../gql/User/queries'
 import {
   UPDATE_USER_MUTATION,
   CREATE_USER_MUTATION,
@@ -112,7 +112,7 @@ class SyncUser extends Component {
 const SyncUserApollo = compose(
   graphql(UPDATE_USER_MUTATION, {name: 'updateUserMutation'}),
   graphql(CREATE_USER_MUTATION, {name: 'createUserMutation'}),
-  graphql(USER_QUERY, {options: {fetchPolicy: 'network-only'}}),
+  graphql(CURRENT_USER_QUERY, {options: {fetchPolicy: 'network-only'}}),
 )(SyncUser)
 
 export default SyncUserApollo
