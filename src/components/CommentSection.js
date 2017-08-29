@@ -108,7 +108,25 @@ class CommentSection extends Component {
     deleteInProgress: false,
     createInProgress: false,
   }
-
+  
+  renderDeleteAction = (commentAuthorId, commentId) => {
+    const {apiUserId} = this.props
+    if (apiUserId === commentAuthorId ){
+      return(
+        <FaIconButton
+          onClick={()=>requireAuth(
+            ()=> this.setState({deleteCommentId: commentId})
+          )}
+          color={colors.lightGrey}
+          hoverColor={colors.errorRed}
+          faClassName="fa-trash"
+        />
+      )
+    }
+    else{
+      return
+    }
+  }
   //pass in true for subcomment parameter if rendering subcomment
   renderComment = (comment, subcomment='') => {
     return(
@@ -121,14 +139,7 @@ class CommentSection extends Component {
             userName={comment.user.name}
             avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
           />
-          <FaIconButton
-            onClick={()=>requireAuth(
-              ()=> this.setState({deleteCommentId: comment.id})
-            )}
-            color={colors.lightGrey}
-            hoverColor={colors.errorRed}
-            faClassName="fa-trash"
-          />
+          {this.renderDeleteAction(comment.user.id, comment.id)}
         </CommentHeader>
         <CommentText>{comment.text}</CommentText>
       </CommentBox>
