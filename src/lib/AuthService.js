@@ -30,9 +30,28 @@ export default class AuthService {
   // ======================================================
   // Public methods
   // ======================================================
+  isLocalStorageSupported() {
+  var testKey = 'test', storage = window.localStorage;
+  try {
+    storage.setItem(testKey, '1');
+    storage.removeItem(testKey);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
   login() {
     // Call the show method to display the widget.
-    this.lock.show()
+    if(this.isLocalStorageSupported()){
+      this.lock.show()
+    }
+    else{
+      alert(`
+        Login currently unavailable when browsing in private mode on mobile devices,
+        please switch to normal mode to log in.
+      `)
+    }
   }
 
   logout(){
