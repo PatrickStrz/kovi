@@ -20,6 +20,7 @@
     "react-infinite-scroll-component": "^2.3.0",
     "react-media": "^1.6.1",
     "react-modal": "^2.2.2",
+    "react-popover": "^0.4.16",
     "react-quill": "^1.0.0",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
