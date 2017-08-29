@@ -19,6 +19,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import TasksContainer from 'components/tasks/TasksContainer'
+import MuiPopover from 'components/MuiPopover'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -37,6 +38,10 @@ const RightContent = styled.div`
   ::-webkit-scrollbar {
     display: none;
   } /* hides scrollbar*/
+`
+const LeftBox = styled.div`
+  height:100%;
+  width:100%;
 `
 class Home extends Component {
 
@@ -85,6 +90,7 @@ class Home extends Component {
       <div>
         <HomeLayout
           centerPanelContent={centerContent}
+          leftPanelContent={<LeftBox><MuiPopover/></LeftBox>}
           rightPanelContent={
             <RightContent>
               <h3>Help Build The App</h3>
