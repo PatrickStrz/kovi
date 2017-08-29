@@ -13,6 +13,7 @@ import {levels} from '../../gql/Score/score-system'
 import {COMMUNITY_SCORE_COUNTS_QUERY} from '../../gql/Score/queries'
 import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
+import {logException} from 'config'
 
 class CommunityScore extends Component {
   static propTypes = {
@@ -53,8 +54,16 @@ class CommunityScore extends Component {
   }
 
   render(){
-    if (this.props.data.loading || !this.props.communityScore){
+    const {data} = this.props
+
+    if (data.loading ){
       return(<h2>loading...</h2>)
+    }
+    if (data.error){
+      logException(data.error, {
+      action: "CommunityScore query in CommunityScore.js"
+      })
+      return <p>error</p>
     }
     return(
       <span style={this.props.style}>
