@@ -21,10 +21,11 @@ class UserScore extends Component {
    }
 
   render(){
-    if (this.props.data.loading){
+    const {data} = this.props
+    if (data.loading){
       return(<h2>loading...</h2>)
     }
-    if (this.props.data.error){
+    if (data.error){
       logException(this.props.data.error, {
       action: "UserScore query in UserScore.js"
       })
