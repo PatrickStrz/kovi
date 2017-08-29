@@ -6,12 +6,14 @@ Do not bind in props or use arrow functions in props to avoid
 creating a new function on every render. Instead use arrow functions when defining
 class properties to preserve 'this'.
 
+[Article explaining why](https://medium.freecodecamp.org/why-arrow-functions-and-bind-in-reacts-render-are-problematic-f1c08b060e36?source=email-cb596b73fd9a-1504008041017-digest.reader------0-38&sectionName=top)
+
  ```
  //bad
 
-<ChildComponent onClick={( )=> this.handleClick()}>
+<ChildComponent onClick={( ) => this.handleClick()}>
 
-//bad
+//bad8
 
 <ChildComponent onClick={this.handleClick.bind(this)}>
 

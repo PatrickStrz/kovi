@@ -15,6 +15,8 @@ export default class ChallengeList extends Component {
     hasMore: PropTypes.bool.isRequired,
   }
 
+  state={scrollTop:false}
+
   renderChallengeCards = () => {
 
     const {
@@ -50,6 +52,7 @@ export default class ChallengeList extends Component {
         loader={<GenericLoader text="..."/>}
         next={loadMoreEntries}
        >
+         {this.state.scrollTop && window.scrollTo(0,0)}
         {this.renderChallengeCards()}
       </InfiniteScroll>
     )

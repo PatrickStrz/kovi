@@ -72,7 +72,7 @@ class ChallengeCreateContainer extends Component {
           query: ALL_CHALLENGES_QUERY,
           variables: this.allChallengesQueryVariables()
         })
-        data.allChallenges.push(createChallenge)
+        data.allChallenges.unshift(createChallenge)
         proxy.writeQuery({
           query:ALL_CHALLENGES_QUERY,
           variables: this.allChallengesQueryVariables(),
@@ -85,6 +85,7 @@ class ChallengeCreateContainer extends Component {
       this.setState({title:""}) //clear field on success.
       this.props.hideCreateChallengeView()
       this.props.clearEditor()
+      window.scrollTo(0,0) // scroll to top so user can see newly added challenge
     }
     catch(err){
       logException(err, {
