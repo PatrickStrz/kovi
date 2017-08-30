@@ -21,7 +21,7 @@ import WarningDialog from 'ui-kit/WarningDialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import FaIconButton from 'ui-kit/icons/FaIconButton'
 import Popover from 'ui-kit/Popover'
-import ProfilePopoverContainer from 'components/ProfilePopoverContainer'
+import ProfileCardContainer from 'components/ProfileCardContainer'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -138,7 +138,7 @@ class CommentSection extends Component {
         <CommentHeader>
           <Popover
             renderedInDialog={true}
-            body={<ProfilePopoverContainer userId={comment.user.id}/>}
+            body={<ProfileCardContainer userId={comment.user.id} />}
           >
             <UserHeader
               imageUrl={comment.user.picture}

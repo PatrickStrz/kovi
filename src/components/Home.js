@@ -19,7 +19,6 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import TasksContainer from 'components/tasks/TasksContainer'
-import Popover from 'ui-kit/Popover'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -85,7 +84,6 @@ class Home extends Component {
     return(
       <div>
         <HomeLayout
-          leftPanelContent={<Popover body={<h2>body kinda</h2>}><div style={{backgroundColor:'red', height:50, width:50}}/></Popover>}
           centerPanelContent={centerContent}
           rightPanelContent={
             <RightContent>
