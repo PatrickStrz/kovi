@@ -7,14 +7,12 @@ import {checkLogin, logout, userSyncSuccess} from 'actions/auth-actions'
 import {login} from 'lib/auth'
 import {
   HEADER_Z_INDEX,
-  SCOREBOARD_Z_INDEX,
 } from 'styles/z-index'
 //components
 import SyncUser from 'components/SyncUser'
 import Alert from 'components/Alert'
 import BottomBar from 'components/BottomBar'
 import Navbar from 'components/navbar/Navbar'
-import Scoreboard from 'components/scoreboard/Scoreboard'
 import Headroom from 'react-headroom'
 
 class Site extends Component {
@@ -77,10 +75,10 @@ class Site extends Component {
           />
         </Headroom>
         {/* Scoreboard visible only on scroll down */}
-        <Scoreboard
+        {/* <Scoreboard
           zIndex={SCOREBOARD_Z_INDEX}
           isVisible={this.state.scorecardVisible ? true : false}
-        />
+        /> */}
         {/* component that syncs or creates a user depending on redux state: */}
         { this.shouldSyncUser() && renderSyncUser() }
         <div>

@@ -1,12 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
+//other
+import styled from 'styled-components'
+import {withRouter} from 'react-router'
+import {muiColors} from 'styles/theme/colors'
+//components
 import AppBar from 'material-ui/AppBar'
 import UserIconMenu from './UserIconMenu'
 import IconButton from 'material-ui/IconButton'
 import AccountCircle from 'material-ui/svg-icons/action/account-circle'
-import {muiColors} from 'styles/theme/colors'
+import UserScore from 'components/scoreboard/UserScore'
 
+const RightElementBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30px; /*match left offset of appbar */
+`
+const ScoreBox = styled.div`
+  margin-right: 10px;
+`
 const Navbar = (props) => {
 
   const handleTouchTap = () => props.history.push('/')
@@ -62,7 +75,8 @@ const Navbar = (props) => {
       title={<span style={styles.title}>KOVI</span>}
       onTitleTouchTap={handleTouchTap}
       style={styles.navbar}
-      iconElementRight={userControls}
+      // iconElementRight={userControls}
+      iconElementRight={<RightElementBox><ScoreBox><UserScore/></ScoreBox>{userControls}</RightElementBox>}
     />
   )
 }
