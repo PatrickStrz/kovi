@@ -20,6 +20,8 @@ import TextButton from 'ui-kit/TextButton'
 import WarningDialog from 'ui-kit/WarningDialog'
 import RaisedButton from 'material-ui/RaisedButton'
 import FaIconButton from 'ui-kit/icons/FaIconButton'
+import Popover from 'ui-kit/Popover'
+import ProfileCardContainer from 'components/ProfileCardContainer'
 
 const commentAvatarSize = '35px'
 const childCommentAvatarSize = '25px'
@@ -108,7 +110,7 @@ class CommentSection extends Component {
     deleteInProgress: false,
     createInProgress: false,
   }
-  
+
   renderDeleteAction = (commentAuthorId, commentId) => {
     const {apiUserId} = this.props
     if (apiUserId === commentAuthorId ){
@@ -134,11 +136,16 @@ class CommentSection extends Component {
         willDelete={this.state.deleteCommentId === comment.id}
         key={'comment' + comment.id}>
         <CommentHeader>
-          <UserHeader
-            imageUrl={comment.user.picture}
-            userName={comment.user.name}
-            avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
-          />
+          <Popover
+            renderedInDialog={true}
+            body={<ProfileCardContainer userId={comment.user.id} />}
+          >
+            <UserHeader
+              imageUrl={comment.user.picture}
+              userName={comment.user.name}
+              avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
+            />
+          </Popover>
           {this.renderDeleteAction(comment.user.id, comment.id)}
         </CommentHeader>
         <CommentText>{comment.text}</CommentText>
