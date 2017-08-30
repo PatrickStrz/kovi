@@ -43,11 +43,15 @@ const Navbar = (props) => {
       height: 30,
     },
   }
-
   const renderUserControls = () => {
     if (isAuthenticated) {
       return (
+        <RightElementBox>
+        <ScoreBox>
+          <UserScore/>
+        </ScoreBox>
         <UserIconMenu picture={profile.picture} handleLogout={handleLogout}/>
+      </RightElementBox>
       )
     }
     else {
@@ -68,15 +72,12 @@ const Navbar = (props) => {
     }
   }
 
-  const userControls = renderUserControls()
-
   return(
     <AppBar
       title={<span style={styles.title}>KOVI</span>}
       onTitleTouchTap={handleTouchTap}
       style={styles.navbar}
-      // iconElementRight={userControls}
-      iconElementRight={<RightElementBox><ScoreBox><UserScore/></ScoreBox>{userControls}</RightElementBox>}
+      iconElementRight={renderUserControls()}
     />
   )
 }
