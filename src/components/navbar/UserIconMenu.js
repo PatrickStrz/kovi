@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
-import IconButton from 'material-ui/IconButton'
-import Avatar from 'material-ui/Avatar'
+import Avatar from 'ui-kit/Avatar'
+import Clickable from 'ui-kit/Clickable'
 
 class UserIconMenu extends Component{
   static propTypes = {
@@ -33,13 +33,13 @@ class UserIconMenu extends Component{
   render(){
   const { picture, handleLogout } = this.props
     return(
-      <div >
-        <IconButton onTouchTap={this.handleTouchTap} >
+      <div>
+        <Clickable onClick={this.handleTouchTap} >
           <Avatar
-            src={picture}
-            size={30}
+            imageUrl={picture}
+            size="35px"
           />
-        </IconButton>
+        </Clickable>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
