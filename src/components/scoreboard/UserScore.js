@@ -11,7 +11,6 @@ import styled from 'styled-components'
 import {logException} from '../../config'
 import {muiColors} from 'styles/theme/colors'
 //components
-import GenericLoader from 'ui-kit/GenericLoader'
 
 const Score = styled.p`
   display: inline-block;
@@ -32,7 +31,7 @@ class UserScore extends Component {
   render(){
     const {data} = this.props
     if (data.loading){
-      return(<GenericLoader text="..."/>)
+      return <div></div>
     }
     if (data.error){
       logException(this.props.data.error, {
