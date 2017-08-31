@@ -71,6 +71,10 @@ class Home extends Component {
     </Dialog>
   )
 
+  handleCreateChallengeClose = () => {
+    this.props.hideCreateChallengeView()
+  }
+
   render(){
     const {
         openChallengeDetailViewId,
@@ -108,11 +112,12 @@ class Home extends Component {
         </FloatingActionButton>
         <Dialog
           isOpen={this.props.isCreateViewOpen}
-          handleClose={this.props.hideCreateChallengeView}
+          handleClose={this.props.handleCreateChallengeClose}
           title='Create A Challenge'
           modal={true}
         >
-          <ChallengeCreateContainer />
+          <ChallengeCreateContainer
+          />
         </Dialog>
         {/* conditionally rendering modal helps reduce number of DOM nodes: */}
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
@@ -125,7 +130,6 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       showCreateChallengeView,
       hideChallengeDetailView,
-      hideCreateChallengeView,
     }, dispatch)
 }
 
