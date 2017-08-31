@@ -1,6 +1,8 @@
 //react+redux
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+//redux
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -14,6 +16,13 @@ import {COMMUNITY_SCORE_COUNTS_QUERY} from '../../gql/Score/queries'
 import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
 import {logException} from 'config'
+import {muiColors} from 'styles/theme/colors'
+
+const Score = styled.p`
+  display: inline-block;
+  color: ${muiColors.primary1};
+  font-size: 18px;
+`
 
 class CommunityScore extends Component {
   static propTypes = {
@@ -22,7 +31,6 @@ class CommunityScore extends Component {
     initializeCommunityScore: PropTypes.func.isRequired,
     updateCommunityScore:  PropTypes.func.isRequired,
     communityScore: PropTypes.number,
-    style: PropTypes.object.isRequired,
   }
 
   componentWillMount() {
@@ -57,7 +65,7 @@ class CommunityScore extends Component {
     const {data} = this.props
 
     if (data.loading ){
-      return(<h2>loading...</h2>)
+      return(<div></div>)
     }
     if (data.error){
       logException(data.error, {
@@ -66,9 +74,9 @@ class CommunityScore extends Component {
       return <p>error</p>
     }
     return(
-      <span style={this.props.style}>
+      <Score style={this.props.style}>
         {this.props.communityScore}
-      </span>
+      </Score>
     )
   }
 }
