@@ -20,6 +20,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import TasksContainer from 'components/tasks/TasksContainer'
+import CommunityScore from 'components/scoreboard/CommunityScore'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -94,6 +95,7 @@ class Home extends Component {
           centerPanelContent={centerContent}
           rightPanelContent={
             <RightContent>
+              <CommunityScore/>
               <h3>Help Build The App</h3>
               <TasksContainer/>
             </RightContent>}
