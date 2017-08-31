@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {hideCreateChallengeView, challengeCreated} from '../actions/challenge-actions'
-import {handleEditorChange, clearEditor} from '../actions/editor-actions'
+import {handleEditorChange, clearEditor, setEditorValue} from '../actions/editor-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -47,22 +47,29 @@ const EditorBox = styled.div`
 const TitleBox = styled.div`
   width:90%;
 `
-class ChallengeCreateContainer extends Component {
+class ChallengeFormContainer extends Component {
   //so can change query variables in one place and pass to child components:
   static propTypes = {
-    // redux:
+
+
     update: PropTypes.bool.isRequired, // if false renders create form
-    handleEditorChange: PropTypes.func.isRequired,
-    clearEditor: PropTypes.func.isRequired,
-    challengeCreated: PropTypes.func.isRequired,
-    hideCreateChallengeView: PropTypes.func.isRequired,
-    apiUserId: PropTypes.string.isRequired,
-    apiUserScorecardId: PropTypes.string.isRequired,
-    editorHtml: PropTypes.string.isRequired,
     defaultValues: PropTypes.shape({
       title: PropTypes.string.isRequired,
       body: PropTypes.string.isRequired,
     }),
+    challengeId: PropTypes.string, // for update
+    /* apollo compose HOC */
+    createChallengeAndScoreMutation: PropTypes.func.isRequired,
+    /* redux connect HOC */
+    handleEditorChange: PropTypes.func.isRequired,
+    clearEditor: PropTypes.func.isRequired,
+    challengeCreated: PropTypes.func.isRequired,
+    hideCreateChallengeView: PropTypes.func.isRequired,
+    setEditorValue: PropTypes.func.isRequired,
+    apiUserId: PropTypes.string.isRequired,
+    apiUserScorecardId: PropTypes.string.isRequired,
+    editorHtml: PropTypes.string.isRequired,
+
   }
 
   state = {
@@ -71,13 +78,17 @@ class ChallengeCreateContainer extends Component {
     titleError:""
   }
 
-  // componentWillMount() {
-  //   const {defaultValues, intitializeChallengeBody} = this.props
-  //      if (defaultValues){
-  //        this.setState({title:defaultValues.title})
-  //        intitializeChallengeBody(defaultValues.body)
-  //      }
-  //  }
+  componentWillMount() {
+    const {defaultValues, setEditorValue} = this.props
+       if (defaultValues){
+         this.setState({title:defaultValues.title})
+         setEditorValue(defaultValues.body)
+       }
+   }
+
+   componentWillUnmount() {
+     this.props.setEditorValue('')
+   }
 
   allChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
@@ -89,6 +100,8 @@ class ChallengeCreateContainer extends Component {
       hideCreateChallengeView,
       clearEditor,
       challengeCreated,
+      update,
+      challengeId,
     } = this.props
     const {title} = this.state
     const options = {
@@ -115,6 +128,25 @@ class ChallengeCreateContainer extends Component {
         })
       },
     }
+
+    if(update) {
+      options.variables.id = challengeId
+    }
+
+    const submitChallenge = (options) =>{
+      const {
+        updateChallengeMutation,
+        createChallengeAndScoreMutation
+      } = this.props
+
+      if(update){
+        updateChallengeMutation(options)
+      }
+      else{
+        createChallengeAndScoreMutation(options)
+      }
+    }
+
     try{
       const response = await createChallengeAndScoreMutation(options)
       this.setState({title:""}) //clear field on success.
@@ -124,9 +156,11 @@ class ChallengeCreateContainer extends Component {
       let other components know which challenge was recently created
       (So user can easily see where their new addition is in a list):
       */
-      challengeCreated(response.data.createChallenge.id)
+      if(!update){
+        challengeCreated(response.data.createChallenge.id)
+        window.scrollTo(0,0)
+      }
       // scroll to top so user can see newly added challenge:
-      window.scrollTo(0,0)
     }
     catch(err){
       logException(err, {
@@ -214,6 +248,7 @@ const mapDispatchToProps = (dispatch) => {
     clearEditor,
     challengeCreated,
     hideCreateChallengeView,
+    setEditorValue,
   }, dispatch)
 }
 
@@ -225,7 +260,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const ChallengeCreateApollo = compose(
+const ChallengeFormContainerApollo = compose(
   graphql(
     CREATE_CHALLENGE_AND_SCORE_MUTATION,
     {name:"createChallengeAndScoreMutation"}
@@ -234,6 +269,6 @@ const ChallengeCreateApollo = compose(
     UPDATE_CHALLENGE_MUTATION,
     {name:"updateChallenge"}
   ),
-)(ChallengeCreateContainer)
+)(ChallengeFormContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChallengeCreateApollo)
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeFormContainerApollo)

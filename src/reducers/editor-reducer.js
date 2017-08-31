@@ -8,6 +8,8 @@ export default function editorReducer(state=initialState, action){
     return { ...state, editorHtml: action.html }
   case ActionTypes.CLEAR_EDITOR:
     return { ...state, editorHtml: '' }
+  case ActionTypes.SET_EDITOR_VALUE:
+    return { ...state, editorHtml: action.html }
   default:
     return state
   }

@@ -14,7 +14,7 @@ import styled from 'styled-components'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
-import ChallengeCreateContainer from 'components/ChallengeCreateContainer'
+import ChallengeFormContainer from 'components/ChallengeCreateContainer'
 import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -48,7 +48,6 @@ class Home extends Component {
     openChallengeDetailViewId: PropTypes.string,
     hideCreateChallengeView: PropTypes.func.isRequired,
     isCreateViewOpen: PropTypes.bool.isRequired,
-
   }
 
   styles = {
@@ -112,11 +111,12 @@ class Home extends Component {
         </FloatingActionButton>
         <Dialog
           isOpen={this.props.isCreateViewOpen}
-          handleClose={this.props.handleCreateChallengeClose}
+          handleClose={this.handleCreateChallengeClose}
           title='Create A Challenge'
           modal={true}
         >
-          <ChallengeCreateContainer
+          <ChallengeFormContainer
+            update={false}
           />
         </Dialog>
         {/* conditionally rendering modal helps reduce number of DOM nodes: */}
