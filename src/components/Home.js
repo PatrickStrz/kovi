@@ -14,7 +14,7 @@ import styled from 'styled-components'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
-import ChallengeFormContainer from 'components/ChallengeCreateContainer'
+import ChallengeFormContainer from 'components/ChallengeFormContainer'
 import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'

@@ -1,11 +1,20 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+//redux
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {
+  showUpdateChallengeView,
+  hideUpdateChallengeView
+} from 'actions/challenge-actions'
 //lib + other
 import styled from 'styled-components'
 import DOMPurify from 'dompurify' //prevents XSS
-import {colors} from 'styles/theme/colors'
+import {colors, muiColors} from 'styles/theme/colors'
 //components
 import ChallengeCommentsContainer from 'components/ChallengeCommentsContainer'
+import ChallengeFormContainer from 'components/ChallengeFormContainer'
+import FaIconButton from 'ui-kit/icons/FaIconButton'
 
 /*
  Note: Because rendering <ChallengingCommentContainer/> in this element,
@@ -28,15 +37,47 @@ const LineBreak = styled.hr`
   border: solid 1px ${colors.faintGrey};
 `
 
-export default class ChallengeDetail extends Component{
+class ChallengeDetail extends Component{
   static propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired, //html string
     id: PropTypes.string.isRequired,
   }
+
+  state = {
+    edit: false
+  }
+
+  isUpdateViewOpen = () =>{
+    const {id, openUpdateViewId} = this.props
+    if (openUpdateViewId === id){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
+  toggleEdit = () => {
+    const {hideUpdateChallengeView, showUpdateChallengeView, id } = this.props
+    if (this.isUpdateViewOpen()){
+      hideUpdateChallengeView()
+    }
+    else{
+      showUpdateChallengeView(id)
+    }
+  }
+
   renderBody = () => {
-    const {title, body, id} = this.props
-    if (!this.state.edit) {
+    const {title, body, id, openUpdateViewId} = this.props
+    if (this.isUpdateViewOpen()) {
+      return(
+        <ChallengeFormContainer
+          defaultValues={{title, body}}
+          update={true}
+          challengeId={id}
+        />
+      )
     }
     else{
       return(
@@ -54,20 +95,33 @@ export default class ChallengeDetail extends Component{
   }
 
   render(){
-    const {title, body, id} = this.props
+    const {id} = this.props
     return(
       <div>
-        <Title>{title}</Title>
-        <MarkdownBox>
-          <div
-            className="content"
-            dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
-          />
-        </MarkdownBox>
-        <CommentsHeading>Discussion</CommentsHeading>
+        <FaIconButton
+          faClassName={this.isUpdateViewOpen() ? "fa-close" : "fa-pencil"}
+          size="20px"
+          onClick={this.toggleEdit}
+          color={colors.lightGrey}
+          hoverColor={muiColors.secondary1}
+        />
+        {this.renderBody()}
         <LineBreak />
         <ChallengeCommentsContainer challengeId={id}/>
       </div>
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    hideUpdateChallengeView,
+    showUpdateChallengeView,
+  }, dispatch)
+}
+
+const mapStateToProps = (state) => ({
+  openUpdateViewId: state.app.challenges.openUpdateViewId,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeDetail)

@@ -27,7 +27,10 @@ class ChallengeCard extends Component {
     newUserChallenges: PropTypes.array.isRequired,
   }
 
-  // check if challenge was created by user in this session:
+  /*
+  check if challenge was created by user in this session
+  newUserChallenges is an array of newly created challenge id's from redux store
+  */
   isNewlyCreated = (challengeId) => {
     if (this.props.newUserChallenges.indexOf(challengeId) >= 0){
         return true
@@ -38,7 +41,7 @@ class ChallengeCard extends Component {
   }
 
   render(){
-    const {id, userDidUpvote} = this.props.challenge
+    const {id, userDidUpvote, title} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
     const {
       apiUserId,
@@ -78,7 +81,7 @@ class ChallengeCard extends Component {
         <Card
           highlight={this.isNewlyCreated(id)}
           highlightColor={colors.faintTeal}
-          text={lorem}
+          text={title}
           bottomSection={upvote}
           onBodyClick={()=>{showChallengeDetailView(id)}}
         />
