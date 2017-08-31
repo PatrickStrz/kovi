@@ -5,6 +5,11 @@ export const handleEditorChange = (html) => ({
   html
 })
 
+export const setEditorValue = (html) => ({
+  type: ActionTypes.SET_EDITOR_VALUE,
+  html
+})
+
 export const clearEditor = () => ({
   type: ActionTypes.CLEAR_EDITOR,
 })

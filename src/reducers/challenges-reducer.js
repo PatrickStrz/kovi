@@ -24,6 +24,7 @@ export default function challengesReducer(state=initialState, action) {
       return {
         ...state,
         newUserChallenges:[...state.newUserChallenges, action.id],
+        isCreateViewOpen: false,
       }
     default:
       return state

@@ -98,8 +98,8 @@ class CommentSection extends Component {
     commentTypeId: PropTypes.object.isRequired, //for gql i.e DiscussionId: id
     refetchQuery: PropTypes.object.isRequired, //gql query
     //redux
-    userImageUrl: PropTypes.string.isRequired,
-    apiUserId: PropTypes.string.isRequired,
+    userImageUrl: PropTypes.string,
+    apiUserId: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
     showAlert: PropTypes.func.isRequired,
   }

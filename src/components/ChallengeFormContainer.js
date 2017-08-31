@@ -4,11 +4,17 @@ import PropTypes from 'prop-types'
 //redux
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {hideCreateChallengeView, challengeCreated} from '../actions/challenge-actions'
-import {handleEditorChange, clearEditor} from '../actions/editor-actions'
+import {
+  hideCreateChallengeView,
+  challengeCreated
+ } from '../actions/challenge-actions'
+import {handleEditorChange, clearEditor, setEditorValue} from '../actions/editor-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
-import {CREATE_CHALLENGE_AND_SCORE_MUTATION} from 'gql/Challenge/mutations'
+import {
+  CREATE_CHALLENGE_AND_SCORE_MUTATION,
+  UPDATE_CHALLENGE_MUTATION,
+} from 'gql/Challenge/mutations'
 import {ALL_CHALLENGES_QUERY} from 'gql/Challenge/queries'
 import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
 //helpers+other
@@ -18,7 +24,6 @@ import {colors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
 //components
 import Editor from 'ui-kit/Editor'
-import Dialog from 'ui-kit/Dialog'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -45,17 +50,30 @@ const EditorBox = styled.div`
 const TitleBox = styled.div`
   width:90%;
 `
-class ChallengeCreateContainer extends Component {
+
+/* form for both creating and updating challenges, update prop determines if
+    it is used as an update form
+*/
+class ChallengeFormContainer extends Component {
   //so can change query variables in one place and pass to child components:
   static propTypes = {
-    // redux:
-    hideCreateChallengeView: PropTypes.func.isRequired,
+    update: PropTypes.bool.isRequired, // if false renders create form
+    defaultValues: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+    }),
+    challengeId: PropTypes.string, // for update
+    onUpdateComplete: PropTypes.func,
+    /* apollo compose HOC */
+    createChallengeAndScoreMutation: PropTypes.func.isRequired,
+    /* redux connect HOC */
     handleEditorChange: PropTypes.func.isRequired,
     clearEditor: PropTypes.func.isRequired,
     challengeCreated: PropTypes.func.isRequired,
+    hideCreateChallengeView: PropTypes.func.isRequired,
+    setEditorValue: PropTypes.func.isRequired,
     apiUserId: PropTypes.string.isRequired,
     apiUserScorecardId: PropTypes.string.isRequired,
-    isCreateViewOpen: PropTypes.bool.isRequired,
     editorHtml: PropTypes.string.isRequired,
   }
 
@@ -65,22 +83,38 @@ class ChallengeCreateContainer extends Component {
     titleError:""
   }
 
+  componentWillMount() {
+    const {defaultValues, setEditorValue} = this.props
+     if (defaultValues){
+       this.setState({title:defaultValues.title})
+       setEditorValue(defaultValues.body)
+     }
+   }
+
+   componentWillUnmount() {
+     this.props.setEditorValue('')
+   }
+
   allChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
   charMax = 100
 
-  handleCreateChallengeSubmit = async () => {
+  // adjusts based on update prop:
+  handleChallengeSubmit = async () => {
     const {
       createChallengeAndScoreMutation,
       hideCreateChallengeView,
       clearEditor,
       challengeCreated,
+      update,
+      challengeId,
+      updateChallengeMutation,
+      onUpdateComplete,
     } = this.props
-    const {title, description} = this.state
+    const {title} = this.state
     const options = {
       variables: {
         title,
-        description,
         body: this.props.editorHtml,
         "filter":{ "id": this.props.apiUserId},
         scorecardId: this.props.apiUserScorecardId,
@@ -102,22 +136,42 @@ class ChallengeCreateContainer extends Component {
         })
       },
     }
+
+    const submitChallenge = (options) =>{
+      if(update){
+        /* prevent manual update, apollo takes care of updating store
+        automatically for items already in the store: */
+        options.update = ''
+        options.variables.id = challengeId
+        return updateChallengeMutation(options)
+      }
+      else{
+        return createChallengeAndScoreMutation(options)
+      }
+    }
+
     try{
-      const response = await createChallengeAndScoreMutation(options)
+      const response = await submitChallenge(options)
       this.setState({title:""}) //clear field on success.
-      hideCreateChallengeView()
       clearEditor()
       /*
-      let other components know which challenge was recently created
+      if created let other components know which challenge was recently created
       (So user can easily see where their new addition is in a list):
       */
-      challengeCreated(response.data.createChallenge.id)
+      if (update) {
+        onUpdateComplete()
+      }
+      
+      if(!update){
+        challengeCreated(response.data.createChallenge.id)
+        hideCreateChallengeView()
+        window.scrollTo(0,0)
+      }
       // scroll to top so user can see newly added challenge:
-      window.scrollTo(0,0)
     }
     catch(err){
       logException(err, {
-      action: "mutation in handleCreateChallengeSubmit in ChallengeList.js"
+      action: "mutation in handleChallengeSubmit in ChallengeList.js"
       })
     }
   }
@@ -148,7 +202,7 @@ class ChallengeCreateContainer extends Component {
   }
 
   render(){
-
+    const {update} = this.props
     const renderRemainingCharCount = () => {
       const charCount = this.state.title.length
       const remainingChars = this.charMax - charCount
@@ -162,69 +216,66 @@ class ChallengeCreateContainer extends Component {
     /*-------------- render return ----------------*/
 
     return(
-        <Dialog
-          isOpen={this.props.isCreateViewOpen}
-          handleClose={this.props.hideCreateChallengeView}
-          title='Create A Challenge'
-          modal={true}
-        >
-          <FormBox>
-            <TitleBox>
-              <TextField
-                id="challengeCreateTitle"
-                fullWidth={true}
-                hintText="write a concise title"
-                onChange={this.handleTitleChange}
-                value={this.state.title}
-                errorText={this.state.titleError}
-                multiLine={true}
-              />
-              {renderRemainingCharCount()}
-            </TitleBox>
-          <br />
-            <EditorBox>
-              <Editor
-                handleChange={this.props.handleEditorChange}
-                value={this.props.editorHtml}
-              />
-            </EditorBox>
-            <br/>
-            <br/>
-            <RaisedButton
-              label="submit challenge"
-              onClick={this.handleCreateChallengeSubmit}
-              primary={true}
-              disabled={(this.state.titleError || !this.state.title) && true}
+        <FormBox>
+          <TitleBox>
+            <TextField
+              id="challengeCreateTitle"
+              fullWidth={true}
+              hintText="write a concise title"
+              onChange={this.handleTitleChange}
+              value={this.state.title}
+              errorText={this.state.titleError}
+              multiLine={true}
             />
-          </FormBox>
-        </Dialog>
+            {renderRemainingCharCount()}
+          </TitleBox>
+          <br />
+          <EditorBox>
+            <Editor
+              handleChange={this.props.handleEditorChange}
+              value={this.props.editorHtml}
+            />
+          </EditorBox>
+          <br/>
+          <br/>
+          <RaisedButton
+            label={update ? "update" : "submit challenge"}
+            onClick={this.handleChallengeSubmit}
+            primary={true}
+            disabled={(this.state.titleError || !this.state.title) && true}
+          />
+        </FormBox>
       )
     }
   }
 
-const ChallengeCreateApollo = compose(
-  graphql(
-    CREATE_CHALLENGE_AND_SCORE_MUTATION,
-    {name:"createChallengeAndScoreMutation"}
-  ),
-)(ChallengeCreateContainer)
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    handleEditorChange,
+    clearEditor,
+    challengeCreated,
+    hideCreateChallengeView,
+    setEditorValue,
+  }, dispatch)
+}
 
 const mapStateToProps = (state) => {
   return {
     apiUserId: state.app.auth.apiUserId,
     apiUserScorecardId: state.app.auth.apiUserScorecardId,
-    isCreateViewOpen: state.app.challenges.isCreateViewOpen,
     editorHtml: state.app.editor.editorHtml,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    hideCreateChallengeView,
-    handleEditorChange,
-    clearEditor,
-    challengeCreated,
-  }, dispatch)
-}
+const ChallengeFormContainerApollo = compose(
+  graphql(
+    CREATE_CHALLENGE_AND_SCORE_MUTATION,
+    {name:"createChallengeAndScoreMutation"}
+  ),
+  graphql(
+    UPDATE_CHALLENGE_MUTATION,
+    {name:"updateChallengeMutation"}
+  ),
+)(ChallengeFormContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChallengeCreateApollo)
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeFormContainerApollo)

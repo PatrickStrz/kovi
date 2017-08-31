@@ -26,6 +26,7 @@ export const INITIAL_COMMUNITY_SCORE = 'INITIAL_COMMUNITY_SCORE'
 /*------------------- Editor ------------------------*/
 export const EDITOR_CHANGE = 'EDITOR_CHANGE'
 export const CLEAR_EDITOR = 'CLEAR_EDITOR'
+export const SET_EDITOR_VALUE = 'SET_EDITOR_VALUE'
 
 /*------------------- Discussion ------------------------*/
 export const SHOW_DISCUSSION_VIEW = 'SHOW_DISCUSSION_VIEW'

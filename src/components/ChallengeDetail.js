@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 //lib + other
 import styled from 'styled-components'
 import DOMPurify from 'dompurify' //prevents XSS
-import {colors} from 'styles/theme/colors'
+import {colors, muiColors} from 'styles/theme/colors'
 //components
 import ChallengeCommentsContainer from 'components/ChallengeCommentsContainer'
+import ChallengeFormContainer from 'components/ChallengeFormContainer'
+import FaIconButton from 'ui-kit/icons/FaIconButton'
 
 /*
  Note: Because rendering <ChallengingCommentContainer/> in this element,
@@ -13,6 +15,12 @@ commentsquery is only performed after query in ChallengeDetailContainer
 container completes.For this use case it works since we do not want comments to
 render before the body.
 */
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
 const MarkdownBox = styled.div`
   background-color: #d2fffc;
   border-radius: 3px;
@@ -33,21 +41,75 @@ export default class ChallengeDetail extends Component{
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired, //html string
     id: PropTypes.string.isRequired,
+    apiUserId: PropTypes.string,
+    authorId: PropTypes.string.isRequired,
   }
-  render(){
-    const {title, body, id} = this.props
-    return(
+
+  state = {
+    edit: false
+  }
+
+  toggleEdit = () => {
+    this.setState({edit: !this.state.edit})
+  }
+
+  closeEdit = () => {
+    this.setState({edit:false})
+  }
+
+  renderBody = () => {
+    const {body, id, title} = this.props
+    if (this.state.edit) {
+      return(
+        <ChallengeFormContainer
+          defaultValues={{title, body}}
+          update={true}
+          challengeId={id}
+          onUpdateComplete={this.closeEdit}
+        />
+      )
+    }
+    else{
+      return(
       <div>
-        <Title>{title}</Title>
         <MarkdownBox>
           <div
             className="content"
             dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
           />
         </MarkdownBox>
-        <CommentsHeading>Discussion</CommentsHeading>
+      </div>
+      )
+    }
+  }
+
+  renderEditButton = () => {
+    const {apiUserId, authorId} = this.props
+    if (apiUserId === authorId){
+      return(
+        <FaIconButton
+          faClassName={this.state.edit ? "fa-close" : "fa-pencil"}
+          size="25px"
+          onClick={this.toggleEdit}
+          color={colors.lightGrey}
+          hoverColor={muiColors.secondary1}
+        />
+      )
+    }
+  }
+
+  render(){
+    const {id, title} = this.props
+    return(
+      <div>
+        <Header>
+          <Title>{title}</Title>
+          {this.renderEditButton()}
+        </Header>
+        {this.renderBody()}
         <LineBreak />
-        <ChallengeCommentsContainer challengeId={id}/>
+        <CommentsHeading>Discussion</CommentsHeading>
+        <ChallengeCommentsContainer challengeId={id} on />
       </div>
     )
   }

@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import {
   showCreateChallengeView,
   hideChallengeDetailView,
+  hideCreateChallengeView,
 } from '../actions/challenge-actions'
 //lib + other
 import {requireAuth} from '../lib/auth'
@@ -13,7 +14,7 @@ import styled from 'styled-components'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
-import ChallengeCreateContainer from 'components/ChallengeCreateContainer'
+import ChallengeFormContainer from 'components/ChallengeFormContainer'
 import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -45,6 +46,8 @@ class Home extends Component {
     showCreateChallengeView: PropTypes.func.isRequired,
     hideChallengeDetailView: PropTypes.func.isRequired,
     openChallengeDetailViewId: PropTypes.string,
+    hideCreateChallengeView: PropTypes.func.isRequired,
+    isCreateViewOpen: PropTypes.bool.isRequired,
   }
 
   styles = {
@@ -66,6 +69,10 @@ class Home extends Component {
       <ChallengeDetailContainer id={this.props.openChallengeDetailViewId}/>
     </Dialog>
   )
+
+  handleCreateChallengeClose = () => {
+    this.props.hideCreateChallengeView()
+  }
 
   render(){
     const {
@@ -102,7 +109,16 @@ class Home extends Component {
         >
           <ContentAdd/>
         </FloatingActionButton>
-        <ChallengeCreateContainer />
+        <Dialog
+          isOpen={this.props.isCreateViewOpen}
+          handleClose={this.handleCreateChallengeClose}
+          title='Create A Challenge'
+          modal={true}
+        >
+          <ChallengeFormContainer
+            update={false}
+          />
+        </Dialog>
         {/* conditionally rendering modal helps reduce number of DOM nodes: */}
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
       </div>
@@ -114,11 +130,13 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       showCreateChallengeView,
       hideChallengeDetailView,
+      hideCreateChallengeView,
     }, dispatch)
 }
 
 const mapStateToProps = (state) => ({
   openChallengeDetailViewId: state.app.challenges.openChallengeDetailViewId,
+  isCreateViewOpen: state.app.challenges.isCreateViewOpen,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

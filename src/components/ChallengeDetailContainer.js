@@ -1,6 +1,8 @@
 // react+redux
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+//redux
+import {connect} from 'react-redux'
 //gql
 import {graphql} from 'react-apollo'
 import {CHALLENGE_DETAIL_QUERY} from '../gql/Challenge/queries'
@@ -28,10 +30,17 @@ export class ChallengeDetailContainer extends Component {
       return <GenericError />
     }
 
-    const {id, title, body} = this.props.data.Challenge
+    const {id, title, body, author} = this.props.data.Challenge
+    const {apiUserId} = this.props
 
     return(
-      <ChallengeDetail id={id} title={title} body={body}  />
+      <ChallengeDetail
+        id={id}
+        title={title}
+        body={body}
+        apiUserId={apiUserId}
+        authorId={author.id}
+      />
     )
   }
 }
@@ -41,4 +50,8 @@ CHALLENGE_DETAIL_QUERY,{
   options: ({ id }) => ({ variables: { id } }), // coming from own props
 })(ChallengeDetailContainer)
 
-export default ChallengeDetailContainerApollo
+const mapStateToProps = (state) => ({
+  apiUserId: state.app.auth.apiUserId
+})
+
+export default connect(mapStateToProps)(ChallengeDetailContainerApollo)

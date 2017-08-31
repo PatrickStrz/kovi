@@ -9,7 +9,7 @@ import GenericLoader from 'ui-kit/GenericLoader'
 export default class ChallengeList extends Component {
   static propTypes = {
     challenges: PropTypes.array.isRequired,
-    apiUserId: PropTypes.string.isRequired,
+    apiUserId: PropTypes.string,
     allChallengesQueryVariables: PropTypes.object.isRequired,
     loadMoreEntries: PropTypes.func.isRequired,
     hasMore: PropTypes.bool.isRequired,

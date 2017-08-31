@@ -9,7 +9,6 @@ export const DELETE_CHALLENGE_MUTATION = gql`mutation deleteChallenge($id: ID!){
 
 export const CREATE_CHALLENGE_AND_SCORE_MUTATION = gql`mutation
   createChallengeAndScore(
-    $description: String,
     $title: String,
     $body: String,
     $filter: UserFilter,
@@ -18,7 +17,6 @@ export const CREATE_CHALLENGE_AND_SCORE_MUTATION = gql`mutation
     $authorId: ID,
   ){
 	  createChallenge(
-      description: $description,
       title: $title,
       body: $body,
       authorId: $authorId){
@@ -43,11 +41,11 @@ export const CREATE_CHALLENGE_AND_SCORE_MUTATION = gql`mutation
 export const UPDATE_CHALLENGE_MUTATION = gql`mutation
   updateChallengeMutation(
     $id: ID!,
-    $description: String,
+    $body: String,
     $title: String,
     $filter: UserFilter
   ){
-	  updateChallenge(id: $id, description: $description,title:$title){
+	  updateChallenge(id: $id, title:$title, body: $body,){
       ...challengeBody
     }
   }
