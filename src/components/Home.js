@@ -130,6 +130,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       showCreateChallengeView,
       hideChallengeDetailView,
+      hideCreateChallengeView,
     }, dispatch)
 }
 

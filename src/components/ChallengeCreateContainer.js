@@ -51,6 +51,7 @@ class ChallengeCreateContainer extends Component {
   //so can change query variables in one place and pass to child components:
   static propTypes = {
     // redux:
+    update: PropTypes.bool.isRequired, // if false renders create form
     handleEditorChange: PropTypes.func.isRequired,
     clearEditor: PropTypes.func.isRequired,
     challengeCreated: PropTypes.func.isRequired,
@@ -58,6 +59,10 @@ class ChallengeCreateContainer extends Component {
     apiUserId: PropTypes.string.isRequired,
     apiUserScorecardId: PropTypes.string.isRequired,
     editorHtml: PropTypes.string.isRequired,
+    defaultValues: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+    }),
   }
 
   state = {
@@ -65,6 +70,14 @@ class ChallengeCreateContainer extends Component {
     description: "",
     titleError:""
   }
+
+  // componentWillMount() {
+  //   const {defaultValues, intitializeChallengeBody} = this.props
+  //      if (defaultValues){
+  //        this.setState({title:defaultValues.title})
+  //        intitializeChallengeBody(defaultValues.body)
+  //      }
+  //  }
 
   allChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
 
@@ -77,11 +90,10 @@ class ChallengeCreateContainer extends Component {
       clearEditor,
       challengeCreated,
     } = this.props
-    const {title, description} = this.state
+    const {title} = this.state
     const options = {
       variables: {
         title,
-        description,
         body: this.props.editorHtml,
         "filter":{ "id": this.props.apiUserId},
         scorecardId: this.props.apiUserScorecardId,
