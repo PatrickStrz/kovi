@@ -6,7 +6,6 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
   hideCreateChallengeView,
-  hideUpdateChallengeView,
   challengeCreated
  } from '../actions/challenge-actions'
 import {handleEditorChange, clearEditor, setEditorValue} from '../actions/editor-actions'
@@ -66,6 +65,7 @@ class ChallengeFormContainer extends Component {
       body: PropTypes.string.isRequired,
     }),
     challengeId: PropTypes.string, // for update
+    onUpdateComplete: PropTypes.func,
     /* apollo compose HOC */
     createChallengeAndScoreMutation: PropTypes.func.isRequired,
     /* redux connect HOC */
@@ -73,7 +73,6 @@ class ChallengeFormContainer extends Component {
     clearEditor: PropTypes.func.isRequired,
     challengeCreated: PropTypes.func.isRequired,
     hideCreateChallengeView: PropTypes.func.isRequired,
-    hideUpdateChallengeView: PropTypes.func.isRequired,
     setEditorValue: PropTypes.func.isRequired,
     apiUserId: PropTypes.string.isRequired,
     apiUserScorecardId: PropTypes.string.isRequired,
@@ -113,6 +112,7 @@ class ChallengeFormContainer extends Component {
       update,
       challengeId,
       updateChallengeMutation,
+      onUpdateComplete,
     } = this.props
     const {title} = this.state
     const options = {
@@ -141,10 +141,6 @@ class ChallengeFormContainer extends Component {
       },
     }
 
-    if(update) {
-      options.update = ''
-    }
-
     const submitChallenge = (options) =>{
       if(update){
         /* prevent manual update, apollo takes care of updating store
@@ -162,16 +158,16 @@ class ChallengeFormContainer extends Component {
       const response = await submitChallenge(options)
       this.setState({title:""}) //clear field on success.
       clearEditor()
-
-       if (update){
-         hideUpdateChallengeView()
-       }
       /*
       if created let other components know which challenge was recently created
       (So user can easily see where their new addition is in a list):
       */
+      if (update) {
+        onUpdateComplete()
+      }
       if(!update){
         challengeCreated(response.data.createChallenge.id)
+        hideCreateChallengeView()
         window.scrollTo(0,0)
       }
       // scroll to top so user can see newly added challenge:
@@ -209,7 +205,7 @@ class ChallengeFormContainer extends Component {
   }
 
   render(){
-
+    const {update} = this.props
     const renderRemainingCharCount = () => {
       const charCount = this.state.title.length
       const remainingChars = this.charMax - charCount
@@ -246,7 +242,7 @@ class ChallengeFormContainer extends Component {
           <br/>
           <br/>
           <RaisedButton
-            label="submit challenge"
+            label={update ? "update" : "submit challenge"}
             onClick={this.handleChallengeSubmit}
             primary={true}
             disabled={(this.state.titleError || !this.state.title) && true}
@@ -263,7 +259,6 @@ const mapDispatchToProps = (dispatch) => {
     challengeCreated,
     hideCreateChallengeView,
     setEditorValue,
-    hideUpdateChallengeView,
   }, dispatch)
 }
 
