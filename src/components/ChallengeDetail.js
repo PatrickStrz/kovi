@@ -15,11 +15,6 @@ commentsquery is only performed after query in ChallengeDetailContainer
 container completes.For this use case it works since we do not want comments to
 render before the body.
 */
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`
 
 const MarkdownBox = styled.div`
   background-color: #d2fffc;
@@ -102,10 +97,8 @@ export default class ChallengeDetail extends Component{
     const {id, title} = this.props
     return(
       <div>
-        <Header>
-          <Title>{title}</Title>
-          {this.renderEditButton()}
-        </Header>
+        {this.renderEditButton()}
+        <Title>{title}</Title>  
         {this.renderBody()}
         <LineBreak />
         <CommentsHeading>Discussion</CommentsHeading>
