@@ -41,12 +41,13 @@ export default class ChallengeDetail extends Component{
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired, //html string
     id: PropTypes.string.isRequired,
+    apiUserId: PropTypes.string,
+    authorId: PropTypes.string.isRequired,
   }
 
   state = {
     edit: false
   }
-
 
   toggleEdit = () => {
     this.setState({edit: !this.state.edit})
@@ -82,21 +83,29 @@ export default class ChallengeDetail extends Component{
     }
   }
 
+  renderEditButton = () => {
+    const {apiUserId, authorId} = this.props
+    if (apiUserId === authorId){
+      return(
+        <FaIconButton
+          faClassName={this.state.edit ? "fa-close" : "fa-pencil"}
+          size="25px"
+          onClick={this.toggleEdit}
+          color={colors.lightGrey}
+          hoverColor={muiColors.secondary1}
+        />
+      )
+    }
+  }
+
   render(){
     const {id, title} = this.props
     return(
       <div>
         <Header>
           <Title>{title}</Title>
-          <FaIconButton
-            faClassName={this.state.edit ? "fa-close" : "fa-pencil"}
-            size="25px"
-            onClick={this.toggleEdit}
-            color={colors.lightGrey}
-            hoverColor={muiColors.secondary1}
-          />
+          {this.renderEditButton()}
         </Header>
-
         {this.renderBody()}
         <LineBreak />
         <CommentsHeading>Discussion</CommentsHeading>

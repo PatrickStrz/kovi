@@ -57,8 +57,6 @@ const TitleBox = styled.div`
 class ChallengeFormContainer extends Component {
   //so can change query variables in one place and pass to child components:
   static propTypes = {
-
-
     update: PropTypes.bool.isRequired, // if false renders create form
     defaultValues: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -77,7 +75,6 @@ class ChallengeFormContainer extends Component {
     apiUserId: PropTypes.string.isRequired,
     apiUserScorecardId: PropTypes.string.isRequired,
     editorHtml: PropTypes.string.isRequired,
-
   }
 
   state = {
@@ -88,10 +85,10 @@ class ChallengeFormContainer extends Component {
 
   componentWillMount() {
     const {defaultValues, setEditorValue} = this.props
-       if (defaultValues){
-         this.setState({title:defaultValues.title})
-         setEditorValue(defaultValues.body)
-       }
+     if (defaultValues){
+       this.setState({title:defaultValues.title})
+       setEditorValue(defaultValues.body)
+     }
    }
 
    componentWillUnmount() {
@@ -126,7 +123,6 @@ class ChallengeFormContainer extends Component {
       },
       /* updates query in apollo store without performing network request,
       appends to beginning of list: */
-      // const updateArgs
       update: (proxy, {data: {createChallenge}}) => {
         const data = proxy.readQuery({
           query: ALL_CHALLENGES_QUERY,
@@ -147,10 +143,10 @@ class ChallengeFormContainer extends Component {
         automatically for items already in the store: */
         options.update = ''
         options.variables.id = challengeId
-        updateChallengeMutation(options)
+        return updateChallengeMutation(options)
       }
       else{
-        createChallengeAndScoreMutation(options)
+        return createChallengeAndScoreMutation(options)
       }
     }
 
@@ -165,6 +161,7 @@ class ChallengeFormContainer extends Component {
       if (update) {
         onUpdateComplete()
       }
+      
       if(!update){
         challengeCreated(response.data.createChallenge.id)
         hideCreateChallengeView()
