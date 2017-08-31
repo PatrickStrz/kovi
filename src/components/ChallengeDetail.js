@@ -34,6 +34,25 @@ export default class ChallengeDetail extends Component{
     body: PropTypes.string.isRequired, //html string
     id: PropTypes.string.isRequired,
   }
+  renderBody = () => {
+    const {title, body, id} = this.props
+    if (!this.state.edit) {
+    }
+    else{
+      return(
+      <div>
+        <Title>{title}</Title>
+        <MarkdownBox>
+          <div
+            className="content"
+            dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
+          />
+        </MarkdownBox>
+      </div>
+      )
+    }
+  }
+
   render(){
     const {title, body, id} = this.props
     return(

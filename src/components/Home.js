@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import {
   showCreateChallengeView,
   hideChallengeDetailView,
+  hideCreateChallengeView,
 } from '../actions/challenge-actions'
 //lib + other
 import {requireAuth} from '../lib/auth'
@@ -45,6 +46,9 @@ class Home extends Component {
     showCreateChallengeView: PropTypes.func.isRequired,
     hideChallengeDetailView: PropTypes.func.isRequired,
     openChallengeDetailViewId: PropTypes.string,
+    hideCreateChallengeView: PropTypes.func.isRequired,
+    isCreateViewOpen: PropTypes.bool.isRequired,
+
   }
 
   styles = {
@@ -102,7 +106,14 @@ class Home extends Component {
         >
           <ContentAdd/>
         </FloatingActionButton>
-        <ChallengeCreateContainer />
+        <Dialog
+          isOpen={this.props.isCreateViewOpen}
+          handleClose={this.props.hideCreateChallengeView}
+          title='Create A Challenge'
+          modal={true}
+        >
+          <ChallengeCreateContainer />
+        </Dialog>
         {/* conditionally rendering modal helps reduce number of DOM nodes: */}
         { openChallengeDetailViewId && this.renderChallengeDetailView()}
       </div>
@@ -114,11 +125,13 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       showCreateChallengeView,
       hideChallengeDetailView,
+      hideCreateChallengeView,
     }, dispatch)
 }
 
 const mapStateToProps = (state) => ({
   openChallengeDetailViewId: state.app.challenges.openChallengeDetailViewId,
+  isCreateViewOpen: state.app.challenges.isCreateViewOpen,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
