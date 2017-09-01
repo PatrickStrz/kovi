@@ -22,6 +22,7 @@ const Score = styled.p`
   display: inline-block;
   color: ${muiColors.primary1};
   font-size: 18px;
+  margin: 0px;
 `
 
 class CommunityScore extends Component {
@@ -75,7 +76,7 @@ class CommunityScore extends Component {
     }
     return(
       <Score style={this.props.style}>
-        {this.props.communityScore}
+        {this.props.communityScore} points
       </Score>
     )
   }

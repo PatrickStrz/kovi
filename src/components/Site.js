@@ -74,11 +74,6 @@ class Site extends Component {
             profile={profile}
           />
         </Headroom>
-        {/* Scoreboard visible only on scroll down */}
-        {/* <Scoreboard
-          zIndex={SCOREBOARD_Z_INDEX}
-          isVisible={this.state.scorecardVisible ? true : false}
-        /> */}
         {/* component that syncs or creates a user depending on redux state: */}
         { this.shouldSyncUser() && renderSyncUser() }
         <div>

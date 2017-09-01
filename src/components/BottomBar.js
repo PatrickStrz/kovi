@@ -23,7 +23,6 @@ import Notifications from 'material-ui/svg-icons/social/notifications'
 import Public from 'material-ui/svg-icons/social/public'
 import Dialog from 'ui-kit/Dialog'
 import MuiDrawer from 'ui-kit/MuiDrawer'
-import TasksContainer from 'components/tasks/TasksContainer'
 import Placeholder from 'components/Placeholder'
 
 

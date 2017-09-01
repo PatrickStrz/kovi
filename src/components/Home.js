@@ -19,8 +19,6 @@ import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
-import TasksContainer from 'components/tasks/TasksContainer'
-import CommunityScore from 'components/scoreboard/CommunityScore'
 import Community from 'components/community/Community'
 
 const ChallengeListBox = styled.div`
