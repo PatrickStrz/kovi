@@ -21,7 +21,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
-import CommunityBody from 'components/community/CommunityBody'
+import Community from 'components/community/Community'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -97,7 +97,7 @@ class Home extends Component {
           centerPanelContent={centerContent}
           rightPanelContent={
             <RightContent>
-              <CommunityBody/>
+              <Community/>
             </RightContent>}
           showLines={false}
         />

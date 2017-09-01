@@ -39,7 +39,7 @@ export default class MuiDrawer extends Component {
           docked={docked}
           onRequestChange={this.handleClickAway}
         >
-          <AppBar title="Community" />
+          {/* <AppBar title="Community" /> */}
           {children}
         </Drawer>
       </div>
