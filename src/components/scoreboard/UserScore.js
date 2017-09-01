@@ -7,13 +7,21 @@ import {graphql} from 'react-apollo'
 import {USER_SCORECARD_QUERY} from '../../gql/Scorecard/queries'
 import {USER_SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
+import styled from 'styled-components'
 import {logException} from '../../config'
+import {muiColors} from 'styles/theme/colors'
+//components
+
+const Score = styled.p`
+  display: inline-block;
+  color: ${muiColors.primary1};
+  font-size: 18px;
+`
 
 class UserScore extends Component {
   static propTypes = {
-    subscribeToScorecardUpdates: PropTypes.func.isRequired,
-    apiUserScorecardId: PropTypes.string,
-    style: PropTypes.object.isRequired,
+    subscribeToScorecardUpdates: PropTypes.func.isRequired, //apollo HOC
+    apiUserScorecardId: PropTypes.string, //connect HOC
   }
 
   componentWillMount() {
@@ -23,7 +31,7 @@ class UserScore extends Component {
   render(){
     const {data} = this.props
     if (data.loading){
-      return(<h2>loading...</h2>)
+      return <div></div>
     }
     if (data.error){
       logException(this.props.data.error, {
@@ -31,9 +39,9 @@ class UserScore extends Component {
       })
     }
     return(
-      <span style={this.props.style}>
+      <Score>
         {this.props.data.Scorecard.total}
-      </span>
+      </Score>
     )
   }
 }

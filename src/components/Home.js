@@ -19,7 +19,7 @@ import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
-import TasksContainer from 'components/tasks/TasksContainer'
+import Community from 'components/community/Community'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -38,6 +38,7 @@ const RightContent = styled.div`
   ::-webkit-scrollbar {
     display: none;
   } /* hides scrollbar*/
+  padding: 10px;
 `
 class Home extends Component {
 
@@ -94,8 +95,7 @@ class Home extends Component {
           centerPanelContent={centerContent}
           rightPanelContent={
             <RightContent>
-              <h3>Help Build The App</h3>
-              <TasksContainer/>
+              <Community/>
             </RightContent>}
           showLines={false}
         />
@@ -120,7 +120,7 @@ class Home extends Component {
           />
         </Dialog>
         {/* conditionally rendering modal helps reduce number of DOM nodes: */}
-        { openChallengeDetailViewId && this.renderChallengeDetailView()}
+        {openChallengeDetailViewId && this.renderChallengeDetailView()}
       </div>
     )
   }

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import {DRAWER_BODY_Z_INDEX, DRAWER_OVERLAY_Z_INDEX} from 'styles/z-index'
 //components
 import Drawer from 'material-ui/Drawer'
-import AppBar from 'material-ui/AppBar'
 
 export default class MuiDrawer extends Component {
 
@@ -39,7 +38,6 @@ export default class MuiDrawer extends Component {
           docked={docked}
           onRequestChange={this.handleClickAway}
         >
-          <AppBar title="Community" />
           {children}
         </Drawer>
       </div>
