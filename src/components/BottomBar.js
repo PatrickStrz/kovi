@@ -16,6 +16,7 @@ import styled from 'styled-components'
 import {media} from 'styles/media-queries'
 //components
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation'
+import CommunityBody from 'components/community/CommunityBody'
 import Paper from 'material-ui/Paper'
 import FilterList from 'material-ui/svg-icons/content/filter-list'
 import Notifications from 'material-ui/svg-icons/social/notifications'
@@ -24,6 +25,7 @@ import Dialog from 'ui-kit/Dialog'
 import MuiDrawer from 'ui-kit/MuiDrawer'
 import TasksContainer from 'components/tasks/TasksContainer'
 import Placeholder from 'components/Placeholder'
+
 
 const NotificationsIcon = <Notifications />
 const FilterIcon = <FilterList />
@@ -140,7 +142,7 @@ class BottomBar extends Component {
         docked={false}
         handleClose={this.handleCommunityClose}
         >
-        <TasksContainer/>
+        <CommunityBody/>
       </MuiDrawer>
     </div>
     )

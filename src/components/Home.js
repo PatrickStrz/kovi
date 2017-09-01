@@ -21,6 +21,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
+import CommunityBody from 'components/community/CommunityBody'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -39,6 +40,7 @@ const RightContent = styled.div`
   ::-webkit-scrollbar {
     display: none;
   } /* hides scrollbar*/
+  padding: 10px;
 `
 class Home extends Component {
 
@@ -95,9 +97,7 @@ class Home extends Component {
           centerPanelContent={centerContent}
           rightPanelContent={
             <RightContent>
-              <CommunityScore/>
-              <h3>Help Build The App</h3>
-              <TasksContainer/>
+              <CommunityBody/>
             </RightContent>}
           showLines={false}
         />
@@ -122,7 +122,7 @@ class Home extends Component {
           />
         </Dialog>
         {/* conditionally rendering modal helps reduce number of DOM nodes: */}
-        { openChallengeDetailViewId && this.renderChallengeDetailView()}
+        {openChallengeDetailViewId && this.renderChallengeDetailView()}
       </div>
     )
   }
