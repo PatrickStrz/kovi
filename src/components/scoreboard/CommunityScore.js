@@ -1,7 +1,7 @@
 //react+redux
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 //redux
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -34,10 +34,9 @@ class CommunityScore extends Component {
     initializeCommunityScore: PropTypes.func.isRequired,
     updateCommunityScore:  PropTypes.func.isRequired,
     communityScore: PropTypes.number,
+    animation1: PropTypes.bool,
+    animation2: PropTypes.bool,
   }
-
-  state = {animate1: false, animate2: false}
-
 
   componentWillMount() {
        this.props.subscribeToNewScores()
@@ -68,8 +67,12 @@ class CommunityScore extends Component {
     return(CommunityTotal)
   }
 
+  renderScore = () => {
+      return <Score>{this.props.communityScore} points</Score>
+  }
+
   render(){
-    const {data} = this.props
+    const {data, animation1, animation2} = this.props
 
     if (data.loading ){
       return(<div></div>)
@@ -80,15 +83,12 @@ class CommunityScore extends Component {
       })
       return <p>error</p>
     }
+    //make sure score remounts on prop change so animation plays:
     return(
-
-      <Score style={this.props.style}>
-        {/* {this.state.animate1 && alert('animate1')}
-        {this.state.animate2 && alert('animate2')} */}
-        {this.props.animation1 && console.log('animation1') }
-        {this.props.animation2 && console.log('animation2') }
-        {this.props.communityScore} points
-      </Score>
+      <div>
+        {this.props.animation1 && this.renderScore()}
+        {this.props.animation2 && this.renderScore()}
+      </div>
     )
   }
 }
