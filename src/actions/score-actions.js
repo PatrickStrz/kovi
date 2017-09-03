@@ -4,7 +4,8 @@ export const initializeCommunityScore = (value) => ({
   type: ActionTypes.INITIAL_COMMUNITY_SCORE,
   value
 })
-export const updateCommunityScore = (value) => ({
+export const updateCommunityScore = (value, scoreId) => ({
   type: ActionTypes.NEW_COMMUNITY_SCORE,
-  value
+  value,
+  scoreId
 })

@@ -17,12 +17,14 @@ import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
 import {logException} from 'config'
 import {muiColors} from 'styles/theme/colors'
+import {bounceInKeyframes} from 'styles/animations/keyframes'
 
 const Score = styled.p`
   display: inline-block;
   color: ${muiColors.primary1};
   font-size: 18px;
   margin: 0px;
+  animation: ${bounceInKeyframes} 0.5s;
 `
 
 class CommunityScore extends Component {
@@ -34,9 +36,20 @@ class CommunityScore extends Component {
     communityScore: PropTypes.number,
   }
 
+  state = {animate1: false, animate2: false}
+
+
   componentWillMount() {
        this.props.subscribeToNewScores()
    }
+
+   componentWillReceiveProps = (nextProps) => {
+     if (this.props.data.loading && !nextProps.data.loading) {
+       const communityScore = this.getTotalCommunityScore(nextProps.data)
+       this.props.initializeCommunityScore(communityScore)
+     }
+   }
+
     //this total is calculated based on the scoring system in score-system.js:
   getTotalCommunityScore = (data) => {
     const level1Count = data[levels.one.name].count
@@ -55,13 +68,6 @@ class CommunityScore extends Component {
     return(CommunityTotal)
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    if (this.props.data.loading && !nextProps.data.loading) {
-      const communityScore = this.getTotalCommunityScore(nextProps.data)
-      this.props.initializeCommunityScore(communityScore)
-    }
-  }
-
   render(){
     const {data} = this.props
 
@@ -75,7 +81,12 @@ class CommunityScore extends Component {
       return <p>error</p>
     }
     return(
+
       <Score style={this.props.style}>
+        {/* {this.state.animate1 && alert('animate1')}
+        {this.state.animate2 && alert('animate2')} */}
+        {this.props.animation1 && console.log('animation1') }
+        {this.props.animation2 && console.log('animation2') }
         {this.props.communityScore} points
       </Score>
     )
@@ -98,8 +109,9 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
             if (!subscriptionData.data) {
                 return prev;
             }
-            const newScore = subscriptionData.data.Score.node.value
-            ownProps.updateCommunityScore(newScore)
+            console.log(event)
+            const {value, id} = subscriptionData.data.Score.node
+            ownProps.updateCommunityScore(value, id)
             return {
                 prev,
             }
@@ -114,6 +126,8 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
 const mapStateToProps = (state) => {
   return {
     communityScore: state.app.scores.communityScore,
+    animation1: state.app.scores.animation1,
+    animation2: state.app.scores.animation2,
   }
 }
 
