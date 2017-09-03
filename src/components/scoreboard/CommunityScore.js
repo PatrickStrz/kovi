@@ -1,7 +1,7 @@
 //react+redux
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 //redux
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -17,12 +17,14 @@ import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
 import {logException} from 'config'
 import {muiColors} from 'styles/theme/colors'
+import {bounceInKeyframes} from 'styles/animations/keyframes'
 
 const Score = styled.p`
   display: inline-block;
   color: ${muiColors.primary1};
   font-size: 18px;
   margin: 0px;
+  animation: ${bounceInKeyframes} 0.5s;
 `
 
 class CommunityScore extends Component {
@@ -32,11 +34,21 @@ class CommunityScore extends Component {
     initializeCommunityScore: PropTypes.func.isRequired,
     updateCommunityScore:  PropTypes.func.isRequired,
     communityScore: PropTypes.number,
+    animation1: PropTypes.bool,
+    animation2: PropTypes.bool,
   }
 
   componentWillMount() {
        this.props.subscribeToNewScores()
    }
+
+   componentWillReceiveProps = (nextProps) => {
+     if (this.props.data.loading && !nextProps.data.loading) {
+       const communityScore = this.getTotalCommunityScore(nextProps.data)
+       this.props.initializeCommunityScore(communityScore)
+     }
+   }
+
     //this total is calculated based on the scoring system in score-system.js:
   getTotalCommunityScore = (data) => {
     const level1Count = data[levels.one.name].count
@@ -55,15 +67,12 @@ class CommunityScore extends Component {
     return(CommunityTotal)
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    if (this.props.data.loading && !nextProps.data.loading) {
-      const communityScore = this.getTotalCommunityScore(nextProps.data)
-      this.props.initializeCommunityScore(communityScore)
-    }
+  renderScore = () => {
+      return <Score>{this.props.communityScore} points</Score>
   }
 
   render(){
-    const {data} = this.props
+    const {data, animation1, animation2} = this.props
 
     if (data.loading ){
       return(<div></div>)
@@ -74,10 +83,12 @@ class CommunityScore extends Component {
       })
       return <p>error</p>
     }
+    //make sure score remounts on prop change so animation plays:
     return(
-      <Score style={this.props.style}>
-        {this.props.communityScore} points
-      </Score>
+      <div>
+        {this.props.animation1 && this.renderScore()}
+        {this.props.animation2 && this.renderScore()}
+      </div>
     )
   }
 }
@@ -98,8 +109,9 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
             if (!subscriptionData.data) {
                 return prev;
             }
-            const newScore = subscriptionData.data.Score.node.value
-            ownProps.updateCommunityScore(newScore)
+            console.log(event)
+            const {value, id} = subscriptionData.data.Score.node
+            ownProps.updateCommunityScore(value, id)
             return {
                 prev,
             }
@@ -114,6 +126,8 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
 const mapStateToProps = (state) => {
   return {
     communityScore: state.app.scores.communityScore,
+    animation1: state.app.scores.animation1,
+    animation2: state.app.scores.animation2,
   }
 }
 
