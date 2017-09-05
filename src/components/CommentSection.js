@@ -8,23 +8,19 @@ import {showAlert} from 'actions/alert-actions'
 import {graphql, compose} from 'react-apollo'
 import {DELETE_COMMENT_MUTATION} from 'gql/Comment/mutations'
 //lib + other
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
 import {logException} from '../config'
 import {login, requireAuth} from 'lib/auth'
 //components
-import UserHeader from 'ui-kit/UserHeader'
 import InputWithProfile from 'ui-kit/InputWithProfile'
 import TextButton from 'ui-kit/TextButton'
 import WarningDialog from 'ui-kit/WarningDialog'
 import RaisedButton from 'material-ui/RaisedButton'
-import FaIconButton from 'ui-kit/icons/FaIconButton'
-import Popover from 'ui-kit/Popover'
-import ProfileCardContainer from 'components/ProfileCardContainer'
+import {Comment} from 'ui-kit'
 
 const commentAvatarSize = '35px'
-const childCommentAvatarSize = '25px'
 
 const CommentSectionBox = styled.div`
   margin: auto;
@@ -36,18 +32,6 @@ const CommentSectionBox = styled.div`
 const CommentCreateBox = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
-`
-
-const CommentsBox = styled.div`
-  /* horizonally center: */
-  border-radius: 5px;
-  background-color: ${colors.whiteGrey};
-  padding: 15px;
-`
-
-const CommentText = styled.p`
-  color: #545252;
-  word-wrap: break-word;
 `
 
 const SubCommentSectionWrapper = styled.div`
@@ -73,17 +57,11 @@ const CreateCommentBox = styled.div`
   }
 `
 
-const CommentBox = styled.div`
+const CommentsBox = styled.div`
+  /* horizonally center: */
+  border-radius: 5px;
+  background-color: ${colors.whiteGrey};
   padding: 15px;
-  border-radius: 3px;
-  ${ props => props.willDelete && css`
-    background-color: ${colors.errorRed}
-    ` }
-`
-
-const CommentHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
 `
 
 /*
@@ -111,45 +89,12 @@ class CommentSection extends Component {
     createInProgress: false,
   }
 
-  renderDeleteAction = (commentAuthorId, commentId) => {
-    const {apiUserId} = this.props
-    if (apiUserId === commentAuthorId ){
-      return(
-        <FaIconButton
-          onClick={()=>requireAuth(
-            ()=> this.setState({deleteCommentId: commentId})
-          )}
-          color={colors.lightGrey}
-          hoverColor={colors.errorRed}
-          faClassName="fa-trash"
-        />
-      )
-    }
-    else{
-      return
-    }
-  }
   //pass in true for subcomment parameter if rendering subcomment
   renderComment = (comment, subcomment='') => {
     return(
-      <CommentBox
-        willDelete={this.state.deleteCommentId === comment.id}
-        key={'comment' + comment.id}>
-        <CommentHeader>
-          <Popover
-            renderedInDialog={true}
-            body={<ProfileCardContainer userId={comment.user.id} />}
-          >
-            <UserHeader
-              imageUrl={comment.user.picture}
-              userName={comment.user.name}
-              avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
-            />
-          </Popover>
-          {this.renderDeleteAction(comment.user.id, comment.id)}
-        </CommentHeader>
-        <CommentText>{comment.text}</CommentText>
-      </CommentBox>
+      <div key={`challenge-comment-${comment.id}`}>
+        <Comment comment={comment} subcomment={subcomment ? true : false}/>
+      </div>
     )
   }
 
