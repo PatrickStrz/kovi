@@ -10,12 +10,15 @@ import {USER_SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 import styled from 'styled-components'
 import {logException} from '../../config'
 import {muiColors} from 'styles/theme/colors'
+import {bounceInKeyframes} from 'styles/animations/keyframes'
+
 //components
 
 const Score = styled.p`
   display: inline-block;
   color: ${muiColors.primary1};
   font-size: 18px;
+  animation: ${bounceInKeyframes} 0.5s;
 `
 
 class UserScore extends Component {
@@ -24,10 +27,33 @@ class UserScore extends Component {
     apiUserScorecardId: PropTypes.string, //connect HOC
   }
 
+  state = {
+    animation1: true,
+    animation2: false,
+  }
+
   componentWillMount() {
        this.props.subscribeToScorecardUpdates()
    }
 
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.data.Scorecard && nextProps.data.Scorecard){
+      const score = this.props.data.Scorecard.total
+      const newScore = nextProps.data.Scorecard.total
+      const {animation1, animation2} = this.state
+      if (score !== newScore) {
+        this.setState({animation1:!animation1, animation2:!animation2})
+      }
+    }
+  }
+
+  renderScore = () => {
+    return(
+      <Score>
+        {this.props.data.Scorecard.total}
+      </Score>
+    )
+  }
   render(){
     const {data} = this.props
     if (data.loading){
@@ -38,10 +64,12 @@ class UserScore extends Component {
       action: "UserScore query in UserScore.js"
       })
     }
+    // to have a new render on score change to replay animation
     return(
-      <Score>
-        {this.props.data.Scorecard.total}
-      </Score>
+      <div>
+        {this.state.animation1 && this.renderScore()}
+        {this.state.animation2 && this.renderScore()}
+      </div>
     )
   }
 }
