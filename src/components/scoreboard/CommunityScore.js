@@ -1,7 +1,7 @@
 //react+redux
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 //redux
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -86,8 +86,8 @@ class CommunityScore extends Component {
     //make sure score remounts on prop change so animation plays:
     return(
       <div>
-        {this.props.animation1 && this.renderScore()}
-        {this.props.animation2 && this.renderScore()}
+        {animation1 && this.renderScore()}
+        {animation2 && this.renderScore()}
       </div>
     )
   }
@@ -109,7 +109,6 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
             if (!subscriptionData.data) {
                 return prev;
             }
-            console.log(event)
             const {value, id} = subscriptionData.data.Score.node
             ownProps.updateCommunityScore(value, id)
             return {
