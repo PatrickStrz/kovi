@@ -6,7 +6,10 @@ import {bindActionCreators} from 'redux'
 import {showAlert} from 'actions/alert-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
-import {DELETE_COMMENT_MUTATION} from 'gql/Comment/mutations'
+import {
+  DELETE_COMMENT_MUTATION,
+  CREATE_CHILD_COMMENT_MUTATION ,
+} from 'gql/Comment/mutations'
 //lib + other
 import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
@@ -119,6 +122,7 @@ class CommentSection extends Component {
             <SubCommentSectionWrapper>
               <SubCommentSectionBox>
                 {this.renderChildComments(comment.childComments)}
+                {this.renderCommentCreate(this.handleCommentSubmit)}
               </SubCommentSectionBox>
             </SubCommentSectionWrapper>
           </div>
@@ -128,7 +132,7 @@ class CommentSection extends Component {
     )
   }
 
-  renderCommentCreate = () => {
+  renderCommentCreate = (handleSubmit) => {
 
     if (this.props.isAuthenticated){
       return(
@@ -142,7 +146,7 @@ class CommentSection extends Component {
           />
         <TextButton
           label="Post"
-          onClick={() => this.handleCommentSubmit()}
+          onClick={handleSubmit}
           inProgress={this.state.createInProgress}
         />
       </CreateCommentBox>
@@ -161,6 +165,9 @@ class CommentSection extends Component {
   handleCommentInput = (text) => {
     this.setState({commentText:text})
   }
+
+  /* using mutation from parent component ( so can comment
+  on any commentable type such as Challenges) : */
 
   handleCommentSubmit = async () => {
     const {
@@ -186,6 +193,41 @@ class CommentSection extends Component {
     try{
       this.setState({createInProgress:true})
       await this.props.commentCreateMutation(options)
+      this.setState({commentText:'', createInProgress:false}) //clears input
+    }
+    catch(err){
+      this.setState({createInProgress:false})
+      showAlert("Failed to create comment")
+      logException(err, {
+      action: "handleCommentCreate function in CommentsContainer"
+      })
+    }
+  }
+
+  handleChildCommentSubmit = async (parentCommentId) => {
+    const {
+      apiUserId,
+      refetchQuery,
+      commentTypeId,
+      showAlert,
+    } = this.props
+
+    const options = {
+      variables: {
+        ...commentTypeId,
+        userId: apiUserId,
+        text: this.state.commentText,
+      },
+      refetchQueries: [{
+        query: refetchQuery,
+        variables: {
+          ...commentTypeId
+        },
+      }],
+    }
+    try{
+      this.setState({creatingChildCommentFor:parentCommentId})
+      await this.props.createChildCommentMutation(options)
       this.setState({commentText:'', createInProgress:false}) //clears input
     }
     catch(err){
@@ -246,7 +288,7 @@ class CommentSection extends Component {
             {this.renderComments(this.props.comments)}
           </CommentsBox>
           <CommentCreateBox>
-            {this.renderCommentCreate()}
+            {this.renderCommentCreate(this.handleCommentSubmit)}
           </CommentCreateBox>
         </CommentSectionBox>
         <WarningDialog
@@ -263,8 +305,10 @@ class CommentSection extends Component {
   }
 }
 
+// common mutations to all comment sections
 const CommentSectionWithMutations = compose(
   graphql(DELETE_COMMENT_MUTATION, {name: 'deleteCommentMutation'}),
+  graphql(CREATE_CHILD_COMMENT_MUTATION, {name: 'createChildCommentMutation'}),
 )(CommentSection)
 
 const mapDispatchToProps = (dispatch) => {

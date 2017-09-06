@@ -34,7 +34,7 @@ class Comment extends Component{
   static propTypes = {
     comment: PropTypes.object.isRequired,
     subcomment: PropTypes.bool,
-    onDeleteClick: PropTypes.bool,
+    onDeleteClick: PropTypes.func.isRequired, // accepts commentId argument
     // apiUserId = PropTypes.string.isRequired,
   }
 
@@ -70,7 +70,6 @@ class Comment extends Component{
 
     return(
       <CommentBox
-        // willDelete={this.state.deleteCommentId === comment.id}
         key={'comment' + comment.id}>
         <CommentHeader>
           <Popover
