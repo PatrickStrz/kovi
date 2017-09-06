@@ -90,6 +90,7 @@ class CommentSection extends Component {
     deleteCommentId: '',
     deleteInProgress: false,
     createInProgress: false,
+    childCommentsText: {},
   }
 
   //pass in true for subcomment parameter if rendering subcomment
@@ -122,7 +123,7 @@ class CommentSection extends Component {
             <SubCommentSectionWrapper>
               <SubCommentSectionBox>
                 {this.renderChildComments(comment.childComments)}
-                {this.renderCommentCreate(this.handleCommentSubmit)}
+                {this.renderChildCommentCreate(comment.id)}
               </SubCommentSectionBox>
             </SubCommentSectionWrapper>
           </div>
@@ -132,8 +133,7 @@ class CommentSection extends Component {
     )
   }
 
-  renderCommentCreate = (handleSubmit) => {
-
+  renderCommentCreate = () => {
     if (this.props.isAuthenticated){
       return(
         <CreateCommentBox>
@@ -146,7 +146,7 @@ class CommentSection extends Component {
           />
         <TextButton
           label="Post"
-          onClick={handleSubmit}
+          onClick={this.handleCommentSubmit}
           inProgress={this.state.createInProgress}
         />
       </CreateCommentBox>
@@ -160,10 +160,48 @@ class CommentSection extends Component {
     }
   }
 
+  renderChildCommentCreate = (parentCommentId) => {
+    if (this.props.isAuthenticated){
+      return(
+        <CreateCommentBox>
+          <InputWithProfile
+            avatarImageUrl={this.props.userImageUrl}
+            avatarSize="18px"
+            placeholder="write a reply..."
+            handleChange={text => this.handleChildCommentInput(text,parentCommentId)}
+            value={this.state.childCommentsText.parentCommentId}
+          />
+        <TextButton
+          label="Post"
+          onClick={this.handleCommentSubmit}
+          inProgress={this.state.createInProgress}
+        />
+      </CreateCommentBox>
+      )
+    }
+
+    else {
+      const label = "log in to reply"
+      const handleClick = () => login()
+      return <RaisedButton primary={true} label={label} onClick={handleClick} />
+    }
+
+  }
+
   // handler functions:
 
   handleCommentInput = (text) => {
     this.setState({commentText:text})
+  }
+
+  handleChildCommentInput = (text, id) => {
+    const childComment = {}
+    childComment[id] = text
+    this.setState({
+      childCommentsText:{
+      ...this.state.childCommentsText,
+      ...childComment}
+     })
   }
 
   /* using mutation from parent component ( so can comment
@@ -288,7 +326,7 @@ class CommentSection extends Component {
             {this.renderComments(this.props.comments)}
           </CommentsBox>
           <CommentCreateBox>
-            {this.renderCommentCreate(this.handleCommentSubmit)}
+            {this.renderCommentCreate()}
           </CommentCreateBox>
         </CommentSectionBox>
         <WarningDialog
