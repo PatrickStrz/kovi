@@ -173,7 +173,7 @@ class CommentSection extends Component {
           />
         <TextButton
           label="Post"
-          onClick={this.handleCommentSubmit}
+          onClick={()=>this.handleChildCommentSubmit(parentCommentId)}
           inProgress={this.state.createInProgress}
         />
       </CreateCommentBox>
@@ -246,15 +246,15 @@ class CommentSection extends Component {
     const {
       apiUserId,
       refetchQuery,
-      commentTypeId,
       showAlert,
+      commentTypeId,
     } = this.props
 
     const options = {
       variables: {
-        ...commentTypeId,
+        parentCommentId,
         userId: apiUserId,
-        text: this.state.commentText,
+        text: this.state.childCommentsText[parentCommentId],
       },
       refetchQueries: [{
         query: refetchQuery,
@@ -263,16 +263,17 @@ class CommentSection extends Component {
         },
       }],
     }
+    
     try{
       this.setState({creatingChildCommentFor:parentCommentId})
       await this.props.createChildCommentMutation(options)
-      this.setState({commentText:'', createInProgress:false}) //clears input
+      // this.setState({commentText:'', createInProgress:false}) //clears input
     }
     catch(err){
-      this.setState({createInProgress:false})
-      showAlert("Failed to create comment")
+      // this.setState({createInProgress:false})
+      showAlert("Failed to create reply")
       logException(err, {
-      action: "handleCommentCreate function in CommentsContainer"
+      action: "handleChildCommentCreate function in CommentsContainer"
       })
     }
   }
