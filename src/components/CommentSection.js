@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
 import {logException} from '../config'
-import {login, requireAuth} from 'lib/auth'
+import {login} from 'lib/auth'
 //components
 import InputWithProfile from 'ui-kit/InputWithProfile'
 import TextButton from 'ui-kit/TextButton'
@@ -93,7 +93,12 @@ class CommentSection extends Component {
   renderComment = (comment, subcomment='') => {
     return(
       <div key={`challenge-comment-${comment.id}`}>
-        <Comment comment={comment} subcomment={subcomment ? true : false}/>
+        <Comment
+          comment={comment}
+          subcomment={comment ? true : false}
+          onDeleteClick={this.handleDeleteClick}
+          apiUserId={this.props.apiUserId}
+        />
       </div>
     )
   }
@@ -191,33 +196,39 @@ class CommentSection extends Component {
       })
     }
   }
+  /* Delete  comments */
 
+  //gql operation
   handleDeleteComment = async (commentId) => {
-    const {deleteCommentMutation, commentTypeId, refetchQuery} = this.props
-    const options = {
-      variables: {commentId},
-      refetchQueries: [{
-        query: refetchQuery,
-        variables: {...commentTypeId},
-      }],
-    }
-    try{
-      this.setState({deleteInProgress:true})
-      await deleteCommentMutation(options)
-      //clear input, close delete modal
-      this.setState({
-        commentText: '',
-        deleteCommentId: '',
-        deleteInProgress:false
-      })
-    }
-    catch(err){
-      logException(err, {
-      action: "handleCommentDelete function in CommentsContainer"
-      })
-      //stop deleteProgress
-      this.setState({deleteInProgress:false})
-    }
+   const {deleteCommentMutation, commentTypeId, refetchQuery} = this.props
+   const options = {
+     variables: {commentId},
+     refetchQueries: [{
+       query: refetchQuery,
+       variables: {...commentTypeId},
+     }],
+   }
+   try{
+     this.setState({deleteInProgress:true})
+     await deleteCommentMutation(options)
+     //clear input, close delete modal
+     this.setState({
+       commentText: '',
+       deleteCommentId: '',
+       deleteInProgress:false
+     })
+   }
+   catch(err){
+     logException(err, {
+     action: "handleCommentDelete function in CommentsContainer"
+     })
+     //stop deleteProgress
+     this.setState({deleteInProgress:false})
+   }
+ }
+
+  handleDeleteClick = (commentId) => {
+    this.setState({deleteCommentId: commentId})
   }
 
   handleDeleteCb = () => {

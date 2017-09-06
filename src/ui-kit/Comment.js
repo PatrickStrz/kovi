@@ -4,12 +4,11 @@ import PropTypes from 'prop-types'
 //other
 import {requireAuth} from 'lib/auth'
 import {colors} from 'styles/theme/colors'
-import {logException} from '../config'
 //components
 import Popover from 'ui-kit/Popover'
 import ProfileCardContainer from 'components/ProfileCardContainer'
 import UserHeader from 'ui-kit/UserHeader'
-import DeleteWithAlert from 'ui-kit/icons'
+import {FaIconButton} from 'ui-kit/icons'
 
 const CommentBox = styled.div`
   padding: 15px;
@@ -39,47 +38,23 @@ class Comment extends Component{
     // apiUserId = PropTypes.string.isRequired,
   }
 
-  handleDeleteComment = async (commentId) => {
-    const {deleteCommentMutation, commentTypeId, refetchQuery} = this.props
-    const options = {
-      variables: {commentId},
-      refetchQueries: [{
-        query: refetchQuery,
-        variables: {...commentTypeId},
-      }],
-    }
-    try{
-      this.setState({deleteInProgress:true})
-      await deleteCommentMutation(options)
-      //clear input, close delete modal
-      this.setState({
-        commentText: '',
-        deleteCommentId: '',
-        deleteInProgress:false
-      })
-    }
-    catch(err){
-      logException(err, {
-      action: "handleCommentDelete function in CommentsContainer"
-      })
-      //stop deleteProgress
-      this.setState({deleteInProgress:false})
-    }
+  handleDeleteClick = () => {
+    this.props.onDeleteClick(this.props.comment.id)
   }
 
-  renderDelete = (commentAuthorId, commentId) => {
+
+  renderDelete = () => {
     const {apiUserId, comment} = this.props
-    if (apiUserId === commentAuthorId ){
+    if (apiUserId === comment.user.id ){
       return(
         <FaIconButton
           onClick={()=>requireAuth(
-            ()=> this.setState({deleteCommentId: comment.id})
+            this.handleDeleteClick
           )}
           color={colors.lightGrey}
           hoverColor={colors.errorRed}
           faClassName="fa-trash"
         />
-        <DeleteWithAlert apiUserId={}/>
       )
     }
     else{
@@ -108,16 +83,12 @@ class Comment extends Component{
               avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
             />
           </Popover>
-          {/* {this.renderDelete(comment.user.id, comment.id)} */}
+          {this.renderDelete()}
         </CommentHeader>
         <CommentText>{comment.text}</CommentText>
       </CommentBox>
     )
   }
 }
-
-const CommentWithMutation = graphql(
-  DELETE_COMMENT_MUTATION, {name: 'deleteCommentMutation'}
-)(CommentSection)
 
 export default Comment
