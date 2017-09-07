@@ -127,7 +127,6 @@ class CommentSection extends Component {
   }
 
   renderComments = (comments) => {
-
     return (comments.map(comment =>{
       return(
           <div key={'comment' + comment.id}>
@@ -202,7 +201,6 @@ class CommentSection extends Component {
 
   renderReply = (parentCommentId) => {
     if (this.state.childCommentInputVisibleFor.indexOf(parentCommentId) >= 0) {
-      // returns login button if user not authed:
       return this.renderChildCommentCreate(parentCommentId)
     }
     else{
@@ -375,7 +373,6 @@ class CommentSection extends Component {
     this.handleDeleteComment(this.state.deleteCommentId)
   }
 
-  // toggles visibility of child comment input
   handleReplyClick = (parentCommentId) => {
     const {childCommentInputVisibleFor} = this.state
     // if value not in list:
