@@ -6,25 +6,25 @@ import {bindActionCreators} from 'redux'
 import {showAlert} from 'actions/alert-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
-import {DELETE_COMMENT_MUTATION} from 'gql/Comment/mutations'
+import {
+  DELETE_COMMENT_MUTATION,
+  CREATE_CHILD_COMMENT_MUTATION ,
+} from 'gql/Comment/mutations'
 //lib + other
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
 import {logException} from '../config'
-import {login, requireAuth} from 'lib/auth'
+import {login} from 'lib/auth'
+import {removeValueFromList} from 'lib/array-helpers'
 //components
-import UserHeader from 'ui-kit/UserHeader'
 import InputWithProfile from 'ui-kit/InputWithProfile'
 import TextButton from 'ui-kit/TextButton'
 import WarningDialog from 'ui-kit/WarningDialog'
 import RaisedButton from 'material-ui/RaisedButton'
-import FaIconButton from 'ui-kit/icons/FaIconButton'
-import Popover from 'ui-kit/Popover'
-import ProfileCardContainer from 'components/ProfileCardContainer'
+import {Comment} from 'ui-kit'
 
 const commentAvatarSize = '35px'
-const childCommentAvatarSize = '25px'
 
 const CommentSectionBox = styled.div`
   margin: auto;
@@ -38,26 +38,14 @@ const CommentCreateBox = styled.div`
   margin-bottom: 20px;
 `
 
-const CommentsBox = styled.div`
-  /* horizonally center: */
-  border-radius: 5px;
-  background-color: ${colors.whiteGrey};
-  padding: 15px;
-`
-
-const CommentText = styled.p`
-  color: #545252;
-  word-wrap: break-word;
-`
-
-const SubCommentSectionWrapper = styled.div`
+const ChildCommentSectionWrapper = styled.div`
   border-left: 4px solid ${colors.faintGrey};
   margin-left: ${commentAvatarSize};
   padding-left: 10px;
   /* to match margin of CommentText p element: */
   margin-bottom: 16px;
 `
-const SubCommentSectionBox = styled.div`
+const ChildCommentSectionBox = styled.div`
   display: flex;
   flex-direction: column;
 `
@@ -73,21 +61,15 @@ const CreateCommentBox = styled.div`
   }
 `
 
-const CommentBox = styled.div`
+const CommentsBox = styled.div`
+  /* horizonally center: */
+  border-radius: 5px;
+  background-color: ${colors.whiteGrey};
   padding: 15px;
-  border-radius: 3px;
-  ${ props => props.willDelete && css`
-    background-color: ${colors.errorRed}
-    ` }
-`
-
-const CommentHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
 `
 
 /*
-    * Component with comments + subcomments + operations (create/delete comments)
+    * Component with comments + childComments + operations (create/delete comments)
     * Completely reusable, can use with any gql Type that is commentable.
 */
 class CommentSection extends Component {
@@ -96,12 +78,14 @@ class CommentSection extends Component {
     comments: PropTypes.array.isRequired,
     commentCreateMutation: PropTypes.func.isRequired,
     commentTypeId: PropTypes.object.isRequired, //for gql i.e DiscussionId: id
-    refetchQuery: PropTypes.object.isRequired, //gql query
     //redux
     userImageUrl: PropTypes.string,
     apiUserId: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
     showAlert: PropTypes.func.isRequired,
+    //gql
+    refetchQuery: PropTypes.object.isRequired, //gql query
+    createChildCommentMutation: PropTypes.func.isRequired,
   }
 
   state = {
@@ -109,47 +93,21 @@ class CommentSection extends Component {
     deleteCommentId: '',
     deleteInProgress: false,
     createInProgress: false,
+    childCommentsText: {},
+    childCommentsAreCreating:[],
   }
 
-  renderDeleteAction = (commentAuthorId, commentId) => {
-    const {apiUserId} = this.props
-    if (apiUserId === commentAuthorId ){
-      return(
-        <FaIconButton
-          onClick={()=>requireAuth(
-            ()=> this.setState({deleteCommentId: commentId})
-          )}
-          color={colors.lightGrey}
-          hoverColor={colors.errorRed}
-          faClassName="fa-trash"
-        />
-      )
-    }
-    else{
-      return
-    }
-  }
-  //pass in true for subcomment parameter if rendering subcomment
-  renderComment = (comment, subcomment='') => {
+  //pass in true for childComment parameter if rendering childComment
+  renderComment = (comment, childComment='') => {
     return(
-      <CommentBox
-        willDelete={this.state.deleteCommentId === comment.id}
-        key={'comment' + comment.id}>
-        <CommentHeader>
-          <Popover
-            renderedInDialog={true}
-            body={<ProfileCardContainer userId={comment.user.id} />}
-          >
-            <UserHeader
-              imageUrl={comment.user.picture}
-              userName={comment.user.name}
-              avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
-            />
-          </Popover>
-          {this.renderDeleteAction(comment.user.id, comment.id)}
-        </CommentHeader>
-        <CommentText>{comment.text}</CommentText>
-      </CommentBox>
+      <div key={`challenge-comment-${comment.id}`}>
+        <Comment
+          comment={comment}
+          childComment={childComment ? true : false}
+          onDeleteClick={this.handleDeleteClick}
+          apiUserId={this.props.apiUserId}
+        />
+      </div>
     )
   }
 
@@ -166,11 +124,12 @@ class CommentSection extends Component {
       return(
           <div key={'comment' + comment.id}>
             {this.renderComment(comment)}
-            <SubCommentSectionWrapper>
-              <SubCommentSectionBox>
+            <ChildCommentSectionWrapper>
+              <ChildCommentSectionBox>
                 {this.renderChildComments(comment.childComments)}
-              </SubCommentSectionBox>
-            </SubCommentSectionWrapper>
+              </ChildCommentSectionBox>
+              {this.renderChildCommentCreate(comment.id, this.state)}
+            </ChildCommentSectionWrapper>
           </div>
           )
         }
@@ -179,7 +138,6 @@ class CommentSection extends Component {
   }
 
   renderCommentCreate = () => {
-
     if (this.props.isAuthenticated){
       return(
         <CreateCommentBox>
@@ -192,7 +150,7 @@ class CommentSection extends Component {
           />
         <TextButton
           label="Post"
-          onClick={() => this.handleCommentSubmit()}
+          onClick={this.handleCommentSubmit}
           inProgress={this.state.createInProgress}
         />
       </CreateCommentBox>
@@ -206,11 +164,52 @@ class CommentSection extends Component {
     }
   }
 
+  renderChildCommentCreate = (parentCommentId) => {
+    const isCreating = this.state.childCommentsAreCreating.indexOf(parentCommentId) >= 0
+    if (this.props.isAuthenticated){
+      return(
+        <CreateCommentBox>
+          <InputWithProfile
+            avatarImageUrl={this.props.userImageUrl}
+            avatarSize="18px"
+            placeholder="write a reply..."
+            handleChange={text => this.handleChildCommentInput(text,parentCommentId)}
+            value={this.state.childCommentsText[parentCommentId]}
+          />
+        <TextButton
+          label="Post"
+          onClick={()=>this.handleChildCommentSubmit(parentCommentId)}
+          inProgress={isCreating}
+        />
+      </CreateCommentBox>
+      )
+    }
+
+    else {
+      const label = "log in to reply"
+      const handleClick = () => login()
+      return <RaisedButton primary={true} label={label} onClick={handleClick} />
+    }
+  }
+
   // handler functions:
 
   handleCommentInput = (text) => {
     this.setState({commentText:text})
   }
+
+  handleChildCommentInput = (text, id) => {
+    const childComment = {}
+    childComment[id] = text
+    this.setState({
+      childCommentsText:{
+      ...this.state.childCommentsText,
+      ...childComment}
+     })
+  }
+
+  /* using mutation from parent component ( so can comment
+  on any commentable type such as Challenges) : */
 
   handleCommentSubmit = async () => {
     const {
@@ -247,32 +246,100 @@ class CommentSection extends Component {
     }
   }
 
-  handleDeleteComment = async (commentId) => {
-    const {deleteCommentMutation, commentTypeId, refetchQuery} = this.props
+  handleChildCommentSubmit = async (parentCommentId) => {
+    const {
+      apiUserId,
+      refetchQuery,
+      showAlert,
+      commentTypeId,
+    } = this.props
+
     const options = {
-      variables: {commentId},
+      variables: {
+        parentCommentId,
+        userId: apiUserId,
+        text: this.state.childCommentsText[parentCommentId],
+      },
       refetchQueries: [{
         query: refetchQuery,
-        variables: {...commentTypeId},
+        variables: {
+          ...commentTypeId
+        },
       }],
     }
+
     try{
-      this.setState({deleteInProgress:true})
-      await deleteCommentMutation(options)
-      //clear input, close delete modal
+      //Create in progress:
       this.setState({
-        commentText: '',
-        deleteCommentId: '',
-        deleteInProgress:false
+        childCommentsAreCreating:[
+          ...this.state.childCommentsAreCreating,
+          parentCommentId,
+        ], // for loading indicator
       })
+      await this.props.createChildCommentMutation(options)
+      //create successful
+      const childCommentsAreCreating = removeValueFromList(
+        parentCommentId,
+        this.state.childCommentsAreCreating
+      )
+
+      const childCommentsText = {...this.state.childCommentsText}
+      childCommentsText[parentCommentId] = ''
+      this.setState({
+        childCommentsText,
+        childCommentsAreCreating,
+      }) //clears input
     }
+
     catch(err){
+
+      const childCommentsAreCreating = removeValueFromList(
+        parentCommentId,
+        this.state.childCommentsAreCreating
+      )
+
+      this.setState({childCommentsAreCreating})
+
+      err && showAlert("Failed to create reply")
+
       logException(err, {
-      action: "handleCommentDelete function in CommentsContainer"
+      action: "handleChildCommentCreate function in CommentsContainer"
       })
-      //stop deleteProgress
-      this.setState({deleteInProgress:false})
     }
+  }
+  /* Delete  comments */
+
+  //gql operation
+  handleDeleteComment = async (commentId) => {
+   const {deleteCommentMutation, commentTypeId, refetchQuery} = this.props
+   const options = {
+     variables: {commentId},
+     refetchQueries: [{
+       query: refetchQuery,
+       variables: {...commentTypeId},
+     }],
+   }
+   try{
+     this.setState({deleteInProgress:true})
+     await deleteCommentMutation(options)
+     //clear input, close delete modal
+     this.setState({
+       commentText: '',
+       deleteCommentId: '',
+       deleteInProgress:false
+     })
+   }
+   catch(err){
+     logException(err, {
+     action: "handleCommentDelete function in CommentsContainer"
+     })
+     //stop deleteProgress
+     this.setState({deleteInProgress:false})
+   }
+ }
+
+  handleDeleteClick = (commentId) => {
+    this.setState({deleteCommentId: commentId})
   }
 
   handleDeleteCb = () => {
@@ -307,8 +374,10 @@ class CommentSection extends Component {
   }
 }
 
+// common mutations to all comment sections
 const CommentSectionWithMutations = compose(
   graphql(DELETE_COMMENT_MUTATION, {name: 'deleteCommentMutation'}),
+  graphql(CREATE_CHILD_COMMENT_MUTATION, {name: 'createChildCommentMutation'}),
 )(CommentSection)
 
 const mapDispatchToProps = (dispatch) => {
