@@ -1,6 +1,7 @@
 // react+redux
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 //gql
 import {graphql} from 'react-apollo'
 import {USER_QUERY} from '../gql/User/queries'
@@ -41,9 +42,13 @@ const ScoreBox = styled.div`
   align-items: baseline;
 `
 const ScoreHeading = styled.p`
-  font-size: 16px;
+  font-size: 18px;
   color: ${colors.lightGrey};
   margin-right:5px;
+`
+const Score = styled.p`
+  color: ${muiColors.primary1};
+  font-size: 18px;
 `
 
 export class ProfileCardContainer extends Component {
@@ -54,7 +59,23 @@ export class ProfileCardContainer extends Component {
       loading: PropTypes.bool.isRequired,
       error: PropTypes.string,
       User: PropTypes.object,
+      //redux
+      currentUserId: PropTypes.string,
     }).isRequired,
+  }
+
+  renderScore = () => {
+    const {currentUserId, userId} = this.props
+    const scorecardId = this.props.data.User.scorecard.id
+    const score = this.props.data.User.scorecard.total
+    if(currentUserId === userId){
+      /* UserScore is a component with a subscription. So get up to date score
+       if user clicks on their own profile: */
+      return <UserScore scorecardId={scorecardId} />
+    }
+    else{
+      return <Score>{score}</Score>
+    }
   }
 
   render(){
@@ -66,7 +87,6 @@ export class ProfileCardContainer extends Component {
       return <Box><GenericError /></Box>
     }
     const {name, pictureLarge} = this.props.data.User
-    const scorecardId = this.props.data.User.scorecard.id
 
     return(
       <Box>
@@ -75,8 +95,7 @@ export class ProfileCardContainer extends Component {
           <Name>{name}</Name>
           <ScoreBox>
             <ScoreHeading>Score:</ScoreHeading>
-            {/* <UserScore scorecardId={scorecardId}/> */}
-            <p>{this.props.data.User.scorecard.total}</p>
+            {this.renderScore()}
           </ScoreBox>
         </Body>
       </Box>
@@ -89,4 +108,8 @@ const ProfileCardContainerApollo = graphql(
   options: ({ userId }) => ({ variables: {id: userId}}), // coming from own props
 })(ProfileCardContainer)
 
-export default ProfileCardContainerApollo
+const mapStateToProps = (state) =>({
+  currentUserId: state.app.auth.apiUserId,
+})
+
+export default connect(mapStateToProps)(ProfileCardContainerApollo)
