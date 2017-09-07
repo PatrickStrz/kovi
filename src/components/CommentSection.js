@@ -38,14 +38,14 @@ const CommentCreateBox = styled.div`
   margin-bottom: 20px;
 `
 
-const SubCommentSectionWrapper = styled.div`
+const ChildCommentSectionWrapper = styled.div`
   border-left: 4px solid ${colors.faintGrey};
   margin-left: ${commentAvatarSize};
   padding-left: 10px;
   /* to match margin of CommentText p element: */
   margin-bottom: 16px;
 `
-const SubCommentSectionBox = styled.div`
+const ChildCommentSectionBox = styled.div`
   display: flex;
   flex-direction: column;
 `
@@ -69,7 +69,7 @@ const CommentsBox = styled.div`
 `
 
 /*
-    * Component with comments + subcomments + operations (create/delete comments)
+    * Component with comments + childComments + operations (create/delete comments)
     * Completely reusable, can use with any gql Type that is commentable.
 */
 class CommentSection extends Component {
@@ -95,13 +95,13 @@ class CommentSection extends Component {
     childCommentsAreCreating:[],
   }
 
-  //pass in true for subcomment parameter if rendering subcomment
-  renderComment = (comment, subcomment='') => {
+  //pass in true for childComment parameter if rendering childComment
+  renderComment = (comment, childComment='') => {
     return(
       <div key={`challenge-comment-${comment.id}`}>
         <Comment
           comment={comment}
-          subcomment={comment ? true : false}
+          childComment={childComment ? true : false}
           onDeleteClick={this.handleDeleteClick}
           apiUserId={this.props.apiUserId}
         />
@@ -122,12 +122,12 @@ class CommentSection extends Component {
       return(
           <div key={'comment' + comment.id}>
             {this.renderComment(comment)}
-            <SubCommentSectionWrapper>
-              <SubCommentSectionBox>
+            <ChildCommentSectionWrapper>
+              <ChildCommentSectionBox>
                 {this.renderChildComments(comment.childComments)}
-                {this.renderChildCommentCreate(comment.id, this.state)}
-              </SubCommentSectionBox>
-            </SubCommentSectionWrapper>
+              </ChildCommentSectionBox>
+              {this.renderChildCommentCreate(comment.id, this.state)}
+            </ChildCommentSectionWrapper>
           </div>
           )
         }

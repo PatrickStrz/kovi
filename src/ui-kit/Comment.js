@@ -33,7 +33,7 @@ class Comment extends Component{
 
   static propTypes = {
     comment: PropTypes.object.isRequired,
-    subcomment: PropTypes.bool,
+    childComment: PropTypes.bool,
     onDeleteClick: PropTypes.func.isRequired, // accepts commentId argument
     // apiUserId = PropTypes.string.isRequired,
   }
@@ -66,7 +66,7 @@ class Comment extends Component{
     const commentAvatarSize = '35px'
     const childCommentAvatarSize = '25px'
 
-    const {comment, subcomment} = this.props
+    const {comment, childComment} = this.props
 
     return(
       <CommentBox
@@ -79,7 +79,7 @@ class Comment extends Component{
             <UserHeader
               imageUrl={comment.user.picture}
               userName={comment.user.name}
-              avatarSize={subcomment ? childCommentAvatarSize : commentAvatarSize}
+              avatarSize={childComment ? childCommentAvatarSize : commentAvatarSize}
             />
           </Popover>
           {this.renderDelete()}
