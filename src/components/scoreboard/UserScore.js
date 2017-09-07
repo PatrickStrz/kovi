@@ -22,8 +22,7 @@ const Score = styled.p`
 class UserScore extends Component {
   static propTypes = {
     subscribeToScorecardUpdates: PropTypes.func.isRequired, //apollo HOC
-    scorecardId: PropTypes.string, //connect HOC
-
+    scorecardId: PropTypes.string,
   }
 
   state = {

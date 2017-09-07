@@ -6,7 +6,7 @@ import {graphql} from 'react-apollo'
 import {USER_QUERY} from '../gql/User/queries'
 //other
 import styled from 'styled-components'
-import {muiColors} from 'styles/theme/colors'
+import {muiColors, colors} from 'styles/theme/colors'
 
 //components
 import GenericError from 'ui-kit/GenericError'
@@ -38,10 +38,12 @@ const Name = styled.p`
 const ScoreBox = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: baseline;
 `
 const ScoreHeading = styled.p`
   font-size: 16px;
-  color: rgb(104, 105, 104);
+  color: ${colors.lightGrey};
+  margin-right:5px;
 `
 
 export class ProfileCardContainer extends Component {
@@ -63,7 +65,8 @@ export class ProfileCardContainer extends Component {
 
       return <Box><GenericError /></Box>
     }
-    const { name, pictureLarge} = this.props.data.User
+    const {name, pictureLarge} = this.props.data.User
+    const scorecardId = this.props.data.User.scorecard.id
 
     return(
       <Box>
@@ -72,6 +75,7 @@ export class ProfileCardContainer extends Component {
           <Name>{name}</Name>
           <ScoreBox>
             <ScoreHeading>Score:</ScoreHeading>
+            <UserScore scorecardId={scorecardId}/>
           </ScoreBox>
         </Body>
       </Box>

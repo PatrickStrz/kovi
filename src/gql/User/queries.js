@@ -14,6 +14,7 @@ export const USER_QUERY = gql`
       name
       pictureLarge
       scorecard{
+        id
         total
       }
     }
