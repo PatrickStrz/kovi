@@ -1,6 +1,4 @@
-//react+redux
 import React,{Component} from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 //gql
 import {graphql} from 'react-apollo'
@@ -24,7 +22,8 @@ const Score = styled.p`
 class UserScore extends Component {
   static propTypes = {
     subscribeToScorecardUpdates: PropTypes.func.isRequired, //apollo HOC
-    apiUserScorecardId: PropTypes.string, //connect HOC
+    scorecardId: PropTypes.string, //connect HOC
+
   }
 
   state = {
@@ -77,7 +76,7 @@ class UserScore extends Component {
 const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
   options: (ownProps)=>({
     variables: {
-      id: ownProps.apiUserScorecardId,
+      id: ownProps.scorecardId,
     },
     fetchPolicy: 'network-only',
   }),
@@ -87,7 +86,7 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
       subscribeToScorecardUpdates: () => {
         return data.subscribeToMore({
           document: USER_SCORE_CREATED_SUBSCRIPTION,
-          variables: {id: ownProps.apiUserScorecardId},
+          variables: {id: ownProps.userId},
           updateQuery: (prev, {subscriptionData}) => {
             if (!subscriptionData.data) {
                 return prev
@@ -106,10 +105,4 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
   }
 })(UserScore)
 
-const mapStateToProps = (state) => {
-  return {
-    apiUserScorecardId: state.app.auth.apiUserScorecardId,
-  }
-}
-
-export default connect(mapStateToProps)(UserScoreWithData)
+export default UserScoreWithData

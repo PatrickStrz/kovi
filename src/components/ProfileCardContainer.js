@@ -12,6 +12,7 @@ import {muiColors} from 'styles/theme/colors'
 import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
 import UserPhoto from 'ui-kit/UserPhoto'
+import UserScore from 'components/scoreboard/UserScore'
 
 const Box = styled.div`
     padding: 10px;
@@ -22,10 +23,25 @@ const Box = styled.div`
     background-color: rgb(255, 255, 255);
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   `
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 const Name = styled.p`
   font-size: 20px;
   color: ${muiColors.primary1};
   margin: 10px;
+`
+
+const ScoreBox = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+const ScoreHeading = styled.p`
+  font-size: 16px;
+  color: rgb(104, 105, 104);
 `
 
 export class ProfileCardContainer extends Component {
@@ -52,7 +68,12 @@ export class ProfileCardContainer extends Component {
     return(
       <Box>
         <UserPhoto imageUrl={pictureLarge} size="100px" />
-        <Name>{name}</Name>
+        <Body>
+          <Name>{name}</Name>
+          <ScoreBox>
+            <ScoreHeading>Score:</ScoreHeading>
+          </ScoreBox>
+        </Body>
       </Box>
     )
   }

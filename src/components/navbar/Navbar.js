@@ -48,7 +48,7 @@ const Navbar = (props) => {
       return (
         <RightElementBox>
         <ScoreBox>
-          <UserScore/>
+          <UserScore scorecardId={props.userScorecardId}/>
         </ScoreBox>
         <UserIconMenu picture={profile.picture} handleLogout={handleLogout}/>
       </RightElementBox>
@@ -87,6 +87,7 @@ Navbar.propTypes = {
   handleLogin: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   profile: PropTypes.object.isRequired,
+  userScorecardId: PropTypes.string,
 }
 
 export default withRouter(Navbar)

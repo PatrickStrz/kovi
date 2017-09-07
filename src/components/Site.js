@@ -1,9 +1,11 @@
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+//redux
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {checkLogin, logout, userSyncSuccess} from 'actions/auth-actions'
 //helpers + other
 import {withRouter} from 'react-router-dom'
-import {checkLogin, logout, userSyncSuccess} from 'actions/auth-actions'
 import {login} from 'lib/auth'
 import {
   HEADER_Z_INDEX,
@@ -16,6 +18,16 @@ import Navbar from 'components/navbar/Navbar'
 import Headroom from 'react-headroom'
 
 class Site extends Component {
+
+  static propTypes = {
+    //redux
+    auth0Authenticated: PropTypes.bool,
+    userSynced: PropTypes.bool,
+    userSyncRequired: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
+    profile: PropTypes.object,
+    apiUserScorecardId: PropTypes.string,
+  }
 
   constructor(props) {
     super(props)
@@ -43,6 +55,7 @@ class Site extends Component {
       profile,
       userSyncSuccess,
       children,
+      apiUserScorecardId,
     } = this.props
 
     const renderSyncUser = () => {
@@ -72,6 +85,7 @@ class Site extends Component {
             handleLogin={login}
             isAuthenticated={isAuthenticated}
             profile={profile}
+            userScorecardId={apiUserScorecardId}
           />
         </Headroom>
         {/* component that syncs or creates a user depending on redux state: */}
@@ -94,6 +108,7 @@ const mapStateToProps = (state) => {
     userSyncRequired: state.app.auth.userSyncRequired,
     isAuthenticated: state.app.auth.isAuthenticated,
     profile: state.app.auth.profile,
+    apiUserScorecardId: state.app.auth.userScorecardId
   }
 }
 
