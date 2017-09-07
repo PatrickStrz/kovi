@@ -32,10 +32,14 @@ const CommentText = styled.p`
 class Comment extends Component{
 
   static propTypes = {
-    comment: PropTypes.object.isRequired,
+    comment: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      text: PropTypes.string,
+      user: PropTypes.object.isRequired,
+    }).isRequired,
     childComment: PropTypes.bool,
     onDeleteClick: PropTypes.func.isRequired, // accepts commentId argument
-    // apiUserId = PropTypes.string.isRequired,
+    apiUserId: PropTypes.string,
   }
 
   handleDeleteClick = () => {

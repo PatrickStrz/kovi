@@ -78,12 +78,14 @@ class CommentSection extends Component {
     comments: PropTypes.array.isRequired,
     commentCreateMutation: PropTypes.func.isRequired,
     commentTypeId: PropTypes.object.isRequired, //for gql i.e DiscussionId: id
-    refetchQuery: PropTypes.object.isRequired, //gql query
     //redux
     userImageUrl: PropTypes.string,
     apiUserId: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
     showAlert: PropTypes.func.isRequired,
+    //gql
+    refetchQuery: PropTypes.object.isRequired, //gql query
+    createChildCommentMutation: PropTypes.func.isRequired,
   }
 
   state = {
@@ -188,7 +190,6 @@ class CommentSection extends Component {
       const handleClick = () => login()
       return <RaisedButton primary={true} label={label} onClick={handleClick} />
     }
-
   }
 
   // handler functions:
@@ -292,7 +293,6 @@ class CommentSection extends Component {
 
     catch(err){
 
-      //remove for loading indicator
       const childCommentsAreCreating = removeValueFromList(
         parentCommentId,
         this.state.childCommentsAreCreating
