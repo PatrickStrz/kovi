@@ -75,7 +75,8 @@ export class ProfileCardContainer extends Component {
           <Name>{name}</Name>
           <ScoreBox>
             <ScoreHeading>Score:</ScoreHeading>
-            <UserScore scorecardId={scorecardId}/>
+            {/* <UserScore scorecardId={scorecardId}/> */}
+            <p>{this.props.data.User.scorecard.total}</p>
           </ScoreBox>
         </Body>
       </Box>
