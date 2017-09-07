@@ -52,7 +52,6 @@ const Score = styled.p`
 `
 
 export class ProfileCardContainer extends Component {
-
   static propTypes = {
     userId: PropTypes.string.isRequired,
     data: PropTypes.shape({

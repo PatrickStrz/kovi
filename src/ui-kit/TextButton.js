@@ -11,7 +11,7 @@ const Button = styled.a`
     font-size: ${props.fontSize};
     `}
   ${props => props.withBorder && css`
-    border: solid 2px;
+    border: solid 2px ${props.borderColor};
     border-radius: 3px;
     `}
   /* top left bottom right: */
@@ -36,6 +36,7 @@ const TextButton = (props) => {
       fontSize={props.fontSize}
       onClick={() => handleClick()}
       withBorder={props.withBorder}
+      borderColor={props.borderColor}
     >
     {props.label}
     </Button>
@@ -48,6 +49,7 @@ TextButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   inProgress: PropTypes.bool,
   withBorder: PropTypes.bool,
+  borderColor: PropTypes.string,
   size: PropTypes.string,
 }
 
