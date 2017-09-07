@@ -16,6 +16,7 @@ import {colors} from 'styles/theme/colors'
 import {XS_MAX} from 'styles/screen-sizes'
 import {logException} from '../config'
 import {login} from 'lib/auth'
+import {removeValueFromList} from 'lib/array-helpers'
 //components
 import InputWithProfile from 'ui-kit/InputWithProfile'
 import TextButton from 'ui-kit/TextButton'
@@ -91,6 +92,7 @@ class CommentSection extends Component {
     deleteInProgress: false,
     createInProgress: false,
     childCommentsText: {},
+    childCommentsAreCreating:[],
   }
 
   //pass in true for subcomment parameter if rendering subcomment
@@ -123,7 +125,7 @@ class CommentSection extends Component {
             <SubCommentSectionWrapper>
               <SubCommentSectionBox>
                 {this.renderChildComments(comment.childComments)}
-                {this.renderChildCommentCreate(comment.id)}
+                {this.renderChildCommentCreate(comment.id, this.state)}
               </SubCommentSectionBox>
             </SubCommentSectionWrapper>
           </div>
@@ -161,6 +163,7 @@ class CommentSection extends Component {
   }
 
   renderChildCommentCreate = (parentCommentId) => {
+    const isCreating = this.state.childCommentsAreCreating.indexOf(parentCommentId) >= 0
     if (this.props.isAuthenticated){
       return(
         <CreateCommentBox>
@@ -169,12 +172,12 @@ class CommentSection extends Component {
             avatarSize="18px"
             placeholder="write a reply..."
             handleChange={text => this.handleChildCommentInput(text,parentCommentId)}
-            value={this.state.childCommentsText.parentCommentId}
+            value={this.state.childCommentsText[parentCommentId]}
           />
         <TextButton
           label="Post"
           onClick={()=>this.handleChildCommentSubmit(parentCommentId)}
-          inProgress={this.state.createInProgress}
+          inProgress={isCreating}
         />
       </CreateCommentBox>
       )
@@ -263,15 +266,42 @@ class CommentSection extends Component {
         },
       }],
     }
-    
+
     try{
-      this.setState({creatingChildCommentFor:parentCommentId})
+      //Create in progress:
+      this.setState({
+        childCommentsAreCreating:[
+          ...this.state.childCommentsAreCreating,
+          parentCommentId,
+        ], // for loading indicator
+      })
       await this.props.createChildCommentMutation(options)
-      // this.setState({commentText:'', createInProgress:false}) //clears input
+      //create successful
+      const childCommentsAreCreating = removeValueFromList(
+        parentCommentId,
+        this.state.childCommentsAreCreating
+      )
+
+      const childCommentsText = {...this.state.childCommentsText}
+      childCommentsText[parentCommentId] = ''
+      this.setState({
+        childCommentsText,
+        childCommentsAreCreating,
+      }) //clears input
     }
+
     catch(err){
-      // this.setState({createInProgress:false})
-      showAlert("Failed to create reply")
+
+      //remove for loading indicator
+      const childCommentsAreCreating = removeValueFromList(
+        parentCommentId,
+        this.state.childCommentsAreCreating
+      )
+
+      this.setState({childCommentsAreCreating})
+
+      err && showAlert("Failed to create reply")
+
       logException(err, {
       action: "handleChildCommentCreate function in CommentsContainer"
       })
