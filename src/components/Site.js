@@ -108,7 +108,7 @@ const mapStateToProps = (state) => {
     userSyncRequired: state.app.auth.userSyncRequired,
     isAuthenticated: state.app.auth.isAuthenticated,
     profile: state.app.auth.profile,
-    apiUserScorecardId: state.app.auth.userScorecardId
+    apiUserScorecardId: state.app.auth.apiUserScorecardId
   }
 }
 

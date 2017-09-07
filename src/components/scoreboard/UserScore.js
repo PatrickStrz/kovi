@@ -86,7 +86,7 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
       subscribeToScorecardUpdates: () => {
         return data.subscribeToMore({
           document: USER_SCORE_CREATED_SUBSCRIPTION,
-          variables: {id: ownProps.userId},
+          variables: {userScorecardId: ownProps.scorecardId},
           updateQuery: (prev, {subscriptionData}) => {
             if (!subscriptionData.data) {
                 return prev
