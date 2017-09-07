@@ -18,9 +18,12 @@ import {logException} from '../config'
 import {login} from 'lib/auth'
 import {removeValueFromList} from 'lib/array-helpers'
 //components
-import InputWithProfile from 'ui-kit/InputWithProfile'
-import TextButton from 'ui-kit/TextButton'
-import WarningDialog from 'ui-kit/WarningDialog'
+import {
+  TextButton,
+  InputWithProfile,
+  WarningDialog
+} from 'ui-kit'
+
 import RaisedButton from 'material-ui/RaisedButton'
 import {Comment} from 'ui-kit'
 
@@ -95,9 +98,13 @@ class CommentSection extends Component {
     createInProgress: false,
     childCommentsText: {},
     childCommentsAreCreating:[],
+    childCommentInputVisibleFor:[], // array of parent comment ids
   }
 
   //pass in true for childComment parameter if rendering childComment
+
+  /* -------- element rendering functions -------- */
+
   renderComment = (comment, childComment='') => {
     return(
       <div key={`challenge-comment-${comment.id}`}>
@@ -120,6 +127,7 @@ class CommentSection extends Component {
   }
 
   renderComments = (comments) => {
+
     return (comments.map(comment =>{
       return(
           <div key={'comment' + comment.id}>
@@ -128,7 +136,7 @@ class CommentSection extends Component {
               <ChildCommentSectionBox>
                 {this.renderChildComments(comment.childComments)}
               </ChildCommentSectionBox>
-              {this.renderChildCommentCreate(comment.id, this.state)}
+              {this.renderReply(comment.id)}
             </ChildCommentSectionWrapper>
           </div>
           )
@@ -192,7 +200,28 @@ class CommentSection extends Component {
     }
   }
 
-  // handler functions:
+  renderReply = (parentCommentId) => {
+    if (this.state.childCommentInputVisibleFor.indexOf(parentCommentId) >= 0) {
+      // returns login button if user not authed:
+      return this.renderChildCommentCreate(parentCommentId)
+    }
+    else{
+      return(
+      <div style={{marginLeft:'16px'}}>
+        <TextButton
+          fontSize="14px"
+          withBorder={true}
+          color={colors.lightGrey}
+          label="reply"
+          onClick={()=>this.handleReplyClick(parentCommentId)}
+        />
+      </div>
+      )
+    }
+  }
+
+
+  /*---------  handler functions:  ---------*/
 
   handleCommentInput = (text) => {
     this.setState({commentText:text})
@@ -344,6 +373,19 @@ class CommentSection extends Component {
 
   handleDeleteCb = () => {
     this.handleDeleteComment(this.state.deleteCommentId)
+  }
+
+  // toggles visibility of child comment input
+  handleReplyClick = (parentCommentId) => {
+    const {childCommentInputVisibleFor} = this.state
+    // if value not in list:
+    if (childCommentInputVisibleFor.indexOf(parentCommentId) === -1) {
+      this.setState({
+        childCommentInputVisibleFor: [
+          ...childCommentInputVisibleFor, parentCommentId
+        ]
+      })
+    }
   }
 
   render(){
