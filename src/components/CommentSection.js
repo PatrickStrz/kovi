@@ -209,7 +209,8 @@ class CommentSection extends Component {
         <TextButton
           fontSize="14px"
           withBorder={true}
-          color={colors.lightGrey}
+          borderColor={colors.lightGrey}
+          color={colors.medGrey}
           label="reply"
           onClick={()=>this.handleReplyClick(parentCommentId)}
         />
