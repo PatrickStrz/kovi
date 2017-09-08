@@ -91,10 +91,8 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
             if (!subscriptionData.data) {
                 return prev
             }
-            const {node} = subscriptionData.data.Score.node
-            const {value,id} = node
-            const scorecardId = node.scorecard.id
-            
+            const {value,id} = subscriptionData.data.Score.node
+            const scorecardId = subscriptionData.data.Score.node.scorecard.id
             /* even though filtering subscriptions by scorecard id, receiveing
             events that belong to other scorecards, correcting for this: */
             if (ownProps.scorecardId === scorecardId){
