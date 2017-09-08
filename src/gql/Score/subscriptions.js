@@ -21,6 +21,9 @@ export const USER_SCORE_CREATED_SUBSCRIPTION = gql`
       node{
         id
         value
+        scorecard{
+          id
+        }
       }
     }
   }

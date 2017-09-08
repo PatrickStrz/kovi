@@ -23,6 +23,9 @@ export const CHALLENGE_CREATED = 'CHALLENGE_CREATED'
 export const NEW_COMMUNITY_SCORE = 'NEW_COMMUNITY_SCORE'
 export const INITIAL_COMMUNITY_SCORE = 'INITIAL_COMMUNITY_SCORE'
 
+export const NEW_USER_SCORE = 'NEW_USER_SCORE'
+export const INITIAL_USER_SCORE = 'INITIAL_USER_SCORE'
+
 /*------------------- Editor ------------------------*/
 export const EDITOR_CHANGE = 'EDITOR_CHANGE'
 export const CLEAR_EDITOR = 'CLEAR_EDITOR'
