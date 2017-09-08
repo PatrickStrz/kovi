@@ -60,9 +60,9 @@ class CommunityScore extends Component {
     const level3Value = levels.three.value
 
     const CommunityTotal = (
-      level1Count*level1Value +
-      level2Count*level2Value +
-      level3Count*level3Value
+      level1Count * level1Value +
+      level2Count * level2Value +
+      level3Count * level3Value
     )
     return(CommunityTotal)
   }
@@ -72,7 +72,7 @@ class CommunityScore extends Component {
   }
 
   render(){
-    const {data, animation1, animation2} = this.props
+    const {data, communityAnimation1, communityAnimation2} = this.props
 
     if (data.loading ){
       return(<div></div>)
@@ -86,8 +86,8 @@ class CommunityScore extends Component {
     //make sure score remounts on prop change so animation plays:
     return(
       <div>
-        {animation1 && this.renderScore()}
-        {animation2 && this.renderScore()}
+        {communityAnimation1 && this.renderScore()}
+        {communityAnimation2 && this.renderScore()}
       </div>
     )
   }
@@ -105,13 +105,14 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
         return data.subscribeToMore({
           document: SCORE_CREATED_SUBSCRIPTION,
           updateQuery: (prev, {subscriptionData}) => {
-            //get console errors for missing fields since this is a different query
             if (!subscriptionData.data) {
-                return prev;
+                return prev
             }
             const {value, id} = subscriptionData.data.Score.node
             ownProps.updateCommunityScore(value, id)
             return {
+                /* don't update apollo store using redux app store for
+                scores */
                 prev,
             }
           }
@@ -125,8 +126,8 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
 const mapStateToProps = (state) => {
   return {
     communityScore: state.app.scores.communityScore,
-    animation1: state.app.scores.animation1,
-    animation2: state.app.scores.animation2,
+    communityAnimation1: state.app.scores.communityAnimation1,
+    communityAnimation2: state.app.scores.communityAnimation2,
   }
 }
 

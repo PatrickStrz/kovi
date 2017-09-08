@@ -1,5 +1,12 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
+//redux
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+  initializeUserScore,
+  updateUserScore,
+} from '../../actions/score-actions'
 //gql
 import {graphql} from 'react-apollo'
 import {USER_SCORECARD_QUERY} from '../../gql/Scorecard/queries'
@@ -25,35 +32,29 @@ class UserScore extends Component {
     scorecardId: PropTypes.string,
   }
 
-  state = {
-    animation1: true,
-    animation2: false,
-  }
-
   componentWillMount() {
        this.props.subscribeToScorecardUpdates()
    }
 
   componentWillReceiveProps = (nextProps) => {
-    if (this.props.data.Scorecard && nextProps.data.Scorecard){
-      const score = this.props.data.Scorecard.total
-      const newScore = nextProps.data.Scorecard.total
-      const {animation1, animation2} = this.state
-      if (score !== newScore) {
-        this.setState({animation1:!animation1, animation2:!animation2})
-      }
+    /* once component finishes loading data, inital score can be set
+    using the value returned from the query
+    */
+    if (this.props.data.loading && !nextProps.data.loading) {
+      const userScore = nextProps.data.Scorecard.total
+      this.props.initializeUserScore(userScore)
     }
   }
 
   renderScore = () => {
     return(
       <Score>
-        {this.props.data.Scorecard.total}
+        {this.props.userScore}
       </Score>
     )
   }
   render(){
-    const {data} = this.props
+    const {data, animation1, animation2} = this.props
     if (data.loading){
       return <div></div>
     }
@@ -65,8 +66,8 @@ class UserScore extends Component {
     // to have a new render on score change to replay animation
     return(
       <div>
-        {this.state.animation1 && this.renderScore()}
-        {this.state.animation2 && this.renderScore()}
+        {animation1 && this.renderScore()}
+        {animation2 && this.renderScore()}
       </div>
     )
   }
@@ -90,12 +91,20 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
             if (!subscriptionData.data) {
                 return prev
             }
-            const newScoreValue = subscriptionData.data.Score.node.value
-            const newScorecardTotal = prev.Scorecard.total + newScoreValue
-            const newScorecard = {...prev.Scorecard}
-            newScorecard.total = newScorecardTotal
+            const {node} = subscriptionData.data.Score.node
+            const {value,id} = node
+            const scorecardId = node.scorecard.id
+            
+            /* even though filtering subscriptions by scorecard id, receiveing
+            events that belong to other scorecards, correcting for this: */
+            if (ownProps.scorecardId === scorecardId){
+              ownProps.updateUserScore(value, id)
+            }
+
             return {
-                Scorecard: newScorecard,
+                /* don't update apollo store using redux app store for
+                scores */
+                prev,
             }
           }
         })
@@ -104,4 +113,19 @@ const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
   }
 })(UserScore)
 
-export default UserScoreWithData
+const mapStateToProps = (state) => {
+  return {
+    userScore: state.app.scores.userScore,
+    animation1: state.app.scores.userAnimation1,
+    animation2: state.app.scores.userAnimation2,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      initializeUserScore,
+      updateUserScore,
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserScoreWithData)
