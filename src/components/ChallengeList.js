@@ -1,6 +1,8 @@
 // React
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
+// helpers + other
+import {normalizeToFeed} from 'lib/array-helpers'
 //components
 import ChallengeCard from './ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -64,7 +66,7 @@ export default class ChallengeList extends Component {
     const {hasMore, loadMoreEntries} = this.props
     const challengeList = this.renderChallengeCards()
     const taskList = this.mapTaskList()
-    const feed = this.feedify(challengeList, taskList)
+    const feed = normalizeToFeed(challengeList, taskList)
     /* ---------------- render return -----------------*/
 
     return(
