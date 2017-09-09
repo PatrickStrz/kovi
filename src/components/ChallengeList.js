@@ -7,6 +7,7 @@ import {normalizeToFeed} from 'lib/array-helpers'
 import ChallengeCard from './ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import GenericLoader from 'ui-kit/GenericLoader'
+import {Card} from 'ui-kit'
 
 export default class ChallengeList extends Component {
   static propTypes = {
@@ -62,10 +63,27 @@ export default class ChallengeList extends Component {
     )
   }
 
+  renderTaskCards = () => {
+  const {tasks} = this.props
+    return tasks.map(task => {
+      if (task.type === 'Discussion'){
+        return(
+            <Card
+              key={'tasklist'+task.id}
+              text={task.discussion.topic}
+              onBodyClick={()=>{alert('clicked:'+task.id)}}
+            />
+          )
+        }
+        else return ''
+      }
+    )
+  }
+
   render(){
     const {hasMore, loadMoreEntries} = this.props
     const challengeList = this.renderChallengeCards()
-    const taskList = this.mapTaskList()
+    const taskList = this.renderTaskCards()
     const feed = normalizeToFeed(challengeList, taskList)
     /* ---------------- render return -----------------*/
 
@@ -76,7 +94,7 @@ export default class ChallengeList extends Component {
         loader={<GenericLoader text="..."/>}
         next={loadMoreEntries}
        >
-         {this.state.scrollTop && window.scrollTo(0,0)}
+        {this.state.scrollTop && window.scrollTo(0,0)}
         {/* {this.renderChallengeCards()} */}
         {feed}
       </InfiniteScroll>
