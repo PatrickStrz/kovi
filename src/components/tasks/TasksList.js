@@ -24,7 +24,7 @@ class TasksList extends Component {
   }
 
   renderDiscussionView = () =>{
-    const discussionId = this.props.state.openDiscusionId
+    const discussionId = this.props.openDiscusionId
     return(
       <Dialog
         title={'Discussion'}
@@ -59,7 +59,7 @@ class TasksList extends Component {
     return(
       <div>
         {this.renderTaskCards()}
-        {this.props.state.openDiscusionId && this.renderDiscussionView()}
+        {this.props.openDiscusionId && this.renderDiscussionView()}
       </div>
     )
   }
@@ -73,9 +73,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = state => ({
-  state:{
     openDiscusionId: state.app.community.openDiscusionId,
-  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksList)
