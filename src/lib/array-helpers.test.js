@@ -71,7 +71,7 @@ test('normalizeToFeed should combine lists in expected shape', () => {
   expect(feed).toEqual(expectedFeedResult)
 })
 
-test('normalizeToFeed should combine lists in expected shape', () => {
+test('normalizeToFeed should combine lists in expected order', () => {
   const feed = normalizeToFeed(
     feedData.challenges,
     feedData.tasks,

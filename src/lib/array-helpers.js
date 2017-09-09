@@ -9,7 +9,7 @@ export const removeValueFromList = (value,list)=> {
 }
 
 /* normalizeToFeed takes an indefinite number of arrays and returns
-  1 list of all of the items in each of the arrays in the following shape:
+  1 list in the following order:
   [ array1[0],array2[0],array3[0],[array1[1],array2[1],array3[1], array1[2]... ]
 
   example of use -->
@@ -25,6 +25,6 @@ export const normalizeToFeed = (...lists) => {
   for (let i = 0; i < longestListLength; i++){
     lists.forEach(list => list[i] && feed.push(list[i]))
   }; /* semi colon necessary here for loop to execute.
-  only use when using <= es5 features */
+  only use for <= es5 features */
   return feed
 }

@@ -17,7 +17,7 @@ import ChallengeList from 'components/ChallengeList'
 import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
 
-class ChallengeListContainer extends Component {
+class HomeFeedContainer extends Component {
   render(){
     //so can change query variables in one place and pass to child components:
     const allChallengesQueryVariables = {"filter":{ "id": this.props.apiUserId}}
@@ -40,7 +40,7 @@ class ChallengeListContainer extends Component {
           apiUserId={this.props.apiUserId}
           hasMore={allChallengesQuery.cursor.length === 0 ? false : true}
           loadMoreEntries={()=>allChallengesQuery.loadMoreEntries()}
-          tasks = {allTasksQuery.allTasks}
+          tasks={allTasksQuery.allTasks}
         />
       )
     }
@@ -96,13 +96,13 @@ const allChallengesQueryOptions = {
   }),
 }
 
-const ChallengeListApollo = compose(
+const HomeFeedContainerApollo = compose(
   graphql(ALL_CHALLENGES_QUERY, allChallengesQueryOptions),
 
   graphql(ALL_TASKS_QUERY, {name: 'allTasksQuery'}),
   // graphql(ALL_CHALLENGES, {name: 'allChallengesQuery'}),
 
-)(ChallengeListContainer)
+)(HomeFeedContainer)
 
 const mapStateToProps = (state) => {
   return {
@@ -111,4 +111,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ChallengeListApollo)
+export default connect(mapStateToProps)(HomeFeedContainerApollo)

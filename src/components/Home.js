@@ -12,7 +12,7 @@ import {
 import {requireAuth} from '../lib/auth'
 import styled from 'styled-components'
 //Components
-import ChallengeListContainer from './ChallengeListContainer'
+import HomeFeedContainer from './HomeFeedContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
 import ChallengeFormContainer from 'components/ChallengeFormContainer'
 import Dialog from 'ui-kit/Dialog'
@@ -83,7 +83,7 @@ class Home extends Component {
 
     const centerContent = (
       <ChallengeListBox>
-        <ChallengeListContainer />
+        <HomeFeedContainer />
       </ChallengeListBox>
     )
 
