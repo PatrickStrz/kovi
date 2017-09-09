@@ -17,6 +17,16 @@ export default class ChallengeList extends Component {
 
   state={scrollTop:false}
 
+  feedify = (...lists) => {
+    const listLengths = lists.map(list => list.length)
+    const longestListLength = Math.max(...listLengths)
+    const newArr = []
+    for (let i = 0; i < longestListLength; i++){
+      lists.forEach(list => list[i] && newArr.push(list[i]))
+    };
+  return newArr
+}
+
   renderChallengeCards = () => {
 
     const {
@@ -39,10 +49,22 @@ export default class ChallengeList extends Component {
     )
   }
 
+  mapTaskList = () => {
+    const {tasks} = this.props
+    return tasks.map(task => <div
+        style={{backgroundColor:'rgb(139, 236, 199)'}}
+        key={'task'+task.id}
+        >
+        {task.type}
+      </div>
+    )
+  }
 
   render(){
     const {hasMore, loadMoreEntries} = this.props
-
+    const challengeList = this.renderChallengeCards()
+    const taskList = this.mapTaskList()
+    const feed = this.feedify(challengeList, taskList)
     /* ---------------- render return -----------------*/
 
     return(
@@ -53,7 +75,8 @@ export default class ChallengeList extends Component {
         next={loadMoreEntries}
        >
          {this.state.scrollTop && window.scrollTo(0,0)}
-        {this.renderChallengeCards()}
+        {/* {this.renderChallengeCards()} */}
+        {feed}
       </InfiniteScroll>
     )
   }
