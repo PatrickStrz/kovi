@@ -6,52 +6,70 @@ import {connect} from 'react-redux'
 //gql
 import {graphql} from 'react-apollo'
 import {CHALLENGE_DETAIL_QUERY} from '../gql/Challenge/queries'
+//other
+import {withRouter} from 'react-router'
 //components
 import GenericError from 'ui-kit/GenericError'
 import ChallengeDetail from 'components/ChallengeDetail'
 import GenericLoader from 'ui-kit/GenericLoader'
+import {Dialog} from 'ui-kit'
 
 export class ChallengeDetailContainer extends Component {
 
   static propTypes = {
-    id: PropTypes.string.isRequired,
     data: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
-      error: PropTypes.string,
+      error: PropTypes.object,
       Challenge: PropTypes.object,
     }).isRequired,
   }
 
-  render(){
-    if (this.props.data.loading){
+  renderBody = () => {
+    if (this.props.data.loading) {
       return <GenericLoader text="loading..." />
     }
-    if (this.props.data.error){
+    else if (this.props.data.error) {
       return <GenericError />
     }
+    else {
+      const {title, body, author} = this.props.data.Challenge
+      const id = this.props.match.params.id
+      const {apiUserId} = this.props
 
-    const {id, title, body, author} = this.props.data.Challenge
-    const {apiUserId} = this.props
+      return(
+        <ChallengeDetail
+          id={id}
+          title={title}
+          body={body}
+          apiUserId={apiUserId}
+          authorId={author.id}
+        />
+      )
+    }
+  }
 
+  render(){
     return(
-      <ChallengeDetail
-        id={id}
-        title={title}
-        body={body}
-        apiUserId={apiUserId}
-        authorId={author.id}
-      />
+      <Dialog
+        isOpen={true}
+        handleClose={()=> this.props.history.push('/')}
+        title="challengeDetail"
+      >
+        {this.renderBody()}
+      </Dialog>
     )
   }
 }
 
 const ChallengeDetailContainerApollo = graphql(
 CHALLENGE_DETAIL_QUERY,{
-  options: ({ id }) => ({ variables: { id } }), // coming from own props
+  options: (ownProps) => ({variables: {id: ownProps.match.params.id}}),
 })(ChallengeDetailContainer)
 
 const mapStateToProps = (state) => ({
   apiUserId: state.app.auth.apiUserId
 })
 
-export default connect(mapStateToProps)(ChallengeDetailContainerApollo)
+export default withRouter(
+  connect(mapStateToProps)(ChallengeDetailContainerApollo)
+)

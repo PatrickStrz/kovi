@@ -61,7 +61,7 @@ export default class Dialog extends Component {
   }
 
   static defaultProps = {
-    modal: false
+    modal: false,
   }
 
   styles = (isMobile) => ({
@@ -114,7 +114,6 @@ export default class Dialog extends Component {
 
     return(
       <div>
-
         <Modal
           style={styles}
           contentLabel={title}

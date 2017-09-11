@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   showCreateChallengeView,
-  hideChallengeDetailView,
   hideCreateChallengeView,
 } from '../actions/challenge-actions'
 //lib + other
@@ -13,13 +12,14 @@ import {requireAuth} from '../lib/auth'
 import styled from 'styled-components'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
-import ChallengeDetailContainer from './ChallengeDetailContainer'
 import ChallengeFormContainer from 'components/ChallengeFormContainer'
 import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
+import ChallengeDetailContainer from 'components/ChallengeDetailContainer'
+import {Route} from 'react-router'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -45,8 +45,6 @@ class Home extends Component {
   static propTypes = {
     //redux:
     showCreateChallengeView: PropTypes.func.isRequired,
-    hideChallengeDetailView: PropTypes.func.isRequired,
-    openChallengeDetailViewId: PropTypes.string,
     hideCreateChallengeView: PropTypes.func.isRequired,
     isCreateViewOpen: PropTypes.bool.isRequired,
   }
@@ -61,25 +59,12 @@ class Home extends Component {
     }
   }
 
-  renderChallengeDetailView = () =>(
-    <Dialog
-      title={'ChallengeDetail'}
-      isOpen={true}
-      handleClose={this.props.hideChallengeDetailView}
-    >
-      <ChallengeDetailContainer id={this.props.openChallengeDetailViewId}/>
-    </Dialog>
-  )
-
   handleCreateChallengeClose = () => {
     this.props.hideCreateChallengeView()
   }
 
   render(){
-    const {
-        openChallengeDetailViewId,
-        showCreateChallengeView
-      } = this.props
+    const {showCreateChallengeView} = this.props
 
     const centerContent = (
       <ChallengeListBox>
@@ -119,8 +104,7 @@ class Home extends Component {
             update={false}
           />
         </Dialog>
-        {/* conditionally rendering modal helps reduce number of DOM nodes: */}
-        {openChallengeDetailViewId && this.renderChallengeDetailView()}
+        <Route path="/challenge/:id" component={ChallengeDetailContainer}/>
       </div>
     )
   }
@@ -129,13 +113,11 @@ class Home extends Component {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       showCreateChallengeView,
-      hideChallengeDetailView,
       hideCreateChallengeView,
     }, dispatch)
 }
 
 const mapStateToProps = (state) => ({
-  openChallengeDetailViewId: state.app.challenges.openChallengeDetailViewId,
   isCreateViewOpen: state.app.challenges.isCreateViewOpen,
 })
 
