@@ -11,6 +11,7 @@ import 'styles/css/react-modal.css'
 import Media from 'react-media'
 import Modal from 'react-modal'
 import FaIconButton from 'ui-kit/icons/FaIconButton'
+import Redirect from 'react-router'
 
 const ExitBox = styled.div`
   position: fixed;
@@ -61,7 +62,11 @@ export default class Dialog extends Component {
   }
 
   static defaultProps = {
-    modal: false
+    modal: false,
+  }
+
+  state = {
+    shouldClose: false,
   }
 
   styles = (isMobile) => ({
@@ -123,6 +128,7 @@ export default class Dialog extends Component {
           shouldCloseOnOverlayClick={!modal}
         >
           {isOpen && exit}
+          {this.state.shouldClose && <Redirect to='/jsnjsde'/>}
           <ChildrenContainer>
             {children}
           </ChildrenContainer>

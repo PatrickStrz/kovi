@@ -15,7 +15,6 @@ import GenericError from 'ui-kit/GenericError'
 import ChallengeDetail from 'components/ChallengeDetail'
 import GenericLoader from 'ui-kit/GenericLoader'
 import Dialog from 'ui-kit/Dialog'
-import Redirect from 'react-router'
 
 export class ChallengeDetailContainer extends Component {
 
@@ -26,6 +25,10 @@ export class ChallengeDetailContainer extends Component {
       error: PropTypes.string,
       Challenge: PropTypes.object,
     }).isRequired,
+  }
+
+  closeAndRedirect = () =>{
+    this.props.hideChallengeDetailView()
   }
 
   render(){
@@ -43,7 +46,7 @@ export class ChallengeDetailContainer extends Component {
     return(
       <Dialog
         isOpen={true}
-        handleClose={this.props.hideChallengeDetailView}
+        handleClose={()=> this.props.history.push('/')}
         title="challengeDetail"
         >
         <ChallengeDetail
@@ -63,15 +66,13 @@ CHALLENGE_DETAIL_QUERY,{
   options: (ownProps) => ({ variables: { id: ownProps.match.params.id } }), // coming from own props
 })(ChallengeDetailContainer)
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    hideChallengeDetailView,
-  }, dispatch)
-}
-
 const mapStateToProps = (state) => ({
   apiUserId: state.app.auth.apiUserId
 })
+
+const mapDispatchToProps = (dispatch) =>{
+  return bindActionCreators({hideChallengeDetailView},dispatch)
+}
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(ChallengeDetailContainerApollo)

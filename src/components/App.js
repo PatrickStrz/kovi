@@ -14,13 +14,12 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <BrowserRouter>
           <Site>
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/challenge/:id" component={ChallengeDetailContainer}/>
-                <Route exact path="/about" render={() => <h1>about</h1>} />
-                <Route exact path={this.devRoute} render={() => <h1>Secret dev page</h1>}/>
-                <Route render={() => <h1>Page doesn't exist  ¯\_(ツ)_/¯</h1>}/>
-              </Switch>
+            <Route path="/" component={Home} />
+            <Route path="/challenge/:id" component={ChallengeDetailContainer}/>
+            <Switch>
+              <Route exact path="/about" render={() => <h1>about</h1>} />
+              <Route exact path={this.devRoute} render={() => <h1>Secret dev page</h1>}/>
+            </Switch>
           </Site>
         </BrowserRouter>
       </MuiThemeProvider>

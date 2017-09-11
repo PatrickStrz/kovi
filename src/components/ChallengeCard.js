@@ -15,6 +15,7 @@ import {colors} from 'styles/theme/colors'
 //components
 import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
+import {withRouter} from 'react-router'
 
 class ChallengeCard extends Component {
   static propTypes = {
@@ -70,7 +71,7 @@ class ChallengeCard extends Component {
           mutationVariables={upvoteMutationVariables}
         />
       )
-      
+
     return(
       <div>
         <Card
@@ -78,7 +79,8 @@ class ChallengeCard extends Component {
           highlightColor={colors.faintTeal}
           text={title}
           bottomSection={upvote}
-          onBodyClick={()=>{showChallengeDetailView(id)}}
+          // onBodyClick={()=>{showChallengeDetailView(id)}}
+          onBodyClick={()=> this.props.history.push(`/challenge/${id}`)}
         />
       </div>
     )
@@ -100,4 +102,4 @@ const ChallengeCardApollo = compose(
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeCard)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo))

@@ -11,7 +11,6 @@ import {
 //lib + other
 import {requireAuth} from '../lib/auth'
 import styled from 'styled-components'
-import {Redirect, Route} from 'react-router'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
@@ -21,6 +20,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
+import {Redirect, Route, withRouter} from 'react-router'
+
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -52,6 +53,19 @@ class Home extends Component {
     isCreateViewOpen: PropTypes.bool.isRequired,
   }
 
+  state = {
+    nextUrl: ''
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (!this.props.openChallengeDetailViewId && nextProps.openChallengeDetailViewId){
+      this.setState({nextUrl: `/challenge/${nextProps.openChallengeDetailViewId}`})
+    }
+    else if (this.props.openChallengeDetailViewId && !nextProps.openChallengeDetailViewId){
+      this.setState({nextUrl:'/'})
+    }
+  }
+
   styles = {
     actionButton:{
       position: 'fixed',
@@ -76,6 +90,15 @@ class Home extends Component {
     this.props.hideCreateChallengeView()
   }
 
+  renderRedirect = () => {
+    return(
+      <Redirect
+        to={this.state.nextUrl}
+        push={true}
+      />
+    )
+  }
+
   render(){
     const {
         openChallengeDetailViewId,
@@ -88,7 +111,9 @@ class Home extends Component {
       </ChallengeListBox>
     )
 
+
     /*--------- render return --------*/
+
 
     return(
       <div>
@@ -120,9 +145,7 @@ class Home extends Component {
             update={false}
           />
         </Dialog>
-        {openChallengeDetailViewId && <Redirect
-          to={`/challenge/${this.props.openChallengeDetailViewId}`}
-        />}
+        {/* {this.state.nextUrl && this.renderRedirect()} */}
       </div>
     )
   }
