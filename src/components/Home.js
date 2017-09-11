@@ -11,6 +11,7 @@ import {
 //lib + other
 import {requireAuth} from '../lib/auth'
 import styled from 'styled-components'
+import {Redirect, Route} from 'react-router'
 //Components
 import ChallengeListContainer from './ChallengeListContainer'
 import ChallengeDetailContainer from './ChallengeDetailContainer'
@@ -119,8 +120,9 @@ class Home extends Component {
             update={false}
           />
         </Dialog>
-        {/* conditionally rendering modal helps reduce number of DOM nodes: */}
-        {openChallengeDetailViewId && this.renderChallengeDetailView()}
+        {openChallengeDetailViewId && <Redirect
+          to={`/challenge/${this.props.openChallengeDetailViewId}`}
+        />}
       </div>
     )
   }
