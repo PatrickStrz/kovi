@@ -1,9 +1,8 @@
-//react+redux
+//react
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
+//redux
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
-import {showChallengeDetailView,} from '../actions/challenge-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -24,7 +23,6 @@ class ChallengeCard extends Component {
     addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     //redux:
-    showChallengeDetailView: PropTypes.func.isRequired,
     newUserChallenges: PropTypes.array.isRequired,
   }
 
@@ -46,7 +44,6 @@ class ChallengeCard extends Component {
     const upvotesCount = this.props.challenge._upvotesMeta.count
     const {
       apiUserId,
-      showChallengeDetailView,
       addChallengeUpvoteMutation,
       removeChallengeUpvoteMutation,
     } = this.props
@@ -79,18 +76,11 @@ class ChallengeCard extends Component {
           highlightColor={colors.faintTeal}
           text={title}
           bottomSection={upvote}
-          // onBodyClick={()=>{showChallengeDetailView(id)}}
           onBodyClick={()=> this.props.history.push(`/challenge/${id}`)}
         />
       </div>
     )
   }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    showChallengeDetailView,
-  }, dispatch)
 }
 
 const mapStateToProps = (state) => ({
@@ -102,4 +92,4 @@ const ChallengeCardApollo = compose(
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeCard)
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo))
+export default withRouter(connect(mapStateToProps)(ChallengeCardApollo))

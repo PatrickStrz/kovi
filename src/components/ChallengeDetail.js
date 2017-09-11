@@ -98,7 +98,7 @@ export default class ChallengeDetail extends Component{
     return(
       <div>
         {this.renderEditButton()}
-        <Title>{title}</Title>  
+        <Title>{title}</Title>
         {this.renderBody()}
         <LineBreak />
         <CommentsHeading>Discussion</CommentsHeading>
