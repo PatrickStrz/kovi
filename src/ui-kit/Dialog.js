@@ -11,7 +11,6 @@ import 'styles/css/react-modal.css'
 import Media from 'react-media'
 import Modal from 'react-modal'
 import FaIconButton from 'ui-kit/icons/FaIconButton'
-import Redirect from 'react-router'
 
 const ExitBox = styled.div`
   position: fixed;
@@ -65,10 +64,6 @@ export default class Dialog extends Component {
     modal: false,
   }
 
-  state = {
-    shouldClose: false,
-  }
-
   styles = (isMobile) => ({
     overlay : {
       // position: 'fixed'  --> prevents scrolling body when forcefully scroll
@@ -119,7 +114,6 @@ export default class Dialog extends Component {
 
     return(
       <div>
-
         <Modal
           style={styles}
           contentLabel={title}
@@ -128,7 +122,6 @@ export default class Dialog extends Component {
           shouldCloseOnOverlayClick={!modal}
         >
           {isOpen && exit}
-          {this.state.shouldClose && <Redirect to='/jsnjsde'/>}
           <ChildrenContainer>
             {children}
           </ChildrenContainer>

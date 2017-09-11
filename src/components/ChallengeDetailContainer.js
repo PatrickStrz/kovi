@@ -17,22 +17,21 @@ import {Dialog} from 'ui-kit'
 export class ChallengeDetailContainer extends Component {
 
   static propTypes = {
-
     data: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
-      error: PropTypes.string,
+      error: PropTypes.object,
       Challenge: PropTypes.object,
     }).isRequired,
   }
 
   renderBody = () => {
-    if (this.props.data.loading){
+    if (this.props.data.loading) {
       return <GenericLoader text="loading..." />
     }
-    else if (this.props.data.error){
+    else if (this.props.data.error) {
       return <GenericError />
     }
-    else{
+    else {
       const {title, body, author} = this.props.data.Challenge
       const id = this.props.match.params.id
       const {apiUserId} = this.props
@@ -64,7 +63,7 @@ export class ChallengeDetailContainer extends Component {
 
 const ChallengeDetailContainerApollo = graphql(
 CHALLENGE_DETAIL_QUERY,{
-  options: (ownProps) => ({ variables: { id: ownProps.match.params.id } }), // coming from own props
+  options: (ownProps) => ({variables: {id: ownProps.match.params.id}}),
 })(ChallengeDetailContainer)
 
 const mapStateToProps = (state) => ({

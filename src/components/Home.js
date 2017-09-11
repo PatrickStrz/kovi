@@ -18,7 +18,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
-
+import ChallengeDetailContainer from 'components/ChallengeDetailContainer'
+import {Route} from 'react-router'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -46,10 +47,6 @@ class Home extends Component {
     showCreateChallengeView: PropTypes.func.isRequired,
     hideCreateChallengeView: PropTypes.func.isRequired,
     isCreateViewOpen: PropTypes.bool.isRequired,
-  }
-
-  state = {
-    nextUrl: ''
   }
 
   styles = {
@@ -107,6 +104,7 @@ class Home extends Component {
             update={false}
           />
         </Dialog>
+        <Route path="/challenge/:id" component={ChallengeDetailContainer}/>
       </div>
     )
   }
