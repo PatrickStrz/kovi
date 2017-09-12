@@ -6,9 +6,10 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
   hideCreateChallengeView,
-  challengeCreated
- } from '../actions/challenge-actions'
-import {handleEditorChange, clearEditor, setEditorValue} from '../actions/editor-actions'
+  challengeCreated,
+ } from 'actions/challenge-actions'
+ import {requestRefetchUserScore} from 'actions/score-actions'
+import {handleEditorChange, clearEditor, setEditorValue} from 'actions/editor-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -16,9 +17,9 @@ import {
   UPDATE_CHALLENGE_MUTATION,
 } from 'gql/Challenge/mutations'
 import {ALL_CHALLENGES_QUERY} from 'gql/Challenge/queries'
-import {CHALLENGE_CREATE_SCORE} from '../gql/Score/score-system'
+import {CHALLENGE_CREATE_SCORE} from 'gql/Score/score-system'
 //helpers+other
-import {logException} from '../config'
+import {logException} from 'config'
 import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
@@ -153,6 +154,7 @@ class ChallengeFormContainer extends Component {
     try{
       const response = await submitChallenge(options)
       this.setState({title:""}) //clear field on success.
+      this.props.requestRefetchUserScore()
       clearEditor()
       /*
       if created let other components know which challenge was recently created
@@ -161,7 +163,7 @@ class ChallengeFormContainer extends Component {
       if (update) {
         onUpdateComplete()
       }
-      
+
       if(!update){
         challengeCreated(response.data.createChallenge.id)
         hideCreateChallengeView()
@@ -256,6 +258,7 @@ const mapDispatchToProps = (dispatch) => {
     challengeCreated,
     hideCreateChallengeView,
     setEditorValue,
+    requestRefetchUserScore,
   }, dispatch)
 }
 
