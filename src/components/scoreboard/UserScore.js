@@ -14,9 +14,9 @@ import styled from 'styled-components'
 import {logException} from '../../config'
 import {muiColors} from 'styles/theme/colors'
 import {bounceInKeyframes} from 'styles/animations/keyframes'
-import {calculateTotalScore} from 'lib/score-system'
+import {calculateTotalScore, levels} from 'lib/score-system'
 
-//components
+// styled components:
 
 const Score = styled.p`
   display: inline-block;
@@ -24,6 +24,8 @@ const Score = styled.p`
   font-size: 18px;
   animation: ${bounceInKeyframes} 0.5s;
 `
+
+// default component
 
 class UserScore extends Component {
   static propTypes = {
@@ -35,11 +37,10 @@ class UserScore extends Component {
       refetch: PropTypes.func,
     }).isRequired,
   }
-
-  // componentWillMount() {
-  //      this.props.subscribeToScorecardUpdates()
-  //  }
-
+  state = {
+    animation1: true,
+    animation2: false,
+  }
   componentWillReceiveProps = (nextProps) => {
     /*
     requestRefetchUserScore action creator is called from other components which
@@ -50,6 +51,17 @@ class UserScore extends Component {
       refetchUserScoreComplete,
       data
     } = this.props
+
+    if (this.props.data[levels.one.name] && nextProps.data[levels.one.name]){
+      const currentScore = calculateTotalScore(this.props.data)
+      const nextScore = calculateTotalScore(nextProps.data)
+      if (currentScore !== nextScore){
+        this.setState({
+          animation1:!this.state.animation1,
+          animation2:!this.state.animation2
+        })
+      }
+    }
 
     if (nextProps.shouldRefetchUserScore && !this.props.shouldRefetchUserScore) {
       data.refetch()
@@ -68,6 +80,7 @@ class UserScore extends Component {
     )
   }
   render(){
+    const {animation1, animation2} = this.state
     const {data} = this.props
     if (data.loading){
       return <div></div>
@@ -77,11 +90,12 @@ class UserScore extends Component {
       action: "UserScore query in UserScore.js"
       })
     }
+    /* animation 1 & 2 used to rerender the entire Score component on prop
+     changes to rerun css animations: */
     return(
       <div>
-        {/* {animation1 && this.renderScore()}
-        {animation2 && this.renderScore()} */}
-        {this.renderScore()}
+        {animation1 && this.renderScore()}
+        {animation2 && this.renderScore()}
       </div>
     )
   }
