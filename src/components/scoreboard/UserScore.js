@@ -42,26 +42,31 @@ class UserScore extends Component {
     animation2: false,
   }
   componentWillReceiveProps = (nextProps) => {
-    /*
-    requestRefetchUserScore action creator is called from other components which
-    sets the shouldRefetchUserScore state to true. If refetch is successfull
-    need to reset that piece of state to false.
-    */
     const {
       refetchUserScoreComplete,
       data
     } = this.props
 
+    /* make sure that atleast one field is present (can't calculate score
+    without fields) */
     if (this.props.data[levels.one.name] && nextProps.data[levels.one.name]){
       const currentScore = calculateTotalScore(this.props.data)
       const nextScore = calculateTotalScore(nextProps.data)
       if (currentScore !== nextScore){
         this.setState({
+          /* use these state changes to rerender Score component on each score
+          change to restart the css animation: */
           animation1:!this.state.animation1,
           animation2:!this.state.animation2
         })
       }
     }
+
+    /*
+    requestRefetchUserScore action creator is called from other components which
+    sets the shouldRefetchUserScore state to true. If refetch is successful
+    need to reset that piece of state to false.
+    */
 
     if (nextProps.shouldRefetchUserScore && !this.props.shouldRefetchUserScore) {
       data.refetch()

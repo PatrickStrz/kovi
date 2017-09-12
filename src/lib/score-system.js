@@ -35,6 +35,7 @@ export const levels = {
 
 
 export const CHALLENGE_CREATE_SCORE = levels.one
+
 /* accepts data from a query in the shape of:
 "data": {
     "levelOne": {
@@ -46,8 +47,8 @@ export const CHALLENGE_CREATE_SCORE = levels.one
     "level3": {
       "count": 0
     }
+    ...
 */
-
 
 export const calculateTotalScore = (data) => {
   const level1Count = data[levels.one.name].count

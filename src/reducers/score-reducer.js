@@ -15,7 +15,7 @@ const updateCommunityScore = (state, action) => {
   }
   else if (state.communityScoreEventId !== action.scoreId) {
     return({
-      // animation hack - switching betwe en 2 animation states acts as a reset :
+      // animation hack - switching between 2 animation states acts as a reset :
       communityAnimation1: !state.communityAnimation1,
       communityAnimation2: !state.communityAnimation2,
       communityScoreEventId: action.scoreId,
