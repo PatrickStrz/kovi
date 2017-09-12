@@ -8,13 +8,13 @@ import {
 } from '../../actions/score-actions'
 //gql
 import {graphql} from 'react-apollo'
-import {USER_SCORECARD_QUERY} from '../../gql/Scorecard/queries'
-import {USER_SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
+import {USER_SCORE_COUNTS_QUERY} from 'gql/Score/queries'
 //other
 import styled from 'styled-components'
 import {logException} from '../../config'
 import {muiColors} from 'styles/theme/colors'
 import {bounceInKeyframes} from 'styles/animations/keyframes'
+import {calculateTotalScore} from 'lib/score-system'
 
 //components
 
@@ -41,15 +41,12 @@ class UserScore extends Component {
   //  }
 
   componentWillReceiveProps = (nextProps) => {
-    /* once component finishes loading data, inital score can be set
-    using the value returned from the query
+    /*
+    requestRefetchUserScore action creator is called from other components which
+    sets the shouldRefetchUserScore state to true. If refetch is successfull
+    need to reset that piece of state to false.
     */
-    // if (this.props.data.loading && !nextProps.data.loading) {
-    //   const userScore = nextProps.data.Scorecard.total
-    //   this.props.initializeUserScore(userScore)
-    // }
     const {
-      refetchQuery,
       refetchUserScoreComplete,
       data
     } = this.props
@@ -66,7 +63,7 @@ class UserScore extends Component {
   renderScore = () => {
     return(
       <Score>
-        {this.props.data.Scorecard.total}
+        {calculateTotalScore(this.props.data)}
       </Score>
     )
   }
@@ -80,7 +77,6 @@ class UserScore extends Component {
       action: "UserScore query in UserScore.js"
       })
     }
-    // to have a new render on score change to replay animation
     return(
       <div>
         {/* {animation1 && this.renderScore()}
@@ -91,10 +87,10 @@ class UserScore extends Component {
   }
 }
 
-const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
+const UserScoreWithData = graphql(USER_SCORE_COUNTS_QUERY,{
   options: (ownProps)=>({
     variables: {
-      id: ownProps.scorecardId,
+      scorecardId: ownProps.scorecardId,
     },
     fetchPolicy: 'network-only',
   }),

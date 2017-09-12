@@ -35,3 +35,33 @@ export const levels = {
 
 
 export const CHALLENGE_CREATE_SCORE = levels.one
+/* accepts data from a query in the shape of:
+"data": {
+    "levelOne": {
+      "count": 265
+    },
+    "level2": {
+      "count": 2
+    },
+    "level3": {
+      "count": 0
+    }
+*/
+
+
+export const calculateTotalScore = (data) => {
+  const level1Count = data[levels.one.name].count
+  const level2Count = data[levels.two.name].count
+  const level3Count = data[levels.three.name].count
+
+  const level1Value = levels.one.value
+  const level2Value = levels.two.value
+  const level3Value = levels.three.value
+
+  const CommunityTotal = (
+    level1Count * level1Value +
+    level2Count * level2Value +
+    level3Count * level3Value
+  )
+  return(CommunityTotal)
+}

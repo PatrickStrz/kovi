@@ -17,7 +17,7 @@ import {
   UPDATE_CHALLENGE_MUTATION,
 } from 'gql/Challenge/mutations'
 import {ALL_CHALLENGES_QUERY} from 'gql/Challenge/queries'
-import {CHALLENGE_CREATE_SCORE} from 'gql/Score/score-system'
+import {CHALLENGE_CREATE_SCORE} from 'lib/score-system'
 //helpers+other
 import {logException} from 'config'
 import styled from 'styled-components'
