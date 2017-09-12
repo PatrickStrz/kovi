@@ -4,20 +4,19 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  initializeUserScore,
-  updateUserScore,
+  refetchUserScoreComplete,
 } from '../../actions/score-actions'
 //gql
 import {graphql} from 'react-apollo'
-import {USER_SCORECARD_QUERY} from '../../gql/Scorecard/queries'
-import {USER_SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
+import {USER_SCORE_COUNTS_QUERY} from 'gql/Score/queries'
 //other
 import styled from 'styled-components'
 import {logException} from '../../config'
 import {muiColors} from 'styles/theme/colors'
 import {bounceInKeyframes} from 'styles/animations/keyframes'
+import {calculateTotalScore, levels} from 'lib/score-system'
 
-//components
+// styled components:
 
 const Score = styled.p`
   display: inline-block;
@@ -26,35 +25,68 @@ const Score = styled.p`
   animation: ${bounceInKeyframes} 0.5s;
 `
 
+// default component
+
 class UserScore extends Component {
   static propTypes = {
-    subscribeToScorecardUpdates: PropTypes.func.isRequired, //apollo HOC
     scorecardId: PropTypes.string,
+    data: PropTypes.shape({
+      loading: PropTypes.bool,
+      error: PropTypes.object,
+      Scorecard: PropTypes.object,
+      refetch: PropTypes.func,
+    }).isRequired,
   }
-
-  componentWillMount() {
-       this.props.subscribeToScorecardUpdates()
-   }
-
+  state = {
+    animation1: true,
+    animation2: false,
+  }
   componentWillReceiveProps = (nextProps) => {
-    /* once component finishes loading data, inital score can be set
-    using the value returned from the query
+    const {
+      refetchUserScoreComplete,
+      data
+    } = this.props
+
+    /* make sure that atleast one field is present (can't calculate score
+    without fields) */
+    if (this.props.data[levels.one.name] && nextProps.data[levels.one.name]){
+      const currentScore = calculateTotalScore(this.props.data)
+      const nextScore = calculateTotalScore(nextProps.data)
+      if (currentScore !== nextScore){
+        this.setState({
+          /* use these state changes to rerender Score component on each score
+          change to restart the css animation: */
+          animation1:!this.state.animation1,
+          animation2:!this.state.animation2
+        })
+      }
+    }
+
+    /*
+    requestRefetchUserScore action creator is called from other components which
+    sets the shouldRefetchUserScore state to true. If refetch is successful
+    need to reset that piece of state to false.
     */
-    if (this.props.data.loading && !nextProps.data.loading) {
-      const userScore = nextProps.data.Scorecard.total
-      this.props.initializeUserScore(userScore)
+
+    if (nextProps.shouldRefetchUserScore && !this.props.shouldRefetchUserScore) {
+      data.refetch()
+    }
+
+    else if (this.props.shouldRefetchUserScore){
+      refetchUserScoreComplete()
     }
   }
 
   renderScore = () => {
     return(
       <Score>
-        {this.props.userScore}
+        {calculateTotalScore(this.props.data)}
       </Score>
     )
   }
   render(){
-    const {data, animation1, animation2} = this.props
+    const {animation1, animation2} = this.state
+    const {data} = this.props
     if (data.loading){
       return <div></div>
     }
@@ -63,7 +95,8 @@ class UserScore extends Component {
       action: "UserScore query in UserScore.js"
       })
     }
-    // to have a new render on score change to replay animation
+    /* animation 1 & 2 used to rerender the entire Score component on prop
+     changes to rerun css animations: */
     return(
       <div>
         {animation1 && this.renderScore()}
@@ -73,56 +106,27 @@ class UserScore extends Component {
   }
 }
 
-const UserScoreWithData = graphql(USER_SCORECARD_QUERY,{
+const UserScoreWithData = graphql(USER_SCORE_COUNTS_QUERY,{
   options: (ownProps)=>({
     variables: {
-      id: ownProps.scorecardId,
+      scorecardId: ownProps.scorecardId,
     },
     fetchPolicy: 'network-only',
   }),
-  props: ({ownProps, data}) => {
-    return {
-      data,
-      subscribeToScorecardUpdates: () => {
-        return data.subscribeToMore({
-          document: USER_SCORE_CREATED_SUBSCRIPTION,
-          variables: {userScorecardId: ownProps.scorecardId},
-          updateQuery: (prev, {subscriptionData}) => {
-            if (!subscriptionData.data) {
-                return prev
-            }
-            const {value,id} = subscriptionData.data.Score.node
-            const scorecardId = subscriptionData.data.Score.node.scorecard.id
-            /* even though filtering subscriptions by scorecard id, receiveing
-            events that belong to other scorecards, correcting for this: */
-            if (ownProps.scorecardId === scorecardId){
-              ownProps.updateUserScore(value, id)
-            }
-
-            return {
-                /* don't update apollo store using redux app store for
-                scores */
-                prev,
-            }
-          }
-        })
-      },
-    }
-  }
-})(UserScore)
+ })(UserScore)
 
 const mapStateToProps = (state) => {
   return {
     userScore: state.app.scores.userScore,
     animation1: state.app.scores.userAnimation1,
     animation2: state.app.scores.userAnimation2,
+    shouldRefetchUserScore: state.app.scores.shouldRefetchUserScore
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-      initializeUserScore,
-      updateUserScore,
+      refetchUserScoreComplete,
     }, dispatch)
 }
 

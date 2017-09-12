@@ -5,10 +5,7 @@ const initialState = {
   communityScoreEventId:'',
   communityAnimation1: true,
   communityAnimation2: false,
-  userScore: '',
-  userScoreEventId:'',
-  userAnimation1: true,
-  userAnimation2: false,
+  shouldRefetchUserScore: false,
 }
 
 const updateCommunityScore = (state, action) => {
@@ -27,21 +24,6 @@ const updateCommunityScore = (state, action) => {
   }
 }
 
-const updateUserScore = (state, action) => {
-  // protect from duplicate events causing score to be our of sync with server:
-  if (state.userScoreEventId === action.scoreId){
-    return state.userScore
-  }
-  else if (state.userScoreEventId !== action.scoreId) {
-    return({
-      // animation hack - switching between 2 animation states acts as a reset :
-      userAnimation1: !state.userAnimation1,
-      userAnimation2: !state.userAnimation2,
-      userScoreEventId: action.scoreId,
-      userScore: state.userScore + action.value,
-    })
-  }
-}
 
 export default function scoreReducer(state=initialState, action) {
   switch (action.type) {
@@ -53,14 +35,14 @@ export default function scoreReducer(state=initialState, action) {
         ...state,
         ...updatedCommunityState
       }
-    case ActionTypes.INITIAL_USER_SCORE:
-      return {...state, userScore: action.value}
-    case ActionTypes.NEW_USER_SCORE:
-      const updatedUserState = updateUserScore(state, action)
+    case ActionTypes.REQUEST_REFETCH_USER_SCORE:
       return {
-        ...state,
-        ...updatedUserState
-    }
+        ...state, shouldRefetchUserScore: true,
+      }
+    case ActionTypes.REFETCH_USER_SCORE_COMPLETE:
+      return {
+        ...state, shouldRefetchUserScore: false,
+      }
     default:
       return state
   }

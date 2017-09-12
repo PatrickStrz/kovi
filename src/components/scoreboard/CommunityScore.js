@@ -11,13 +11,13 @@ import {
 } from '../../actions/score-actions'
 //gql
 import {graphql} from 'react-apollo'
-import {levels} from '../../gql/Score/score-system'
 import {COMMUNITY_SCORE_COUNTS_QUERY} from '../../gql/Score/queries'
 import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
 import {logException} from 'config'
 import {muiColors} from 'styles/theme/colors'
 import {bounceInKeyframes} from 'styles/animations/keyframes'
+import {calculateTotalScore} from 'lib/score-system'
 
 const Score = styled.p`
   display: inline-block;
@@ -44,28 +44,12 @@ class CommunityScore extends Component {
 
    componentWillReceiveProps = (nextProps) => {
      if (this.props.data.loading && !nextProps.data.loading) {
-       const communityScore = this.getTotalCommunityScore(nextProps.data)
+       const communityScore = calculateTotalScore(nextProps.data)
        this.props.initializeCommunityScore(communityScore)
      }
    }
 
-    //this total is calculated based on the scoring system in score-system.js:
-  getTotalCommunityScore = (data) => {
-    const level1Count = data[levels.one.name].count
-    const level2Count = data[levels.two.name].count
-    const level3Count = data[levels.three.name].count
-
-    const level1Value = levels.one.value
-    const level2Value = levels.two.value
-    const level3Value = levels.three.value
-
-    const CommunityTotal = (
-      level1Count * level1Value +
-      level2Count * level2Value +
-      level3Count * level3Value
-    )
-    return(CommunityTotal)
-  }
+    //this total is calculated based on the scoring system in lib/score-system:
 
   renderScore = () => {
       return <Score>{this.props.communityScore} points</Score>
