@@ -141,7 +141,7 @@ class BottomBar extends Component {
         docked={false}
         handleClose={this.handleCommunityClose}
         >
-        <Community/>
+          {this.props.isCommunityMobileOpen && <Community/> }
       </MuiDrawer>
     </div>
     )
