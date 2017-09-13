@@ -92,8 +92,14 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
             if (!subscriptionData.data) {
                 return prev
             }
-            const {value, id} = subscriptionData.data.Score.node
-            ownProps.updateCommunityScore(value, id)
+            const {value, id, scorecard} = subscriptionData.data.Score.node
+            ownProps.updateCommunityScore(
+              value,
+              id,
+              scorecard.user.id,
+              scorecard.user.picture,
+            )
+
             return {
                 /* don't update apollo store using redux app store for
                 scores */
