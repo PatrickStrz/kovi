@@ -20,7 +20,6 @@ import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
 import ChallengeDetailContainer from 'components/ChallengeDetailContainer'
 import {Route} from 'react-router'
-import LightSwitch from 'components/LightSwitch'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -84,7 +83,6 @@ class Home extends Component {
               <Community/>
             </RightContent>}
           showLines={false}
-          leftPanelContent={<LightSwitch />}
         />
         <FloatingActionButton
           backgroundColor='#38c1be'

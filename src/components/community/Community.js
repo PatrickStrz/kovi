@@ -4,6 +4,7 @@ import {muiColors} from 'styles/theme/colors'
 //components
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
+import ProfilePop from 'components/ProfilePop'
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -13,7 +14,7 @@ const Header = styled.p`
   margin: auto;
 `
 
-const HeadingContainer = styled.div`
+const HeadingBox = styled.div`
   background-color: ${muiColors.secondary1};
   background-color: #bff9f7;  ${''/* margin: 5px; */}
   padding: 10px;
@@ -24,9 +25,9 @@ const HeadingContainer = styled.div`
   margin-bottom: 10px;
 `
 
-const ScoreContainer = styled.div`
+const ScoreBox = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: center;
   flex-direction: row;
   justify-content: center;
   background-color: white;
@@ -35,17 +36,23 @@ const ScoreContainer = styled.div`
   padding-left: 15px;
   padding-right: 15px;
 `
+const ProfilePopBox = styled.div`
+  margin-left: 5px;
+`
 
 class Community extends Component {
   render(){
     return(
       <div>
-        <HeadingContainer>
+        <HeadingBox>
           <Header>Community</Header>
-          <ScoreContainer>
+          <ScoreBox>
             <CommunityScore />
-          </ScoreContainer>
-        </HeadingContainer>
+            <ProfilePopBox>
+              <ProfilePop/>
+            </ProfilePopBox>
+          </ScoreBox>
+        </HeadingBox>
         <TasksContainer />
       </div>
     )

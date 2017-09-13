@@ -5,7 +5,6 @@ export const initializeCommunityScore = (value) => ({
   value
 })
 export const updateCommunityScore = (value, scoreId, userId, userPictureUrl) =>{
-  debugger
   return({
     type: ActionTypes.NEW_COMMUNITY_SCORE,
     value,

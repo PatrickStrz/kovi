@@ -2,10 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import {Avatar} from 'ui-kit'
+import Animation from 'ui-kit/Animation'
 
-class LightSwitch extends Component {
+class ProfilePop extends Component {
   state = {
-    on: false,
     show: false,
   }
   componentWillReceiveProps = (nextProps) => {
@@ -28,8 +28,8 @@ class LightSwitch extends Component {
   render () {
     const {userPictureUrl} = this.props
     return (
-      <div onClick={this.handleClick} style={{display:(this.state.on ?  'none' : 'block'),}}>
-        {this.state.show && <Avatar imageUrl={userPictureUrl} size='25px'/>}
+      <div>
+        {this.state.show && <Animation><Avatar imageUrl={userPictureUrl} size='25px'/></Animation>}
       </div>
     )
   }
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => ({
   communityScoreEventId: state.app.scores.communityScoreEventId
 })
 
-export default ReactTimeout(connect(mapStateToProps)(LightSwitch))
+export default ReactTimeout(connect(mapStateToProps)(ProfilePop))
