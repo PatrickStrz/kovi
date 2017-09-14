@@ -33,12 +33,27 @@ class SelfDestruct extends Component {
   state = {
     in: false
   }
+
   componentDidMount = () => {
     this.setState({in: true})
   }
+
   startExit = () => {
     this.setState({in: false})
   }
+
+  renderChildren = (state) => {
+    const {enterAnimationDuration, exitAnimationDuration} = this.props
+    return(
+      <Box state={state}
+        enterAnimationDuration={enterAnimationDuration}
+        exitAnimationDuration={exitAnimationDuration}
+      >
+        {this.props.children}
+      </Box>
+    )
+  }
+
   render(){
     const {
       enterAnimationDuration,
@@ -60,12 +75,7 @@ class SelfDestruct extends Component {
           unmountOnExit={true}
           onExited={onSelfDestruct && onSelfDestruct}
           >
-          {state => <Box state={state}
-            enterAnimationDuration={enterAnimationDuration}
-            exitAnimationDuration={exitAnimationDuration}
-            >
-              {this.props.children}
-          </Box>}
+          {state => this.renderChildren(state) }
         </Transition>
       </div>
     )
@@ -73,9 +83,9 @@ class SelfDestruct extends Component {
 }
 
 SelfDestruct.propTypes = {
-  enterAnimationDuration: PropTypes.number.isRequired, //ms
-  exitAnimationDuration: PropTypes.number.isRequired, //ms
-  stayDuration: PropTypes.number.isRequired, //ms
+  enterAnimationDuration: PropTypes.number.isRequired, // milliseconds
+  exitAnimationDuration: PropTypes.number.isRequired, // milliseconds
+  stayDuration: PropTypes.number.isRequired, // milliseconds
   children: PropTypes.node.isRequired,
   onSelfDestruct: PropTypes.func,
 }

@@ -50,7 +50,6 @@ class Community extends Component {
             <CommunityScore />
             <ProfilePopBox>
               <ProfilePop/>
-              {/* <TransitionTest /> */}
             </ProfilePopBox>
           </ScoreBox>
         </HeadingBox>
