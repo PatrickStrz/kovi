@@ -12,8 +12,6 @@ exitAnimation Completes/
 */
 
 const Box = styled.div`
-height: 50px;
-width: 50px;
 ${props => {
   switch (props.state) {
     case 'entering':
@@ -43,7 +41,12 @@ class SelfDestruct extends Component {
     this.setState({in:!this.state.in})
   }
   render(){
-    const {enterAnimationDuration, exitAnimationDuration, stayDuration} = this.props
+    const {
+      enterAnimationDuration,
+      exitAnimationDuration,
+      stayDuration,
+      onSelfDestruct,
+    } = this.props
     const duration = {
       enter: enterAnimationDuration + stayDuration,
       exit: exitAnimationDuration
@@ -51,19 +54,19 @@ class SelfDestruct extends Component {
     const userPictureUrl = "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/14079619_10154275347846251_1836046172102598566_n.jpg?oh=ee0f539bcb033315744599dfc7c02854&oe=5A55AE1C"
     return(
       <div>
-        <div onClick={this.toggle}>click me</div>
         <Transition
           in={this.state.in}
           timeout={duration}
           onEntered={this.toggle}
+
           unmountOnExit={true}
+          onExited={onSelfDestruct && onSelfDestruct}
           >
           {state => <Box state={state}
             enterAnimationDuration={enterAnimationDuration}
             exitAnimationDuration={exitAnimationDuration}
             >
               {this.props.children}
-            {/* <Avatar imageUrl={userPictureUrl} size='25px'/> */}
           </Box>}
         </Transition>
       </div>
@@ -76,6 +79,7 @@ SelfDestruct.propTypes = {
   exitAnimationDuration: PropTypes.number.isRequired, //ms
   stayDuration: PropTypes.number.isRequired, //ms
   children: PropTypes.node.isRequired,
+  onSelfDestruct: PropTypes.func,
 }
 
 export default SelfDestruct

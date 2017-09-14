@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import ReactTimeout from 'react-timeout'
 import {Avatar} from 'ui-kit'
 import Animation from 'ui-kit/Animation'
+import {SelfDestruct} from 'ui-kit'
 
 class ProfilePop extends Component {
   state = {
@@ -11,25 +12,23 @@ class ProfilePop extends Component {
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.userPictureUrl && nextProps.communityScoreEventId){
       this.setState({show: true})
-      this.props.setTimeout(this.hide, 3000)
+      // this.props.setTimeout(this.hide, 3000)
     }
   }
 
-
-  toggle = () => {
-    this.setState({ on: !this.state.on })
-  }
-  hide = () => {
-    this.setState({ show: false })
-  }
-  handleClick = (e) => {
-    this.props.setTimeout(this.toggle, 3000) // call the `toggle` function after 5000ms
-  }
   render () {
     const {userPictureUrl} = this.props
     return (
       <div>
-        {this.state.show && <Animation><Avatar imageUrl={userPictureUrl} size='25px'/></Animation>}
+
+          {this.state.show &&  <SelfDestruct
+              enterAnimationDuration={500}
+              exitAnimationDuration={1000}
+              stayDuration={2000}
+              onSelfDestruct={()=>this.setState({show:false})}
+            > <Avatar imageUrl={userPictureUrl} size='25px'/></SelfDestruct>}
+
+
       </div>
     )
   }

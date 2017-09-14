@@ -20,7 +20,7 @@ import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
 import ChallengeDetailContainer from 'components/ChallengeDetailContainer'
 import {Route} from 'react-router'
-import SelfDestruct from 'components/SelfDestruct'
+import {SelfDestruct} from 'ui-kit'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -83,11 +83,11 @@ class Home extends Component {
             <RightContent>
               <Community/>
             </RightContent>}
-            leftPanelContent={<SelfDestruct
-              enterAnimationDuration={500}
-              stayDuration={3000}
-              exitAnimationDuration={1000}
-            ><h1>yoooooooooo! self dest</h1></SelfDestruct>}
+            // leftPanelContent={<SelfDestruct
+            //   enterAnimationDuration={500}
+            //   stayDuration={3000}
+            //   exitAnimationDuration={1000}
+            // ><h1>yoooooooooo! self dest</h1></SelfDestruct>}
           showLines={false}
         />
         <FloatingActionButton
