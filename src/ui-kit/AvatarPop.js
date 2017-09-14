@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
 import {Avatar} from 'ui-kit'
 import {SelfDestruct} from 'ui-kit'
 
@@ -11,12 +10,11 @@ class ProfilePop extends Component {
     show: false,
   }
   static propTypes = {
-    //redux:
     userPictureUrl: PropTypes.string.isRequired,
-    communityScoreEventId: PropTypes.string.isRequired,
+    uniqueEventId: PropTypes.string.isRequired,
   }
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.userPictureUrl && nextProps.communityScoreEventId){
+    if (nextProps.userPictureUrl && nextProps.uniqueEventId){
       this.setState({show: true})
     }
   }
@@ -44,9 +42,4 @@ class ProfilePop extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  userPictureUrl: state.app.scores.lastContributor.pictureUrl,
-  communityScoreEventId: state.app.scores.communityScoreEventId
-})
-
-export default connect(mapStateToProps)(ProfilePop)
+export default ProfilePop

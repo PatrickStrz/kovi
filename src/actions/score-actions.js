@@ -12,7 +12,6 @@ export const updateCommunityScore = (value, scoreId, userId, userPictureUrl) =>{
     userId,
     userPictureUrl,
   })
-
 }
 
 export const requestRefetchUserScore = () => ({

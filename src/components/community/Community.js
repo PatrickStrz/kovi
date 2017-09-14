@@ -1,10 +1,14 @@
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+//redux
+import {connect} from 'react-redux'
+//other
 import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
 //components
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
-import ProfilePop from 'components/ProfilePop'
+import {AvatarPop} from 'ui-kit'
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -36,21 +40,31 @@ const ScoreBox = styled.div`
   padding-left: 15px;
   padding-right: 15px;
 `
-const ProfilePopBox = styled.div`
+const AvatarPopBox = styled.div`
   margin-left: 5px;
 `
 
 class Community extends Component {
+  static propTypes = {
+    //redux
+    userPictureUrl: PropTypes.string.isRequired,
+    communityScoreEventId: PropTypes.string.isRequired,
+  }
+
   render(){
+    const {userPictureUrl, communityScoreEventId} = this.props
     return(
       <div>
         <HeadingBox>
           <Header>Community</Header>
           <ScoreBox>
             <CommunityScore />
-            <ProfilePopBox>
-              <ProfilePop/>
-            </ProfilePopBox>
+            <AvatarPopBox>
+              <AvatarPop
+                userPictureUrl={userPictureUrl}
+                uniqueEventId={communityScoreEventId}
+              />
+            </AvatarPopBox>
           </ScoreBox>
         </HeadingBox>
         <TasksContainer />
@@ -59,4 +73,9 @@ class Community extends Component {
   }
 }
 
-export default Community
+const mapStateToProps = (state) => ({
+  userPictureUrl: state.app.scores.lastContributor.pictureUrl,
+  communityScoreEventId: state.app.scores.communityScoreEventId
+})
+
+export default connect(mapStateToProps)(Community)

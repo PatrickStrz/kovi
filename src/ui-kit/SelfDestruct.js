@@ -4,12 +4,6 @@ import styled, {css} from 'styled-components'
 import Transition from 'react-transition-group/Transition'
 import {bounceIn, fadeOut} from 'styles/animations/keyframes'
 
-/*
-Self destructing composite component with customizable in/out animations.
-Children stay unaltered for length of 'stayDuration' prop and leave the DOM afer
-exitAnimation Completes/
-*/
-
 const Box = styled.div`
 ${props => {
   switch (props.state) {
@@ -28,6 +22,12 @@ ${props => {
     }
   }}
 `
+
+/*
+Component that mounts and unmounts children after a certain duration + in/out
+animations. Children stay unaltered for length of 'stayDuration' prop and
+leave the DOM afer exitAnimation Completes/
+*/
 
 class SelfDestruct extends Component {
   state = {
