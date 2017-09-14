@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {requireAuth} from '../lib/auth'
 import styled, {css} from 'styled-components'
 import {muiColors, colors} from 'styles/theme/colors'
-import {bounceInKeyframes} from 'styles/animations/keyframes'
+import {bounceIn} from 'styles/animations/keyframes'
 //components
 import FaIconButton from 'ui-kit/icons/FaIconButton'
 
@@ -13,7 +13,7 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   ${ props => (props.animate) && css`
-      animation: ${bounceInKeyframes} 0.5s
+      animation: ${bounceIn} 0.5s
     `}
 `
 const Count = styled.p`

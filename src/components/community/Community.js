@@ -1,9 +1,14 @@
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+//redux
+import {connect} from 'react-redux'
+//other
 import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
 //components
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
+import {AvatarPop} from 'ui-kit'
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -13,7 +18,7 @@ const Header = styled.p`
   margin: auto;
 `
 
-const HeadingContainer = styled.div`
+const HeadingBox = styled.div`
   background-color: ${muiColors.secondary1};
   background-color: #bff9f7;  ${''/* margin: 5px; */}
   padding: 10px;
@@ -24,9 +29,9 @@ const HeadingContainer = styled.div`
   margin-bottom: 10px;
 `
 
-const ScoreContainer = styled.div`
+const ScoreBox = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: center;
   flex-direction: row;
   justify-content: center;
   background-color: white;
@@ -35,21 +40,42 @@ const ScoreContainer = styled.div`
   padding-left: 15px;
   padding-right: 15px;
 `
+const AvatarPopBox = styled.div`
+  margin-left: 5px;
+`
 
 class Community extends Component {
+  static propTypes = {
+    //redux
+    userPictureUrl: PropTypes.string.isRequired,
+    communityScoreEventId: PropTypes.string.isRequired,
+  }
+
   render(){
+    const {userPictureUrl, communityScoreEventId} = this.props
     return(
       <div>
-        <HeadingContainer>
+        <HeadingBox>
           <Header>Community</Header>
-          <ScoreContainer>
+          <ScoreBox>
             <CommunityScore />
-          </ScoreContainer>
-        </HeadingContainer>
+            <AvatarPopBox>
+              <AvatarPop
+                userPictureUrl={userPictureUrl}
+                uniqueEventId={communityScoreEventId}
+              />
+            </AvatarPopBox>
+          </ScoreBox>
+        </HeadingBox>
         <TasksContainer />
       </div>
     )
   }
 }
 
-export default Community
+const mapStateToProps = (state) => ({
+  userPictureUrl: state.app.scores.lastContributor.pictureUrl,
+  communityScoreEventId: state.app.scores.communityScoreEventId
+})
+
+export default connect(mapStateToProps)(Community)

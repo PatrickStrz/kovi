@@ -6,6 +6,12 @@ export const SCORE_CREATED_SUBSCRIPTION = gql`
       node{
         id
         value
+        scorecard{
+          user{
+            id
+            picture
+          }
+        }
       }
     }
   }

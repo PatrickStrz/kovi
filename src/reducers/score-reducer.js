@@ -6,6 +6,7 @@ const initialState = {
   communityAnimation1: true,
   communityAnimation2: false,
   shouldRefetchUserScore: false,
+  lastContributor: {id:'', pictureUrl:'' },
 }
 
 const updateCommunityScore = (state, action) => {
@@ -20,6 +21,7 @@ const updateCommunityScore = (state, action) => {
       communityAnimation2: !state.communityAnimation2,
       communityScoreEventId: action.scoreId,
       communityScore: state.communityScore + action.value,
+      lastContributor: {id: action.userId, pictureUrl: action.userPictureUrl}
     })
   }
 }

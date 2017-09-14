@@ -42,3 +42,13 @@ Webtask ( serverless functions)
 
 * check out `./docs` for kovi specific docs
 * check out `CREATE_REACT_APP_README.md` for any create-react-app stuff.
+
+## Project structure overview:
+1. All GraphQL operations (queries, mutations, subscriptions) in `gql/` directory.
+2. All custom easily reusable ui components in `ui-kit/`
+3. All other components in `components/` directory. Data fetching components
+(Components with Apollo gql queries) names end in Container. ** Don't confuse
+with redux style Container-Component project structure. Other components may
+still be connected to redux and Apollo (i.e so don't have to pass muations down
+multiple levels), but they are not primary data fetching components.
+4. Global style related files are in `styles/` directory  ( animations/ css/ z-Index ...)
