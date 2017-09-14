@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import ReactTimeout from 'react-timeout'
 import {Avatar} from 'ui-kit'
-import Animation from 'ui-kit/Animation'
 import {SelfDestruct} from 'ui-kit'
+
+// profile that pops in and out on state change -->
 
 class ProfilePop extends Component {
   state = {
@@ -12,23 +12,28 @@ class ProfilePop extends Component {
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.userPictureUrl && nextProps.communityScoreEventId){
       this.setState({show: true})
-      // this.props.setTimeout(this.hide, 3000)
     }
   }
 
-  render () {
+  renderPoppingAvatar = () => {
     const {userPictureUrl} = this.props
+    return(
+      <SelfDestruct
+          enterAnimationDuration={500}
+          exitAnimationDuration={1000}
+          stayDuration={2000}
+          onSelfDestruct={()=>this.setState({show:false})}
+        >
+        <Avatar imageUrl={userPictureUrl} size='25px'/>
+      </SelfDestruct>
+
+    )
+  }
+
+  render () {
     return (
       <div>
-
-          {this.state.show &&  <SelfDestruct
-              enterAnimationDuration={500}
-              exitAnimationDuration={1000}
-              stayDuration={2000}
-              onSelfDestruct={()=>this.setState({show:false})}
-            > <Avatar imageUrl={userPictureUrl} size='25px'/></SelfDestruct>}
-
-
+        {this.state.show && this.renderPoppingAvatar() }
       </div>
     )
   }
@@ -39,4 +44,4 @@ const mapStateToProps = (state) => ({
   communityScoreEventId: state.app.scores.communityScoreEventId
 })
 
-export default ReactTimeout(connect(mapStateToProps)(ProfilePop))
+export default connect(mapStateToProps)(ProfilePop)

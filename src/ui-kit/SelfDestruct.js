@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import styled, {css, keyframes} from 'styled-components'
+import styled, {css} from 'styled-components'
 import Transition from 'react-transition-group/Transition'
 import {bounceIn, fadeOut} from 'styles/animations/keyframes'
-import {Avatar} from 'ui-kit'
 
 /*
 Self destructing composite component with customizable in/out animations.
@@ -35,10 +34,10 @@ class SelfDestruct extends Component {
     in: false
   }
   componentDidMount = () => {
-    this.setState({in:true})
+    this.setState({in: true})
   }
-  toggle = () => {
-    this.setState({in:!this.state.in})
+  startExit = () => {
+    this.setState({in: false})
   }
   render(){
     const {
@@ -51,14 +50,13 @@ class SelfDestruct extends Component {
       enter: enterAnimationDuration + stayDuration,
       exit: exitAnimationDuration
     }
-    const userPictureUrl = "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/14079619_10154275347846251_1836046172102598566_n.jpg?oh=ee0f539bcb033315744599dfc7c02854&oe=5A55AE1C"
+
     return(
       <div>
         <Transition
           in={this.state.in}
           timeout={duration}
-          onEntered={this.toggle}
-
+          onEntered={this.startExit}
           unmountOnExit={true}
           onExited={onSelfDestruct && onSelfDestruct}
           >
