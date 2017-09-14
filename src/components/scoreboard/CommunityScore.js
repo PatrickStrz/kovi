@@ -16,7 +16,7 @@ import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
 import {logException} from 'config'
 import {muiColors} from 'styles/theme/colors'
-import {bounceInKeyframes} from 'styles/animations/keyframes'
+import {bounceIn} from 'styles/animations/keyframes'
 import {calculateTotalScore} from 'lib/score-system'
 
 const Score = styled.p`
@@ -24,7 +24,7 @@ const Score = styled.p`
   color: ${muiColors.primary1};
   font-size: 18px;
   margin: 0px;
-  animation: ${bounceInKeyframes} 0.5s;
+  animation: ${bounceIn} 0.5s;
 `
 
 class CommunityScore extends Component {

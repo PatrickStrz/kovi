@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {bounceInKeyframes} from 'styles/animations/keyframes'
+import {bounceIn} from 'styles/animations/keyframes'
 
 const AnimationContainer = styled.div`
-  animation: ${bounceInKeyframes} 0.5s;
+  animation: ${bounceIn} 0.5s;
 `
 const Animation = (props) => {
   return(

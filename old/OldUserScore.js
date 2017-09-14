@@ -15,7 +15,7 @@ import {USER_SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 import styled from 'styled-components'
 import {logException} from '../../config'
 import {muiColors} from 'styles/theme/colors'
-import {bounceInKeyframes} from 'styles/animations/keyframes'
+import {bounceIn} from 'styles/animations/keyframes'
 
 //components
 
@@ -23,7 +23,7 @@ const Score = styled.p`
   display: inline-block;
   color: ${muiColors.primary1};
   font-size: 18px;
-  animation: ${bounceInKeyframes} 0.5s;
+  animation: ${bounceIn} 0.5s;
 `
 
 class UserScore extends Component {

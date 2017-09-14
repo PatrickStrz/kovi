@@ -8,7 +8,7 @@ export const loadingOpacityKeyframes = keyframes`
   100% {opacity:1;}
 `
 
-export const bounceInKeyframes = keyframes`
+export const bounceIn = keyframes`
   0% {
     transform: scale(0.1);
     opacity: 0;
@@ -20,4 +20,21 @@ export const bounceInKeyframes = keyframes`
   100% {
     transform: scale(1);
   }
+`
+
+export const slideIn = keyframes`
+  from {
+    margin-left:100%;
+    width:300%
+  }
+
+  to {
+    margin-left:0%;
+    width:100%;
+  }
+`
+
+export const fadeOut = keyframes`
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
 `
