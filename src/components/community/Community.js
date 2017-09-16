@@ -2,6 +2,8 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //redux
 import {connect} from 'react-redux'
+import {resetLastContributor} from 'actions/score-actions'
+import {bindActionCreators} from 'redux'
 //other
 import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
@@ -9,6 +11,7 @@ import {muiColors} from 'styles/theme/colors'
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop} from 'ui-kit'
+
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -51,6 +54,10 @@ class Community extends Component {
     communityScoreEventId: PropTypes.string.isRequired,
   }
 
+  onHideAvatarPop = () => {
+    this.props.resetLastContributor()
+  }
+
   render(){
     const {userPictureUrl, communityScoreEventId} = this.props
     return(
@@ -63,6 +70,7 @@ class Community extends Component {
               <AvatarPop
                 userPictureUrl={userPictureUrl}
                 uniqueEventId={communityScoreEventId}
+                onHide={this.onHideAvatarPop}
               />
             </AvatarPopBox>
           </ScoreBox>
@@ -73,9 +81,15 @@ class Community extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+      resetLastContributor,
+    }, dispatch)
+}
+
 const mapStateToProps = (state) => ({
   userPictureUrl: state.app.scores.lastContributor.pictureUrl,
   communityScoreEventId: state.app.scores.communityScoreEventId
 })
 
-export default connect(mapStateToProps)(Community)
+export default connect(mapStateToProps, mapDispatchToProps)(Community)
