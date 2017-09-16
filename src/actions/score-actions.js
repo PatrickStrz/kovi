@@ -21,3 +21,7 @@ export const requestRefetchUserScore = () => ({
 export const refetchUserScoreComplete = () => ({
   type: ActionTypes.REFETCH_USER_SCORE_COMPLETE,
 })
+
+export const resetLastContributor = () => ({
+  type: ActionTypes.RESET_LAST_CONTRIBUTOR,
+})

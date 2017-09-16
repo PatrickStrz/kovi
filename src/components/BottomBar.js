@@ -11,6 +11,7 @@ import {
   showCommunityMobile,
   hideCommunityMobile,
 } from 'actions/bottombar-actions'
+import {resetLastContributor} from 'actions/score-actions'
 //helpers + other
 import styled from 'styled-components'
 import {media} from 'styles/media-queries'
@@ -24,11 +25,12 @@ import Public from 'material-ui/svg-icons/social/public'
 import Dialog from 'ui-kit/Dialog'
 import MuiDrawer from 'ui-kit/MuiDrawer'
 import Placeholder from 'components/Placeholder'
+import {AvatarPop} from 'ui-kit'
 
 
 const NotificationsIcon = <Notifications />
 const FilterIcon = <FilterList />
-const PublicIcon = <Public />
+const PublicIcon = <Public style={{color:'#757575'}} />
 
 //Hides Bottom Bar for screens larger than md.
 const BottomBarBox = styled.div`
@@ -54,6 +56,7 @@ class BottomBar extends Component {
 
   state = {
     selectedIndex: 0,
+    showAvatarPop: false,
   }
 
   styles = {
@@ -104,6 +107,21 @@ class BottomBar extends Component {
     )
   }
 
+  renderCommunityIcon = () => {
+    return(
+      <AvatarPop
+        userPictureUrl={this.props.userPictureUrl}
+        uniqueEventId={this.props.communityScoreEventId}
+        placeholder={PublicIcon}
+        onHide={this.onHideAvatarPop}
+      />
+    )
+  }
+
+  onHideAvatarPop = () => {
+    this.props.resetLastContributor()
+  }
+
   render() {
     const {
       showNotificationsMobile,
@@ -128,7 +146,7 @@ class BottomBar extends Component {
           />
           <BottomNavigationItem
             label="Community"
-            icon={PublicIcon}
+            icon={this.renderCommunityIcon(this.props)}
             onTouchTap={()=> this.handleItemClick(2,showCommunityMobile)}
           />
         </BottomNavigation>
@@ -156,6 +174,7 @@ const mapDispatchToProps = (dispatch) => {
       hideFilterMobile,
       showCommunityMobile,
       hideCommunityMobile,
+      resetLastContributor,
     }, dispatch)
 }
 
@@ -163,6 +182,8 @@ const mapStateToProps = (state) => ({
   isNotificationMobileOpen: state.app.bottomBar.isNotificationMobileOpen,
   isFilterMobileOpen: state.app.bottomBar.isFilterMobileOpen,
   isCommunityMobileOpen: state.app.bottomBar.isCommunityMobileOpen,
+  userPictureUrl: state.app.scores.lastContributor.pictureUrl,
+  communityScoreEventId: state.app.scores.communityScoreEventId,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomBar)
