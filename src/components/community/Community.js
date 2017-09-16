@@ -12,7 +12,6 @@ import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop} from 'ui-kit'
 
-
 const Header = styled.p`
   color: ${muiColors.secondary1};
   font-family: 'Open Sans', sans-serif;

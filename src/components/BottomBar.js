@@ -113,12 +113,12 @@ class BottomBar extends Component {
         userPictureUrl={this.props.userPictureUrl}
         uniqueEventId={this.props.communityScoreEventId}
         placeholder={PublicIcon}
-        onHide={this.onShowAvatarPop}
+        onHide={this.onHideAvatarPop}
       />
     )
   }
 
-  onShowAvatarPop = () => {
+  onHideAvatarPop = () => {
     this.props.resetLastContributor()
   }
 
