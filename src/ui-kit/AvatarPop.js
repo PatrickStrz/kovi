@@ -12,31 +12,60 @@ class ProfilePop extends Component {
   static propTypes = {
     userPictureUrl: PropTypes.string.isRequired,
     uniqueEventId: PropTypes.string.isRequired,
+    onShow: PropTypes.func,
+    onHide: PropTypes.func,
+    placeholder: PropTypes.node,
   }
+
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.userPictureUrl && nextProps.uniqueEventId){
+    if (nextProps.userPictureUrl &&
+      (nextProps.uniqueEventId !== this.props.uniqueEventId)
+    ){
       this.setState({show: true})
     }
   }
 
+  componentWillUpdate = (nextProps, nextState) => {
+    if (nextState.show && this.props.onShow){
+      this.props.onShow()
+    }
+  }
+
+  onSelfDestruct = () => {
+    this.setState({show:false})
+    this.props.onHide && this.props.onHide()
+  }
+
   renderPoppingAvatar = () => {
+    const {placeholder} = this.props
     const {userPictureUrl} = this.props
-    return(
-      <SelfDestruct
-        enterAnimationDuration={500}
-        exitAnimationDuration={1000}
-        stayDuration={2000}
-        onSelfDestruct={()=>this.setState({show:false})}
-      >
-        <Avatar imageUrl={userPictureUrl} size='25px'/>
-      </SelfDestruct>
-    )
+
+    if (this.state.show) {
+      return(
+        <SelfDestruct
+          enterAnimationDuration={500}
+          exitAnimationDuration={1000}
+          stayDuration={2000}
+          onSelfDestruct={this.onSelfDestruct}
+        >
+          <Avatar imageUrl={userPictureUrl} size='25px'/>
+        </SelfDestruct>
+      )
+    }
+    else {
+      if (placeholder) {
+        return <div>{placeholder}</div>
+      }
+      else {
+        return ''
+      }
+    }
   }
 
   render () {
     return (
       <div>
-        {this.state.show && this.renderPoppingAvatar() }
+        {this.renderPoppingAvatar()}
       </div>
     )
   }

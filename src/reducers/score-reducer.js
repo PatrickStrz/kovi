@@ -45,6 +45,10 @@ export default function scoreReducer(state=initialState, action) {
       return {
         ...state, shouldRefetchUserScore: false,
       }
+    case ActionTypes.RESET_LAST_CONTRIBUTOR:
+      return {
+        ...state, lastContributor: {id:'', pictureUrl:'' },
+      }
     default:
       return state
   }
