@@ -1,5 +1,5 @@
 # project: cj6o9kpt72gao017850frjw3q
-# version: 12
+# version: 14
 
 type Challenge implements Node {
   author: User! @relation(name: "AuthorForChallenge")
