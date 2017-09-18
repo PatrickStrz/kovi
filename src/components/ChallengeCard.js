@@ -66,6 +66,7 @@ class ChallengeCard extends Component {
           addUpvoteMutation={addChallengeUpvoteMutation}
           removeUpvoteMutation={removeChallengeUpvoteMutation}
           mutationVariables={upvoteMutationVariables}
+          faIconClassName="fa-bullseye"
         />
       )
 
