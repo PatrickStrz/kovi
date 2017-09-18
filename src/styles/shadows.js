@@ -1,12 +1,11 @@
 import {css} from 'styled-components'
 
-
 // Shadows should always be defined in this file.
 // allows us to change shadows in the entire app by changing 1 file.
-// arising from arbitrary z-index values. Do not edit the z-index scale! Only add application
-// scoped z-index values.
+// arising from arbitrary z-index values. Do not edit the shadow scale! Only add application
+// scoped shadow constants.
 
-// Z-Index Scale
+// Shadow Scale
 // --------------------------------------------------
 const shadows = {
   level1: '',

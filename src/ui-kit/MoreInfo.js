@@ -25,8 +25,6 @@ const MoreInfoBox = styled.div`
   ${MORE_INFO_SHADOW}
 `
 
-
-
 class MoreInfo extends Component {
   // static PropTypes
   render(){
