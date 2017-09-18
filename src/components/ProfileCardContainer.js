@@ -8,6 +8,7 @@ import {USER_QUERY} from '../gql/User/queries'
 //other
 import styled from 'styled-components'
 import {muiColors, colors} from 'styles/theme/colors'
+import {PROFILE_CARD_SHADOW} from 'styles/shadows'
 
 //components
 import GenericError from 'ui-kit/GenericError'
@@ -22,7 +23,7 @@ const Box = styled.div`
     justify-content: center;
     align-items: top;
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    ${PROFILE_CARD_SHADOW}
   `
 const Body = styled.div`
   display: flex;

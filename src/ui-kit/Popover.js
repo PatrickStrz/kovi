@@ -16,11 +16,10 @@ const Box = styled.div`
 export default class Popover extends Component {
 
   static propTypes = {
-    renderedInDialog: PropTypes.bool,
-    renderedInDrawer: PropTypes.bool,
-    //clicking on child toggles popover
-    children: PropTypes.node.isRequired,
-    body: PropTypes.node.isRequired,
+    renderedInDialog: PropTypes.bool, // to set the correct z-index value
+    renderedInDrawer: PropTypes.bool, // to set the correct z-index value
+    children: PropTypes.node.isRequired, // clicking on child toggles popover
+    body: PropTypes.node.isRequired, // content within popover
   }
 
   state = {

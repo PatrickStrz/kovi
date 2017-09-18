@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, {css} from 'styled-components'
-
  const getColor = props => {
   const {disabled, disabledColor, color} = props
   if (disabledColor && disabled === true){
@@ -12,7 +11,7 @@ import styled, {css} from 'styled-components'
   }
 }
 
-const Container = styled.div`
+const Box = styled.div`
   /* remove background highlight on mobile click: */
   -webkit-tap-highlight-color:transparent;
   cursor: pointer;
@@ -25,6 +24,8 @@ const Container = styled.div`
           color: ${props.hoverColor};
         }
       }
+      height: ${props.size};
+      width: ${props.size};
     `
   }
   ${props => props.inline && css`display: inline`}
@@ -43,7 +44,7 @@ const FaIconButton = (props) => {
   } = props
 
   return(
-    <Container
+    <Box
       inline={inline}
       disabled={disabled}
       disabledColor={disabledColor}
@@ -53,7 +54,7 @@ const FaIconButton = (props) => {
       onClick={!disabled && onClick}
     >
       <i className={`fa ${faClassName}`} aria-hidden="true"></i>
-    </Container>
+    </Box>
   )
 }
 
@@ -61,7 +62,7 @@ FaIconButton.propTypes = {
   disabled: PropTypes.bool,
   inline: PropTypes.bool,
   size: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   color: PropTypes.string.isRequired,
   hoverColor: PropTypes.string.isRequired,
   faClassName: PropTypes.string.isRequired, // http://fontawesome.io/cheatsheet/
