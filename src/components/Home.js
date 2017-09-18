@@ -69,6 +69,7 @@ class Home extends Component {
 
     const centerContent = (
       <ChallengeListBox>
+        <MoreInfo/>
         <ChallengeListContainer />
       </ChallengeListBox>
     )
@@ -83,7 +84,6 @@ class Home extends Component {
             <RightContent>
               <Community/>
             </RightContent>}
-          leftPanelContent={<MoreInfo/>}
           showLines={false}
         />
         <FloatingActionButton

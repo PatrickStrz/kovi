@@ -62,7 +62,7 @@ FaIconButton.propTypes = {
   disabled: PropTypes.bool,
   inline: PropTypes.bool,
   size: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   color: PropTypes.string.isRequired,
   hoverColor: PropTypes.string.isRequired,
   faClassName: PropTypes.string.isRequired, // http://fontawesome.io/cheatsheet/
