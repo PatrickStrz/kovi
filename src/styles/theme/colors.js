@@ -1,6 +1,7 @@
 export const muiColors = {
   primary1: '#3f51b5',
   secondary1: '#38c1be',
+  tertiary1: '#00f7f9',
 }
 //uncategorized colors
 export const colors = {

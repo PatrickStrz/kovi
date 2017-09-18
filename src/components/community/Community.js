@@ -10,7 +10,8 @@ import {muiColors} from 'styles/theme/colors'
 //components
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
-import {AvatarPop} from 'ui-kit'
+import {AvatarPop, ProgressMeter} from 'ui-kit'
+import {SCORE_SECTION_SHADOW} from 'styles/shadows'
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -30,17 +31,23 @@ const HeadingBox = styled.div`
   justify-content: center;
   margin-bottom: 10px;
 `
-
-const ScoreBox = styled.div`
+const ScoreSection = styled.div`
   display: flex;
-  align-items: center;
-  flex-direction: row;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
   border-radius: 3px;
   margin: 15px;
   padding-left: 15px;
   padding-right: 15px;
+  ${SCORE_SECTION_SHADOW}
+`
+const ScoreBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
 `
 const AvatarPopBox = styled.div`
   margin-left: 5px;
@@ -63,16 +70,19 @@ class Community extends Component {
       <div>
         <HeadingBox>
           <Header>Community</Header>
-          <ScoreBox>
-            <CommunityScore />
-            <AvatarPopBox>
-              <AvatarPop
-                userPictureUrl={userPictureUrl}
-                uniqueEventId={communityScoreEventId}
-                onHide={this.onHideAvatarPop}
-              />
-            </AvatarPopBox>
-          </ScoreBox>
+          <ScoreSection>
+            <ScoreBox>
+              <CommunityScore />
+              <AvatarPopBox>
+                <AvatarPop
+                  userPictureUrl={userPictureUrl}
+                  uniqueEventId={communityScoreEventId}
+                  onHide={this.onHideAvatarPop}
+                />
+              </AvatarPopBox>
+            </ScoreBox>
+            <ProgressMeter />
+          </ScoreSection>
         </HeadingBox>
         <TasksContainer />
       </div>
