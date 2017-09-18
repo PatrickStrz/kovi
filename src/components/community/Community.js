@@ -11,7 +11,7 @@ import {muiColors} from 'styles/theme/colors'
 import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop, ProgressMeter} from 'ui-kit'
-import {MORE_INFO_SHADOW} from 'styles/shadows'
+import {SCORE_SECTION_SHADOW} from 'styles/shadows'
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -41,7 +41,7 @@ const ScoreSection = styled.div`
   margin: 15px;
   padding-left: 15px;
   padding-right: 15px;
-  ${MORE_INFO_SHADOW}
+  ${SCORE_SECTION_SHADOW}
 `
 const ScoreBox = styled.div`
   display: flex;

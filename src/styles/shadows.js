@@ -18,3 +18,4 @@ const shadows = {
 
 export const PROFILE_CARD_SHADOW = shadows.level2
 export const MORE_INFO_SHADOW = shadows.level2
+export const SCORE_SECTION_SHADOW = shadows.level2
