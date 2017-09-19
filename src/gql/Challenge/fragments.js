@@ -6,6 +6,10 @@ export const CHALLENGE_BODY_FRAGMENT = gql`
 			title
 			description
 			body
+			image{
+				id
+				url
+			}
 			userDidUpvote: upvotes(filter:$filter){
 				id
 			}

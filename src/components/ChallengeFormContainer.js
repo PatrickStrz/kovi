@@ -27,7 +27,7 @@ import {media} from 'styles/media-queries'
 import Editor from 'ui-kit/Editor'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import Dropzone from 'react-dropzone'
+import {ImageUpload} from 'ui-kit'
 
 const CharCount = styled.p`
     color: ${props => props.color };
@@ -122,6 +122,7 @@ class ChallengeFormContainer extends Component {
         scorecardId: this.props.apiUserScorecardId,
         scoreValue: CHALLENGE_CREATE_SCORE.value,
         authorId: this.props.apiUserId,
+        imageId: this.state.imageId,
       },
       /* updates query in apollo store without performing network request,
       appends to beginning of list: */
@@ -204,21 +205,8 @@ class ChallengeFormContainer extends Component {
     this.setTitleError(value)
   }
 
-  uploadFile = (files) => {
-  let data = new FormData()
-  data.append('data', files[0])
-  fetch(process.env.REACT_APP_GRAPHCOOL_FILE_ENDPOINT, {
-      method: 'POST',
-      body: data
-    }).then(response => {
-      return response.json()
-    }).then(file => {
-      const fileId = file.id
-      this.setState({
-        imageId: file.id,
-        imageUrl: file.url,
-      })
-    })
+  onUpload = (imageId, imageUrl) => {
+    this.setState({imageId, imageUrl})
   }
 
   render(){
@@ -258,15 +246,12 @@ class ChallengeFormContainer extends Component {
           </EditorBox>
           <br/>
           <br/>
+          <ImageUpload onUpload={this.onUpload}/>
           <RaisedButton
             label={update ? "update" : "submit challenge"}
             onClick={this.handleChallengeSubmit}
             primary={true}
             disabled={(this.state.titleError || !this.state.title) && true}
-          />
-          <Dropzone
-            onDrop={this.uploadFile}
-            onDropAccepted={()=>alert('drop accepted')}
           />
         </FormBox>
       )
