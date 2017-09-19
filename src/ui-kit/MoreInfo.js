@@ -7,7 +7,7 @@ import {muiColors, colors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
 import {MORE_INFO_SHADOW} from 'styles/shadows'
 // components
-import {FaIconButton} from 'ui-kit/icons'
+import {FaIcon} from 'ui-kit/icons'
 import {Popover} from 'ui-kit'
 
 const Box = styled.div`
@@ -35,7 +35,7 @@ class MoreInfo extends Component {
           body={<MoreInfoBox><h1>More info:</h1><h2>this is it</h2></MoreInfoBox>}
           renderedOnPage={true}
         >
-          <FaIconButton
+          <FaIcon
             size="18px"
             color={colors.lightGrey}
             hoverColor={muiColors.secondary1}

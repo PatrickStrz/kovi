@@ -1,1 +1,1 @@
-export {default as FaIconButton} from './FaIconButton'
+export {default as FaIcon} from './FaIcon'

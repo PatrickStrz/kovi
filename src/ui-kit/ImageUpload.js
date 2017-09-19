@@ -101,7 +101,7 @@ class ImageUpload extends Component {
         default:
           return(
             <Box>
-              <Text>Drop a file or click here</Text>
+              <Text>Drop a file or click here, GIFs encouraged ヽ(•‿•)ノ</Text>
             </Box>
           )
       }
