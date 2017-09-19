@@ -1,0 +1,20 @@
+.dropzone-component-main {
+  width: 150px;
+  height: 150px;
+  border-width: 2px;
+  border-color: rgb(173, 172, 172);
+  border-style: dashed;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.reject-dropzone-main {
+  border-color: rgb(255, 79, 79);
+}
+
+.accept-dropzone-main {
+  border-color: rgb(93, 249, 137);
+}

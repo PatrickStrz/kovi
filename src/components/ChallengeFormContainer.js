@@ -247,12 +247,13 @@ class ChallengeFormContainer extends Component {
           <br/>
           <br/>
           <ImageUpload onUpload={this.onUpload}/>
-          <RaisedButton
-            label={update ? "update" : "submit challenge"}
-            onClick={this.handleChallengeSubmit}
-            primary={true}
-            disabled={(this.state.titleError || !this.state.title) && true}
-          />
+            <RaisedButton
+              style={{marginTop:35}}
+              label={update ? "update" : "submit challenge"}
+              onClick={this.handleChallengeSubmit}
+              primary={true}
+              disabled={(this.state.titleError || !this.state.title) && true}
+            />
         </FormBox>
       )
     }
