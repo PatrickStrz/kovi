@@ -1,13 +1,17 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+//other
 import {muiColors, colors} from 'styles/theme/colors'
 import styled from 'styled-components'
-import Dropzone from 'react-dropzone'
 import 'styles/css/react-dropzone.css'
+//components
+import Dropzone from 'react-dropzone'
+import {FaIcon} from 'ui-kit/icons'
+import CircularProgress from 'material-ui/CircularProgress';
 
 const Box = styled.div`
   display: flex;
-  ${''/* flex-direction: column; */}
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   padding: 15px;
@@ -21,6 +25,10 @@ const Text = styled.p`
 const Image = styled.img`
   height:100px;
   width:100px;
+`
+
+const IconBox = styled.div`
+  margin: 25px;
 `
 class ImageUpload extends Component {
   static propTypes = {
@@ -51,9 +59,6 @@ class ImageUpload extends Component {
   setUploadStatus = (status) => {
     this.setState({uploadStatus:status})
   }
-  // setDropzoneStatus = (status) => {
-  //   this.setState({dropzoneStatus:status})
-  // }
 
   baseStyle = {
     height: 200,
@@ -84,13 +89,20 @@ class ImageUpload extends Component {
         case 'uploading':
           return(
             <Box>
-              <Text>uploading...</Text>
+              <CircularProgress size={50}/>
             </Box>
           )
         case 'upload-complete':
           return(
             <Box>
               <Image src={this.state.imageUrl} alt=""/>
+              <IconBox>
+                <FaIcon
+                  size="50px"
+                  faClassName="fa-check"
+                  color={muiColors.secondary1}
+                />
+              </IconBox>
             </Box>
           )
         case 'rejected':
@@ -119,7 +131,6 @@ class ImageUpload extends Component {
         accept=".jpg,.png,.gif,.jpeg"
         style={this.styles.style}
         activeStyle={this.styles.active}
-        rejectStyle={this.styles.reject}
         maxSize={2e+6} //2mb converted to bytes
         onDropAccepted={this.uploadFile}
         onDropRejected={()=>this.setUploadStatus('rejected')}

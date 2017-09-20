@@ -64,7 +64,7 @@ FaIcon.propTypes = {
   size: PropTypes.string,
   onClick: PropTypes.func,
   color: PropTypes.string.isRequired,
-  hoverColor: PropTypes.string.isRequired,
+  hoverColor: PropTypes.string,
   faClassName: PropTypes.string.isRequired, // http://fontawesome.io/cheatsheet/
 }
 
