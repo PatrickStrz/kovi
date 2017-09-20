@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 //redux
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {showAlert} from 'actions/alert-actions'
+import {showErrorAlert} from 'actions/alert-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -85,7 +85,7 @@ class CommentSection extends Component {
     userImageUrl: PropTypes.string,
     apiUserId: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
-    showAlert: PropTypes.func.isRequired,
+    showErrorAlert: PropTypes.func.isRequired,
     //gql
     refetchQuery: PropTypes.object.isRequired, //gql query
     createChildCommentMutation: PropTypes.func.isRequired,
@@ -244,7 +244,7 @@ class CommentSection extends Component {
       apiUserId,
       commentTypeId,
       refetchQuery,
-      showAlert,
+      showErrorAlert,
     } = this.props
 
     const options = {
@@ -267,7 +267,7 @@ class CommentSection extends Component {
     }
     catch(err){
       this.setState({createInProgress:false})
-      showAlert("Failed to create comment")
+      showErrorAlert("Failed to create comment")
       logException(err, {
       action: "handleCommentCreate function in CommentsContainer"
       })
@@ -278,7 +278,7 @@ class CommentSection extends Component {
     const {
       apiUserId,
       refetchQuery,
-      showAlert,
+      showErrorAlert,
       commentTypeId,
     } = this.props
 
@@ -328,7 +328,7 @@ class CommentSection extends Component {
 
       this.setState({childCommentsAreCreating})
 
-      err && showAlert("Failed to create reply")
+      err && showErrorAlert("Failed to create reply")
 
       logException(err, {
       action: "handleChildCommentCreate function in CommentsContainer"
@@ -422,7 +422,7 @@ const CommentSectionWithMutations = compose(
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    showAlert
+    showErrorAlert
   }, dispatch)
 }
 

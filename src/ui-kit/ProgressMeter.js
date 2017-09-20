@@ -9,7 +9,7 @@ const Box = styled.div`
   height: 10px;
   width: 100px;
   padding: 0px;
-  border: solid 3px ${colors.lightGrey};
+  border: solid 3px ${colors.faintGrey};
   border-radius: 3px;
   margin: 5px;
 `
@@ -18,8 +18,8 @@ const Progress = styled.div`
   width: ${props => `${props.percent}%`};
   margin: 0px;
   background-color: ${muiColors.tertiary1};
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-top-left-radius: 1px;
+  border-bottom-left-radius: 1px;
 `
 
 class ProgressMeter extends Component {

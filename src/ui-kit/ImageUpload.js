@@ -20,7 +20,7 @@ const Text = styled.p`
   font-size: 18px;
   color: ${props => props.color ? props.color: colors.lightGrey};
   text-align: center;
-  margin: 5px;
+  margin: 15px;
 `
 const Image = styled.img`
   ${props => css`
@@ -58,6 +58,10 @@ class ImageUpload extends Component {
       this.setState({imageUrl:file.url})
       this.setUploadStatus('upload-complete')
     })
+    .catch( err => {
+      this.setUploadStatus('error')
+      }
+    )
   }
 
   setUploadStatus = (status) => {
@@ -88,7 +92,6 @@ class ImageUpload extends Component {
   }
 
   renderUploadBody = () => {
-
     const {previewWidth, previewHeight} = this.props
 
     switch (this.state.uploadStatus) {
@@ -113,6 +116,15 @@ class ImageUpload extends Component {
                 color={muiColors.secondary1}
               />
             </IconBox>
+          </Box>
+        )
+      case 'error':
+        return(
+          <Box>
+            <Text color={colors.warningRed}>
+              There was error uploading the file
+              <br/>please check your connection and try again.
+            </Text>
           </Box>
         )
       case 'rejected':
@@ -140,6 +152,7 @@ class ImageUpload extends Component {
   render(){
     return(
       <Dropzone
+        onDrop={()=>this.setUploadStatus('')} // to reset after errors
         accept=".jpg,.png,.gif,.jpeg"
         style={this.styles.style}
         activeStyle={this.styles.active}
