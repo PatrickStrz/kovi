@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {hideAlert} from 'actions/alert-actions'
+//other
+import {colors} from 'styles/theme/colors'
 //components
 import Snackbar from 'material-ui/Snackbar'
 
@@ -23,12 +25,23 @@ class Alert extends Component {
     this.props.hideAlert()
   }
 
+  getStyle = () => {
+    if (this.props.type === 'error'){
+      return({
+        backgroundColor: colors.warningRed,
+      })
+    }
+    else{
+      return { backgroundColor:'#000000'}
+    }
+  }
+
   render() {
     const {message} = this.props
-    if (message){
-    }
+
     return (
         <Snackbar
+          bodyStyle={this.getStyle()}
           open={message ? true : false}
           message={message}
           autoHideDuration={4000}
@@ -45,7 +58,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => ({
-  message: state.app.alerts.message
+  message: state.app.alerts.message,
+  type: state.app.alerts.type,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alert)

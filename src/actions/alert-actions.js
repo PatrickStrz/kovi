@@ -5,6 +5,11 @@ export const showAlert = (message) => ({
   message
 })
 
+export const showErrorAlert = (message) => ({
+  type: ActionTypes.SHOW_ERROR_ALERT,
+  message
+})
+
 export const hideAlert = () => ({
-  type: ActionTypes.HIDE_GENERIC_ALERT
+  type: ActionTypes.HIDE_ALERT
 })

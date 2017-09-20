@@ -9,6 +9,7 @@ import {
   challengeCreated,
  } from 'actions/challenge-actions'
  import {requestRefetchUserScore} from 'actions/score-actions'
+ import {showErrorAlert} from 'actions/alert-actions'
 import {handleEditorChange, clearEditor, setEditorValue} from 'actions/editor-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
@@ -74,6 +75,7 @@ class ChallengeFormContainer extends Component {
     challengeCreated: PropTypes.func.isRequired,
     hideCreateChallengeView: PropTypes.func.isRequired,
     setEditorValue: PropTypes.func.isRequired,
+    showErrorAlert: PropTypes.func.isRequired,
     apiUserId: PropTypes.string.isRequired,
     apiUserScorecardId: PropTypes.string.isRequired,
     editorHtml: PropTypes.string.isRequired,
@@ -114,6 +116,7 @@ class ChallengeFormContainer extends Component {
       challengeId,
       updateChallengeMutation,
       onUpdateComplete,
+      showErrorAlert,
     } = this.props
     const {title} = this.state
     const options = {
@@ -166,9 +169,11 @@ class ChallengeFormContainer extends Component {
       */
       if (update) {
         onUpdateComplete()
+
       }
 
       if(!update){
+
         challengeCreated(response.data.createChallenge.id)
         hideCreateChallengeView()
         window.scrollTo(0,0)
@@ -176,6 +181,8 @@ class ChallengeFormContainer extends Component {
       // scroll to top so user can see newly added challenge:
     }
     catch(err){
+      const message = update ? "error updating challenge" : "error creating challenge"
+      showErrorAlert(message)
       logException(err, {
       action: "mutation in handleChallengeSubmit in ChallengeList.js"
       })
@@ -213,13 +220,16 @@ class ChallengeFormContainer extends Component {
 
   isDisabled = () => {
     const {titleError, title, imageId} = this.state
-    let isDisabled = ''
+    let isDisabled
       if (
-        titleError ||
-        !title ||
-        !this.props.editorHtml ||
-        !imageId
+        !titleError &&
+        title &&
+        this.props.editorHtml &&
+        imageId
       ){
+        isDisabled = false
+      }
+      else {
         isDisabled = true
       }
     return isDisabled
@@ -288,6 +298,7 @@ const mapDispatchToProps = (dispatch) => {
     hideCreateChallengeView,
     setEditorValue,
     requestRefetchUserScore,
+    showErrorAlert,
   }, dispatch)
 }
 
@@ -310,4 +321,6 @@ const ChallengeFormContainerApollo = compose(
   ),
 )(ChallengeFormContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChallengeFormContainerApollo)
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(ChallengeFormContainerApollo)

@@ -46,4 +46,5 @@ export const HIDE_COMMUNITY_MOBILE = 'HIDE_COMMUNITY_MOBILE'
 
 /*------------------- Alerts ------------------------*/
 export const SHOW_GENERIC_ALERT = 'SHOW_GENERIC_ALERT'
-export const HIDE_GENERIC_ALERT = 'HIDE_GENERIC_ALERT'
+export const SHOW_ERROR_ALERT = 'SHOW_ERROR_ALERT'
+export const HIDE_ALERT = 'HIDE_ALERT'
