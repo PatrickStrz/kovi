@@ -8,7 +8,7 @@ import {colors} from 'styles/theme/colors'
 import Popover from 'ui-kit/Popover'
 import ProfileCardContainer from 'components/ProfileCardContainer'
 import UserHeader from 'ui-kit/UserHeader'
-import {FaIconButton} from 'ui-kit/icons'
+import {FaIcon} from 'ui-kit/icons'
 
 const CommentBox = styled.div`
   padding: 15px;
@@ -51,7 +51,7 @@ class Comment extends Component{
     const {apiUserId, comment} = this.props
     if (apiUserId === comment.user.id ){
       return(
-        <FaIconButton
+        <FaIcon
           onClick={()=>requireAuth(
             this.handleDeleteClick
           )}

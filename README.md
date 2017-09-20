@@ -3,8 +3,6 @@
 Collaboration platform for user contributed world challenges and technological
 tools.
 
-
-
 ## Getting Started
 
 1. `git clone git@github.com:PatrickStrz/kovi.git`
@@ -16,6 +14,7 @@ REACT_APP_DEV_ROUTE='XXXX' //to view development only routes. i.e) mockup of
 app layout is available for developers that know this secret
 REACT_APP_GRAPHCOOL_ENDPOINT='wss://XXXX' //use dev api in development
 REACT_APP_GRAPHCOOL_WSS_ENDPOINT='https://XXXX' //use dev api wss in development.
+REACT_APP_GRAPHCOOL_FILE_ENDPOINT='https://XXXX' //use dev api wss in development.
 NODE_PATH = 'src' //to enable absolute imports
 ```
  3. install dependencies `npm install`

@@ -10,7 +10,7 @@ import 'styles/css/react-modal.css'
 //components
 import Media from 'react-media'
 import Modal from 'react-modal'
-import FaIconButton from 'ui-kit/icons/FaIconButton'
+import FaIcon from 'ui-kit/icons/FaIcon'
 
 const ExitBox = styled.div`
   position: fixed;
@@ -102,7 +102,7 @@ export default class Dialog extends Component {
     */
     const exit = (
       <ExitBox isMobile={isMobile} onClick={()=> handleClose()}>
-        <FaIconButton
+        <FaIcon
           color={colors.lightGrey}
           hoverColor={muiColors.primary1}
           size="35px"

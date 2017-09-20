@@ -7,7 +7,7 @@ import {colors, muiColors} from 'styles/theme/colors'
 //components
 import ChallengeCommentsContainer from 'components/ChallengeCommentsContainer'
 import ChallengeFormContainer from 'components/ChallengeFormContainer'
-import FaIconButton from 'ui-kit/icons/FaIconButton'
+import FaIcon from 'ui-kit/icons/FaIcon'
 
 /*
  Note: Because rendering <ChallengingCommentContainer/> in this element,
@@ -82,7 +82,7 @@ export default class ChallengeDetail extends Component{
     const {apiUserId, authorId} = this.props
     if (apiUserId === authorId){
       return(
-        <FaIconButton
+        <FaIcon
           faClassName={this.state.edit ? "fa-close" : "fa-pencil"}
           size="25px"
           onClick={this.toggleEdit}

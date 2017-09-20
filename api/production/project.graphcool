@@ -1,5 +1,5 @@
 # project: cj541g35wjwqc01754kb4rfvk
-# version: 67
+# version: 88
 
 type Challenge implements Node {
   author: User! @relation(name: "AuthorForChallenge")
@@ -11,6 +11,7 @@ type Challenge implements Node {
   title: String
   updatedAt: DateTime!
   upvotes: [User!]! @relation(name: "ChallengeUpvotes")
+  image: File @relation(name: "ImageForChallenge")
 }
 
 type Comment implements Node {
@@ -50,6 +51,7 @@ type File implements Node {
   size: Int!
   updatedAt: DateTime!
   url: String! @isUnique
+  challenge: Challenge @relation(name: "ImageForChallenge")
 }
 
 type Score implements Node {

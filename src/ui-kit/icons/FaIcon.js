@@ -31,7 +31,7 @@ const Box = styled.div`
   ${props => props.inline && css`display: inline`}
 `
 
-const FaIconButton = (props) => {
+const FaIcon = (props) => {
   const {
     size,
     color,
@@ -58,14 +58,14 @@ const FaIconButton = (props) => {
   )
 }
 
-FaIconButton.propTypes = {
+FaIcon.propTypes = {
   disabled: PropTypes.bool,
   inline: PropTypes.bool,
   size: PropTypes.string,
   onClick: PropTypes.func,
   color: PropTypes.string.isRequired,
-  hoverColor: PropTypes.string.isRequired,
+  hoverColor: PropTypes.string,
   faClassName: PropTypes.string.isRequired, // http://fontawesome.io/cheatsheet/
 }
 
-export default FaIconButton
+export default FaIcon

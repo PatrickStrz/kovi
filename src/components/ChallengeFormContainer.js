@@ -27,6 +27,7 @@ import {media} from 'styles/media-queries'
 import Editor from 'ui-kit/Editor'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import {ImageUpload} from 'ui-kit'
 
 const CharCount = styled.p`
     color: ${props => props.color };
@@ -81,7 +82,9 @@ class ChallengeFormContainer extends Component {
   state = {
     title: "",
     description: "",
-    titleError:""
+    titleError:"",
+    imageId:"",
+    imageUrl:"",
   }
 
   componentWillMount() {
@@ -121,6 +124,7 @@ class ChallengeFormContainer extends Component {
         scorecardId: this.props.apiUserScorecardId,
         scoreValue: CHALLENGE_CREATE_SCORE.value,
         authorId: this.props.apiUserId,
+        imageId: this.state.imageId,
       },
       /* updates query in apollo store without performing network request,
       appends to beginning of list: */
@@ -203,6 +207,24 @@ class ChallengeFormContainer extends Component {
     this.setTitleError(value)
   }
 
+  onUpload = (imageId, imageUrl) => {
+    this.setState({imageId, imageUrl})
+  }
+
+  isDisabled = () => {
+    const {titleError, title, imageId} = this.state
+    let isDisabled = ''
+      if (
+        titleError ||
+        !title ||
+        !this.props.editorHtml ||
+        !imageId
+      ){
+        isDisabled = true
+      }
+    return isDisabled
+  }
+
   render(){
     const {update} = this.props
     const renderRemainingCharCount = () => {
@@ -231,7 +253,14 @@ class ChallengeFormContainer extends Component {
             />
             {renderRemainingCharCount()}
           </TitleBox>
-          <br />
+          <br/>
+          <ImageUpload
+            onUpload={this.onUpload}
+            previewWidth="50px"
+            previewHeight="50px"
+          />
+          <br/>
+          <br/>
           <EditorBox>
             <Editor
               handleChange={this.props.handleEditorChange}
@@ -244,7 +273,7 @@ class ChallengeFormContainer extends Component {
             label={update ? "update" : "submit challenge"}
             onClick={this.handleChallengeSubmit}
             primary={true}
-            disabled={(this.state.titleError || !this.state.title) && true}
+            disabled={this.isDisabled()}
           />
         </FormBox>
       )

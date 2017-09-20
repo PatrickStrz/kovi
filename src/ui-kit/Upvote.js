@@ -6,7 +6,7 @@ import styled, {css} from 'styled-components'
 import {muiColors, colors} from 'styles/theme/colors'
 import {bounceIn} from 'styles/animations/keyframes'
 //components
-import FaIconButton from 'ui-kit/icons/FaIconButton'
+import FaIcon from 'ui-kit/icons/FaIcon'
 
 const Box = styled.div`
   display:flex;
@@ -82,7 +82,7 @@ class Upvote extends Component{
     const {userDidUpvote, upvotesCount, faIconClassName} = this.props
     return(
     <Box animate={this.state.animate}>
-      <FaIconButton
+      <FaIcon
         inline={true}
         size="25px"
         onClick={() => requireAuth(this.handleToggleUpvote)}
