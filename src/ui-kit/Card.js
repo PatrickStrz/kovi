@@ -28,12 +28,14 @@ const CardBody = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  align-items: center;
   cursor: pointer;
   :hover{
     opacity: 0.5;
   }
 `
 const Text = styled.p`
+  word-break: break-all;
   margin-left: 15px;
   font-size: 16px;
   color: ${colors.medGrey};
@@ -47,6 +49,7 @@ const ActionsBox = styled.div`
 export default class Card extends Component{
 
   static propTypes = {
+    imageUrl: PropTypes.string,
     text: PropTypes.string.isRequired,
     onBodyClick: PropTypes.func.isRequired,
     bottomSection: PropTypes.node,
@@ -56,11 +59,18 @@ export default class Card extends Component{
 
   render(){
 
-    const {text, onBodyClick, bottomSection, highlight, highlightColor} = this.props
+    const {
+      text,
+      onBodyClick,
+      bottomSection,
+      highlight,
+      highlightColor,
+      imageUrl,
+    } = this.props
     return(
       <CardBox highlight={highlight} highlightColor={highlightColor}>
         <CardBody onClick={onBodyClick}>
-          <Image/>
+          <Image url={imageUrl}/>
           <Text>{text}</Text>
         </CardBody>
         <ActionsBox>

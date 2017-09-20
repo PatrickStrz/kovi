@@ -33,7 +33,6 @@ class ChallengeListContainer extends Component {
         <ChallengeList
           challenges={this.props.allChallenges}
           allChallengesQueryVariables={allChallengesQueryVariables}
-          apiUserId={this.props.apiUserId}
           hasMore={this.props.cursor.length === 0 ? false : true}
           loadMoreEntries={()=>this.props.loadMoreEntries()}
         />

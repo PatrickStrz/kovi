@@ -9,7 +9,6 @@ import GenericLoader from 'ui-kit/GenericLoader'
 export default class ChallengeList extends Component {
   static propTypes = {
     challenges: PropTypes.array.isRequired,
-    apiUserId: PropTypes.string,
     allChallengesQueryVariables: PropTypes.object.isRequired,
     loadMoreEntries: PropTypes.func.isRequired,
     hasMore: PropTypes.bool.isRequired,
@@ -22,7 +21,6 @@ export default class ChallengeList extends Component {
     const {
       challenges,
       allChallengesQueryVariables,
-      apiUserId,
     } = this.props
 
     return challenges.map(challenge => {
@@ -30,7 +28,6 @@ export default class ChallengeList extends Component {
         <div key={'challengelist'+challenge.id}>
           <ChallengeCard
             challenge={challenge}
-            apiUserId={apiUserId}
             allChallengesQueryVariables={allChallengesQueryVariables}
           />
         </div>

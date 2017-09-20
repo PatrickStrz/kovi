@@ -18,11 +18,21 @@ import {withRouter} from 'react-router'
 
 class ChallengeCard extends Component {
   static propTypes = {
-    challenge: PropTypes.object.isRequired,
-    apiUserId: PropTypes.string,
+    challenge: PropTypes.shape({
+      title: PropTypes.string,
+      description: PropTypes.string,
+      image: PropTypes.shape({
+        id: PropTypes.string,
+        url: PropTypes.string,
+      }),
+      upvotes: PropTypes.array.isRequired,
+      userDidUpvote: PropTypes.array,
+    }).isRequired,
+    // apollo
     addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     //redux:
+    apiUserId: PropTypes.string,
     newUserChallenges: PropTypes.array.isRequired,
   }
 
@@ -40,7 +50,7 @@ class ChallengeCard extends Component {
   }
 
   render(){
-    const {id, userDidUpvote, title} = this.props.challenge
+    const {id, userDidUpvote, title, image} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
     const {
       apiUserId,
@@ -73,6 +83,7 @@ class ChallengeCard extends Component {
     return(
       <div>
         <Card
+          imageUrl={image && image.url}
           highlight={this.isNewlyCreated(id)}
           highlightColor={colors.faintTeal}
           text={title}
@@ -86,6 +97,7 @@ class ChallengeCard extends Component {
 
 const mapStateToProps = (state) => ({
   newUserChallenges: state.app.challenges.newUserChallenges,
+  apiUserId: state.app.auth.apiUserId,
 })
 
 const ChallengeCardApollo = compose(

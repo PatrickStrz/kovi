@@ -3,18 +3,22 @@ import PropTypes from 'prop-types'
 // other
 import styled, {css} from 'styled-components'
 
+const styles ={
+  borderRadius: '2px'
+}
+
 const Placeholder = styled.div`
   height:60px;
   width:60px;
   background-color: rgb(191, 191, 191);
-  border-radius: 2px;
+  border-radius: ${styles.borderRadius};
 `
 const ImageTag = styled.img`
+  border-radius: ${styles.borderRadius};
   ${props => css`
-      height:${props.size};
-      width:${props.size};
-    `
-  }
+    height:${props.size};
+    width:${props.size};
+  `}
 `
 
 class Image extends Component {
