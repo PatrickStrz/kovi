@@ -10,6 +10,7 @@ const Box = styled.div`
   ${''/* flex-direction: column; */}
   align-items: center;
   justify-content: center;
+  padding: 15px;
 `
 const Text = styled.p`
   font-size: 18px;
@@ -95,7 +96,11 @@ class ImageUpload extends Component {
         case 'rejected':
           return(
             <Box>
-              <Text color={colors.warningRed}>File must be less than 10kb</Text>
+              <Text color={colors.warningRed}>
+                File must be less than 2mb and
+                of one of the following types:
+              <br/> .gif .png .jpg  .jpeg
+              </Text>
             </Box>
           )
         default:
@@ -111,12 +116,11 @@ class ImageUpload extends Component {
   render(){
     return(
       <Dropzone
-        // onDrop={this.uploadFile}
+        accept=".jpg,.png,.gif,.jpeg"
         style={this.styles.style}
         activeStyle={this.styles.active}
         rejectStyle={this.styles.reject}
-        // maxSize={10}
-        // acceptStyle={this.styles.accept}
+        maxSize={2e+6} //2mb converted to bytes
         onDropAccepted={this.uploadFile}
         onDropRejected={()=>this.setUploadStatus('rejected')}
       >
