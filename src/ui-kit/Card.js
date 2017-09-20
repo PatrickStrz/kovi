@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
+//components
+import {Image} from 'ui-kit'
 
 const CardBox = styled.div`
   background-color: ${props =>{
@@ -23,12 +25,16 @@ const CardBox = styled.div`
   padding-left: 20px;
 `
 const CardBody = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   cursor: pointer;
   :hover{
     opacity: 0.5;
   }
 `
 const Text = styled.p`
+  margin-left: 15px;
   font-size: 16px;
   color: ${colors.medGrey};
 `
@@ -54,6 +60,7 @@ export default class Card extends Component{
     return(
       <CardBox highlight={highlight} highlightColor={highlightColor}>
         <CardBody onClick={onBodyClick}>
+          <Image/>
           <Text>{text}</Text>
         </CardBody>
         <ActionsBox>
