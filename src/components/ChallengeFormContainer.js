@@ -82,7 +82,9 @@ class ChallengeFormContainer extends Component {
   state = {
     title: "",
     description: "",
-    titleError:""
+    titleError:"",
+    imageId:"",
+    imageUrl:"",
   }
 
   componentWillMount() {
@@ -209,6 +211,20 @@ class ChallengeFormContainer extends Component {
     this.setState({imageId, imageUrl})
   }
 
+  isDisabled = () => {
+    const {titleError, title, imageId} = this.state
+    let isDisabled = ''
+      if (
+        titleError ||
+        !title ||
+        !this.props.editorHtml ||
+        !imageId
+      ){
+        isDisabled = true
+      }
+    return isDisabled
+  }
+
   render(){
     const {update} = this.props
     const renderRemainingCharCount = () => {
@@ -257,7 +273,7 @@ class ChallengeFormContainer extends Component {
             label={update ? "update" : "submit challenge"}
             onClick={this.handleChallengeSubmit}
             primary={true}
-            disabled={(this.state.titleError || !this.state.title) && true}
+            disabled={this.isDisabled()}
           />
         </FormBox>
       )
