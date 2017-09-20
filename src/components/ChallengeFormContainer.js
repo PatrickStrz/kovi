@@ -237,7 +237,14 @@ class ChallengeFormContainer extends Component {
             />
             {renderRemainingCharCount()}
           </TitleBox>
-          <br />
+          <br/>
+          <ImageUpload
+            onUpload={this.onUpload}
+            previewWidth="50px"
+            previewHeight="50px"
+          />
+          <br/>
+          <br/>
           <EditorBox>
             <Editor
               handleChange={this.props.handleEditorChange}
@@ -246,14 +253,12 @@ class ChallengeFormContainer extends Component {
           </EditorBox>
           <br/>
           <br/>
-          <ImageUpload onUpload={this.onUpload}/>
-            <RaisedButton
-              style={{marginTop:35}}
-              label={update ? "update" : "submit challenge"}
-              onClick={this.handleChallengeSubmit}
-              primary={true}
-              disabled={(this.state.titleError || !this.state.title) && true}
-            />
+          <RaisedButton
+            label={update ? "update" : "submit challenge"}
+            onClick={this.handleChallengeSubmit}
+            primary={true}
+            disabled={(this.state.titleError || !this.state.title) && true}
+          />
         </FormBox>
       )
     }

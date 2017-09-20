@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 //other
 import {muiColors, colors} from 'styles/theme/colors'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import 'styles/css/react-dropzone.css'
 //components
 import Dropzone from 'react-dropzone'
@@ -23,8 +23,10 @@ const Text = styled.p`
   margin: 5px;
 `
 const Image = styled.img`
-  height:100px;
-  width:100px;
+  ${props => css`
+    height: ${props.previewHeight};
+    width: ${props.previewWidth};
+  `}
 `
 
 const IconBox = styled.div`
@@ -33,6 +35,8 @@ const IconBox = styled.div`
 class ImageUpload extends Component {
   static propTypes = {
     onUpload: PropTypes.func.isRequired, // callback that accepts fileId and fileUrl
+    previewHeight: PropTypes.string.isRequired,
+    previewWidth: PropTypes.string.isRequired,
   }
 
   state={
@@ -85,44 +89,52 @@ class ImageUpload extends Component {
 
   renderUploadBody = () => {
 
-      switch (this.state.uploadStatus) {
-        case 'uploading':
-          return(
-            <Box>
-              <CircularProgress size={50}/>
-            </Box>
-          )
-        case 'upload-complete':
-          return(
-            <Box>
-              <Image src={this.state.imageUrl} alt=""/>
-              <IconBox>
-                <FaIcon
-                  size="50px"
-                  faClassName="fa-check"
-                  color={muiColors.secondary1}
-                />
-              </IconBox>
-            </Box>
-          )
-        case 'rejected':
-          return(
-            <Box>
-              <Text color={colors.warningRed}>
-                File must be less than 2mb and
-                of one of the following types:
-              <br/> .gif .png .jpg  .jpeg
-              </Text>
-            </Box>
-          )
-        default:
-          return(
-            <Box>
-              <Text>Drop a file or click here, GIFs encouraged ヽ(•‿•)ノ</Text>
-            </Box>
-          )
-      }
+    const {previewWidth, previewHeight} = this.props
 
+    switch (this.state.uploadStatus) {
+      case 'uploading':
+        return(
+          <Box>
+            <CircularProgress size={50}/>
+          </Box>
+        )
+      case 'upload-complete':
+        return(
+          <Box>
+            <Image
+              src={this.state.imageUrl} alt=""
+              previewWidth={previewWidth}
+              previewHeight={previewHeight}
+            />
+            <IconBox>
+              <FaIcon
+                size="50px"
+                faClassName="fa-check"
+                color={muiColors.secondary1}
+              />
+            </IconBox>
+          </Box>
+        )
+      case 'rejected':
+        return(
+          <Box>
+            <Text color={colors.warningRed}>
+              File must be less than 2mb and
+              of one of the following types:
+            <br/> .gif .png .jpg  .jpeg
+            </Text>
+          </Box>
+        )
+      default:
+        return(
+          <Box>
+            <Text>
+            Drop a file or click here, GIFs encouraged <br/> <br/>
+            ヽ(•‿•)ノ
+            </Text>
+          </Box>
+        )
+    }
   }
 
   render(){
