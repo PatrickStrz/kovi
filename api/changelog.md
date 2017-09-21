@@ -1,0 +1,7 @@
+- Solution Model:
+  - chall rel (many sol --> many cahll) SolutionOnChallenge
+  - product relation (1 prod --> 1 solution) Product on solution
+- Product model
+  -title
+  -url
+  -image  (ImageOnProduct) 1to1

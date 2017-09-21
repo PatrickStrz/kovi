@@ -2,7 +2,7 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //components
-import ChallengeCard from './ChallengeCard'
+import ChallengeSection from './ChallengeSection'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import GenericLoader from 'ui-kit/GenericLoader'
 
@@ -14,7 +14,9 @@ export default class ChallengeList extends Component {
     hasMore: PropTypes.bool.isRequired,
   }
 
-  state={scrollTop:false}
+  state = {
+    scrollTop: false,
+  }
 
   renderChallengeCards = () => {
 
@@ -26,7 +28,7 @@ export default class ChallengeList extends Component {
     return challenges.map(challenge => {
       return(
         <div key={'challengelist'+challenge.id}>
-          <ChallengeCard
+          <ChallengeSection
             challenge={challenge}
             allChallengesQueryVariables={allChallengesQueryVariables}
           />
@@ -44,6 +46,7 @@ export default class ChallengeList extends Component {
 
     return(
       <InfiniteScroll
+        style={{overflow:'hidden'}}
         pageStart={0}
         hasMore={hasMore}
         loader={<GenericLoader text="..."/>}

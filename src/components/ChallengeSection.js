@@ -9,16 +9,22 @@ import {
   ADD_CHALLENGE_UPVOTE_MUTATION,
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
-// lib + other
-import {colors} from 'styles/theme/colors'
+// other
+import {colors, muiColors} from 'styles/theme/colors'
 //components
 import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
 import {withRouter} from 'react-router'
+import SolutionListContainer from 'components/solutions/SolutionListContainer'
+import {FaIcon} from 'ui-kit/icons'
 
-class ChallengeCard extends Component {
+
+
+
+class ChallengeSection extends Component {
   static propTypes = {
     challenge: PropTypes.shape({
+      id: PropTypes.string,
       title: PropTypes.string,
       description: PropTypes.string,
       image: PropTypes.shape({
@@ -36,6 +42,10 @@ class ChallengeCard extends Component {
     newUserChallenges: PropTypes.array.isRequired,
   }
 
+  state = {
+    showSolutions: false
+  }
+
   /*
   check if challenge was created by user in this session
   newUserChallenges is an array of newly created challenge id's from redux store
@@ -47,6 +57,10 @@ class ChallengeCard extends Component {
     else {
       return false
     }
+  }
+
+  toggleSolutions = () => {
+    this.setState({showSolutions:!this.state.showSolutions})
   }
 
   render(){
@@ -90,6 +104,14 @@ class ChallengeCard extends Component {
           bottomSection={upvote}
           onBodyClick={()=> this.props.history.push(`/challenge/${id}`)}
         />
+        <FaIcon
+          color={colors.lightGrey}
+          hoverColor={muiColors.primary1}
+          size="20px"
+          onClick={this.toggleSolutions}
+          faClassName={this.state.showSolutions ? "fa-chevron-up" : "fa-chevron-down"}
+        />
+        {this.state.showSolutions && <SolutionListContainer challengeId={id} />}
       </div>
     )
   }
@@ -100,9 +122,9 @@ const mapStateToProps = (state) => ({
   apiUserId: state.app.auth.apiUserId,
 })
 
-const ChallengeCardApollo = compose(
+const ChallengeSectionApollo = compose(
   graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
-)(ChallengeCard)
+)(ChallengeSection)
 
-export default withRouter(connect(mapStateToProps)(ChallengeCardApollo))
+export default withRouter(connect(mapStateToProps)(ChallengeSectionApollo))
