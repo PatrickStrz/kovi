@@ -236,7 +236,7 @@ class ChallengeFormContainer extends Component {
             onUpload={this.onUpload}
             previewWidth="50px"
             previewHeight="50px"
-            defaultImageUrl={defaultValues.imageUrl && defaultValues.imageUrl}
+            defaultImageUrl={if defaultValues.imageUrl && defaultValues.imageUrl}
           />
           <br/>
           <br/>

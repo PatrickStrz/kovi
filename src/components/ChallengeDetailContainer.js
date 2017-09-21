@@ -32,7 +32,7 @@ export class ChallengeDetailContainer extends Component {
       return <GenericError />
     }
     else {
-      const {title, body, author} = this.props.data.Challenge
+      const {title, body, author, image} = this.props.data.Challenge
       const id = this.props.match.params.id
       const {apiUserId} = this.props
 
@@ -43,6 +43,7 @@ export class ChallengeDetailContainer extends Component {
           body={body}
           apiUserId={apiUserId}
           authorId={author.id}
+          image={image}
         />
       )
     }

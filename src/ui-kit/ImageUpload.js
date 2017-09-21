@@ -22,7 +22,7 @@ const Text = styled.p`
   text-align: center;
   margin: 15px;
 `
-const Image = styled.img`
+const ImagePreview = styled.img`
   ${props => css`
     height: ${props.previewHeight};
     width: ${props.previewWidth};
@@ -37,11 +37,13 @@ class ImageUpload extends Component {
     onUpload: PropTypes.func.isRequired, // callback that accepts fileId and fileUrl
     previewHeight: PropTypes.string.isRequired,
     previewWidth: PropTypes.string.isRequired,
+    defaultImageUrl: PropTypes.string.isRequired,
   }
 
   state={
-    uploadStatus:'',
-    dropzoneStatus:'',
+    uploadStatus: '',
+    dropzoneStatus: '',
+    imageUrl: '',
   }
 
   uploadFile = (files) => {
@@ -90,7 +92,15 @@ class ImageUpload extends Component {
       ...this.baseStyle,
     },
   }
-
+  setImagePreviewUrl = () => {
+    const {defaultImageUrl} = this.props
+    if (defaultImageUrl && !this.state.imageUrl){
+     return defaultImageUrl
+    }
+    else {
+      return this.state.imageUrl
+    }
+  }
   renderUploadBody = () => {
     const {previewWidth, previewHeight} = this.props
 
@@ -104,8 +114,8 @@ class ImageUpload extends Component {
       case 'upload-complete':
         return(
           <Box>
-            <Image
-              src={this.state.imageUrl} alt=""
+            <ImagePreview
+              src={this.setImagePreviewUrl()} alt=""
               previewWidth={previewWidth}
               previewHeight={previewHeight}
             />

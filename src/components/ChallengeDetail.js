@@ -38,6 +38,10 @@ export default class ChallengeDetail extends Component{
     id: PropTypes.string.isRequired,
     apiUserId: PropTypes.string,
     authorId: PropTypes.string.isRequired,
+    image: PropTypes.shape({
+      id: PropTypes.string,
+      url: PropTypes.string
+    }).isRequired,
   }
 
   state = {
@@ -53,11 +57,11 @@ export default class ChallengeDetail extends Component{
   }
 
   renderBody = () => {
-    const {body, id, title} = this.props
+    const {body, id, title, image} = this.props
     if (this.state.edit) {
       return(
         <ChallengeFormContainer
-          defaultValues={{title, body}}
+          defaultValues={{title, body, imageUrl: image.url }}
           update={true}
           challengeId={id}
           onUpdateComplete={this.closeEdit}
