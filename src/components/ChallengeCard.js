@@ -11,6 +11,7 @@ import {
 } from '../gql/Challenge/mutations'
 // other
 import {colors, muiColors} from 'styles/theme/colors'
+import styled from 'styled-components'
 //components
 import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
@@ -18,10 +19,25 @@ import {withRouter} from 'react-router'
 import SolutionListContainer from 'components/solutions/SolutionListContainer'
 import {FaIcon} from 'ui-kit/icons'
 
+const ActionsBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
+const Text = styled.p`
+  font-size: 14px;
+  color: ${colors.lightGrey};
+`
+const IconBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 20px;
+  align-items: baseline;
+`
 
-
-
-class ChallengeSection extends Component {
+class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.shape({
       id: PropTypes.string,
@@ -34,6 +50,7 @@ class ChallengeSection extends Component {
       upvotes: PropTypes.array.isRequired,
       userDidUpvote: PropTypes.array,
     }).isRequired,
+    openSolutionForm: PropTypes.func.isRequired,
     // apollo
     addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
@@ -80,7 +97,8 @@ class ChallengeSection extends Component {
         }
       }
 
-    const upvote = (
+    const actions = (
+      <ActionsBox>
         <Upvote
           userDidUpvote={userDidUpvote.length > 0 && true}
           apiUserId={apiUserId}
@@ -92,7 +110,21 @@ class ChallengeSection extends Component {
           mutationVariables={upvoteMutationVariables}
           faIconClassName="fa-bullseye"
         />
-      )
+      <IconBox>
+        <FaIcon
+          color={colors.lightGrey}
+          hoverColor={muiColors.primary1}
+          size="30px"
+          onClick={this.toggleSolutions}
+          faClassName={this.state.showSolutions ? "fa-sort-up" : "fa-sort-down"}
+        />
+        <Text onClick={()=>this.props.openSolutionForm()}>
+          add solution
+        </Text>
+      </IconBox>
+
+      </ActionsBox>
+    )
 
     return(
       <div>
@@ -101,15 +133,8 @@ class ChallengeSection extends Component {
           highlight={this.isNewlyCreated(id)}
           highlightColor={colors.faintTeal}
           text={title}
-          bottomSection={upvote}
+          bottomSection={actions}
           onBodyClick={()=> this.props.history.push(`/challenge/${id}`)}
-        />
-        <FaIcon
-          color={colors.lightGrey}
-          hoverColor={muiColors.primary1}
-          size="20px"
-          onClick={this.toggleSolutions}
-          faClassName={this.state.showSolutions ? "fa-chevron-up" : "fa-chevron-down"}
         />
         {this.state.showSolutions && <SolutionListContainer challengeId={id} />}
       </div>
@@ -122,9 +147,9 @@ const mapStateToProps = (state) => ({
   apiUserId: state.app.auth.apiUserId,
 })
 
-const ChallengeSectionApollo = compose(
+const ChallengeCardApollo = compose(
   graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
-)(ChallengeSection)
+)(ChallengeCard)
 
-export default withRouter(connect(mapStateToProps)(ChallengeSectionApollo))
+export default withRouter(connect(mapStateToProps)(ChallengeCardApollo))

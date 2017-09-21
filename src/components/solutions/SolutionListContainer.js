@@ -4,19 +4,10 @@ import PropTypes from 'prop-types'
 //gql
 import {graphql} from 'react-apollo'
 import {SOLUTIONS_FOR_CHALLENGE_QUERY } from 'gql/Solution/queries'
-//other
-import styled from 'styled-components'
 //components
 import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
-import ProductCard from 'components/solutions/ProductCard'
-
-const SolutionsBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-`
+import SolutionList from 'components/solutions/SolutionList'
 
 export class SolutionListContainer extends Component {
 
@@ -29,32 +20,17 @@ export class SolutionListContainer extends Component {
     challengeId: PropTypes.string.isRequired,
   }
 
-  renderSolutions = () => {
-    const {allSolutions} = this.props.data
-    return(
-      allSolutions.map(solution => {
-        return(
-          <ProductCard
-            key={'solution'+solution.id}
-            product={solution.product}
-          />
-        )
-      })
-    )
-  }
-
   renderBody = () => {
-    if (this.props.data.loading) {
+    const {loading, error, allSolutions} = this.props.data
+    if (loading) {
       return <GenericLoader text="loading..." />
     }
-    else if (this.props.data.error) {
+    else if (error) {
       return <GenericError />
     }
     else {
       return(
-        <SolutionsBox>
-          {this.renderSolutions()}
-        </SolutionsBox>
+        <SolutionList solutions={allSolutions}/>
       )
     }
   }
@@ -63,7 +39,6 @@ export class SolutionListContainer extends Component {
     return(
       <div>
         {this.renderBody()}
-        solutions list! for challenge: {this.props.challengeId}
       </div>
     )
   }
