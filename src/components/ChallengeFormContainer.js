@@ -22,7 +22,6 @@ import {CHALLENGE_CREATE_SCORE} from 'lib/score-system'
 //helpers+other
 import {logException} from 'config'
 import styled from 'styled-components'
-import {colors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
 //components
 import Editor from 'ui-kit/Editor'
@@ -78,6 +77,7 @@ class ChallengeFormContainer extends Component {
     description: "",
     imageId:"",
     imageUrl:"",
+    titleError:"",
   }
 
   componentWillMount() {
@@ -185,9 +185,14 @@ class ChallengeFormContainer extends Component {
     }
   }
 
-  handleTitleChange = e => {
-    const {value} = e.target
+  handleTitleChange = value => {
     this.setState({title: value})
+  }
+
+  handleTitleError = errorMsg => {
+    if (errorMsg !== this.state.titleError) {
+      this.setState({titleError:errorMsg})
+    } // prevent infinite loop
   }
 
   onUpload = (imageId, imageUrl) => {
@@ -221,6 +226,8 @@ class ChallengeFormContainer extends Component {
           <InputWithCharLimit
             onChange={this.handleTitleChange}
             value={this.state.title}
+            charMax={100}
+            onError={this.handleTitleError}
           />
           <br/>
           <ImageUpload
