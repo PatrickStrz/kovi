@@ -1,13 +1,18 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+//other
 import styled from 'styled-components'
+import {PRODUCT_CARD_SHADOW} from 'styles/shadows'
+//components
+import {Image} from 'ui-kit'
 
 const Box = styled.div`
-  height: 250px;
-  width: 200px;
+  height: 200px;
+  width: 150px;
   background-color: rgb(255, 255, 255);
-  border-radius: 3px;
+  border-radius: 4px;
   margin: 5px;
+  ${PRODUCT_CARD_SHADOW}
 `
 
 class ProductCard extends Component {
@@ -18,8 +23,9 @@ class ProductCard extends Component {
     const {product} = this.props
     return(
       <Box>
-        <h1>{product.title}</h1>
-        <h4>{product.id}</h4>
+        <Image size="150px" url={product.image.url}/>
+        <h4>{product.title}</h4>
+        {/* <h4>{product.id}</h4> */}
       </Box>
     )
   }
