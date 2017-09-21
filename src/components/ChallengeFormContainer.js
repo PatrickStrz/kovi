@@ -22,17 +22,11 @@ import {CHALLENGE_CREATE_SCORE} from 'lib/score-system'
 //helpers+other
 import {logException} from 'config'
 import styled from 'styled-components'
-import {colors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
 //components
 import Editor from 'ui-kit/Editor'
-import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import {ImageUpload} from 'ui-kit'
-
-const CharCount = styled.p`
-    color: ${props => props.color };
-`
+import {ImageUpload, InputWithCharLimit} from 'ui-kit'
 
 const FormBox = styled.div`
   display: flex;
@@ -49,9 +43,6 @@ const FormBox = styled.div`
 `
 const EditorBox = styled.div`
   width:100%
-`
-const TitleBox = styled.div`
-  width:90%;
 `
 
 /* form for both creating and updating challenges, update prop determines if
@@ -84,9 +75,9 @@ class ChallengeFormContainer extends Component {
   state = {
     title: "",
     description: "",
-    titleError:"",
     imageId:"",
     imageUrl:"",
+    titleError:"",
   }
 
   componentWillMount() {
@@ -102,8 +93,6 @@ class ChallengeFormContainer extends Component {
    }
 
   allChallengesQueryVariables = () => ({"filter":{ "id": this.props.apiUserId}})
-
-  charMax = 100
 
   // adjusts based on update prop:
   handleChallengeSubmit = async () => {
@@ -189,18 +178,6 @@ class ChallengeFormContainer extends Component {
     }
   }
 
-  setTitleError = (value) => {
-    let error = "" // clears error
-
-    if (!value){
-      error = "Please write a title"
-    }
-    if (value.length > (this.charMax)){
-      error = "Above character limit"
-    }
-    this.setState({titleError:error})
-  }
-
   checkRequiredFields = () => {
     const {title} = this.state
     if (!title){
@@ -208,10 +185,14 @@ class ChallengeFormContainer extends Component {
     }
   }
 
-  handleTitleChange = e => {
-    const {value} = e.target
+  handleTitleChange = value => {
     this.setState({title: value})
-    this.setTitleError(value)
+  }
+
+  handleTitleError = errorMsg => {
+    if (errorMsg !== this.state.titleError) {
+      this.setState({titleError:errorMsg})
+    } // prevent infinite loop
   }
 
   onUpload = (imageId, imageUrl) => {
@@ -237,32 +218,18 @@ class ChallengeFormContainer extends Component {
 
   render(){
     const {update} = this.props
-    const renderRemainingCharCount = () => {
-      const charCount = this.state.title.length
-      const remainingChars = this.charMax - charCount
-      return(
-        <CharCount color={remainingChars < 15 ? "red" : colors.lightGrey}>
-          {remainingChars}
-        </CharCount>
-      )
-    }
 
     /*-------------- render return ----------------*/
 
     return(
         <FormBox>
-          <TitleBox>
-            <TextField
-              id="challengeCreateTitle"
-              fullWidth={true}
-              hintText="write a concise title"
-              onChange={this.handleTitleChange}
-              value={this.state.title}
-              errorText={this.state.titleError}
-              multiLine={true}
-            />
-            {renderRemainingCharCount()}
-          </TitleBox>
+          <InputWithCharLimit
+            onChange={this.handleTitleChange}
+            value={this.state.title}
+            charMax={100}
+            onError={this.handleTitleError}
+            required={true}
+          />
           <br/>
           <ImageUpload
             onUpload={this.onUpload}
