@@ -21,6 +21,7 @@ class InputWithCharLimit extends Component {
     value: PropTypes.string.isRequired,
     charMax: PropTypes.number.isRequired,
     onError: PropTypes.func.isRequired, // callback that accepts string arg
+    required: PropTypes.bool,
   }
 
   componentWillUpdate = (nextProps, nextState) => {
@@ -33,15 +34,15 @@ class InputWithCharLimit extends Component {
   }
 
   setError = (value) => {
+    const {charMax, required} = this.props
     let error = "" // clears error
-
-    if (!value){
-      error = "Please write a title"
+    if (!value && required){
+        error = "This field is required"
     }
-    if (value.length > (this.props.charMax)){
+    if (value.length > (charMax)){
       error = "Above character limit"
     }
-    this.setState({error:error})
+    this.setState({error})
   }
 
   handleChange = e => {
@@ -49,8 +50,6 @@ class InputWithCharLimit extends Component {
     const value = e.target.value
     onChange(value)
     this.setError(value)
-    if (this.state.error){
-    }
   }
 
   renderRemainingCharCount = () => {
@@ -81,7 +80,6 @@ class InputWithCharLimit extends Component {
         />
         {this.props.value && this.renderRemainingCharCount()}
       </TitleBox>
-
     )
   }
 }

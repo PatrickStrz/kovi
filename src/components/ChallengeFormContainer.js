@@ -228,6 +228,7 @@ class ChallengeFormContainer extends Component {
             value={this.state.title}
             charMax={100}
             onError={this.handleTitleError}
+            required={true}
           />
           <br/>
           <ImageUpload
