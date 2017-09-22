@@ -12,7 +12,7 @@ import {
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
 // other
-import {colors} from 'styles/theme/colors'
+import {colors, muiColors} from 'styles/theme/colors'
 import styled from 'styled-components'
 import {requireAuth} from 'lib/auth'
 //components
@@ -32,6 +32,9 @@ const Text = styled.p`
   color: ${colors.lightGrey};
   cursor: pointer;
   margin-left: 25px;
+  :hover{
+    color: ${muiColors.primary1};
+  }
 `
 const IconBox = styled.div`
   display: flex;
@@ -121,11 +124,11 @@ class ChallengeCard extends Component {
         />
       <IconBox>
         <Text onClick={this.toggleSolutions}>
-          Solutions
+          {this.state.showSolutions ? "Hide" : "Show Solutions" }
         </Text>
 
         <Text onClick={this.showForm}>
-          add solution
+          + Solution
         </Text>
       </IconBox>
 
