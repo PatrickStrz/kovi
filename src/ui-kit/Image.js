@@ -8,8 +8,10 @@ const styles ={
 }
 
 const Placeholder = styled.div`
-  height:60px;
-  width:60px;
+${props => css`
+  height:${props.size};
+  width:${props.size};
+`}
   background-color: rgb(191, 191, 191);
   border-radius: ${styles.borderRadius};
 `
@@ -38,10 +40,10 @@ class Image extends Component {
   }
 
   render(){
-    const {url} = this.props
+    const {size, url} = this.props
     return(
       <div>
-        {url ? this.renderImage() : <Placeholder/> }
+        {url ? this.renderImage() : <Placeholder size={size}/> }
       </div>
     )
   }

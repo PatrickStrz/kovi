@@ -6,7 +6,6 @@ import {graphql} from 'react-apollo'
 import {SOLUTIONS_FOR_CHALLENGE_QUERY } from 'gql/Solution/queries'
 //components
 import GenericError from 'ui-kit/GenericError'
-import GenericLoader from 'ui-kit/GenericLoader'
 import SolutionList from 'components/solutions/SolutionList'
 
 export class SolutionListContainer extends Component {
@@ -23,7 +22,9 @@ export class SolutionListContainer extends Component {
   renderBody = () => {
     const {loading, error, allSolutions} = this.props.data
     if (loading) {
-      return <GenericLoader text="loading..." />
+      return (
+        <SolutionList loading={true} />
+      )
     }
     else if (error) {
       return <GenericError />
