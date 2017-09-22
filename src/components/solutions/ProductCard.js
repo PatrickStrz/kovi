@@ -21,11 +21,12 @@ class ProductCard extends Component {
   }
   render(){
     const {product} = this.props
+    const imageUrl = product.image.url
     return(
       <Box>
-        <Image size="150px" url={product.image.url}/>
+        <Image size="150px" url={imageUrl} />
         <h4>{product.title}</h4>
-        {/* <h4>{product.id}</h4> */}
+        <h4>{product.id}</h4>
       </Box>
     )
   }

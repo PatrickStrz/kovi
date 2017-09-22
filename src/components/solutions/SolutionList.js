@@ -25,12 +25,14 @@ export class SolutionList extends Component {
     if (solutions.length > 0){
       return(
         solutions.map(solution => {
-          return(
-            <ProductCard
-              key={'solution'+solution.id}
-              product={solution.product}
-            />
-          )
+          if (solution.product){
+            return(
+              <ProductCard
+                key={'solution'+solution.id}
+                product={solution.product}
+              />
+            )
+          }
         })
       )
     }

@@ -9,10 +9,6 @@ import TextField from 'material-ui/TextField'
 const CharCount = styled.p`
     color: ${props => props.color };
 `
-const TitleBox = styled.div`
-  width:90%;
-`
-
 class InputWithCharLimit extends Component {
   state = {error: ''}
 
@@ -22,6 +18,7 @@ class InputWithCharLimit extends Component {
     charMax: PropTypes.number.isRequired,
     onError: PropTypes.func.isRequired, // callback that accepts string arg
     required: PropTypes.bool,
+    placeholder: PropTypes.string.isRequired,
   }
 
   componentWillUpdate = (nextProps, nextState) => {
@@ -66,20 +63,20 @@ class InputWithCharLimit extends Component {
   }
 
   render(){
-    const {value} = this.props
+    const {value, placeholder} = this.props
     return(
-      <TitleBox>
+      <div>
         <TextField
           id="challengeCreateTitle"
           fullWidth={true}
-          hintText="write a concise title"
+          hintText={placeholder}
           onChange={this.handleChange}
           value={value}
           errorText={this.state.error}
           multiLine={true}
         />
         {this.props.value && this.renderRemainingCharCount()}
-      </TitleBox>
+      </div>
     )
   }
 }

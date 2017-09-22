@@ -6,6 +6,7 @@ import ChallengeCard from './ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import GenericLoader from 'ui-kit/GenericLoader'
 import {Dialog} from 'ui-kit'
+import SolutionFormContainer from 'components/solutions/SolutionFormContainer'
 
 export default class ChallengeList extends Component {
   static propTypes = {
@@ -50,6 +51,17 @@ export default class ChallengeList extends Component {
     )
   }
 
+  renderSolutionForm = () => {
+    return(
+      <Dialog
+        isOpen={true}
+        title="solutionFormOpenFor"
+        handleClose={this.handleCloseSolutionForm}
+      >
+        <SolutionFormContainer challengeId={this.state.solutionFormOpenFor}/>
+      </Dialog>
+    )
+  }
 
   render(){
     const {hasMore, loadMoreEntries} = this.props
@@ -68,13 +80,7 @@ export default class ChallengeList extends Component {
            {this.state.scrollTop && window.scrollTo(0,0)}
           {this.renderChallengeCards()}
         </InfiniteScroll>
-        <Dialog
-          isOpen={solutionFormOpenFor ? true : false}
-          title="solutionFormOpenFor"
-          handleClose={this.handleCloseSolutionForm}
-        >
-          <h1>form to be</h1>
-        </Dialog>
+        {solutionFormOpenFor && this.renderSolutionForm()}
       </div>
     )
   }
