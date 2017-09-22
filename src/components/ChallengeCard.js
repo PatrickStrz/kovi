@@ -14,6 +14,7 @@ import {
 // other
 import {colors} from 'styles/theme/colors'
 import styled from 'styled-components'
+import {requireAuth} from 'lib/auth'
 //components
 import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
@@ -83,6 +84,11 @@ class ChallengeCard extends Component {
     this.setState({showSolutions:!this.state.showSolutions})
   }
 
+  showForm = () => {
+    const {showProductSolutionForm, challenge} = this.props
+    requireAuth(()=>showProductSolutionForm(challenge.id))
+  }
+
   render(){
     const {id, userDidUpvote, title, image} = this.props.challenge
     const upvotesCount = this.props.challenge._upvotesMeta.count
@@ -118,7 +124,7 @@ class ChallengeCard extends Component {
           Solutions
         </Text>
 
-        <Text onClick={()=>this.props.showProductSolutionForm(id)}>
+        <Text onClick={this.showForm}>
           add solution
         </Text>
       </IconBox>
