@@ -90,8 +90,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    // apiUserId: state.app.auth.apiUserId,
-    // apiUserScorecardId: state.app.auth.apiUserScorecardId,
     productSolutionFormFor: state.app.products.productSolutionFormFor,
   }
 }

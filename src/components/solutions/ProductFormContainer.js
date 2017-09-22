@@ -125,18 +125,6 @@ class ProductFormContainer extends Component {
           challengeId
         },
       }],
-      // update: (proxy, {data: {createSolution}}) => {
-      //   const data = proxy.readQuery({
-      //     query: SOLUTIONS_FOR_CHALLENGE_QUERY,
-      //     variables: challengeId
-      //   })
-      //   data.allSolutions.products.unshift(createSolution)
-      //   proxy.writeQuery({
-      //     query:SOLUTIONS_FOR_CHALLENGE_QUERY,
-      //     variables: challengeId,
-      //     data
-      //   })
-      // },
     }
 
     try{

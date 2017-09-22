@@ -8,8 +8,8 @@ import {muiColors} from 'styles/theme/colors'
 import {Image} from 'ui-kit'
 
 const Box = styled.div`
-  height: 200px;
-  width: 150px;
+  height: 190px;
+  width: 140px;
   background-color: rgb(255, 255, 255);
   border-radius: 4px;
   margin: 5px;
@@ -32,7 +32,7 @@ class ProductCard extends Component {
     const imageUrl = product.image.url
     return(
       <Box>
-        <Image size="150px" url={imageUrl} />
+        <Image size="140px" url={imageUrl} />
         <Text>{product.title}</Text>
       </Box>
     )
