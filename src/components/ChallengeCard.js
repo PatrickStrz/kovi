@@ -12,7 +12,7 @@ import {
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
 // other
-import {colors, muiColors} from 'styles/theme/colors'
+import {colors} from 'styles/theme/colors'
 import styled from 'styled-components'
 //components
 import Upvote from 'ui-kit/Upvote'
@@ -30,7 +30,7 @@ const Text = styled.p`
   font-size: 14px;
   color: ${colors.lightGrey};
   cursor: pointer;
-  margin-left: 25px; 
+  margin-left: 25px;
 `
 const IconBox = styled.div`
   display: flex;
