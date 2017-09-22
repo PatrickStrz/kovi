@@ -2,6 +2,9 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //redux
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {showErrorAlert} from 'actions/alert-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -18,11 +21,11 @@ import {media} from 'styles/media-queries'
 import RaisedButton from 'material-ui/RaisedButton'
 import {ImageUpload, InputWithCharLimit} from 'ui-kit'
 import TextField from 'material-ui/TextField'
+import CircularProgress from 'material-ui/CircularProgress';
 
 const FormBox = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   width: 70%;
   margin-left: 15%;
@@ -42,11 +45,12 @@ class ProductFormContainer extends Component {
   }
 
   state = {
-    title: "",
-    titleError: "",
-    url: "",
-    imageId:"",
-    imageUrl:"",
+    title: '',
+    titleError: '',
+    url: '',
+    imageId: '',
+    imageUrl: '',
+    isSubmitting: '',
   }
 
   handleTitleChange = value => {
@@ -70,7 +74,7 @@ class ProductFormContainer extends Component {
   checkRequiredFields = () => {
     const {title} = this.state
     if (!title){
-      this.setState({titleError:"title is required"})
+      this.setState({titleError:'title is required'})
     }
   }
 
@@ -95,8 +99,14 @@ class ProductFormContainer extends Component {
 
 
   handleSubmit = async () => {
-    const {challengeId, createProductSolutionMutation} = this.props
+    const {
+      challengeId,
+      createProductSolutionMutation,
+      showErrorAlert
+    } = this.props
+
     const {title,imageId,url} = this.state
+
     const options = {
       variables: {
         challengeId,
@@ -105,18 +115,38 @@ class ProductFormContainer extends Component {
         url
       }
     }
+    
     try{
-      const response = await createProductSolutionMutation(options)
-      this.setState({title:"", url:""}) //clear field on success.
+      this.setState({isSubmitting:true})
+      await createProductSolutionMutation(options)
+      this.setState({title:"", url:"", isSubmitting: false})
     }
     catch(err){
-      // const message "error creating product"
-      // showErrorAlert(message)
+      const message = "error creating product"
+      showErrorAlert(message)
+      this.setState({isSubmitting:false})
       logException(err, {
       action: "mutation in handleSubmit in SolutionFormContainer.js"
       })
     }
   }
+
+  renderButton = () => {
+    if (this.state.isSubmitting) {
+      return <CircularProgress size={50}/>
+    }
+    else {
+      return(
+        <RaisedButton
+          // label={update ? "update" : "submit product"}
+          label="submit product"
+          onClick={this.handleSubmit}
+          primary={true}
+          disabled={this.isDisabled()}
+        />
+      )
+    }
+   }
 
     render() {
       return(
@@ -146,16 +176,24 @@ class ProductFormContainer extends Component {
           />
           <br/>
           <br/>
-          <RaisedButton
-            // label={update ? "update" : "submit product"}
-            label="submit product"
-            onClick={this.handleSubmit}
-            primary={true}
-            disabled={this.isDisabled()}
-          />
+          {this.renderButton()}
         </FormBox>
       )
     }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    showErrorAlert,
+  }, dispatch)
+}
+
+const mapStateToProps = (state) => {
+  return {
+    apiUserId: state.app.auth.apiUserId,
+    apiUserScorecardId: state.app.auth.apiUserScorecardId,
+    editorHtml: state.app.editor.editorHtml,
+  }
 }
 
 const ProductFormContainerApollo = compose(
@@ -169,4 +207,6 @@ const ProductFormContainerApollo = compose(
   // ),
 )(ProductFormContainer)
 
-export default ProductFormContainerApollo
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(ProductFormContainerApollo)
