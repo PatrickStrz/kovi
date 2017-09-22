@@ -1,36 +1,33 @@
 // React
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
+//redux
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {hideProductSolutionForm} from 'actions/product-actions'
 //components
 import ChallengeCard from './ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import GenericLoader from 'ui-kit/GenericLoader'
 import {Dialog} from 'ui-kit'
-import SolutionFormContainer from 'components/solutions/SolutionFormContainer'
+import ProductFormContainer from 'components/solutions/ProductFormContainer'
 
-export default class ChallengeList extends Component {
+class ChallengeList extends Component {
   static propTypes = {
     challenges: PropTypes.array.isRequired,
     allChallengesQueryVariables: PropTypes.object.isRequired,
     loadMoreEntries: PropTypes.func.isRequired,
     hasMore: PropTypes.bool.isRequired,
+    //redux
+    productSolutionFormFor: PropTypes.string,
+    hideProductSolutionView: PropTypes.func,
   }
 
   state = {
     scrollTop: false,
-    solutionFormOpenFor:'', //set to challengeId when want to open form
-  }
-
-  handleCloseSolutionForm = () => {
-    this.setState({solutionFormOpenFor:''})
-  }
-
-  openSolutionForm = (challengeId) => {
-    this.setState({solutionFormOpenFor:challengeId})
   }
 
   renderChallengeCards = () => {
-
     const {
       challenges,
       allChallengesQueryVariables,
@@ -41,7 +38,6 @@ export default class ChallengeList extends Component {
       return(
         <div key={'challengelist'+id}>
           <ChallengeCard
-            openSolutionForm={()=>this.openSolutionForm(id)}
             challenge={challenge}
             allChallengesQueryVariables={allChallengesQueryVariables}
           />
@@ -52,20 +48,20 @@ export default class ChallengeList extends Component {
   }
 
   renderSolutionForm = () => {
+    const {hideProductSolutionForm, productSolutionFormFor} = this.props
     return(
       <Dialog
         isOpen={true}
-        title="solutionFormOpenFor"
-        handleClose={this.handleCloseSolutionForm}
+        title="productSolutionFormOpenFor"
+        handleClose={hideProductSolutionForm}
       >
-        <SolutionFormContainer challengeId={this.state.solutionFormOpenFor}/>
+        <ProductFormContainer challengeId={productSolutionFormFor}/>
       </Dialog>
     )
   }
 
   render(){
-    const {hasMore, loadMoreEntries} = this.props
-    const {solutionFormOpenFor} = this.state
+    const {hasMore, loadMoreEntries, productSolutionFormFor} = this.props
     /* ---------------- render return -----------------*/
 
     return(
@@ -80,8 +76,25 @@ export default class ChallengeList extends Component {
            {this.state.scrollTop && window.scrollTo(0,0)}
           {this.renderChallengeCards()}
         </InfiniteScroll>
-        {solutionFormOpenFor && this.renderSolutionForm()}
+        {productSolutionFormFor && this.renderSolutionForm(productSolutionFormFor)}
+        {/* {productSolutionsFormFor && alert('yooo')} */}
       </div>
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    hideProductSolutionForm,
+  }, dispatch)
+}
+
+const mapStateToProps = (state) => {
+  return {
+    // apiUserId: state.app.auth.apiUserId,
+    // apiUserScorecardId: state.app.auth.apiUserScorecardId,
+    productSolutionFormFor: state.app.products.productSolutionFormFor,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChallengeList)

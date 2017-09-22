@@ -3,6 +3,8 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //redux
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {showProductSolutionForm} from 'actions/product-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
@@ -50,13 +52,13 @@ class ChallengeCard extends Component {
       upvotes: PropTypes.array.isRequired,
       userDidUpvote: PropTypes.array,
     }).isRequired,
-    openSolutionForm: PropTypes.func.isRequired,
     // apollo
     addChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     removeChallengeUpvoteMutation: PropTypes.func.isRequired, //apollo
     //redux:
     apiUserId: PropTypes.string,
     newUserChallenges: PropTypes.array.isRequired,
+    showProductSolutionForm: PropTypes.func,
   }
 
   state = {
@@ -118,7 +120,7 @@ class ChallengeCard extends Component {
           onClick={this.toggleSolutions}
           faClassName={this.state.showSolutions ? "fa-sort-up" : "fa-sort-down"}
         />
-        <Text onClick={()=>this.props.openSolutionForm()}>
+        <Text onClick={()=>this.props.showProductSolutionForm(id)}>
           add solution
         </Text>
       </IconBox>
@@ -142,6 +144,12 @@ class ChallengeCard extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    showProductSolutionForm,
+  }, dispatch)
+}
+
 const mapStateToProps = (state) => ({
   newUserChallenges: state.app.challenges.newUserChallenges,
   apiUserId: state.app.auth.apiUserId,
@@ -152,4 +160,6 @@ const ChallengeCardApollo = compose(
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeCard)
 
-export default withRouter(connect(mapStateToProps)(ChallengeCardApollo))
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo)
+)

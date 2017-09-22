@@ -1,5 +1,6 @@
-//react+redux
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
+//redux
 import {connect} from 'react-redux'
 //gql
 import {graphql} from 'react-apollo'
@@ -16,6 +17,13 @@ import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
 
 class ChallengeListContainer extends Component {
+  static propTypes = {
+    //apollo
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    allChallenges: PropTypes.array, // apollo
+  }
+
   render(){
     //so can change query variables in one place and pass to child components:
     const allChallengesQueryVariables = {"filter":{ "id": this.props.apiUserId}}
