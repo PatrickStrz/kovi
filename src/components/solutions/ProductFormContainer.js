@@ -7,10 +7,9 @@ import {bindActionCreators} from 'redux'
 import {showErrorAlert} from 'actions/alert-actions'
 import {hideProductSolutionForm} from 'actions/product-actions'
 //gql
-import {graphql, compose} from 'react-apollo'
+import {graphql} from 'react-apollo'
 import {
   CREATE_PRODUCT_SOLUTION_MUTATION,
-  // UPDATE_PRODUCT_SOLUTION_MUTATION,
 } from 'gql/Solution/mutations'
 import {SOLUTIONS_FOR_CHALLENGE_QUERY} from 'gql/Solution/queries'
 // import {CHALLENGE_CREATE_SCORE} from 'lib/score-system'
@@ -37,10 +36,7 @@ const FormBox = styled.div`
   `}
 `
 
-//title is product name
-
 class ProductFormContainer extends Component {
-
   static propTypes = {
     challengeId: PropTypes.string.isRequired,
     //apollo
@@ -48,6 +44,7 @@ class ProductFormContainer extends Component {
     //redux
     hideProductSolutionForm: PropTypes.func.isRequired,
     showErrorAlert: PropTypes.func.isRequired,
+    apiUserId: PropTypes.string.isRequired,
   }
 
   state = {
@@ -103,13 +100,13 @@ class ProductFormContainer extends Component {
     return isDisabled
   }
 
-
   handleSubmit = async () => {
     const {
       challengeId,
       createProductSolutionMutation,
       showErrorAlert,
       hideProductSolutionForm,
+      apiUserId
     } = this.props
 
     const {title,imageId,url} = this.state
@@ -117,9 +114,10 @@ class ProductFormContainer extends Component {
     const options = {
       variables: {
         challengeId,
-        title,
+        title, // name of product
         imageId,
-        url
+        url,
+        authorId: apiUserId,
       },
       refetchQueries: [{
         query: SOLUTIONS_FOR_CHALLENGE_QUERY,
@@ -164,7 +162,6 @@ class ProductFormContainer extends Component {
     else {
       return(
         <RaisedButton
-          // label={update ? "update" : "submit product"}
           label="submit product"
           onClick={this.handleSubmit}
           primary={true}
@@ -191,8 +188,6 @@ class ProductFormContainer extends Component {
             hintText="url of product website"
             onChange={this.handleUrlChange}
             value={this.state.url}
-            // errorText={this.state.error}
-            // multiLine={true}
           />
           <br/>
           <ImageUpload
@@ -218,21 +213,14 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     apiUserId: state.app.auth.apiUserId,
-    apiUserScorecardId: state.app.auth.apiUserScorecardId,
-    editorHtml: state.app.editor.editorHtml,
+    // apiUserScorecardId: state.app.auth.apiUserScorecardId,
   }
 }
 
-const ProductFormContainerApollo = compose(
-  graphql(
+const ProductFormContainerApollo = graphql(
     CREATE_PRODUCT_SOLUTION_MUTATION,
     {name:"createProductSolutionMutation"}
-  ),
-  // graphql(
-  //   UPDATE_PRODUCT_SOLUTION_MUTATION,
-  //   {name:"updateProductSolutionMutation"}
-  // ),
-)(ProductFormContainer)
+  )(ProductFormContainer)
 
 export default connect(
   mapStateToProps, mapDispatchToProps

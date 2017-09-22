@@ -20,7 +20,7 @@ class ChallengeList extends Component {
     hasMore: PropTypes.bool.isRequired,
     //redux
     productSolutionFormFor: PropTypes.string,
-    hideProductSolutionView: PropTypes.func,
+    hideProductSolutionForm: PropTypes.func,
   }
 
   state = {

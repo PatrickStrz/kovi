@@ -19,20 +19,22 @@ export class SolutionList extends Component {
     solutions: PropTypes.array.isRequired,
   }
 
-
   renderSolutions = () => {
     const {solutions} = this.props
     if (solutions.length > 0){
       return(
         solutions.map(solution => {
-          // if (solution.product){
+          if (solution.product){
             return(
               <ProductCard
                 key={'solution'+solution.id}
                 product={solution.product}
               />
             )
-          // }
+          }
+          else {
+            return ''
+          }
         })
       )
     }
