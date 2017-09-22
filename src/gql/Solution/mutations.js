@@ -6,7 +6,7 @@ export const CREATE_PRODUCT_SOLUTION_MUTATION = gql`
     $title: String!,
     $imageId:ID,
     $url:String!,
-    $authorId:ID
+    $authorId:ID!
   ){
    	createSolution(
       challengeId:$challengeId,
