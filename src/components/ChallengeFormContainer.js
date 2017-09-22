@@ -28,6 +28,9 @@ import Editor from 'ui-kit/Editor'
 import RaisedButton from 'material-ui/RaisedButton'
 import {ImageUpload, InputWithCharLimit} from 'ui-kit'
 
+const TitleBox = styled.div`
+  width:90%;
+`
 const FormBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -223,13 +226,16 @@ class ChallengeFormContainer extends Component {
 
     return(
         <FormBox>
-          <InputWithCharLimit
-            onChange={this.handleTitleChange}
-            value={this.state.title}
-            charMax={100}
-            onError={this.handleTitleError}
-            required={true}
-          />
+          <TitleBox>
+            <InputWithCharLimit
+              placeholder="Quick description of the challenge"
+              onChange={this.handleTitleChange}
+              value={this.state.title}
+              charMax={100}
+              onError={this.handleTitleError}
+              required={true}
+            />
+          </TitleBox>
           <br/>
           <ImageUpload
             onUpload={this.onUpload}

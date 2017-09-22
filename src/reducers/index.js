@@ -6,6 +6,7 @@ import editor from './editor-reducer'
 import community from './community-reducer'
 import bottomBar from './bottombar-reducer'
 import alerts from './alert-reducer'
+import products from './product-reducer'
 
 const appRootReducer = combineReducers({
   alerts,
@@ -15,6 +16,7 @@ const appRootReducer = combineReducers({
   community,
   editor,
   scores,
+  products
 })
 
 export default appRootReducer

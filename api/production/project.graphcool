@@ -1,5 +1,5 @@
 # project: cj541g35wjwqc01754kb4rfvk
-# version: 88
+# version: 89
 
 type Challenge implements Node {
   author: User! @relation(name: "AuthorForChallenge")
@@ -12,6 +12,7 @@ type Challenge implements Node {
   updatedAt: DateTime!
   upvotes: [User!]! @relation(name: "ChallengeUpvotes")
   image: File @relation(name: "ImageForChallenge")
+  solutions: [Solution!]! @relation(name: "SolutionOnChallenge")
 }
 
 type Comment implements Node {
@@ -52,6 +53,7 @@ type File implements Node {
   updatedAt: DateTime!
   url: String! @isUnique
   challenge: Challenge @relation(name: "ImageForChallenge")
+  product: Product @relation(name: "ImageOnProduct")
 }
 
 type Score implements Node {
@@ -86,6 +88,7 @@ type User implements Node {
   scorecard: Scorecard! @relation(name: "ScorecardForUser")
   updatedAt: DateTime!
   upvotedChallenges: [Challenge!]! @relation(name: "ChallengeUpvotes")
+  solutions: [Solution!]! @relation(name: "AuthorOnSolution")
 }
 
 type Task implements Node {
@@ -94,6 +97,21 @@ type Task implements Node {
   id: ID! @isUnique
   type: TaskName!
   updatedAt: DateTime!
+}
+
+type Product implements Node {
+  id: ID! @isUnique
+  image: File! @relation(name: "ImageOnProduct")
+  solution: Solution @relation(name: "ProductOnSolution")
+  title: String! @defaultValue(value: "")
+  url: String!
+}
+
+type Solution implements Node {
+  author: User! @relation(name: "AuthorOnSolution")
+  challenge: Challenge @relation(name: "SolutionOnChallenge")
+  id: ID! @isUnique
+  product: Product @relation(name: "ProductOnSolution")
 }
 
 enum TaskName {

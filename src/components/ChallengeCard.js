@@ -3,22 +3,51 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //redux
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {showProductSolutionForm} from 'actions/product-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
   ADD_CHALLENGE_UPVOTE_MUTATION,
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from '../gql/Challenge/mutations'
-// lib + other
-import {colors} from 'styles/theme/colors'
+// other
+import {colors, muiColors} from 'styles/theme/colors'
+import styled from 'styled-components'
+import {requireAuth} from 'lib/auth'
 //components
 import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
 import {withRouter} from 'react-router'
+import SolutionListContainer from 'components/solutions/SolutionListContainer'
+
+const ActionsBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
+const Text = styled.p`
+  font-size: 14px;
+  color: ${colors.lightGrey};
+  cursor: pointer;
+  margin-left: 25px;
+  :hover{
+    color: ${muiColors.primary1};
+  }
+`
+const IconBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 20px;
+  align-items: baseline;
+`
 
 class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.shape({
+      id: PropTypes.string,
       title: PropTypes.string,
       description: PropTypes.string,
       image: PropTypes.shape({
@@ -34,6 +63,11 @@ class ChallengeCard extends Component {
     //redux:
     apiUserId: PropTypes.string,
     newUserChallenges: PropTypes.array.isRequired,
+    showProductSolutionForm: PropTypes.func,
+  }
+
+  state = {
+    showSolutions: false
   }
 
   /*
@@ -47,6 +81,15 @@ class ChallengeCard extends Component {
     else {
       return false
     }
+  }
+
+  toggleSolutions = () => {
+    this.setState({showSolutions:!this.state.showSolutions})
+  }
+
+  showForm = () => {
+    const {showProductSolutionForm, challenge} = this.props
+    requireAuth(()=>showProductSolutionForm(challenge.id))
   }
 
   render(){
@@ -66,7 +109,8 @@ class ChallengeCard extends Component {
         }
       }
 
-    const upvote = (
+    const actions = (
+      <ActionsBox>
         <Upvote
           userDidUpvote={userDidUpvote.length > 0 && true}
           apiUserId={apiUserId}
@@ -78,7 +122,18 @@ class ChallengeCard extends Component {
           mutationVariables={upvoteMutationVariables}
           faIconClassName="fa-bullseye"
         />
-      )
+      <IconBox>
+        <Text onClick={this.toggleSolutions}>
+          {this.state.showSolutions ? "Hide" : "Show Solutions" }
+        </Text>
+
+        <Text onClick={this.showForm}>
+          + Solution
+        </Text>
+      </IconBox>
+
+      </ActionsBox>
+    )
 
     return(
       <div>
@@ -87,12 +142,19 @@ class ChallengeCard extends Component {
           highlight={this.isNewlyCreated(id)}
           highlightColor={colors.faintTeal}
           text={title}
-          bottomSection={upvote}
+          bottomSection={actions}
           onBodyClick={()=> this.props.history.push(`/challenge/${id}`)}
         />
+        {this.state.showSolutions && <SolutionListContainer challengeId={id} />}
       </div>
     )
   }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    showProductSolutionForm,
+  }, dispatch)
 }
 
 const mapStateToProps = (state) => ({
@@ -105,4 +167,6 @@ const ChallengeCardApollo = compose(
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeCard)
 
-export default withRouter(connect(mapStateToProps)(ChallengeCardApollo))
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo)
+)
