@@ -26,7 +26,6 @@ class ProductCard extends Component {
       <Box>
         <Image size="150px" url={imageUrl} />
         <h4>{product.title}</h4>
-        <h4>{product.id}</h4>
       </Box>
     )
   }

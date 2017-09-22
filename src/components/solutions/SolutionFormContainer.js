@@ -43,7 +43,10 @@ class ProductFormContainer extends Component {
 
   state = {
     title: "",
+    titleError: "",
     url: "",
+    imageId:"",
+    imageUrl:"",
   }
 
   handleTitleChange = value => {
@@ -71,14 +74,16 @@ class ProductFormContainer extends Component {
     }
   }
 
+  // regex for url: https://regexr.com/37i6s
+
   isDisabled = () => {
-    const {titleError, title, imageId} = this.state
+    const {titleError, title, imageId, url} = this.state
     let isDisabled
       if (
         !titleError &&
         title &&
-        this.props.editorHtml &&
-        imageId
+        imageId &&
+        url
       ){
         isDisabled = false
       }
@@ -88,9 +93,31 @@ class ProductFormContainer extends Component {
     return isDisabled
   }
 
-  handleSubmit = () => {
-    alert('submitting:'+this.state.title)
+
+  handleSubmit = async () => {
+    const {challengeId, createProductSolutionMutation} = this.props
+    const {title,imageId,url} = this.state
+    const options = {
+      variables: {
+        challengeId,
+        title,
+        imageId,
+        url
+      }
+    }
+    try{
+      const response = await createProductSolutionMutation(options)
+      this.setState({title:"", url:""}) //clear field on success.
+    }
+    catch(err){
+      // const message "error creating product"
+      // showErrorAlert(message)
+      logException(err, {
+      action: "mutation in handleSubmit in SolutionFormContainer.js"
+      })
+    }
   }
+
     render() {
       return(
         <FormBox>
@@ -124,7 +151,7 @@ class ProductFormContainer extends Component {
             label="submit product"
             onClick={this.handleSubmit}
             primary={true}
-            // disabled={this.isDisabled()}
+            disabled={this.isDisabled()}
           />
         </FormBox>
       )
