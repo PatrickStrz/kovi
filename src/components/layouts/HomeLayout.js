@@ -22,8 +22,8 @@ const CenterPanel = styled.div`
  width: 45%;
  ${media.md`
    position: relative;
-   width: 80%;
-   left:10%;
+   width: 95%;
+   left:2.5%;
    `} /* Center element when in mobile view ( < md )*/
  ${ props => props.showLines && css`border: solid 6px #7be1eb;`}
  display: flex;

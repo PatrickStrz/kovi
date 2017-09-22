@@ -7,6 +7,10 @@ import {CARD_Z_INDEX} from 'styles/z-index'
 import {Image} from 'ui-kit'
 
 const CardBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   background-color: ${props =>{
     return props.highlight ? props.highlightColor : `#ffffff`
     }
@@ -25,18 +29,27 @@ const CardBox = styled.div`
   padding-left: 20px;
 `
 const CardBody = styled.div`
+  margin-left: 25px;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  align-items: left;
+`
+const HeaderBox = styled.div`
+  width: auto;
   cursor: pointer;
   :hover{
     opacity: 0.5;
   }
 `
-const Text = styled.p`
+
+const ImageBox = styled.div`
+  :hover{
+    opacity: 0.5;
+  }
+`
+
+const Title = styled.p`
   word-break: break-all;
-  margin-left: 15px;
   font-size: 16px;
   color: ${colors.medGrey};
 `
@@ -69,13 +82,17 @@ export default class Card extends Component{
     } = this.props
     return(
       <CardBox highlight={highlight} highlightColor={highlightColor}>
-        <CardBody onClick={onBodyClick}>
-          <Image url={imageUrl}/>
-          <Text>{text}</Text>
+        <ImageBox onClick={onBodyClick}>
+          <Image size="80px" url={imageUrl}/>
+        </ImageBox>
+        <CardBody>
+          <HeaderBox onClick={onBodyClick}>
+            <Title>{text}</Title>
+          </HeaderBox>
+          <ActionsBox>
+            {bottomSection}
+          </ActionsBox>
         </CardBody>
-        <ActionsBox>
-          {bottomSection}
-        </ActionsBox>
       </CardBox>
     )
   }

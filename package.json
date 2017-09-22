@@ -11,6 +11,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.18.0",
     "prop-types": "^15.5.8",
+    "randomstring": "^1.1.5",
     "raven-js": "^3.16.1",
     "react": "^15.6.1",
     "react-apollo": "^1.2.0",

@@ -1,6 +1,6 @@
 import {keyframes} from 'styled-components'
 
-export const loadingOpacityKeyframes = keyframes`
+export const loadingOpacity = keyframes`
   0%   {opacity:1;}
   25%  {opacity:0.5;}
   50%  {opacity:0;}
