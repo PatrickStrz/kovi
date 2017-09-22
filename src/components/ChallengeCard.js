@@ -19,7 +19,6 @@ import Upvote from 'ui-kit/Upvote'
 import Card from 'ui-kit/Card'
 import {withRouter} from 'react-router'
 import SolutionListContainer from 'components/solutions/SolutionListContainer'
-import {FaIcon} from 'ui-kit/icons'
 
 const ActionsBox = styled.div`
   display: flex;
@@ -30,6 +29,8 @@ const ActionsBox = styled.div`
 const Text = styled.p`
   font-size: 14px;
   color: ${colors.lightGrey};
+  cursor: pointer;
+  margin-left: 25px; 
 `
 const IconBox = styled.div`
   display: flex;
@@ -113,13 +114,10 @@ class ChallengeCard extends Component {
           faIconClassName="fa-bullseye"
         />
       <IconBox>
-        <FaIcon
-          color={colors.lightGrey}
-          hoverColor={muiColors.primary1}
-          size="30px"
-          onClick={this.toggleSolutions}
-          faClassName={this.state.showSolutions ? "fa-sort-up" : "fa-sort-down"}
-        />
+        <Text onClick={this.toggleSolutions}>
+          Solutions
+        </Text>
+
         <Text onClick={()=>this.props.showProductSolutionForm(id)}>
           add solution
         </Text>

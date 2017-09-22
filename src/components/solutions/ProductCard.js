@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 //other
 import styled from 'styled-components'
 import {PRODUCT_CARD_SHADOW} from 'styles/shadows'
+import {muiColors} from 'styles/theme/colors'
 //components
 import {Image} from 'ui-kit'
 
@@ -15,6 +16,13 @@ const Box = styled.div`
   ${PRODUCT_CARD_SHADOW}
 `
 
+const Text = styled.div`
+  text-align: center;
+  font-size: 18px;
+  color: ${muiColors.primary1};
+  margin-top: 10px;
+`
+
 class ProductCard extends Component {
   static PropTypes = {
     solution: PropTypes.object.isRequired
@@ -25,7 +33,7 @@ class ProductCard extends Component {
     return(
       <Box>
         <Image size="150px" url={imageUrl} />
-        <h4>{product.title}</h4>
+        <Text>{product.title}</Text>
       </Box>
     )
   }

@@ -5,13 +5,14 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {showErrorAlert} from 'actions/alert-actions'
+import {hideProductSolutionForm} from 'actions/product-actions'
 //gql
 import {graphql, compose} from 'react-apollo'
 import {
   CREATE_PRODUCT_SOLUTION_MUTATION,
   // UPDATE_PRODUCT_SOLUTION_MUTATION,
 } from 'gql/Solution/mutations'
-// import {ALL_CHALLENGES_QUERY} from 'gql/Challenge/queries'
+import {SOLUTIONS_FOR_CHALLENGE_QUERY} from 'gql/Solution/queries'
 // import {CHALLENGE_CREATE_SCORE} from 'lib/score-system'
 //helpers+other
 import {logException} from 'config'
@@ -42,6 +43,11 @@ class ProductFormContainer extends Component {
 
   static propTypes = {
     challengeId: PropTypes.string.isRequired,
+    //apollo
+    createProductSolutionMutation: PropTypes.func.isRequired,
+    //redux
+    hideProductSolutionForm: PropTypes.func.isRequired,
+    showErrorAlert: PropTypes.func.isRequired,
   }
 
   state = {
@@ -102,7 +108,8 @@ class ProductFormContainer extends Component {
     const {
       challengeId,
       createProductSolutionMutation,
-      showErrorAlert
+      showErrorAlert,
+      hideProductSolutionForm,
     } = this.props
 
     const {title,imageId,url} = this.state
@@ -113,13 +120,32 @@ class ProductFormContainer extends Component {
         title,
         imageId,
         url
-      }
+      },
+      refetchQueries: [{
+        query: SOLUTIONS_FOR_CHALLENGE_QUERY,
+        variables: {
+          challengeId
+        },
+      }],
+      // update: (proxy, {data: {createSolution}}) => {
+      //   const data = proxy.readQuery({
+      //     query: SOLUTIONS_FOR_CHALLENGE_QUERY,
+      //     variables: challengeId
+      //   })
+      //   data.allSolutions.products.unshift(createSolution)
+      //   proxy.writeQuery({
+      //     query:SOLUTIONS_FOR_CHALLENGE_QUERY,
+      //     variables: challengeId,
+      //     data
+      //   })
+      // },
     }
-    
+
     try{
       this.setState({isSubmitting:true})
       await createProductSolutionMutation(options)
       this.setState({title:"", url:"", isSubmitting: false})
+      hideProductSolutionForm()
     }
     catch(err){
       const message = "error creating product"
@@ -185,6 +211,7 @@ class ProductFormContainer extends Component {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     showErrorAlert,
+    hideProductSolutionForm,
   }, dispatch)
 }
 

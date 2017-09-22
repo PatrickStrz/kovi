@@ -17,8 +17,10 @@ export const CREATE_PRODUCT_SOLUTION_MUTATION = gql`
     ){
       id
       product{
-          title
-           image{
+        id
+        title
+        url
+        image{
           id
           url
         }

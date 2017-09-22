@@ -76,8 +76,7 @@ class ChallengeList extends Component {
            {this.state.scrollTop && window.scrollTo(0,0)}
           {this.renderChallengeCards()}
         </InfiniteScroll>
-        {productSolutionFormFor && this.renderSolutionForm(productSolutionFormFor)}
-        {/* {productSolutionsFormFor && alert('yooo')} */}
+        {productSolutionFormFor && this.renderSolutionForm()}
       </div>
     )
   }
