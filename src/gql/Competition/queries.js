@@ -8,3 +8,20 @@ export const ACTIVE_COMPETITIONS_QUERY = gql`
     }
   }
 `
+export const COMPETITION_DETAIL_QUERY = gql`
+  query CompetitionDetail($id:ID!){
+    Competition(id:$id){
+      id
+      description
+      entries{
+        id
+        html
+        author{
+          id
+          name
+          picture
+        }
+      }
+    }
+  }
+`

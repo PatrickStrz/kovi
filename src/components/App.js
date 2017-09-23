@@ -4,7 +4,7 @@ import {muiTheme} from 'styles/theme/mui-theme'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from 'components/Site'
 import Home from 'components/Home'
-import CompetitionDetail from 'components/competitions/CompetitionDetail'
+import CompetitionDetailContainer from 'components/competitions/CompetitionDetailContainer'
 
 class App extends Component {
   devRoute = `/${process.env.REACT_APP_DEV_ROUTE}/`
@@ -19,7 +19,7 @@ class App extends Component {
               <Route exact path={this.devRoute}
                 render={() => <h1>Secret dev page</h1>}
               />
-              <Route path='/competition/:id' component={CompetitionDetail}/>
+              <Route path='/competition/:id' component={CompetitionDetailContainer}/>
               <Route path="/" component={Home} />
             </Switch>
           </Site>

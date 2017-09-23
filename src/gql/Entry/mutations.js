@@ -4,15 +4,15 @@ export const gql`
   mutation createCompetitionEntry (
     $competitionId:ID!,
     $authorId:ID!,
-    $entry:String!
+    $html:String!
   ){
-    createEntry(
-      competitionId:$competitionId,
-      authorId:$authorId,
-      entry:$entry
-    ){
-      id
-      entry
-    }
+  createEntry(
+    competitionId:$competitionId,
+    authorId:$authorId,
+    html:$html
+  ){
+    id
+    html
   }
+}
 `
