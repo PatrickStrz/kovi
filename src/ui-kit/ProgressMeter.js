@@ -1,20 +1,36 @@
 import React, {Component} from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 //other
 import styled from 'styled-components'
 import {colors, muiColors} from 'styles/theme/colors'
 //other
 
+const height = '20px'
+
 const Box = styled.div`
-  height: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const Meter = styled.div`
+  height: ${height};
   width: 100px;
   padding: 0px;
-  border: solid 3px ${colors.faintGrey};
+  background-color: ${colors.faintGrey};
   border-radius: 3px;
   margin: 5px;
 `
+
+const Percentage = styled.p`
+  letter-spacing: 1px;
+  color: ${muiColors.primary1};
+  font-size: 16px;
+`
+
 const Progress = styled.div`
-  height: 10px;
+  height: ${height};
   width: ${props => `${props.percent}%`};
   margin: 0px;
   background-color: ${muiColors.tertiary1};
@@ -23,11 +39,26 @@ const Progress = styled.div`
 `
 
 class ProgressMeter extends Component {
-  // static PropTypes
+  static propTypes = {
+    percent: PropTypes.number.isRequired,
+  }
+  getPercent = () => {
+    const {percent} = this.props
+    if (percent > 100){
+      return 100
+    }
+    else {
+      return percent
+    }
+  }
   render(){
+    const percent = this.getPercent()
     return(
       <Box>
-        <Progress percent={80} />
+        <Meter>
+        <Progress percent={this.getPercent()} />
+        </Meter>
+        <Percentage>{percent}%</Percentage>
       </Box>
     )
   }

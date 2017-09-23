@@ -15,16 +15,40 @@ import {COMMUNITY_SCORE_COUNTS_QUERY} from '../../gql/Score/queries'
 import {SCORE_CREATED_SUBSCRIPTION} from '../../gql/Score/subscriptions'
 //other
 import {logException} from 'config'
-import {muiColors} from 'styles/theme/colors'
+import {colors, muiColors} from 'styles/theme/colors'
 import {bounceIn} from 'styles/animations/keyframes'
-import {calculateTotalScore} from 'lib/score-system'
+import {calculateTotalScore, percentageOfGoal, remainingPoints} from 'lib/score-system'
+import {ProgressMeter} from 'ui-kit'
+import {FaIcon} from 'ui-kit/icons'
 
-const Score = styled.p`
-  display: inline-block;
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const Score = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
   color: ${muiColors.primary1};
   font-size: 18px;
-  margin: 0px;
+  margin-left: 5px;
   animation: ${bounceIn} 0.5s;
+`
+
+const IconBox = styled.div`
+  margin-left: 5px;
+  margin-right: 5px;
+`
+
+const RemainingPointsBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items:center;
+  color: ${colors.lightGrey}
 `
 
 class CommunityScore extends Component {
@@ -50,13 +74,36 @@ class CommunityScore extends Component {
    }
 
     //this total is calculated based on the scoring system in lib/score-system:
+  renderPointsIcon = () =>{
+    return(
+      <IconBox>
+        <FaIcon faClassName='fa-star' size="20px" color=''/>
+      </IconBox>
+    )
+    }
 
   renderScore = () => {
-      return <Score>{this.props.communityScore} points</Score>
+      return <Score>
+        {this.renderPointsIcon()}
+        {this.props.communityScore}
+      </Score>
+  }
+  renderPointsToGo = () => {
+    const {communityScore} = this.props
+    return(
+      <RemainingPointsBox>
+        {remainingPoints(communityScore)} points to go !
+      </RemainingPointsBox>
+    )
   }
 
   render(){
-    const {data, communityAnimation1, communityAnimation2} = this.props
+    const {
+      data,
+      communityAnimation1,
+      communityAnimation2,
+      communityScore,
+    } = this.props
 
     if (data.loading ){
       return(<div></div>)
@@ -69,10 +116,13 @@ class CommunityScore extends Component {
     }
     //make sure score remounts on prop change so animation plays:
     return(
-      <div>
-        {communityAnimation1 && this.renderScore()}
-        {communityAnimation2 && this.renderScore()}
-      </div>
+      <Box>
+        <ProgressMeter percent={percentageOfGoal(communityScore)}/>
+        {this.renderPointsToGo(communityScore)}
+        {/* <p>{percentageOfGoal(communityScore)}% there</p> */}
+          {communityAnimation1 && this.renderScore()}
+          {communityAnimation2 && this.renderScore()}
+      </Box>
     )
   }
 }

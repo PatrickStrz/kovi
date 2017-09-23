@@ -37,11 +37,13 @@ const ScoreSection = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
-  border-radius: 3px;
+  border-radius: 3px;s
   margin: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 15px;
   padding-right: 15px;
-  ${SCORE_SECTION_SHADOW}
+  ${''/* ${SCORE_SECTION_SHADOW} */}
 `
 const ScoreBox = styled.div`
   display: flex;
@@ -69,7 +71,7 @@ class Community extends Component {
     return(
       <div>
         <HeadingBox>
-          <Header>Community</Header>
+          {/* <Header>Community</Header> */}
           <ScoreSection>
             <ScoreBox>
               <CommunityScore />
@@ -81,10 +83,9 @@ class Community extends Component {
                 />
               </AvatarPopBox>
             </ScoreBox>
-            <ProgressMeter />
           </ScoreSection>
         </HeadingBox>
-        <TasksContainer />
+        {/* <TasksContainer /> */}
       </div>
     )
   }
