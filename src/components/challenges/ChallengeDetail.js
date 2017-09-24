@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import DOMPurify from 'dompurify' //prevents XSS
 import {colors, muiColors} from 'styles/theme/colors'
 //components
-import ChallengeCommentsContainer from 'components/ChallengeCommentsContainer'
-import ChallengeFormContainer from 'components/ChallengeFormContainer'
+import ChallengeCommentsContainer from 'components/challenges/ChallengeCommentsContainer'
+import ChallengeFormContainer from 'components/challenges/ChallengeFormContainer'
 import FaIcon from 'ui-kit/icons/FaIcon'
 
 /*

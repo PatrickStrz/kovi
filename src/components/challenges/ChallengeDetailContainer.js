@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 //gql
 import {graphql} from 'react-apollo'
-import {CHALLENGE_DETAIL_QUERY} from '../gql/Challenge/queries'
+import {CHALLENGE_DETAIL_QUERY} from 'gql/Challenge/queries'
 //other
 import {withRouter} from 'react-router'
 //components
 import GenericError from 'ui-kit/GenericError'
-import ChallengeDetail from 'components/ChallengeDetail'
+import ChallengeDetail from 'components/challenges/ChallengeDetail'
 import GenericLoader from 'ui-kit/GenericLoader'
 import {Dialog} from 'ui-kit'
 
