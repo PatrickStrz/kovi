@@ -37,6 +37,10 @@ export const CHALLENGE_DETAIL_QUERY = gql`
 				id
 				picture
 			}
+			image{
+				id
+				url
+			}
 		}
 	}
 `
