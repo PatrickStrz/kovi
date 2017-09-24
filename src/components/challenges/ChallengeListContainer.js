@@ -7,12 +7,12 @@ import {graphql} from 'react-apollo'
 import {
   ALL_CHALLENGES_QUERY,
   MORE_CHALLENGES_QUERY,
-} from '../gql/Challenge/queries'
+} from 'gql/Challenge/queries'
 //helpers+other
 import {uniqBy} from 'lodash'
-import {logException} from '../config'
+import {logException} from 'config'
 //components
-import ChallengeList from 'components/ChallengeList'
+import ChallengeList from 'components/challenges/ChallengeList'
 import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
 

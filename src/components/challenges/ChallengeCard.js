@@ -10,7 +10,7 @@ import {graphql, compose} from 'react-apollo'
 import {
   ADD_CHALLENGE_UPVOTE_MUTATION,
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
-} from '../gql/Challenge/mutations'
+} from 'gql/Challenge/mutations'
 // other
 import {colors, muiColors} from 'styles/theme/colors'
 import styled from 'styled-components'

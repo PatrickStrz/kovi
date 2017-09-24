@@ -8,17 +8,18 @@ import {
   hideCreateChallengeView,
 } from '../actions/challenge-actions'
 //lib + other
-import {requireAuth} from '../lib/auth'
+import {requireAuth} from 'lib/auth'
 import styled from 'styled-components'
 //Components
-import ChallengeListContainer from './ChallengeListContainer'
-import ChallengeFormContainer from 'components/ChallengeFormContainer'
+
+import ChallengeListContainer from 'components/challenges/ChallengeListContainer'
+import ChallengeFormContainer from 'components/challenges/ChallengeFormContainer'
 import Dialog from 'ui-kit/Dialog'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
-import ChallengeDetailContainer from 'components/ChallengeDetailContainer'
+import ChallengeDetailContainer from 'components/challenges/ChallengeDetailContainer'
 import {Route} from 'react-router'
 
 const ChallengeListBox = styled.div`

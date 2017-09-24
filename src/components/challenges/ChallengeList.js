@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {hideProductSolutionForm} from 'actions/product-actions'
 //components
-import ChallengeCard from './ChallengeCard'
+import ChallengeCard from 'components/challenges/ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import GenericLoader from 'ui-kit/GenericLoader'
 import {Dialog} from 'ui-kit'
