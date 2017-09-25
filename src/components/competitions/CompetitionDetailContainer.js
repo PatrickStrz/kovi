@@ -11,8 +11,10 @@ import GenericLoader from 'ui-kit/GenericLoader'
 //other
 import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
-import {withRouter} from 'react-router'
+// import {withRouter, Route, BrowserRouter} from 'react-router'
+import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom'
 import EntryList from 'components/competitions/EntryList'
+import EntryDetailContainer from 'components/competitions/EntryDetailContainer'
 //components
 
 const Box = styled.div`
@@ -48,6 +50,9 @@ class CompetitionDetailContainer extends Component {
       <Box>
         <Title>{description}</Title>
         <EntryList entries={entries}/>
+        <BrowserRouter>
+          <Route path="/competition/:id/entry/:id" component={EntryDetailContainer}/>
+        </BrowserRouter>
       </Box>
     )
   }

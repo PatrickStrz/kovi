@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 //other
 import styled from 'styled-components'
 //components
-import { Link } from 'react-router-dom'
+import {Link, Route, withRouter} from 'react-router-dom'
+import EntryDetailContainer from 'components/competitions/EntryDetailContainer'
+
 
 class EntryList extends Component {
   static propTypes = {
@@ -12,7 +14,7 @@ class EntryList extends Component {
 
   renderEntryList = () => {
 
-    const {entries} = this.props
+    const {entries, competitionId} = this.props
     return(entries.map(entry =>{
       return(
         <Link key={'entry'+entry.id} to={`entry/${entry.id}`}>
@@ -28,9 +30,10 @@ class EntryList extends Component {
       <div>
         entry list
         {this.renderEntryList()}
+
       </div>
     )
   }
 }
 
-export default EntryList
+export default withRouter(EntryList)

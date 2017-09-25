@@ -1,4 +1,5 @@
 import {gql} from 'react-apollo'
+import {ENTRY_BODY_FRAGMENT} from 'gql/Entry/fragments'
 
 export const ACTIVE_COMPETITIONS_QUERY = gql`
   query activeCompetitionList{
@@ -14,14 +15,9 @@ export const COMPETITION_DETAIL_QUERY = gql`
       id
       description
       entries{
-        id
-        html
-        author{
-          id
-          name
-          picture
-        }
+        ...entryBody
       }
     }
   }
+  ${ENTRY_BODY_FRAGMENT}
 `
