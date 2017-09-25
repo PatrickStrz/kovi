@@ -50,9 +50,6 @@ class CompetitionDetailContainer extends Component {
       <Box>
         <Title>{description}</Title>
         <EntryList entries={entries}/>
-        <BrowserRouter>
-          <Route path="/competition/:id/entry/:id" component={EntryDetailContainer}/>
-        </BrowserRouter>
       </Box>
     )
   }

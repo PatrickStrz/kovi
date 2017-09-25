@@ -9,8 +9,9 @@ import {logException} from 'config'
 import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
 import CompetitionsList from 'components/competitions/CompetitionList'
+import {withRouter} from 'react-router-dom'
 
- class CompetitionsContainer extends Component {
+ class CompetitionsListContainer extends Component {
    static propTypes = {
      data: PropTypes.shape({
        loading: PropTypes.bool.isRequired,
@@ -42,6 +43,6 @@ import CompetitionsList from 'components/competitions/CompetitionList'
    }
  }
 
- const CompetitionsContainerApollo = graphql(ACTIVE_COMPETITIONS_QUERY)(CompetitionsContainer)
+ const CompetitionsListContainerApollo = graphql(ACTIVE_COMPETITIONS_QUERY)(CompetitionsListContainer)
 
- export default CompetitionsContainerApollo
+ export default withRouter(CompetitionsListContainerApollo)

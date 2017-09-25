@@ -21,7 +21,7 @@ import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
 import ChallengeDetailContainer from 'components/challenges/ChallengeDetailContainer'
 import {Route} from 'react-router'
-import CompetitionsContainer from 'components/competitions/CompetitionsContainer'
+import CompetitionsListContainer from 'components/competitions/CompetitionsListContainer'
 
 const ChallengeListBox = styled.div`
   margin-top: 70px;
@@ -70,7 +70,7 @@ class Home extends Component {
 
     const centerContent = (
       <ChallengeListBox>
-        <CompetitionsContainer />
+        <CompetitionsListContainer />
         <ChallengeListContainer />
       </ChallengeListBox>
     )
