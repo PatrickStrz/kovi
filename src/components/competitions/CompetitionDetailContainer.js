@@ -12,9 +12,7 @@ import GenericLoader from 'ui-kit/GenericLoader'
 import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
 // import {withRouter, Route, BrowserRouter} from 'react-router'
-import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom'
 import EntryList from 'components/competitions/EntryList'
-import EntryDetailContainer from 'components/competitions/EntryDetailContainer'
 //components
 
 const Box = styled.div`
@@ -60,4 +58,4 @@ COMPETITION_DETAIL_QUERY,{
   options: (ownProps) => ({variables: {id: ownProps.match.params.id}}),
 })(CompetitionDetailContainer)
 
- export default withRouter(CompetitionDetailContainerApollo)
+ export default CompetitionDetailContainerApollo

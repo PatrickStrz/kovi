@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 //other
-import styled from 'styled-components'
+// import styled from 'styled-components'
 //components
-import {Link, Route, withRouter} from 'react-router-dom'
-import EntryDetailContainer from 'components/competitions/EntryDetailContainer'
+import {Link} from 'react-router-dom'
 
 class CompetitionList extends Component {
   static propTypes = {
@@ -33,4 +32,4 @@ class CompetitionList extends Component {
   }
 }
 
-export default withRouter(CompetitionList)
+export default CompetitionList

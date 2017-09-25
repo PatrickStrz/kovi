@@ -17,11 +17,11 @@ import {Dialog} from 'ui-kit'
 export class EntryDetailContainer extends Component {
 
   static propTypes = {
-    // data: PropTypes.shape({
-    //   loading: PropTypes.bool.isRequired,
-    //   error: PropTypes.object,
-    //   Challenge: PropTypes.object,
-    // }).isRequired,
+    data: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      error: PropTypes.object,
+      Entry: PropTypes.object,
+    }).isRequired,
   }
 
   renderBody = () => {
