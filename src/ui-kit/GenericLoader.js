@@ -1,7 +1,7 @@
 import React from 'react'
 import {muiColors} from 'styles/theme/colors'
 import PropTypes from 'prop-types'
-import {loadingOpacityKeyframes} from 'styles/animations/keyframes'
+import {loadingOpacity} from 'styles/animations/keyframes'
 import styled from 'styled-components'
 
 
@@ -14,7 +14,7 @@ const Box = styled.div`
 `
 const Loader = styled.h1`
   color: ${muiColors.primary1};
-  animation: ${loadingOpacityKeyframes} 1.25s infinite;
+  animation: ${loadingOpacity} 1.25s infinite;
 `
 
 const GenericError = (props) => {
