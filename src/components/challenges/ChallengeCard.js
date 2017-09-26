@@ -122,7 +122,7 @@ class ChallengeCard extends Component {
           mutationVariables={upvoteMutationVariables}
           faIconClassName="fa-bullseye"
         />
-      <IconBox>
+      {/* <IconBox>
         <Text onClick={this.toggleSolutions}>
           {this.state.showSolutions ? "Hide" : "Show Solutions" }
         </Text>
@@ -130,7 +130,7 @@ class ChallengeCard extends Component {
         <Text onClick={this.showForm}>
           + Solution
         </Text>
-      </IconBox>
+      </IconBox> */}
 
       </ActionsBox>
     )
@@ -142,7 +142,7 @@ class ChallengeCard extends Component {
           highlight={this.isNewlyCreated(id)}
           highlightColor={colors.faintTeal}
           text={title}
-          bottomSection={actions}
+          actions={actions}
           onBodyClick={()=> this.props.history.push(`/challenge/${id}`)}
         />
         {this.state.showSolutions && <SolutionListContainer challengeId={id} />}
