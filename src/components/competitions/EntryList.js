@@ -28,7 +28,6 @@ class EntryList extends Component {
       <div>
         entry list
         {this.renderEntryList()}
-
       </div>
     )
   }

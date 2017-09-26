@@ -9,27 +9,29 @@ import {logException} from 'config'
 import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
 //other
-import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
-// import {withRouter, Route, BrowserRouter} from 'react-router'
-import EntryList from 'components/competitions/EntryList'
 //components
+import CompetitionDetail from 'components/competitions/CompetitionDetail'
 
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`
+//
+// const Box = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+// `
+//
+// const Title = styled.h2`
+//   text-align: center;
+//   color: ${muiColors.primary1}
+// `
 
-const Title = styled.h2`
-  text-align: center;
-  color: ${muiColors.primary1}
-`
 
 class CompetitionDetailContainer extends Component {
   static propTypes = {
     competitions: PropTypes.array
   }
+
+
 
   render(){
     const {data} = this.props
@@ -43,12 +45,10 @@ class CompetitionDetailContainer extends Component {
        return <GenericError />
      }
 
-     const {description, entries} = this.props.data.Competition
+    const {Competition} = this.props.data
+
     return(
-      <Box>
-        <Title>{description}</Title>
-        <EntryList entries={entries}/>
-      </Box>
+        <CompetitionDetail competition={Competition}/>
     )
   }
 }
