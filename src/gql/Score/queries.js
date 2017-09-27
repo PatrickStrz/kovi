@@ -22,7 +22,7 @@ export const USER_SCORE_COUNTS_QUERY = gql`
       scorecard:{id:$scorecardId}
 
     }){
-          count
+      count
     }
     ${levels.two.name}: _allScoresMeta(filter:{
       value:${levels.two.value},

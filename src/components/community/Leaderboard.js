@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {calculateTotalScore, levels} from 'lib/score-system'
+
 //other
 import {muiColors, colors} from 'styles/theme/colors'
 //components
@@ -45,7 +47,7 @@ class Leaderboard extends Component {
             <Avatar imageUrl={picture} size="30px"/>
             <Name>{name}</Name>
             <ScoreBox>
-              {scorecard.total}
+              {calculateTotalScore(scorecard)}
             <IconBox>
               <FaIcon
                 inline={true}
