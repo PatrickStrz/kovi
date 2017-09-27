@@ -12,7 +12,7 @@ import {media} from 'styles/media-queries'
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop, ProgressMeter} from 'ui-kit'
 import {SCORE_SECTION_SHADOW} from 'styles/shadows'
-import CommunityPanelContainer from 'components/community/CommunityPanelContainer'
+import LeaderboardContainer from 'components/community/LeaderboardContainer'
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -54,7 +54,7 @@ const AvatarPopBox = styled.div`
   margin-left: 5px;
 `
 
-const CommunityPanelBox = styled.div`
+const LeaderboardBox = styled.div`
   ${media.md`
     margin-left: 5px;
   `} /* indent on mobile */
@@ -91,9 +91,9 @@ class Community extends Component {
             <ProgressMeter />
           </ScoreSection>
         </HeadingBox>
-        <CommunityPanelBox>
-          <CommunityPanelContainer />
-        </CommunityPanelBox>
+        <LeaderboardBox>
+          <LeaderboardContainer />
+        </LeaderboardBox>
       </div>
     )
   }

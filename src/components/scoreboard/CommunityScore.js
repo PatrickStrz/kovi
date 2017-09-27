@@ -9,6 +9,7 @@ import {
   initializeCommunityScore,
   updateCommunityScore,
 } from '../../actions/score-actions'
+import {requestRefetchLeaderboard} from 'actions/community-actions'
 //gql
 import {graphql} from 'react-apollo'
 import {COMMUNITY_SCORE_COUNTS_QUERY} from '../../gql/Score/queries'
@@ -32,7 +33,8 @@ class CommunityScore extends Component {
     subscribeToNewScores: PropTypes.func.isRequired,
     //redux
     initializeCommunityScore: PropTypes.func.isRequired,
-    updateCommunityScore:  PropTypes.func.isRequired,
+    updateCommunityScore: PropTypes.func.isRequired,
+    requestRefetchLeaderboard: PropTypes.func.isRequired,
     communityScore: PropTypes.number,
     animation1: PropTypes.bool,
     animation2: PropTypes.bool,
@@ -98,11 +100,12 @@ const CommunityScoreWithData = graphql(COMMUNITY_SCORE_COUNTS_QUERY,{
               id,
               scorecard.user.id,
               scorecard.user.picture,
-            )
+            ) // redux action creator
+            ownProps.requestRefetchLeaderboard() // redux action creator
 
             return {
-                /* don't update apollo store using redux app store for
-                scores */
+                /* don't update apollo store, using redux app store for
+                scores instead */
                 prev,
             }
           }
@@ -125,6 +128,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
       initializeCommunityScore,
       updateCommunityScore,
+      requestRefetchLeaderboard
     }, dispatch)
 }
 
