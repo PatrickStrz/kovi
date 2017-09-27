@@ -18,7 +18,7 @@ const ScorecardBox = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 `
 const Name = styled.div`
   margin: 5px;
@@ -32,7 +32,7 @@ const IconBox = styled.div`
   margin-left: 5px;
   display: inline-block;
 `
-class TopScorers extends Component {
+class Leaderboard extends Component {
   static propTypes = {
     scorecards: PropTypes.array.isRequired,
   }
@@ -41,13 +41,17 @@ class TopScorers extends Component {
       this.props.scorecards.map(scorecard => {
         const {picture, name} = scorecard.user
         return (
-          <ScorecardBox>
+          <ScorecardBox key={'Leaderboard'+scorecard.id}>
             <Avatar imageUrl={picture} size="30px"/>
             <Name>{name}</Name>
             <ScoreBox>
               {scorecard.total}
             <IconBox>
-              <FaIcon inline={true} faClassName="fa-star-o"/>
+              <FaIcon
+                inline={true}
+                faClassName="fa-star-o"
+                color={colors.medGrey}
+              />
             </IconBox>
             </ScoreBox>
           </ScorecardBox>
@@ -65,4 +69,4 @@ class TopScorers extends Component {
   }
 }
 
-export default TopScorers
+export default Leaderboard

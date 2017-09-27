@@ -6,8 +6,9 @@ import {graphql} from 'react-apollo'
 //other
 import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
+import {logException} from 'config'
 //components
-import TopScorers from 'components/community/TopScorers'
+import Leaderboard from 'components/community/Leaderboard'
 
 const Box = styled.div`
   width: 100%;
@@ -31,16 +32,26 @@ class CommunityPanelContainer extends Component {
     })
   }
   render(){
-    const {loading, data} = this.props.data
-    if (loading) {
+    const {data} = this.props
+
+    if (data.loading) {
       return(<div>Loading</div>)
     }
-    const {allScorecards} = this.props.data
+
+    else if (data.error) {
+      logException(data.error, {
+      action: "query in CommunityPanel"
+      })
+      return <div></div>
+    }
+
+    const {allScorecards} = data
+
     return(
     <div>
       <Box>
         <Title>Leaderboard</Title>
-        <TopScorers scorecards={allScorecards}/>
+        <Leaderboard scorecards={allScorecards}/>
       </Box>
     </div>
     )

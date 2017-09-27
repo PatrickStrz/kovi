@@ -7,8 +7,8 @@ import {bindActionCreators} from 'redux'
 //other
 import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
+import {media} from 'styles/media-queries'
 //components
-import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop, ProgressMeter} from 'ui-kit'
 import {SCORE_SECTION_SHADOW} from 'styles/shadows'
@@ -54,6 +54,12 @@ const AvatarPopBox = styled.div`
   margin-left: 5px;
 `
 
+const CommunityPanelBox = styled.div`
+  ${media.md`
+    margin-left: 5px;
+  `} /* indent on mobile */
+`
+
 class Community extends Component {
   static propTypes = {
     //redux
@@ -85,7 +91,9 @@ class Community extends Component {
             <ProgressMeter />
           </ScoreSection>
         </HeadingBox>
-        <CommunityPanelContainer />
+        <CommunityPanelBox>
+          <CommunityPanelContainer />
+        </CommunityPanelBox>
       </div>
     )
   }

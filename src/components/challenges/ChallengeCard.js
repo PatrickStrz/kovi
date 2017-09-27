@@ -12,7 +12,7 @@ import {
   REMOVE_CHALLENGE_UPVOTE_MUTATION,
 } from 'gql/Challenge/mutations'
 // other
-import {colors, muiColors} from 'styles/theme/colors'
+import {colors} from 'styles/theme/colors'
 import styled from 'styled-components'
 import {requireAuth} from 'lib/auth'
 //components
@@ -26,22 +26,6 @@ const ActionsBox = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-`
-const Text = styled.p`
-  font-size: 14px;
-  color: ${colors.lightGrey};
-  cursor: pointer;
-  margin-left: 25px;
-  :hover{
-    color: ${muiColors.primary1};
-  }
-`
-const IconBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-left: 20px;
-  align-items: baseline;
 `
 
 class ChallengeCard extends Component {
