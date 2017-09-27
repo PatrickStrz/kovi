@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
-import {FaIcon} from 'ui-kit'
 //components
 import {Image} from 'ui-kit'
 
@@ -25,8 +24,8 @@ const CardBox = styled.div`
   margin-bottom: 5px;
   padding-right: 5px;
 `
-const CardBody = styled.div`
 
+const CardBody = styled.div`
   width: 100%;
   margin-left: 10px;
   display: flex;
@@ -46,10 +45,6 @@ const ClickableBox = styled.div`
   }
 `
 
-const IconBox = styled.div`
-
-`
-
 const ImageBox = styled.div`
   margin: 10px;
 `
@@ -58,11 +53,6 @@ const Title = styled.p`
   word-break: break-all;
   font-size: 16px;
   color: ${colors.medGrey};
-`
-const ActionsBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
 `
 
 export default class Card extends Component{

@@ -50,4 +50,4 @@ Webtask ( serverless functions)
 with redux style Container-Component project structure. Other components may
 still be connected to redux and Apollo (i.e so don't have to pass muations down
 multiple levels), but they are not primary data fetching components.
-4. Global style related files are in `styles/` directory  ( animations/ css/ z-Index ...)
+4. Global style related files are in `styles/` directory  ( animations, colors, z-Index ...)
