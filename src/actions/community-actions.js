@@ -8,3 +8,11 @@ export const showDiscussionView = (discussionId) => ({
 export const hideDiscussionView = () => ({
   type: ActionTypes.HIDE_DISCUSSION_VIEW,
 })
+
+export const requestRefetchLeaderboard = () => ({
+  type: ActionTypes.REQUEST_REFETCH_LEADERBOARD,
+})
+
+export const refetchLeaderboardComplete = () => ({
+  type: ActionTypes.REFETCH_LEADERBOARD_COMPLETE,
+})
