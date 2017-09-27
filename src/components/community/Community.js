@@ -12,6 +12,7 @@ import TasksContainer from 'components/tasks/TasksContainer'
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop, ProgressMeter} from 'ui-kit'
 import {SCORE_SECTION_SHADOW} from 'styles/shadows'
+import CommunityPanelContainer from 'components/community/CommunityPanelContainer'
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -84,7 +85,7 @@ class Community extends Component {
             <ProgressMeter />
           </ScoreSection>
         </HeadingBox>
-        <TasksContainer />
+        <CommunityPanelContainer />
       </div>
     )
   }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
-import {FaIcon} from 'ui-kit'
 //components
 import {Image} from 'ui-kit'
 
@@ -25,8 +24,8 @@ const CardBox = styled.div`
   margin-bottom: 5px;
   padding-right: 5px;
 `
-const CardBody = styled.div`
 
+const CardBody = styled.div`
   width: 100%;
   margin-left: 10px;
   display: flex;
@@ -44,10 +43,6 @@ const ClickableBox = styled.div`
   :hover{
     opacity: 0.5;
   }
-`
-
-const IconBox = styled.div`
-
 `
 
 const ImageBox = styled.div`

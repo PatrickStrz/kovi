@@ -31,6 +31,7 @@ class Upvote extends Component{
     addUpvoteMutation: PropTypes.func.isRequired,
     removeUpvoteMutation: PropTypes.func.isRequired,
     mutationVariables: PropTypes.object.isRequired,
+    size: PropTypes.string,
   }
 
   state = { upvoteInProgress: false, animate:false}
@@ -79,12 +80,12 @@ class Upvote extends Component{
   }
 
   render(){
-    const {userDidUpvote, upvotesCount, faIconClassName} = this.props
+    const {userDidUpvote, upvotesCount, faIconClassName, size} = this.props
     return(
     <Box animate={this.state.animate}>
       <FaIcon
+        size={size}
         inline={true}
-        size="25px"
         onClick={() => requireAuth(this.handleToggleUpvote)}
         color={userDidUpvote ? muiColors.secondary1 : colors.lightGrey}
         hoverColor="none"
