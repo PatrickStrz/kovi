@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {calculateTotalScore} from 'lib/score-system'
 //other
 import {muiColors, colors} from 'styles/theme/colors'
 //components

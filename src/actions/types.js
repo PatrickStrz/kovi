@@ -52,3 +52,8 @@ export const HIDE_ALERT = 'HIDE_ALERT'
 /*------------------- Products ------------------------*/
 export const SHOW_PRODUCT_SOLUTION_CREATE_VIEW = 'SHOW_PRODUCT_SOLUTION_CREATE_VIEW'
 export const HIDE_PRODUCT_SOLUTION_CREATE_VIEW = 'HIDE_PRODUCT_SOLUTION_CREATE_VIEW'
+
+/*------------------- Community ------------------------*/
+
+export const REQUEST_REFETCH_LEADERBOARD = 'REQUEST_REFETCH_LEADERBOARD'
+export const REFETCH_LEADERBOARD_COMPLETE = 'REFETCH_LEADERBOARD_COMPLETE'

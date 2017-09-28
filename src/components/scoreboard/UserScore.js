@@ -5,13 +5,13 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   refetchUserScoreComplete,
-} from '../../actions/score-actions'
+} from 'actions/score-actions'
 //gql
 import {graphql} from 'react-apollo'
 import {USER_SCORE_COUNTS_QUERY} from 'gql/Score/queries'
 //other
 import styled from 'styled-components'
-import {logException} from '../../config'
+import {logException} from 'config'
 import {muiColors} from 'styles/theme/colors'
 import {bounceIn} from 'styles/animations/keyframes'
 import {calculateTotalScore, levels} from 'lib/score-system'
