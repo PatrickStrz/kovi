@@ -1,7 +1,8 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-
+//components
 import ReactQuill from 'react-quill'
+import {MarkdownView} from 'ui-kit'
 
 class Editor extends Component {
   static propTypes = {
@@ -14,6 +15,7 @@ class Editor extends Component {
   handleChange = this.props.handleChange
 
   render () {
+      // font-size: 16 below so that mobile iOS won't zoom (font-size => 14px)
     return (
       <ReactQuill
         theme={'snow'}

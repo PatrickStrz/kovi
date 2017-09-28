@@ -4,10 +4,14 @@ import {muiColors, colors} from 'styles/theme/colors'
 import styled from 'styled-components'
 
 const MarkdownBox = styled.div`
-  padding-left: 5vw;
-  padding-right: 5vw;
+  ${props=> props.styles && props.styles}
   word-wrap: break-word;
   color: ${colors.grey};
+  font-family: 'Open Sans', sans-serif;
+  p {
+    background-color: white;
+    padding: 10px;
+  }
   h1 {
     text-align: center;
     color: ${colors.medGrey};
@@ -16,21 +20,28 @@ const MarkdownBox = styled.div`
     text-align: center;
     color: ${colors.medGrey};
   }
+  li {
+    color: ${colors.medGrey};
+  }
+  ol {
+    color: ${colors.medGrey};
+  }
   border-radius: 3px;
   padding: 20px;
   a {
-    color: ${muiColors.primary1}
+    color: ${muiColors.secondary1};
   }
 `
 
 const MarkdownView = (props) => {
   return(
-    <MarkdownBox>{props.children}</MarkdownBox>
+    <MarkdownBox styles={props.styles}>{props.children}</MarkdownBox>
   )
 }
 
 MarkdownView.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  styles: PropTypes.string.isRequired, // css string
 }
 
 export default MarkdownView

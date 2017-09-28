@@ -31,7 +31,7 @@ export default class MuiDrawer extends Component {
     const overlayStyle = {
       zIndex: DRAWER_OVERLAY_Z_INDEX,
       backgroundColor: 'rgb(26, 26, 26)',
-      opacity:0.9
+      opacity:0.7
     }
 
     return (
