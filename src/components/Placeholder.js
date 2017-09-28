@@ -7,12 +7,13 @@ const Title = styled.h1`
   color: ${muiColors.primary1};
   margin-top:20px;
 `
-const Content = styled.h4`
+const Content = styled.h3`
   color: ${colors.medGrey};
   margin-top:20px;
 `
 
 const Box = styled.div`
+  padding-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;

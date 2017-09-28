@@ -18,11 +18,13 @@ import {calculateTotalScore, levels} from 'lib/score-system'
 
 // styled components:
 
-const Score = styled.p`
+const Score = styled.div`
   display: inline-block;
   color: ${muiColors.primary1};
   font-size: 18px;
   animation: ${bounceIn} 0.5s;
+  margin-left: 5px;
+  margin-right: 5px;
 `
 
 // default component

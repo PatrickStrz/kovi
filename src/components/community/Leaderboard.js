@@ -5,8 +5,9 @@ import {calculateTotalScore} from 'lib/score-system'
 //other
 import {muiColors, colors} from 'styles/theme/colors'
 //components
-import {Avatar} from 'ui-kit'
+import {Avatar, Popover} from 'ui-kit'
 import {FaIcon} from 'ui-kit/icons'
+import ProfileCardContainer from 'components/ProfileCardContainer'
 
 const Box = styled.div`
   display: flex;
@@ -20,6 +21,13 @@ const ScorecardBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  :hover{
+    background-color: #e0dddd;
+    border-radius: 20px;
+    padding-right: 5px;
+  };
 `
 const Name = styled.div`
   margin: 5px;
@@ -27,10 +35,9 @@ const Name = styled.div`
 `
 const ScoreBox = styled.div`
   color: ${colors.medGrey};
-  margin-left: 5px;
+  margin-right: 5px;
 `
 const IconBox = styled.div`
-  margin-left: 5px;
   display: inline-block;
 `
 class Leaderboard extends Component {
@@ -42,20 +49,26 @@ class Leaderboard extends Component {
       this.props.scorecards.map(scorecard => {
         const {picture, name} = scorecard.user
         return (
-          <ScorecardBox key={'Leaderboard'+scorecard.id}>
-            <Avatar imageUrl={picture} size="30px"/>
-            <Name>{name}</Name>
-            <ScoreBox>
-              {calculateTotalScore(scorecard)}
-            <IconBox>
-              <FaIcon
-                inline={true}
-                faClassName="fa-star-o"
-                color={colors.medGrey}
-              />
-            </IconBox>
-            </ScoreBox>
-          </ScorecardBox>
+          <Popover
+            key={'Leaderboard'+scorecard.id}
+            renderedInDrawer={true} // adjusts z-index value
+            body={<ProfileCardContainer userId={scorecard.user.id} />}
+          >
+            <ScorecardBox>
+              <Avatar imageUrl={picture} size="30px"/>
+              <Name>{name}</Name>
+              <ScoreBox>
+                {scorecard.total}
+              </ScoreBox>
+              <IconBox>
+                <FaIcon
+                  inline={true}
+                  faClassName="fa-star-o"
+                  color={colors.medGrey}
+                />
+              </IconBox>
+            </ScorecardBox>
+          </Popover>
         )
       })
     )

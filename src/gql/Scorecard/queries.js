@@ -3,7 +3,7 @@ import {levels} from 'lib/score-system'
 
 export const TOP_SCORERS_QUERY = gql`
   query{
-    allScorecards(first:3,orderBy:total_DESC){
+    allScorecards(first:5, orderBy:total_DESC){
       id
       total
       ${levels.one.name}: _scoresMeta(filter:{
