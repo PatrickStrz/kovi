@@ -43,9 +43,9 @@ class AvatarPop extends Component {
     if (this.state.show) {
       return(
         <SelfDestruct
-          enterAnimationDuration={500}
+          enterAnimationDuration={1500}
           exitAnimationDuration={1000}
-          stayDuration={2000}
+          stayDuration={5000}
           onSelfDestruct={this.onSelfDestruct}
         >
           <Avatar imageUrl={userPictureUrl} size='25px'/>

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled, {css} from 'styled-components'
 import Transition from 'react-transition-group/Transition'
-import {bounceIn, fadeOut} from 'styles/animations/keyframes'
+import {fadeOut, pulse} from 'styles/animations/keyframes'
 
 const Box = styled.div`
 ${props => {
@@ -10,7 +10,8 @@ ${props => {
     case 'entering':
       return css`
       animation-duration: ${props.enterAnimationDuration}ms;
-      animation-name: ${bounceIn};
+      animation-name: ${pulse};
+      animation-iteration-count: 2;
       `
     case 'exiting':
       return(css`
