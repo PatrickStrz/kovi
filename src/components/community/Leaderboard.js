@@ -58,7 +58,7 @@ class Leaderboard extends Component {
               <Avatar imageUrl={picture} size="30px"/>
               <Name>{name}</Name>
               <ScoreBox>
-                {scorecard.total}
+                {calculateTotalScore(scorecard)}
               </ScoreBox>
               <IconBox>
                 <FaIcon
