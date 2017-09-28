@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 //other
 import {muiColors, colors} from 'styles/theme/colors'
-import {bounceIn} from 'styles/animations/keyframes'
 //components
 import {Avatar, Popover} from 'ui-kit'
 import {FaIcon} from 'ui-kit/icons'
@@ -21,8 +20,6 @@ const ScorecardBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 15px;
-  -webkit-transition: height 2s; /* For Safari 3.1 to 6.0 */
-  transition: height 2s;
   padding-top: 5px;
   padding-bottom: 5px;
   :hover{
@@ -37,10 +34,9 @@ const Name = styled.div`
 `
 const ScoreBox = styled.div`
   color: ${colors.medGrey};
-  margin-left: 5px;
+  margin-right: 5px;
 `
 const IconBox = styled.div`
-  margin-left: 5px;
   display: inline-block;
 `
 class Leaderboard extends Component {
@@ -53,14 +49,16 @@ class Leaderboard extends Component {
         const {picture, name} = scorecard.user
         return (
           <Popover
+            key={'Leaderboard'+scorecard.id}
             renderedInDrawer={true} // adjusts z-index value
             body={<ProfileCardContainer userId={scorecard.user.id} />}
           >
-            <ScorecardBox key={'Leaderboard'+scorecard.id}>
+            <ScorecardBox>
               <Avatar imageUrl={picture} size="30px"/>
               <Name>{name}</Name>
               <ScoreBox>
                 {scorecard.total}
+              </ScoreBox>
               <IconBox>
                 <FaIcon
                   inline={true}
@@ -68,7 +66,6 @@ class Leaderboard extends Component {
                   color={colors.medGrey}
                 />
               </IconBox>
-              </ScoreBox>
             </ScorecardBox>
           </Popover>
         )

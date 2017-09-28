@@ -33,10 +33,10 @@ const TopBox = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: top;
-    background-color: ${colors.faintTeal};
     margin-left: 10px;
     border-radius: 3px;
   `
+
 const Body = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,19 +63,18 @@ const LevelBox = styled.div`
   background-color: ${colors.faintTeal};
   border-radius: 3px;
 `
-const Score = styled.p`
+const Score = styled.div`
+  display: inline-block;
   color: ${muiColors.primary1};
   font-size: 18px;
+  margin-right: 5px;
 `
+
 const LevelHeading = styled.div`
   margin: 10px;
   display: inline-block;
   font-size: 18px;
   color: ${muiColors.secondary1};
-`
-const IconContainer = styled.div`
-  display: inline-block;
-  margin-left: 10px;
 `
 
 export class ProfileCardContainer extends Component {
@@ -113,7 +112,6 @@ export class ProfileCardContainer extends Component {
       return <OuterBox><GenericError /></OuterBox>
     }
     const {name, pictureLarge} = this.props.data.User
-
     return(
       <OuterBox>
         <TopBox>
@@ -126,6 +124,7 @@ export class ProfileCardContainer extends Component {
                 faClassName="fa-star-o"
                 color={muiColors.primary1}
                 inline={true}
+                extraStyles="margin-left: 5px"
               />
             </ScoreBox>
           </Body>
@@ -133,14 +132,13 @@ export class ProfileCardContainer extends Component {
         <LevelBox>
           <LevelHeading>
             LEVEL 1 - EXPLORER
-          <IconContainer>
-            <FaIcon
-              faClassName="fa-binoculars"
-              color={muiColors.secondary1}
-              inline={true}
-            />
-          </IconContainer>
         </LevelHeading>
+        <FaIcon
+          faClassName="fa-binoculars"
+          color={muiColors.secondary1}
+          inline={true}
+          extraStyles="margin-left: 10px;"
+        />
         </LevelBox>
       </OuterBox>
     )

@@ -10,6 +10,7 @@ import UserIconMenu from './UserIconMenu'
 import IconButton from 'material-ui/IconButton'
 import AccountCircle from 'material-ui/svg-icons/action/account-circle'
 import UserScore from 'components/scoreboard/UserScore'
+import {FaIcon} from 'ui-kit/icons'
 
 const RightElementBox = styled.div`
   display: flex;
@@ -18,6 +19,9 @@ const RightElementBox = styled.div`
   margin-right: 30px; /*match left offset of appbar */
 `
 const ScoreBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
   margin-right: 10px;
 `
 const Navbar = (props) => {
@@ -48,6 +52,11 @@ const Navbar = (props) => {
       return (
         <RightElementBox>
         <ScoreBox>
+          <FaIcon
+            inline={true}
+            faClassName="fa-star-o"
+            color={muiColors.primary1}
+          />
           <UserScore scorecardId={props.userScorecardId}/>
         </ScoreBox>
         <UserIconMenu picture={profile.picture} handleLogout={handleLogout}/>
