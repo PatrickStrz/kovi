@@ -22,6 +22,19 @@ export const bounceIn = keyframes`
   }
 `
 
+export const pulse = keyframes`
+  0% {
+    transform: scale(0.5);
+  }
+  30% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+`
+
 export const slideIn = keyframes`
   from {
     margin-left:100%;
