@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-
+//components
 import ReactQuill from 'react-quill'
 
 class Editor extends Component {
@@ -14,6 +14,7 @@ class Editor extends Component {
   handleChange = this.props.handleChange
 
   render () {
+      // font-size: 16 below so that mobile iOS won't zoom (font-size => 14px)
     return (
       <ReactQuill
         theme={'snow'}
