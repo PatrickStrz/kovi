@@ -8,6 +8,7 @@ import {colors, muiColors} from 'styles/theme/colors'
 import ChallengeCommentsContainer from 'components/challenges/ChallengeCommentsContainer'
 import ChallengeFormContainer from 'components/challenges/ChallengeFormContainer'
 import FaIcon from 'ui-kit/icons/FaIcon'
+import {MarkdownView} from 'ui-kit'
 
 /*
  Note: Because rendering <ChallengingCommentContainer/> in this element,
@@ -16,19 +17,23 @@ container completes.For this use case it works since we do not want comments to
 render before the body.
 */
 
-const MarkdownBox = styled.div`
-  background-color: #d2fffc;
-  border-radius: 3px;
-  padding: 20px;
+const Title = styled.div`
+  border-bottom: 5px solid ${colors.grey};
+  margin-bottom: 20px;
+  font-size: 35px;
+  text-align: center;
+  color: ${colors.medGrey};
+  padding: 5px;
 `
-const Title = styled.h2`
-  color: #49494a;
-`
+
 const CommentsHeading = styled.h4`
   color: ${colors.lightGrey};
 `
 const LineBreak = styled.hr`
   border: solid 1px ${colors.faintGrey};
+`
+const MdBox = styled.div`
+  background-color: ${colors.faintTeal};
 `
 
 export default class ChallengeDetail extends Component{
@@ -66,14 +71,14 @@ export default class ChallengeDetail extends Component{
     }
     else{
       return(
-      <div>
-        <MarkdownBox>
+      <MdBox>
+        <MarkdownView>
           <div
             className="content"
             dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
           />
-        </MarkdownBox>
-      </div>
+        </MarkdownView>
+      </MdBox>
       )
     }
   }
@@ -98,7 +103,9 @@ export default class ChallengeDetail extends Component{
     return(
       <div>
         {this.renderEditButton()}
-        <Title>{title}</Title>
+        <Title>
+        {title}
+        </Title>
         {this.renderBody()}
         <LineBreak />
         <CommentsHeading>Discussion</CommentsHeading>

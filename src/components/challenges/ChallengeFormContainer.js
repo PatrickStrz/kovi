@@ -26,7 +26,7 @@ import {media} from 'styles/media-queries'
 //components
 import Editor from 'ui-kit/Editor'
 import RaisedButton from 'material-ui/RaisedButton'
-import {ImageUpload, InputWithCharLimit} from 'ui-kit'
+import {ImageUpload, InputWithCharLimit, MarkdownView} from 'ui-kit'
 
 const TitleBox = styled.div`
   width:90%;
@@ -44,10 +44,6 @@ const FormBox = styled.div`
      align-items: left;
      `}
 `
-const EditorBox = styled.div`
-  width:100%
-`
-
 /* form for both creating and updating challenges, update prop determines if
     it is used as an update form
 */
@@ -244,12 +240,12 @@ class ChallengeFormContainer extends Component {
           />
           <br/>
           <br/>
-          <EditorBox>
+          <MarkdownView>
             <Editor
               handleChange={this.props.handleEditorChange}
               value={this.props.editorHtml}
             />
-          </EditorBox>
+          </MarkdownView>
           <br/>
           <br/>
           <RaisedButton
