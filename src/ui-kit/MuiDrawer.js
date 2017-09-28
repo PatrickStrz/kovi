@@ -28,10 +28,16 @@ export default class MuiDrawer extends Component {
   render() {
     const {isOpen, children, docked} = this.props
 
+    const overlayStyle = {
+      zIndex: DRAWER_OVERLAY_Z_INDEX,
+      backgroundColor: 'rgb(26, 26, 26)',
+      opacity:0.9
+    }
+
     return (
       <div>
         <Drawer
-          overlayStyle={{zIndex: DRAWER_OVERLAY_Z_INDEX}}
+          overlayStyle={overlayStyle}
           containerStyle={{zIndex: DRAWER_BODY_Z_INDEX}}
           openSecondary={true}
           open={isOpen}

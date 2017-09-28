@@ -5,7 +5,7 @@ import {SelfDestruct} from 'ui-kit'
 
 // user avatar that pops in and out on state change -->
 
-class ProfilePop extends Component {
+class AvatarPop extends Component {
   state = {
     show: false,
   }
@@ -71,4 +71,4 @@ class ProfilePop extends Component {
   }
 }
 
-export default ProfilePop
+export default AvatarPop
