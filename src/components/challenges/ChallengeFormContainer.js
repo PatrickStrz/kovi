@@ -231,7 +231,7 @@ class ChallengeFormContainer extends Component {
               placeholder="Quick description of the challenge"
               onChange={this.handleTitleChange}
               value={this.state.title}
-              charMax={100}
+              charMax={60}
               onError={this.handleTitleError}
               required={true}
             />

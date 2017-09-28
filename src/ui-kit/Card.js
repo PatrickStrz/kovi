@@ -49,10 +49,11 @@ const ImageBox = styled.div`
   margin: 10px;
 `
 
-const Title = styled.p`
-  word-break: break-all;
+const Title = styled.div`
+  word-break: break-word;
   font-size: 16px;
-  color: ${colors.medGrey};
+  color: ${colors.grey};
+  padding: 5px;
 `
 
 export default class Card extends Component{

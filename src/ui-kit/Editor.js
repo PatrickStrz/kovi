@@ -2,7 +2,6 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //components
 import ReactQuill from 'react-quill'
-import {MarkdownView} from 'ui-kit'
 
 class Editor extends Component {
   static propTypes = {
