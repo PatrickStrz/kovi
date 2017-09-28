@@ -15,15 +15,27 @@ import GenericError from 'ui-kit/GenericError'
 import GenericLoader from 'ui-kit/GenericLoader'
 import UserPhoto from 'ui-kit/UserPhoto'
 import UserScore from 'components/scoreboard/UserScore'
+import {FaIcon} from 'ui-kit/icons'
 
-const Box = styled.div`
-    padding: 10px;
+const OuterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgb(255, 255, 255);
+  ${PROFILE_CARD_SHADOW}
+  padding: 10px;
+  min-height: 150px;
+  min-width: 270px;
+`
+const TopBox = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: top;
-    background-color: rgb(255, 255, 255);
-    ${PROFILE_CARD_SHADOW}
+    background-color: ${colors.faintTeal};
+    margin-left: 10px;
+    border-radius: 3px;
   `
 const Body = styled.div`
   display: flex;
@@ -42,14 +54,28 @@ const ScoreBox = styled.div`
   flex-direction: row;
   align-items: baseline;
 `
-const ScoreHeading = styled.p`
-  font-size: 18px;
-  color: ${colors.lightGrey};
-  margin-right:5px;
+const LevelBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: 100%;
+  margin-top: 10px;
+  background-color: ${colors.faintTeal};
+  border-radius: 3px;
 `
 const Score = styled.p`
   color: ${muiColors.primary1};
   font-size: 18px;
+`
+const LevelHeading = styled.div`
+  margin: 10px;
+  display: inline-block;
+  font-size: 18px;
+  color: ${muiColors.secondary1};
+`
+const IconContainer = styled.div`
+  display: inline-block;
+  margin-left: 10px;
 `
 
 export class ProfileCardContainer extends Component {
@@ -80,25 +106,43 @@ export class ProfileCardContainer extends Component {
 
   render(){
     if (this.props.data.loading){
-      return <Box><GenericLoader text="..." /></Box>
+      return <OuterBox><GenericLoader text="..." /></OuterBox>
     }
     if (this.props.data.error){
 
-      return <Box><GenericError /></Box>
+      return <OuterBox><GenericError /></OuterBox>
     }
     const {name, pictureLarge} = this.props.data.User
 
     return(
-      <Box>
-        <UserPhoto imageUrl={pictureLarge} size="100px" />
-        <Body>
-          <Name>{name}</Name>
-          <ScoreBox>
-            <ScoreHeading>Score:</ScoreHeading>
-            {this.renderScore()}
-          </ScoreBox>
-        </Body>
-      </Box>
+      <OuterBox>
+        <TopBox>
+          <UserPhoto imageUrl={pictureLarge} size="100px" />
+          <Body>
+            <Name>{name}</Name>
+            <ScoreBox>
+              {this.renderScore()}
+              <FaIcon
+                faClassName="fa-star-o"
+                color={muiColors.primary1}
+                inline={true}
+              />
+            </ScoreBox>
+          </Body>
+        </TopBox>
+        <LevelBox>
+          <LevelHeading>
+            LEVEL 1 - EXPLORER
+          <IconContainer>
+            <FaIcon
+              faClassName="fa-binoculars"
+              color={muiColors.secondary1}
+              inline={true}
+            />
+          </IconContainer>
+        </LevelHeading>
+        </LevelBox>
+      </OuterBox>
     )
   }
 }

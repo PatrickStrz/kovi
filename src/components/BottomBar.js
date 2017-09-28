@@ -86,7 +86,7 @@ class BottomBar extends Component {
 
     if (isNotificationMobileOpen){
       title = 'Notifications'
-      content = "No new notifications"
+      content = "No new notifications ヽ(•‿•)ノ"
       handleClose = () => hideNotificationsMobile()
     }
     if (isFilterMobileOpen){
