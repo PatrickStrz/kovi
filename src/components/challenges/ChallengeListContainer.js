@@ -29,10 +29,11 @@ class ChallengeListContainer extends Component {
     const allChallengesQueryVariables = {"filter":{ "id": this.props.apiUserId}}
 
     if (this.props.loading){
-      return <GenericLoader text="loading..." />
+      // return <GenericLoader text="loading..." />
+      return <ChallengeList loading={true}/>
     }
 
-    if(this.props.error){
+    else if (this.props.error){
       logException(this.props.error, {action: 'query in ChallengeListContainer'})
       return <GenericError />
     }
