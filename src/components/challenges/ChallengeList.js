@@ -5,9 +5,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {hideProductSolutionForm} from 'actions/product-actions'
-//helpers+other
-import {range} from 'lodash'
-import randomstring from 'randomstring'
 //components
 import ChallengeCard from 'components/challenges/ChallengeCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -15,6 +12,7 @@ import GenericLoader from 'ui-kit/GenericLoader'
 import {Dialog} from 'ui-kit'
 import ProductFormContainer from 'components/solutions/ProductFormContainer'
 import {Card} from 'ui-kit'
+import {LoaderList} from 'ui-kit'
 
 class ChallengeList extends Component {
   static propTypes = {
@@ -65,28 +63,14 @@ class ChallengeList extends Component {
     )
   }
 
-  renderLoaders = () => {
-    const n = range(5)
-    return n.map(() => {
-        return(
-          <Card
-            key={randomstring.generate(5)}
-            isLoading={true}
-          />
-        )
-      }
-    )
-  }
-
   render(){
     const {hasMore, loadMoreEntries, productSolutionFormFor, loading} = this.props
     /* ---------------- render return -----------------*/
 
     if (loading){
+      const loader = <Card isLoading={true} />
       return(
-        <div>
-          {this.renderLoaders()}
-        </div>
+        <LoaderList length={5} loader={loader}/>
       )
     }
     else {
