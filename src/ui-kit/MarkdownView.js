@@ -41,7 +41,7 @@ const MarkdownView = (props) => {
 
 MarkdownView.propTypes = {
   children: PropTypes.node.isRequired,
-  styles: PropTypes.string.isRequired, // css string
+  styles: PropTypes.string, // css string
 }
 
 export default MarkdownView

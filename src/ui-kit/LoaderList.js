@@ -10,8 +10,9 @@ const LoaderBox = styled.div`
   animation: ${loadingOpacity} 1.25s infinite;
 `
 
-/* takes a node component and length (number of nodes to render)
-  and renders a list of loaders with loading animation */
+/* takes a component and length (number of nodes to render)
+  and renders a list of loaders with loading animations applied to each node
+*/
 const LoaderList = (props) => {
   const n = range(props.length)
 
