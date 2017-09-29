@@ -1,18 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+// helpers + other
+import styled from 'styled-components'
 import {range} from 'lodash'
 import randomstring from 'randomstring'
+import {loadingOpacity} from 'styles/animations/keyframes'
 
-// takes a loader and length (number of loaders) and renders a list of loaders
+const LoaderBox = styled.div`
+  animation: ${loadingOpacity} 1.25s infinite;
+`
+
+/* takes a node component and length (number of nodes to render)
+  and renders a list of loaders with loading animation */
 const LoaderList = (props) => {
   const n = range(props.length)
 
   const renderLoaders = () => {
       return n.map(() => {
           return(
-            <div key={randomstring.generate(5)}>
+            <LoaderBox key={randomstring.generate(5)}>
               {props.loader}
-            </div>
+            </LoaderBox>
           )
         }
       )

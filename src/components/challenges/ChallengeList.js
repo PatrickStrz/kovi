@@ -68,7 +68,7 @@ class ChallengeList extends Component {
     /* ---------------- render return -----------------*/
 
     if (loading){
-      const loader = <Card isLoading={true} />
+      const loader = <Card />
       return(
         <LoaderList length={5} loader={loader}/>
       )

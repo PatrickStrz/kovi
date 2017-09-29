@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 //helpers+other
 import {colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
-import {loadingOpacity} from 'styles/animations/keyframes'
 //components
 import {Image} from 'ui-kit'
 
@@ -31,9 +30,6 @@ const CardBox = styled.div`
   z-index: ${CARD_Z_INDEX};
   margin-bottom: 5px;
   padding-right: 5px;
-  ${props => props.isLoading && css`
-    animation: ${loadingOpacity} 1.25s infinite;
-  `}
 `
 
 const CardBody = styled.div`
@@ -88,14 +84,12 @@ export default class Card extends Component{
       highlight,
       highlightColor,
       imageUrl,
-      isLoading,
       backgroundColor,
     } = this.props
     return(
       <CardBox
         highlight={highlight}
         highlightColor={highlightColor}
-        isLoading={isLoading}
         backgroundColor={backgroundColor}
         >
         <CardBody>
