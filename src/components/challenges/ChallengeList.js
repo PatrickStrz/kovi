@@ -14,6 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import GenericLoader from 'ui-kit/GenericLoader'
 import {Dialog} from 'ui-kit'
 import ProductFormContainer from 'components/solutions/ProductFormContainer'
+import {Card} from 'ui-kit'
 
 class ChallengeList extends Component {
   static propTypes = {
@@ -68,7 +69,10 @@ class ChallengeList extends Component {
     const n = range(5)
     return n.map(() => {
         return(
-          <div key={randomstring.generate(5)}>Yooooooooo loading</div>
+          <Card
+            key={randomstring.generate(5)}
+            isLoading={true}
+          />
         )
       }
     )

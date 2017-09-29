@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
+//helpers+other
 import {colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
+import {loadingOpacity} from 'styles/animations/keyframes'
 //components
 import {Image} from 'ui-kit'
 
@@ -12,7 +14,13 @@ const CardBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: ${props =>{
-    return props.highlight ? props.highlightColor : `#ffffff`
+    if (props.highlight){
+      return props.highlightColor
+    }
+    else if (props.backgroundColor) {
+      return props.backgroundColor
+    }
+    else return '#ffffff'
     }
   };
   width:100%;
@@ -23,6 +31,9 @@ const CardBox = styled.div`
   z-index: ${CARD_Z_INDEX};
   margin-bottom: 5px;
   padding-right: 5px;
+  ${props => props.isLoading && css`
+    animation: ${loadingOpacity} 1.25s infinite;
+  `}
 `
 
 const CardBody = styled.div`
@@ -60,11 +71,13 @@ export default class Card extends Component{
 
   static propTypes = {
     imageUrl: PropTypes.string,
-    text: PropTypes.string.isRequired,
-    onBodyClick: PropTypes.func.isRequired,
+    text: PropTypes.string,
+    onBodyClick: PropTypes.func,
     actions: PropTypes.node,
     highlight: PropTypes.bool,
     highlightColor: PropTypes.string,
+    isLoading:  PropTypes.bool,
+    backgroundColor: PropTypes.string,
   }
 
   render(){
@@ -75,9 +88,16 @@ export default class Card extends Component{
       highlight,
       highlightColor,
       imageUrl,
+      isLoading,
+      backgroundColor,
     } = this.props
     return(
-      <CardBox highlight={highlight} highlightColor={highlightColor}>
+      <CardBox
+        highlight={highlight}
+        highlightColor={highlightColor}
+        isLoading={isLoading}
+        backgroundColor={backgroundColor}
+        >
         <CardBody>
           <ClickableBox onClick={onBodyClick}>
             <ImageBox onClick={onBodyClick}>
