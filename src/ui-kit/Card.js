@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+//helpers+other
 import {colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
 //components
@@ -12,7 +13,13 @@ const CardBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: ${props =>{
-    return props.highlight ? props.highlightColor : `#ffffff`
+    if (props.highlight){
+      return props.highlightColor
+    }
+    else if (props.backgroundColor) {
+      return props.backgroundColor
+    }
+    else return '#ffffff'
     }
   };
   width:100%;
@@ -60,11 +67,13 @@ export default class Card extends Component{
 
   static propTypes = {
     imageUrl: PropTypes.string,
-    text: PropTypes.string.isRequired,
-    onBodyClick: PropTypes.func.isRequired,
+    text: PropTypes.string,
+    onBodyClick: PropTypes.func,
     actions: PropTypes.node,
     highlight: PropTypes.bool,
     highlightColor: PropTypes.string,
+    isLoading:  PropTypes.bool,
+    backgroundColor: PropTypes.string,
   }
 
   render(){
@@ -75,9 +84,14 @@ export default class Card extends Component{
       highlight,
       highlightColor,
       imageUrl,
+      backgroundColor,
     } = this.props
     return(
-      <CardBox highlight={highlight} highlightColor={highlightColor}>
+      <CardBox
+        highlight={highlight}
+        highlightColor={highlightColor}
+        backgroundColor={backgroundColor}
+        >
         <CardBody>
           <ClickableBox onClick={onBodyClick}>
             <ImageBox onClick={onBodyClick}>

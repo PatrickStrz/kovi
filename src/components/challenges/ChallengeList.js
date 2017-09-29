@@ -11,13 +11,16 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import GenericLoader from 'ui-kit/GenericLoader'
 import {Dialog} from 'ui-kit'
 import ProductFormContainer from 'components/solutions/ProductFormContainer'
+import {Card} from 'ui-kit'
+import {LoaderList} from 'ui-kit'
 
 class ChallengeList extends Component {
   static propTypes = {
-    challenges: PropTypes.array.isRequired,
-    allChallengesQueryVariables: PropTypes.object.isRequired,
-    loadMoreEntries: PropTypes.func.isRequired,
-    hasMore: PropTypes.bool.isRequired,
+    loading: PropTypes.bool,
+    challenges: PropTypes.array,
+    allChallengesQueryVariables: PropTypes.object,
+    loadMoreEntries: PropTypes.func,
+    hasMore: PropTypes.bool,
     //redux
     productSolutionFormFor: PropTypes.string,
     hideProductSolutionForm: PropTypes.func,
@@ -61,24 +64,32 @@ class ChallengeList extends Component {
   }
 
   render(){
-    const {hasMore, loadMoreEntries, productSolutionFormFor} = this.props
+    const {hasMore, loadMoreEntries, productSolutionFormFor, loading} = this.props
     /* ---------------- render return -----------------*/
 
-    return(
-      <div>
-        <InfiniteScroll
-          style={{overflow:'hidden'}}
-          pageStart={0}
-          hasMore={hasMore}
-          loader={<GenericLoader text="..."/>}
-          next={loadMoreEntries}
-         >
-           {this.state.scrollTop && window.scrollTo(0,0)}
-          {this.renderChallengeCards()}
-        </InfiniteScroll>
-        {productSolutionFormFor && this.renderSolutionForm()}
-      </div>
-    )
+    if (loading){
+      const loader = <Card />
+      return(
+        <LoaderList length={5} loader={loader}/>
+      )
+    }
+    else {
+      return(
+        <div>
+          <InfiniteScroll
+            style={{overflow:'hidden'}}
+            pageStart={0}
+            hasMore={hasMore}
+            loader={<GenericLoader text="..."/>}
+            next={loadMoreEntries}
+           >
+             {this.state.scrollTop && window.scrollTo(0,0)}
+            {this.renderChallengeCards()}
+          </InfiniteScroll>
+          {productSolutionFormFor && this.renderSolutionForm()}
+        </div>
+      )
+    }
   }
 }
 

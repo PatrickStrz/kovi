@@ -29,7 +29,8 @@ const Box = styled.div`
      width: ${props.size};
    `
  }
- ${props => props.inline && css`display: inline`}
+ ${props => props.button && css`cursor: pointer;` }
+ ${props => props.inline && css`display: inline;`}
  ${props => props.extraStyles && css`${props.extraStyles}`}
 `
 
@@ -59,6 +60,7 @@ const FaIcon = (props) => {
       hoverColor={hoverColor}
       onClick={!disabled && onClick}
       extraStyles={extraStyles}
+      button={onClick && true}
     >
       <i className={`fa ${faClassName}`} aria-hidden="true"></i>
     </Box>
