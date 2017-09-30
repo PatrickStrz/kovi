@@ -18,17 +18,5 @@ exports[`test renders correctly 1`] = `
       Loading...
     </div>
   </div>
-  <div
-    className="sc-hzDkRC cBEVhi">
-    <div>
-      Loading...
-    </div>
-  </div>
-  <div
-    className="sc-hzDkRC cBEVhi">
-    <div>
-      Loading...
-    </div>
-  </div>
 </div>
 `;
