@@ -3,10 +3,10 @@
 
 ### Auth
 expected behaviour:
-1. When log in with Auth0, the user is synced with API ( or user created on
+- When log in with Auth0, the user is synced with API ( or user created on
 first log in.)
-2. When token expires prompted to login when try to perform protected actions.
-3.
+- When token expires prompted to login when try to perform protected actions.
+
 
 ### Comments
 

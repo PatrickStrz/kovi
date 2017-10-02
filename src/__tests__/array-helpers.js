@@ -1,4 +1,4 @@
-import {removeValueFromList} from './array-helpers'
+import {removeValueFromList} from 'lib/array-helpers'
 
 test('removeValueFromList should remove given value from list', ()=>{
   const startList = [1,49,34,3]
