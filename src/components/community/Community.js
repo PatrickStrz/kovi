@@ -8,6 +8,11 @@ import {bindActionCreators} from 'redux'
 import styled, {css} from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
+import {
+  calculateTotalScore,
+  percentageOfGoal,
+  remainingPoints
+} from 'lib/score-system'
 //components
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop, ProgressMeter} from 'ui-kit'
@@ -72,11 +77,12 @@ class Community extends Component {
   }
 
   render(){
-    const {userPictureUrl, communityScoreEventId} = this.props
+    const {userPictureUrl, communityScoreEventId, communityScore} = this.props
     return(
       <div>
         <HeadingBox>
-          <Header>1800
+          <Header>
+            {remainingPoints(communityScore)}
             <FaIcon faClassName="fa-star-o"
             color={muiColors.secondary1}
             inline={true}
@@ -84,7 +90,7 @@ class Community extends Component {
           /> to go!
           </Header>
           <ScoreSection>
-            <ProgressMeter percent={80} />
+            <ProgressMeter percent={percentageOfGoal(communityScore)} />
           </ScoreSection>
           <ScoreBox>
             <CommunityScore />
@@ -113,7 +119,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => ({
   userPictureUrl: state.app.scores.lastContributor.pictureUrl,
-  communityScoreEventId: state.app.scores.communityScoreEventId
+  communityScoreEventId: state.app.scores.communityScoreEventId,
+  communityScore: state.app.scores.communityScore
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Community)
