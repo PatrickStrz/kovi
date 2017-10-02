@@ -5,14 +5,25 @@ import {connect} from 'react-redux'
 import {resetLastContributor} from 'actions/score-actions'
 import {bindActionCreators} from 'redux'
 //other
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
 //components
 import CommunityScore from 'components/scoreboard/CommunityScore'
 import {AvatarPop, ProgressMeter} from 'ui-kit'
-import {SCORE_SECTION_SHADOW} from 'styles/shadows'
 import LeaderboardContainer from 'components/community/LeaderboardContainer'
+import {FaIcon} from 'ui-kit/icons'
+
+const HeadingBox = styled.div`
+  background-color: ${muiColors.secondary1};
+  background-color: #bff9f7;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`
 
 const Header = styled.p`
   color: ${muiColors.secondary1};
@@ -22,16 +33,6 @@ const Header = styled.p`
   margin: auto;
 `
 
-const HeadingBox = styled.div`
-  background-color: ${muiColors.secondary1};
-  background-color: #bff9f7;  ${''/* margin: 5px; */}
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-`
 const ScoreSection = styled.div`
   display: flex;
   justify-content: center;
@@ -42,7 +43,6 @@ const ScoreSection = styled.div`
   margin: 15px;
   padding-left: 15px;
   padding-right: 15px;
-  ${SCORE_SECTION_SHADOW}
 `
 const ScoreBox = styled.div`
   display: flex;
@@ -76,20 +76,26 @@ class Community extends Component {
     return(
       <div>
         <HeadingBox>
-          <Header>Community</Header>
+          <Header>1800
+            <FaIcon faClassName="fa-star-o"
+            color={muiColors.secondary1}
+            inline={true}
+            extraStyles={css`margin-left:3px;`}
+          /> to go!
+          </Header>
           <ScoreSection>
-            <ScoreBox>
-              <CommunityScore />
-              <AvatarPopBox>
-                <AvatarPop
-                  userPictureUrl={userPictureUrl}
-                  uniqueEventId={communityScoreEventId}
-                  onHide={this.onHideAvatarPop}
-                />
-              </AvatarPopBox>
-            </ScoreBox>
-            <ProgressMeter />
+            <ProgressMeter percent={80} />
           </ScoreSection>
+          <ScoreBox>
+            <CommunityScore />
+            <AvatarPopBox>
+              <AvatarPop
+                userPictureUrl={userPictureUrl}
+                uniqueEventId={communityScoreEventId}
+                onHide={this.onHideAvatarPop}
+              />
+            </AvatarPopBox>
+          </ScoreBox>
         </HeadingBox>
         <LeaderboardBox>
           <LeaderboardContainer />

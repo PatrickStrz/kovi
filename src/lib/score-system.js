@@ -15,6 +15,29 @@
  It looks more intesting to have all digits of a number changing.
 */
 
+//previousCommunityGoal = 34000
+const startingPoint = 34090 //community score at time goal is set
+const communityGoal = 39000 // current goal for total community score
+
+export const goal = communityGoal - startingPoint
+
+export const getPointDiff = points => {
+    return( points - startingPoint )
+  }
+export const remainingPoints = points => {
+  const remainingPoints = (goal - getPointDiff(points))
+  if (remainingPoints >= 0 ){
+    return remainingPoints
+  }
+  else if (remainingPoints < 0 ){
+    return 0
+  }
+}
+
+export const percentageOfGoal = (points) => {
+  return parseInt(getPointDiff(points)/goal * 100, 10) //10 --> radix param
+}
+
 export const levels = {
   //names cannot include numbers to use in query,
   one: {value: 55, name: 'fiftyfive'},
