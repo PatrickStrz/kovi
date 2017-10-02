@@ -5,4 +5,4 @@
 This allows for centralized layouts that are very easy to change and reuse.
 - To view colored borders of layout components for easier development, pass in
 showLines prop.
-- Every route is nested within Site.js ( Site component contains navigation bars)
+- Every layout is nested within Site.js ( Site component contains navigation bars)

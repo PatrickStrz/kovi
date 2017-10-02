@@ -6,24 +6,10 @@
 - Use styled-components library for styling to reinforce component architecture.
 - For composed components define 1 off components above default component
 declaration.
-- For styled-components that are repeated, factor them out into their own file
-in the `ui-kit` directory.
-- For components that are used for positioning or layouts, use `Box` in the name
-for clarity. i.e) `CommentBox`. Avoid using the word container as it is reserved
-for data fetching components and will make files much harder to understand.
+
 ### Inline styles
+- Only use inline styles when necessary, otherwise use styled components library.
 
-- Only use when nessessary, otherwise use styled components library.
-
-- Omit 'px'
-  i.e)
-  ```
-  //bad:
-  {marginBottom: '15px'}
-
-  //good:
-  {marginBottom: 15}
-  ```
 ### CSS files
 Lowest amount of usage, only use when absolutely necessary, such as extending
 styles of components from external libraries.
@@ -31,20 +17,9 @@ styles of components from external libraries.
 ### Global CSS / Theming
 Global style systems are in `styles` directory for easy theme changing, and
 to minimize bugs that arise from value definitions across the entire codebase
-- All colors are to be defined in `styles/theme/colors`. one-off color values
-in components are not permitted, they must be defined and exported from the `colors`
-file.
-- Z-index values should only be defined in `styles/z-index`.
-- Animation keyframes should only defined in `styles/animations/keyframes`
-- Shadows should only be defined in `styles/shadows`.
-- No one-off plain css media queries, either use the custom `media`` ` template literal for
-styled components (`styles/media-queries`), or `react-media` library +
-`styles/screen-sizes` for cases where it is necessary to pass screen size changes
-as a prop.
 
-### Other CSS
-- styled components are vendor prefixed so don't worry about vendors.
-- Use flexbox for positioning.
+** Check out `styling` docs for detailed documentation.
+
 
 ## Binding Callbacks
 

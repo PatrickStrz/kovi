@@ -1,9 +1,9 @@
 # Alerts
-
--  1 `<Alert/>` component is present
-in `<Site/>`. In order to set a message need to
-dispatch an action from  `actions/alert-actions`.
-
-- For displaying errors user `showErrorAlert` action creator in
-`alert-actions.js` ( just need to set the message and call the action in
-the catch statement of a request, `<Alert/>` component hides itself)
+- Alerts are just extended `Snackbar` components from the `material-ui` library
+that can be used to show important information to a user at the bottom of
+the screen. (Errors, score updates, notifications ..)
+- `<Alert/>` component is present
+in `<Site/>`.
+- Can display an alert from any component by
+dispatching an action from  `actions/alert-actions`.
+`<Alert />` hides itself, so dispatching `hide` actions is not necessary.

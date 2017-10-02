@@ -9,9 +9,14 @@ component architecture. CSS is automatically vendor prefixed.
 ui-kit for any component that will be reused throughout the application.
 - Use 'local' styled components that are not exported for composed components that
 require smaller one-off pieces.
+- For styled-components that are repeated, factor them out into their own file
+in the `ui-kit` directory.
+- For components that are used for positioning or layouts, use `Box` in the name
+for clarity. i.e) `CommentBox`. Avoid using the word container as it is reserved
+for data fetching components and will make files much harder to understand.
 - For media queries use the `media` custom template literal in `styles/media-queries`
 
-## Inline styles/ CSS
+## Inline styles/ CSS classes
 1. Only Use inline styles for material-ui library components.
 2. Only use CSS classes when absolutely necessary. I.e) overriding or supplying
 a css class when using components from external libraries.
@@ -40,9 +45,21 @@ import {muiThemeBottom} from 'styles/theme/mui-theme-bottom-bar'
 into mui-theme for use.
 
 ##Z-Index
-1. Z-index values should always be defined in `z-index.js`
+- Z-index values should always be defined in `z-index.js`
 allows us to at a glance determine relative layers of our application and
-prevents bugs arising from arbitrary z-index values. Do not edit the z-index
+prevents bugs arising from arbitrary z-index values.
+- Do not edit the z-index
 scale! Only add application scoped z-index values.
 
-**todo: decide on UI-color-pattern, I.e) primary for buttons ...
+## Animations
+
+- Animation keyframes should only defined in `styles/animations/keyframes`
+
+## Shadows:
+
+- Shadows should only be defined in `styles/shadows`.
+## Media Queries
+- No one-off css media queries, either use the custom `media`` ` template
+literal for styled components (`styles/media-queries`), or `react-media` library
+with `styles/screen-sizes` for cases where it is necessary to pass screen size
+changes as a prop.
