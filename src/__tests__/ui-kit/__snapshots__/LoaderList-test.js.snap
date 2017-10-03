@@ -1,19 +1,19 @@
 exports[`test renders correctly 1`] = `
 <div>
   <div
-    className="sc-hzDkRC cBEVhi">
+    className="sc-jhAzac glHGPE">
     <div>
       Loading...
     </div>
   </div>
   <div
-    className="sc-hzDkRC cBEVhi">
+    className="sc-jhAzac glHGPE">
     <div>
       Loading...
     </div>
   </div>
   <div
-    className="sc-hzDkRC cBEVhi">
+    className="sc-jhAzac glHGPE">
     <div>
       Loading...
     </div>
