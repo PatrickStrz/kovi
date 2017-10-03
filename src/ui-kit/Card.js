@@ -2,12 +2,14 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 //helpers+other
-import {colors} from 'styles/theme/colors'
+import {muiColors, colors} from 'styles/theme/colors'
 import {CARD_Z_INDEX} from 'styles/z-index'
 //components
 import {Image} from 'ui-kit'
+import {FaIcon} from 'ui-kit/icons'
 
 const CardBox = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -28,7 +30,7 @@ const CardBox = styled.div`
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   border-radius: 2px;
   z-index: ${CARD_Z_INDEX};
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   padding-right: 5px;
 `
 
@@ -39,7 +41,7 @@ const CardBody = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-right: 30px;
+  padding-right: 20px;
 `
 const ClickableBox = styled.div`
   display: flex;
@@ -63,6 +65,17 @@ const Title = styled.div`
   padding: 5px;
 `
 
+const IconBox = styled.div`
+  position: absolute;
+  left: 0%;
+  bottom:0%;
+  height: 20px;
+  width: 20px;
+  border-top-right-radius: 18px;
+  border-bottom-left-radius: 2px;
+  background-color: ${colors.lightTeal};
+`
+
 export default class Card extends Component{
 
   static propTypes = {
@@ -74,6 +87,7 @@ export default class Card extends Component{
     highlightColor: PropTypes.string,
     isLoading:  PropTypes.bool,
     backgroundColor: PropTypes.string,
+    onBottomCornerClick: PropTypes.func,
   }
 
   render(){
@@ -85,6 +99,7 @@ export default class Card extends Component{
       highlightColor,
       imageUrl,
       backgroundColor,
+      onBottomCornerClick,
     } = this.props
     return(
       <CardBox
@@ -95,12 +110,21 @@ export default class Card extends Component{
         <CardBody>
           <ClickableBox onClick={onBodyClick}>
             <ImageBox onClick={onBodyClick}>
-              <Image size="90px" url={imageUrl}/>
+              <Image size="80px" url={imageUrl}/>
             </ImageBox>
             <Title>{text}</Title>
           </ClickableBox>
             {actions}
         </CardBody>
+        <IconBox>
+          <FaIcon
+            faClassName="fa-chevron-down"
+            color={colors.white}
+            hoverColor={muiColors.secondary1}
+            size="15px;"
+            onClick={onBottomCornerClick}
+          />
+        </IconBox>
       </CardBox>
     )
   }

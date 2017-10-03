@@ -5,11 +5,13 @@ export const muiColors = {
 }
 //uncategorized colors
 export const colors = {
+  white: '#ffffff',
   faintGrey: '#ece8e8',
   lightGrey: '#adadad',
   whiteGrey: '#f9f7f7',
   grey: '#626666',
   medGrey: '#4d4e4e',
+  lightTeal: '#a7f6f3',
   faintTeal: '#d2fffc',
   errorRed: '#ed5151',
   warningRed: '#df4a4a',
