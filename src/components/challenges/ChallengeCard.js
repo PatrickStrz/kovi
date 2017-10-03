@@ -104,7 +104,7 @@ class ChallengeCard extends Component {
           addUpvoteMutation={addChallengeUpvoteMutation}
           removeUpvoteMutation={removeChallengeUpvoteMutation}
           mutationVariables={upvoteMutationVariables}
-          faIconClassName="fa-arrow-circle-o-up"
+          faIconClassName="fa-star-o"
           size="35px"
         />
       </ActionsBox>
