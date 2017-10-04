@@ -11,10 +11,9 @@ import {
 import {requireAuth} from 'lib/auth'
 import styled from 'styled-components'
 //Components
-
 import ChallengeListContainer from 'components/challenges/ChallengeListContainer'
 import ChallengeFormContainer from 'components/challenges/ChallengeFormContainer'
-import Dialog from 'ui-kit/Dialog'
+import {Dialog, Banner} from 'ui-kit'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
@@ -23,7 +22,7 @@ import ChallengeDetailContainer from 'components/challenges/ChallengeDetailConta
 import {Route} from 'react-router'
 
 const ChallengeListBox = styled.div`
-  margin-top: 70px;
+  margin-top: 45px;
   margin-bottom: 70px; /* so can see bottom of infinite scroll list */
 `
 
@@ -50,6 +49,10 @@ class Home extends Component {
     isCreateViewOpen: PropTypes.bool.isRequired,
   }
 
+  state = {
+    showBanner: true
+  }
+
   styles = {
     actionButton:{
       position: 'fixed',
@@ -64,11 +67,30 @@ class Home extends Component {
     this.props.hideCreateChallengeView()
   }
 
+  handleCloseBanner = () => {
+    this.setState({showBanner: false})
+  }
+
+  renderBanner = () => {
+    return(
+      <Banner
+        text={<div>Welcome to <b> Kovi </b> -
+        the platform for moving tech forward in a
+        direction that benefits humanity
+        <br/>
+        <b>ヽ(•‿•)ノ</b>
+      </div>}
+        onExitClick={this.handleCloseBanner}
+      />
+    )
+  }
+
   render(){
     const {showCreateChallengeView} = this.props
 
     const centerContent = (
       <ChallengeListBox>
+        {this.state.showBanner && this.renderBanner()}
         <ChallengeListContainer />
       </ChallengeListBox>
     )
