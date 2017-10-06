@@ -5,13 +5,12 @@ import {muiColors, colors} from 'styles/theme/colors'
 import {FEATURE_BOX_SHADOW} from 'styles/shadows'
 
 const Box = styled.div`
-  padding: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   width: auto;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 `
 
 const FeatureBox = styled.div`
@@ -19,7 +18,6 @@ const FeatureBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   border-bottom: solid 3px rgb(219, 219, 219);
 `
 
@@ -28,7 +26,7 @@ const Title = styled.h2`
 `
 
 const ImageFrame = styled.div`
-  padding: 15px;
+  padding: 10px;
   border-radius: 3px;
   background-color: ${muiColors.primary1};
   display: flex;
