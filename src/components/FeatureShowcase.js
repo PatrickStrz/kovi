@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 //other
 import styled, {css} from 'styled-components'
 import {muiColors, colors} from 'styles/theme/colors'
-import {IMAGE_BOX_SHADOW} from 'styles/shadows'
+import {FEATURE_BOX_SHADOW} from 'styles/shadows'
 
 const Box = styled.div`
   padding: 50px;
@@ -13,9 +13,7 @@ const Box = styled.div`
   align-items: center;
   text-align: center;
 `
-const Name = styled.h2`
-  color: ${muiColors.primary1};
-`
+
 const FeatureBox = styled.div`
   max-width: 90%;
   display: flex;
@@ -25,13 +23,17 @@ const FeatureBox = styled.div`
   border-bottom: solid 3px rgb(219, 219, 219);
 `
 
+const Title = styled.h2`
+  color: ${muiColors.primary1};
+`
+
 const ImageFrame = styled.div`
   padding: 15px;
   border-radius: 3px;
   background-color: ${muiColors.primary1};
   display: flex;
   justify-content: center;
-  ${IMAGE_BOX_SHADOW}
+  ${FEATURE_BOX_SHADOW}
 `
 
 const Image = styled.img`
@@ -92,6 +94,13 @@ const features = [
       Your content is beautifully styled automatically.
     `
   },
+  {
+    title: "Discussions",
+    imageUrl: "https://files.graph.cool/cj541g35wjwqc01754kb4rfvk/cj8fef3tc00ui0155sqgol9ym",
+    description: `
+      Discuss world challenges and how they can be solved using technology.
+    `
+  },
 
 ]
 
@@ -99,8 +108,8 @@ class FeatureShowcase extends Component {
   renderFeatures = () => {
     return features.map(feature => {
       return(
-        <FeatureBox>
-        <Name>{feature.title}</Name>
+        <FeatureBox key={feature.title}>
+        <Title>{feature.title}</Title>
         <ImageFrame>
           <Image
             src={feature.imageUrl}

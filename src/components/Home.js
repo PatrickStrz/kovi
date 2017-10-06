@@ -19,7 +19,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
 import ChallengeDetailContainer from 'components/challenges/ChallengeDetailContainer'
-import {Route} from 'react-router'
+import {Route, Link} from 'react-router-dom'
 import BottomBar from 'components/BottomBar'
 
 const ChallengeListBox = styled.div`
@@ -77,9 +77,10 @@ class Home extends Component {
       <Banner
         text={<div>Welcome to <b> Kovi </b> -
         the platform for moving tech forward in a
-        direction that benefits humanity
+        direction that benefits humanity.
         <br/>
-        <b>ヽ(•‿•)ノ</b>
+        We are a work in progress, but moving quickly.
+        <Link to="/features"><div>Check out some cool features we built</div></Link>
       </div>}
         onExitClick={this.handleCloseBanner}
       />
@@ -129,8 +130,7 @@ class Home extends Component {
           />
         </Dialog>
         <Route path="/challenge/:id" component={ChallengeDetailContainer}/>
-        {/* bottom bar sticks to bottom */}
-        <BottomBar/>
+        <BottomBar />
       </div>
     )
   }

@@ -34,7 +34,7 @@ const IconBox = styled.div`
 class Banner extends Component {
   static propTypes = {
       onExitClick: PropTypes.func.isRequired,
-      text: PropTypes.nodeisRequired,
+      text: PropTypes.node.isRequired,
   }
 
   render(){

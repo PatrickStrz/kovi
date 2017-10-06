@@ -13,18 +13,16 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <BrowserRouter>
-          <div>
+          <Site>
             <Switch>
-              <Site>
-                <Route path="/features" component={FeatureShowcase} />
-                <Route exact path="/about" render={() => <h1>about</h1>} />
-                <Route exact path={this.devRoute}
-                  render={() => <h1>Secret dev page</h1>}
-                />
-                <Route exact path="/" component={Home} />
-              </Site>
+              <Route exact path="/about" render={() => <h1>about</h1>} />
+              <Route exact path={this.devRoute}
+                render={() => <h1>Secret dev page</h1>}
+              />
+              <Route exact path="/features" component={FeatureShowcase} />
+              <Route path="/" component={Home} />
             </Switch>
-          </div>
+          </Site>
         </BrowserRouter>
       </MuiThemeProvider>
     )
