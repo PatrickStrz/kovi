@@ -21,7 +21,7 @@ const Box = styled.div`
 const Text = styled.div`
   width: 80%;
   color: ${muiColors.primary1};
-  text-align: center;
+  text-align: left;
   line-height: 2;
 `
 

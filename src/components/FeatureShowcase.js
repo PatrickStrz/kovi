@@ -19,6 +19,8 @@ const FeatureBox = styled.div`
   flex-direction: column;
   align-items: center;
   border-bottom: solid 3px rgb(219, 219, 219);
+  text-align: center;
+  font-size: 18px;
 `
 
 const Title = styled.h2`
@@ -52,14 +54,15 @@ const features = [
     title:  "Know who is contributing in real time ",
     imageUrl: "https://files.graph.cool/cj6o9kpt72gao017850frjw3q/cj8ezn2hq00b901553mw816lo",
     description: `The community button in the bottom bar changes to a clickable
-    avatar whenever a new contribution occurs. This allows you to stay on top of
+    avatar of the user who just contributed. You can click on it to
+    open the community dashboard. This allows you to stay on top of
     the most recent community level changes as they happen.`
   },
   {
     title:"Real time Community board updates",
     imageUrl: "https://files.graph.cool/cj541g35wjwqc01754kb4rfvk/cj8f4ondf00ks01554dhymloe",
     description: `
-    See the community aggregate score grow and who helped push it forward.
+    See the community total score grow and who helped push it forward.
     `
   },
   {
@@ -73,15 +76,14 @@ const features = [
     title:"Animated actions",
     imageUrl: "https://files.graph.cool/cj541g35wjwqc01754kb4rfvk/cj8f3wl2400k40155zpv6w5sm",
     description: `
-     We aim to make micro-interactions
-    within the app feel fun and to give you more response to your inputs.
+     We aim to give you fun visual responses to your inputs.
     `
   },
   {
     title: "Easy contribution experience",
     imageUrl: "https://files.graph.cool/cj541g35wjwqc01754kb4rfvk/cj8f4d01s00kg0155vhuc4j0m",
     description: `
-      Simple interface to make it easy to contribute content to the community
+      Simple interface making it easy to contribute content to the community
       whether on mobile or desktop.
     `
   },
