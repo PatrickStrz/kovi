@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 //other
 import styled from 'styled-components'
-import {colors, muiColors} from 'styles/theme/colors'
+import {muiColors} from 'styles/theme/colors'
 //components
 import {FaIcon} from 'ui-kit/icons'
 
@@ -32,6 +32,11 @@ const IconBox = styled.div`
 `
 
 class Banner extends Component {
+  static propTypes = {
+      onExitClick: PropTypes.func.isRequired,
+      text: PropTypes.node.isRequired,
+  }
+
   render(){
     const {text, onExitClick} = this.props
     return(

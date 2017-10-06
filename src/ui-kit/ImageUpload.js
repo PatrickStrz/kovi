@@ -131,7 +131,7 @@ class ImageUpload extends Component {
         return(
           <Box>
             <Text color={colors.warningRed}>
-              File must be less than 2mb and
+              File must be less than 10mb and
               of one of the following types:
             <br/> .gif .png .jpg  .jpeg
             </Text>
@@ -156,7 +156,7 @@ class ImageUpload extends Component {
         accept=".jpg,.png,.gif,.jpeg"
         style={this.styles.style}
         activeStyle={this.styles.active}
-        maxSize={2e+6} //2mb converted to bytes
+        maxSize={1e+7} //10mb converted to bytes
         onDropAccepted={this.uploadFile}
         onDropRejected={()=>this.setUploadStatus('rejected')}
       >
