@@ -13,7 +13,6 @@ import styled from 'styled-components'
 //Components
 import ChallengeListContainer from 'components/challenges/ChallengeListContainer'
 import ChallengeFormContainer from 'components/challenges/ChallengeFormContainer'
-import {Dialog, Banner} from 'ui-kit'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import HomeLayout from 'components/layouts/HomeLayout'
@@ -21,6 +20,8 @@ import Community from 'components/community/Community'
 import ChallengeDetailContainer from 'components/challenges/ChallengeDetailContainer'
 import {Route, Link} from 'react-router-dom'
 import BottomBar from 'components/BottomBar'
+import Transition from 'react-transition-group/Transition'
+import {Dialog, Banner, Animate} from 'ui-kit'
 
 const ChallengeListBox = styled.div`
   margin-top: 45px;
@@ -91,8 +92,10 @@ class Home extends Component {
     const {showCreateChallengeView} = this.props
 
     const centerContent = (
+
       <ChallengeListBox>
-        {this.state.showBanner && this.renderBanner()}
+        {/* {this.state.showBanner && this.renderBanner()} */}
+        <Animate child={this.state.showBanner && this.renderBanner()}/>
         <ChallengeListContainer />
       </ChallengeListBox>
     )
