@@ -13,7 +13,6 @@ import {
 //components
 import SyncUser from 'components/SyncUser'
 import Alert from 'components/Alert'
-import BottomBar from 'components/BottomBar'
 import Navbar from 'components/navbar/Navbar'
 import Headroom from 'react-headroom'
 
@@ -93,8 +92,6 @@ class Site extends Component {
         <div>
           {children}
         </div>
-        {/* bottom bar sticks to bottom */}
-        <BottomBar/>
         <Alert />
       </div>
     )

@@ -20,6 +20,7 @@ import HomeLayout from 'components/layouts/HomeLayout'
 import Community from 'components/community/Community'
 import ChallengeDetailContainer from 'components/challenges/ChallengeDetailContainer'
 import {Route} from 'react-router'
+import BottomBar from 'components/BottomBar'
 
 const ChallengeListBox = styled.div`
   margin-top: 45px;
@@ -128,6 +129,8 @@ class Home extends Component {
           />
         </Dialog>
         <Route path="/challenge/:id" component={ChallengeDetailContainer}/>
+        {/* bottom bar sticks to bottom */}
+        <BottomBar/>
       </div>
     )
   }

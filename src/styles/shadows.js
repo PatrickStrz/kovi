@@ -20,3 +20,4 @@ export const PROFILE_CARD_SHADOW = shadows.level2
 export const MORE_INFO_SHADOW = shadows.level2
 export const SCORE_SECTION_SHADOW = shadows.level2
 export const PRODUCT_CARD_SHADOW = shadows.level2
+export const IMAGE_BOX_SHADOW = shadows.level2
