@@ -95,7 +95,7 @@ class Home extends Component {
 
       <ChallengeListBox>
         {/* {this.state.showBanner && this.renderBanner()} */}
-        <Animate child={this.state.showBanner && this.renderBanner()}/>
+        <Animate cheese="cheeesy" inProp={this.state.showBanner && true} child={this.renderBanner()}/>
         <ChallengeListContainer />
       </ChallengeListBox>
     )

@@ -15,13 +15,13 @@ class Animate extends Component {
     in: false
   }
   componentDidMount = () => {
-    this.props.child && this.setState({in: true})
+    this.props.inProp && this.setState({in: true})
   }
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.child) {
+    if (nextProps.inProp) {
       this.setState({in: true})
     }
-    if (this.props.child && !nextProps.child){
+    if (this.props.inProp && !nextProps.inProp){
       this.setState({in:false})
     }
   }
@@ -40,10 +40,10 @@ class Animate extends Component {
 
   render(){
     return(
-      <Transition in={this.state.in} timeout={{enter:2000, exit:2000}}>
+      <Transition in={this.state.in} timeout={{enter:2000, exit:2000}} mountOnEnter={true} unmountOnExit={true}>
         {state => {
           return(
-            <Box opacity={this.getOpacity(state)}> {this.props.child} </Box>
+            <Box opacity={this.getOpacity(state)}> {this.props.child} {console.log(state)} </Box>
           )
         } }
       </Transition>
