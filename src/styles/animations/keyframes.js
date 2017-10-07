@@ -48,6 +48,19 @@ export const slideIn = keyframes`
 `
 
 export const fadeOut = keyframes`
-  0%   { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`
+export const fadeAndShrink = keyframes`
+  0% {
+    height: 100%;
+  }
+  100% {
+    height: 0%;
+    transform: scale(0);
+  }
 `
