@@ -9,7 +9,7 @@ import {
 } from '../actions/challenge-actions'
 //lib + other
 import {requireAuth} from 'lib/auth'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 //Components
 import ChallengeListContainer from 'components/challenges/ChallengeListContainer'
 import ChallengeFormContainer from 'components/challenges/ChallengeFormContainer'
@@ -20,8 +20,8 @@ import Community from 'components/community/Community'
 import ChallengeDetailContainer from 'components/challenges/ChallengeDetailContainer'
 import {Route, Link} from 'react-router-dom'
 import BottomBar from 'components/BottomBar'
-import Transition from 'react-transition-group/Transition'
-import {Dialog, Banner, Animate} from 'ui-kit'
+import {Dialog, Banner, SingleTransition} from 'ui-kit'
+import {fadeAndShrink} from 'styles/animations/keyframes'
 
 const ChallengeListBox = styled.div`
   margin-top: 45px;
@@ -94,8 +94,13 @@ class Home extends Component {
     const centerContent = (
 
       <ChallengeListBox>
-        {/* {this.state.showBanner && this.renderBanner()} */}
-        <Animate cheese="cheeesy" inProp={this.state.showBanner && true} child={this.renderBanner()}/>
+        <SingleTransition
+          isMounted={this.state.showBanner && true}
+          exitTime={500}
+          exitingStyle={css`animation: ${fadeAndShrink} 0.5s;`}
+        >
+          {this.renderBanner()}
+        </SingleTransition>
         <ChallengeListContainer />
       </ChallengeListBox>
     )

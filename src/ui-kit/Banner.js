@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
 //components
 import {FaIcon} from 'ui-kit/icons'
-import {Animate} from 'ui-kit'
 
 const Box = styled.div`
   margin-bottom:25px;
@@ -36,10 +35,6 @@ class Banner extends Component {
   static propTypes = {
       onExitClick: PropTypes.func.isRequired,
       text: PropTypes.node.isRequired,
-  }
-
-  state = {
-    willExit: false
   }
 
   render(){
