@@ -75,9 +75,7 @@ export default class ChallengeDetail extends Component{
         <MarkdownView>
           <div
             className="content"
-            dangerouslySetInnerHTML={
-              {__html: DOMPurify.sanitize(body, {allowedTags: false})}
-            }
+            dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(body)}}
           />
         </MarkdownView>
       </MdBox>
