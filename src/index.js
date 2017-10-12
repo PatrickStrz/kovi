@@ -11,6 +11,7 @@ import { ApolloProvider } from 'react-apollo'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import './styles/css/index.css'
 import Raven from 'raven-js' // for Sentry error logging
+import ReactGA from 'react-ga'
 
 // create websocket client for subscriptions:
 const wsClient = new SubscriptionClient(
@@ -59,7 +60,11 @@ const store = createStore(
 )
 
 injectTapEventPlugin() //for material-ui onclick events
-Raven.config('https://190caa1c5da9498c9ba578fe4726a696@sentry.io/190960').install()
+Raven.config(process.env.REACT_APP_SENTRY_URL).install()
+
+if (process.env.REACT_APP_ENV === 'production') {
+  ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID)
+} 
 
 ReactDOM.render((
   <ApolloProvider store={store} client={client}>

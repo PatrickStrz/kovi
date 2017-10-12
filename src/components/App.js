@@ -5,6 +5,12 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from 'components/Site'
 import Home from 'components/Home'
 import FeatureShowcase from 'components/FeatureShowcase'
+import ReactGA from 'react-ga'
+
+const logPageView = () => {
+  ReactGA.set({ page: window.location.pathname + window.location.search })
+  ReactGA.pageview(window.location.pathname + window.location.search)
+}
 
 class App extends Component {
   devRoute = `/${process.env.REACT_APP_DEV_ROUTE}/`
@@ -12,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <BrowserRouter>
+        <BrowserRouter onUpdate={logPageView}>
           <Site>
             <Switch>
               <Route exact path="/about" render={() => <h1>about</h1>} />
