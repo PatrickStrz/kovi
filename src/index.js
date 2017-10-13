@@ -64,7 +64,7 @@ Raven.config(process.env.REACT_APP_SENTRY_URL).install()
 
 if (process.env.REACT_APP_ENV === 'production') {
   ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID)
-} 
+}
 
 ReactDOM.render((
   <ApolloProvider store={store} client={client}>
