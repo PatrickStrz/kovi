@@ -6,16 +6,18 @@ import ReactGA from 'react-ga'
 attribute of BrowserRouter removed in react-router 4 api*/
 
 class RouteChange extends Component {
+  env = process.env.REACT_APP_ENV
+
   componentDidMount = () => {
     //on initial render:
-    process.env.REACT_APP_ENV === 'production' && this.logPageView()
+    this.env === 'production' && this.logPageView()
   }
 
   componentWillReceiveProps = (nextProps) => {
     //on every RouterChange:
-    process.env.REACT_APP_ENV === 'production' && this.logPageView()
+    this.env === 'production' && this.logPageView()
   }
-
+  // google analytics:
   logPageView = () => {
     ReactGA.set({ page: window.location.pathname + window.location.search })
     ReactGA.pageview(window.location.pathname + window.location.search)

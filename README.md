@@ -8,6 +8,8 @@ tools.
 1. `git clone git@github.com:PatrickStrz/kovi.git`
 2. Add the following secrets to .env file:
 ```
+REACT_APP_ENV= 'dev' or 'production'
+REACT_APP_PRODUCTION = true
 REACT_APP_AUTH0_CLIENT_ID='XXXX' //from auth0 console
 REACT_APP_AUTH0_DOMAIN='XXXX' //from auth0 console
 REACT_APP_DEV_ROUTE='XXXX' //to view development only routes. i.e) mockup of
@@ -15,8 +17,11 @@ app layout is available for developers that know this secret
 REACT_APP_GRAPHCOOL_ENDPOINT='wss://XXXX' //use dev api in development
 REACT_APP_GRAPHCOOL_WSS_ENDPOINT='https://XXXX' //use dev api wss in development.
 REACT_APP_GRAPHCOOL_FILE_ENDPOINT='https://XXXX' //use dev api wss in development.
+REACT_APP_SENTRY_URL='https://XXXX'
+REACT_APP_GOOGLE_ANALYTICS_ID='UA=XXXX'
 NODE_PATH = 'src' //to enable absolute imports
 ```
+
  3. install dependencies `npm install`
 
 ## Deployment
