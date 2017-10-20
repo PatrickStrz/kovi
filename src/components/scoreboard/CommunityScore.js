@@ -1,7 +1,7 @@
 //react+redux
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 //redux
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -19,10 +19,11 @@ import {logException} from 'config'
 import {muiColors} from 'styles/theme/colors'
 import {bounceIn} from 'styles/animations/keyframes'
 import {calculateTotalScore} from 'lib/score-system'
+import {FaIcon} from 'ui-kit/icons'
 
-const Score = styled.p`
+const Score = styled.div`
   display: inline-block;
-  color: ${muiColors.primary1};
+  color: ${muiColors.secondary1};
   font-size: 18px;
   margin: 0px;
   animation: ${bounceIn} 0.5s;
@@ -54,7 +55,18 @@ class CommunityScore extends Component {
     //this total is calculated based on the scoring system in lib/score-system:
 
   renderScore = () => {
-      return <Score>{this.props.communityScore} points</Score>
+      return (
+      <Score>
+        {this.props.communityScore}
+        <FaIcon
+          faClassName="fa-star-o"
+          color={muiColors.secondary1}
+          inline={true}
+          extraStyles={css`margin-left: 3px; margin-right: 3px;`}
+        />
+        collectively
+      </Score>
+    )
   }
 
   render(){
