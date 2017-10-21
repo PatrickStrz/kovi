@@ -28,26 +28,6 @@ import Editor from 'ui-kit/Editor'
 import RaisedButton from 'material-ui/RaisedButton'
 import {ImageUpload, InputWithCharLimit} from 'ui-kit'
 
-const TitleBox = styled.div`
-  width:90%;
-`
-const FormBox = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  width: 70%;
-  margin-left: 15%;
-   ${media.md`
-     width:90%;
-     margin-left: 5%;
-     align-items: left;
-     `}
-`
-const EditorBox = styled.div`
-  width:100%
-`
-
 /* form for both creating and updating challenges, update prop determines if
     it is used as an update form
 */
@@ -293,6 +273,26 @@ const ChallengeFormContainerApollo = compose(
     {name:"updateChallengeMutation"}
   ),
 )(ChallengeFormContainer)
+
+const TitleBox = styled.div`
+  width:90%;
+`
+const FormBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  width: 70%;
+  margin-left: 15%;
+   ${media.md`
+     width:90%;
+     margin-left: 5%;
+     align-items: left;
+     `}
+`
+const EditorBox = styled.div`
+  width:100%
+`
 
 export default connect(
   mapStateToProps, mapDispatchToProps

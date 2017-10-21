@@ -23,19 +23,6 @@ import {ImageUpload, InputWithCharLimit} from 'ui-kit'
 import TextField from 'material-ui/TextField'
 import CircularProgress from 'material-ui/CircularProgress';
 
-const FormBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 70%;
-  margin-left: 15%;
-   ${media.md`
-     width:90%;
-     margin-left: 5%;
-     align-items: left;
-  `}
-`
-
 class ProductFormContainer extends Component {
   static propTypes = {
     challengeId: PropTypes.string.isRequired,
@@ -210,6 +197,18 @@ const ProductFormContainerApollo = graphql(
     {name:"createProductSolutionMutation"}
   )(ProductFormContainer)
 
+  const FormBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    margin-left: 15%;
+     ${media.md`
+       width:90%;
+       margin-left: 5%;
+       align-items: left;
+    `}
+  `
 export default connect(
   mapStateToProps, mapDispatchToProps
 )(ProductFormContainerApollo)

@@ -8,11 +8,6 @@ import {
   POPOVER_DIALOG_Z_INDEX
 } from 'styles/z-index'
 
-const Box = styled.div`
-  cursor: pointer;
-  -webkit-tap-highlight-color:transparent;
-`
-
 export default class Popover extends Component {
 
   static propTypes = {
@@ -65,3 +60,8 @@ export default class Popover extends Component {
     )
   }
 }
+
+const Box = styled.div`
+  cursor: pointer;
+  -webkit-tap-highlight-color:transparent;
+`

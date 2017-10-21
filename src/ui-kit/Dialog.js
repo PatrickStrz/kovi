@@ -12,43 +12,6 @@ import Media from 'react-media'
 import Modal from 'react-modal'
 import FaIcon from 'ui-kit/icons/FaIcon'
 
-const ExitBox = styled.div`
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  ${props =>{
-    if (props.isMobile){
-      return css`
-        background-color: rgb(69, 69, 69);
-        height: 45px;
-        width: 45px;
-        right: 0px;
-        top: 20px;
-        border-top-left-radius: 50%;
-        border-bottom-left-radius: 50%;
-      `
-    }
-    else {
-      return css`
-        background-color: white;
-        height: 45px;
-        width: 45px;
-        right: 2vh;
-        top: 2vh;
-        border-radius: 50%;
-      `
-      }
-    }
-  }
-  opacity: 80%;
-  overflow: auto;
-  z-index: ${DIALOG_EXIT_Z_INDEX}
-`
-const ChildrenContainer = styled.div`
-  padding-bottom: 5vh;
-`
 //Wrapper component for react modal:
 export default class Dialog extends Component {
 
@@ -139,3 +102,41 @@ export default class Dialog extends Component {
     )
   }
 }
+
+const ExitBox = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  ${props =>{
+    if (props.isMobile){
+      return css`
+        background-color: rgb(69, 69, 69);
+        height: 45px;
+        width: 45px;
+        right: 0px;
+        top: 20px;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+      `
+    }
+    else {
+      return css`
+        background-color: white;
+        height: 45px;
+        width: 45px;
+        right: 2vh;
+        top: 2vh;
+        border-radius: 50%;
+      `
+      }
+    }
+  }
+  opacity: 80%;
+  overflow: auto;
+  z-index: ${DIALOG_EXIT_Z_INDEX}
+`
+const ChildrenContainer = styled.div`
+  padding-bottom: 5vh;
+`

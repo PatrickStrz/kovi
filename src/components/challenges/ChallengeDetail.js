@@ -17,25 +17,6 @@ container completes.For this use case it works since we do not want comments to
 render before the body.
 */
 
-const Title = styled.div`
-  border-bottom: 5px solid ${colors.grey};
-  margin-bottom: 20px;
-  font-size: 35px;
-  text-align: center;
-  color: ${colors.medGrey};
-  padding: 5px;
-`
-
-const CommentsHeading = styled.h4`
-  color: ${colors.lightGrey};
-`
-const LineBreak = styled.hr`
-  border: solid 1px ${colors.faintGrey};
-`
-const MdBox = styled.div`
-  background-color: ${colors.faintTeal};
-`
-
 export default class ChallengeDetail extends Component{
   static propTypes = {
     title: PropTypes.string.isRequired,
@@ -114,3 +95,22 @@ export default class ChallengeDetail extends Component{
     )
   }
 }
+
+const Title = styled.div`
+  border-bottom: 5px solid ${colors.grey};
+  margin-bottom: 20px;
+  font-size: 35px;
+  text-align: center;
+  color: ${colors.medGrey};
+  padding: 5px;
+`
+
+const CommentsHeading = styled.h4`
+  color: ${colors.lightGrey};
+`
+const LineBreak = styled.hr`
+  border: solid 1px ${colors.faintGrey};
+`
+const MdBox = styled.div`
+  background-color: ${colors.faintTeal};
+`

@@ -14,52 +14,6 @@ import {AvatarPop, ProgressMeter} from 'ui-kit'
 import {SCORE_SECTION_SHADOW} from 'styles/shadows'
 import LeaderboardContainer from 'components/community/LeaderboardContainer'
 
-const Header = styled.p`
-  color: ${muiColors.secondary1};
-  font-family: 'Open Sans', sans-serif;
-  text-align: center;
-  font-size: 20px;
-  margin: auto;
-`
-
-const HeadingBox = styled.div`
-  background-color: ${muiColors.secondary1};
-  background-color: #bff9f7;  ${''/* margin: 5px; */}
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-`
-const ScoreSection = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  border-radius: 3px;
-  margin: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
-  ${SCORE_SECTION_SHADOW}
-`
-const ScoreBox = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-`
-const AvatarPopBox = styled.div`
-  margin-left: 5px;
-`
-
-const LeaderboardBox = styled.div`
-  ${media.md`
-    margin-left: 5px;
-  `} /* indent on mobile */
-`
-
 class Community extends Component {
   static propTypes = {
     //redux
@@ -109,5 +63,52 @@ const mapStateToProps = (state) => ({
   userPictureUrl: state.app.scores.lastContributor.pictureUrl,
   communityScoreEventId: state.app.scores.communityScoreEventId
 })
+
+
+const Header = styled.p`
+  color: ${muiColors.secondary1};
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  font-size: 20px;
+  margin: auto;
+`
+
+const HeadingBox = styled.div`
+  background-color: ${muiColors.secondary1};
+  background-color: #bff9f7;  ${''/* margin: 5px; */}
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`
+const ScoreSection = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 3px;
+  margin: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  ${SCORE_SECTION_SHADOW}
+`
+const ScoreBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+`
+const AvatarPopBox = styled.div`
+  margin-left: 5px;
+`
+
+const LeaderboardBox = styled.div`
+  ${media.md`
+    margin-left: 5px;
+  `} /* indent on mobile */
+`
 
 export default connect(mapStateToProps, mapDispatchToProps)(Community)

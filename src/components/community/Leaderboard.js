@@ -9,37 +9,6 @@ import {Avatar, Popover} from 'ui-kit'
 import {FaIcon} from 'ui-kit/icons'
 import ProfileCardContainer from 'components/ProfileCardContainer'
 
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-`
-const ScorecardBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  :hover{
-    background-color: #e0dddd;
-    border-radius: 20px;
-    padding-right: 5px;
-  };
-`
-const Name = styled.div`
-  margin: 5px;
-  color: ${muiColors.primary1}
-`
-const ScoreBox = styled.div`
-  color: ${colors.medGrey};
-  margin-right: 5px;
-`
-const IconBox = styled.div`
-  display: inline-block;
-`
 class Leaderboard extends Component {
   static propTypes = {
     scorecards: PropTypes.array.isRequired,
@@ -82,5 +51,37 @@ class Leaderboard extends Component {
     )
   }
 }
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`
+const ScorecardBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  :hover{
+    background-color: #e0dddd;
+    border-radius: 20px;
+    padding-right: 5px;
+  };
+`
+const Name = styled.div`
+  margin: 5px;
+  color: ${muiColors.primary1}
+`
+const ScoreBox = styled.div`
+  color: ${colors.medGrey};
+  margin-right: 5px;
+`
+const IconBox = styled.div`
+  display: inline-block;
+`
 
 export default Leaderboard

@@ -3,26 +3,6 @@ import PropTypes from 'prop-types'
 // other
 import styled, {css} from 'styled-components'
 
-const styles ={
-  borderRadius: '2px'
-}
-
-const Placeholder = styled.div`
-${props => css`
-  height:${props.size};
-  width:${props.size};
-`}
-  background-color: rgb(191, 191, 191);
-  border-radius: ${styles.borderRadius};
-`
-const ImageTag = styled.img`
-  border-radius: ${styles.borderRadius};
-  ${props => css`
-    height:${props.size};
-    width:${props.size};
-  `}
-`
-
 class Image extends Component {
   static propTypes = {
     url: PropTypes.string,
@@ -48,5 +28,25 @@ class Image extends Component {
     )
   }
 }
+
+const styles ={
+  borderRadius: '2px'
+}
+
+const Placeholder = styled.div`
+${props => css`
+  height:${props.size};
+  width:${props.size};
+`}
+  background-color: rgb(191, 191, 191);
+  border-radius: ${styles.borderRadius};
+`
+const ImageTag = styled.img`
+  border-radius: ${styles.borderRadius};
+  ${props => css`
+    height:${props.size};
+    width:${props.size};
+  `}
+`
 
 export default Image

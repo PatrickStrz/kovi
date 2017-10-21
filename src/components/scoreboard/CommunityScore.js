@@ -20,14 +20,6 @@ import {muiColors} from 'styles/theme/colors'
 import {bounceIn} from 'styles/animations/keyframes'
 import {calculateTotalScore} from 'lib/score-system'
 
-const Score = styled.p`
-  display: inline-block;
-  color: ${muiColors.primary1};
-  font-size: 18px;
-  margin: 0px;
-  animation: ${bounceIn} 0.5s;
-`
-
 class CommunityScore extends Component {
   static propTypes = {
     subscribeToNewScores: PropTypes.func.isRequired,
@@ -131,5 +123,13 @@ const mapDispatchToProps = (dispatch) => {
       requestRefetchLeaderboard
     }, dispatch)
 }
+
+const Score = styled.p`
+  display: inline-block;
+  color: ${muiColors.primary1};
+  font-size: 18px;
+  margin: 0px;
+  animation: ${bounceIn} 0.5s;
+`
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommunityScoreWithData)

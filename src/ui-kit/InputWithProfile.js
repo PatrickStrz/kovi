@@ -1,17 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-
+//other
 import styled from 'styled-components'
-
+//components
 import TextareaAutosize from 'react-autosize-textarea';
 import Avatar from 'ui-kit/Avatar'
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-`
 
 /*
 input with avatar on left side. Component spans the full width
@@ -70,3 +64,10 @@ export default class CommentCreate extends Component {
     )
   }
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+`

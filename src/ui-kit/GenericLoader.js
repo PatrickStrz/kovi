@@ -4,6 +4,17 @@ import PropTypes from 'prop-types'
 import {loadingOpacity} from 'styles/animations/keyframes'
 import styled from 'styled-components'
 
+const GenericError = (props) => {
+  return(
+    <Box>
+      <Loader>{props.text}</Loader>
+    </Box>
+  )
+}
+
+GenericError.PropTypes = {
+  text: PropTypes.string.isRequired
+}
 
 const Box = styled.div`
   width: 100%;
@@ -16,17 +27,5 @@ const Loader = styled.h1`
   color: ${muiColors.primary1};
   animation: ${loadingOpacity} 1.25s infinite;
 `
-
-const GenericError = (props) => {
-  return(
-    <Box>
-      <Loader>{props.text}</Loader>
-    </Box>
-  )
-}
-
-GenericError.PropTypes = {
-  text: PropTypes.string.isRequired
-}
 
 export default GenericError

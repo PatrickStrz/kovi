@@ -7,6 +7,49 @@ import {CARD_Z_INDEX} from 'styles/z-index'
 //components
 import {Image} from 'ui-kit'
 
+export default class Card extends Component{
+
+  static propTypes = {
+    imageUrl: PropTypes.string,
+    text: PropTypes.string,
+    onBodyClick: PropTypes.func,
+    actions: PropTypes.node,
+    highlight: PropTypes.bool,
+    highlightColor: PropTypes.string,
+    isLoading:  PropTypes.bool,
+    backgroundColor: PropTypes.string,
+  }
+
+  render(){
+    const {
+      text,
+      onBodyClick,
+      actions,
+      highlight,
+      highlightColor,
+      imageUrl,
+      backgroundColor,
+    } = this.props
+    return(
+      <CardBox
+        highlight={highlight}
+        highlightColor={highlightColor}
+        backgroundColor={backgroundColor}
+        >
+        <CardBody>
+          <ClickableBox onClick={onBodyClick}>
+            <ImageBox onClick={onBodyClick}>
+              <Image size="90px" url={imageUrl}/>
+            </ImageBox>
+            <Title>{text}</Title>
+          </ClickableBox>
+            {actions}
+        </CardBody>
+      </CardBox>
+    )
+  }
+}
+
 const CardBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -62,46 +105,3 @@ const Title = styled.div`
   color: ${colors.grey};
   padding: 5px;
 `
-
-export default class Card extends Component{
-
-  static propTypes = {
-    imageUrl: PropTypes.string,
-    text: PropTypes.string,
-    onBodyClick: PropTypes.func,
-    actions: PropTypes.node,
-    highlight: PropTypes.bool,
-    highlightColor: PropTypes.string,
-    isLoading:  PropTypes.bool,
-    backgroundColor: PropTypes.string,
-  }
-
-  render(){
-    const {
-      text,
-      onBodyClick,
-      actions,
-      highlight,
-      highlightColor,
-      imageUrl,
-      backgroundColor,
-    } = this.props
-    return(
-      <CardBox
-        highlight={highlight}
-        highlightColor={highlightColor}
-        backgroundColor={backgroundColor}
-        >
-        <CardBody>
-          <ClickableBox onClick={onBodyClick}>
-            <ImageBox onClick={onBodyClick}>
-              <Image size="90px" url={imageUrl}/>
-            </ImageBox>
-            <Title>{text}</Title>
-          </ClickableBox>
-            {actions}
-        </CardBody>
-      </CardBox>
-    )
-  }
-}

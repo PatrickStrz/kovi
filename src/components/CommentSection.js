@@ -27,50 +27,6 @@ import {
 import RaisedButton from 'material-ui/RaisedButton'
 import {Comment} from 'ui-kit'
 
-const commentAvatarSize = '35px'
-
-const CommentSectionBox = styled.div`
-  margin: auto;
-  margin-top: 21px;
-  justify-content: center;
-  width: 90%;
-  margin-bottom: 30px;
-`
-const CommentCreateBox = styled.div`
-  margin-top: 20px;
-  margin-bottom: 20px;
-`
-
-const ChildCommentSectionWrapper = styled.div`
-  border-left: 4px solid ${colors.faintGrey};
-  margin-left: ${commentAvatarSize};
-  padding-left: 10px;
-  /* to match margin of CommentText p element: */
-  margin-bottom: 16px;
-`
-const ChildCommentSectionBox = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const CreateCommentBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-  width: 70%;
-  @media (max-width: ${XS_MAX}) {
-    width: 90%
-  }
-`
-
-const CommentsBox = styled.div`
-  /* horizonally center: */
-  border-radius: 5px;
-  background-color: ${colors.whiteGrey};
-  padding: 15px;
-`
-
 /*
     * Component with comments + childComments + operations (create/delete comments)
     * Completely reusable, can use with any gql Type that is commentable.
@@ -431,5 +387,49 @@ const mapStateToProps = (state) => ({
   apiUserId: state.app.auth.apiUserId,
   isAuthenticated: state.app.auth.isAuthenticated,
 })
+
+const commentAvatarSize = '35px'
+
+const CommentSectionBox = styled.div`
+  margin: auto;
+  margin-top: 21px;
+  justify-content: center;
+  width: 90%;
+  margin-bottom: 30px;
+`
+const CommentCreateBox = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`
+
+const ChildCommentSectionWrapper = styled.div`
+  border-left: 4px solid ${colors.faintGrey};
+  margin-left: ${commentAvatarSize};
+  padding-left: 10px;
+  /* to match margin of CommentText p element: */
+  margin-bottom: 16px;
+`
+const ChildCommentSectionBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const CreateCommentBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  width: 70%;
+  @media (max-width: ${XS_MAX}) {
+    width: 90%
+  }
+`
+
+const CommentsBox = styled.div`
+  /* horizonally center: */
+  border-radius: 5px;
+  background-color: ${colors.whiteGrey};
+  padding: 15px;
+`
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentSectionWithMutations)

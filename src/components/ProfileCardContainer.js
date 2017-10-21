@@ -17,66 +17,6 @@ import UserPhoto from 'ui-kit/UserPhoto'
 import UserScore from 'components/scoreboard/UserScore'
 import {FaIcon} from 'ui-kit/icons'
 
-const OuterBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  background-color: rgb(255, 255, 255);
-  ${PROFILE_CARD_SHADOW}
-  padding: 10px;
-  min-height: 150px;
-  min-width: 270px;
-`
-const TopBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: top;
-    margin-left: 10px;
-    border-radius: 3px;
-  `
-
-const Body = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const Name = styled.p`
-  font-size: 20px;
-  color: ${muiColors.primary1};
-  margin: 10px;
-`
-
-const ScoreBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-`
-const LevelBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  width: 100%;
-  margin-top: 10px;
-  background-color: ${colors.faintTeal};
-  border-radius: 3px;
-`
-const Score = styled.div`
-  display: inline-block;
-  color: ${muiColors.primary1};
-  font-size: 18px;
-  margin-right: 5px;
-`
-
-const LevelHeading = styled.div`
-  margin: 10px;
-  display: inline-block;
-  font-size: 18px;
-  color: ${muiColors.secondary1};
-`
-
 export class ProfileCardContainer extends Component {
   static propTypes = {
     userId: PropTypes.string.isRequired,
@@ -153,5 +93,65 @@ const ProfileCardContainerApollo = graphql(
 const mapStateToProps = (state) =>({
   currentUserId: state.app.auth.apiUserId,
 })
+
+const OuterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgb(255, 255, 255);
+  ${PROFILE_CARD_SHADOW}
+  padding: 10px;
+  min-height: 150px;
+  min-width: 270px;
+`
+const TopBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: top;
+    margin-left: 10px;
+    border-radius: 3px;
+  `
+
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const Name = styled.p`
+  font-size: 20px;
+  color: ${muiColors.primary1};
+  margin: 10px;
+`
+
+const ScoreBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+`
+const LevelBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  width: 100%;
+  margin-top: 10px;
+  background-color: ${colors.faintTeal};
+  border-radius: 3px;
+`
+const Score = styled.div`
+  display: inline-block;
+  color: ${muiColors.primary1};
+  font-size: 18px;
+  margin-right: 5px;
+`
+
+const LevelHeading = styled.div`
+  margin: 10px;
+  display: inline-block;
+  font-size: 18px;
+  color: ${muiColors.secondary1};
+`
 
 export default connect(mapStateToProps)(ProfileCardContainerApollo)

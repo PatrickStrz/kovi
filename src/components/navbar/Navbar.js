@@ -12,18 +12,6 @@ import AccountCircle from 'material-ui/svg-icons/action/account-circle'
 import UserScore from 'components/scoreboard/UserScore'
 import {FaIcon} from 'ui-kit/icons'
 
-const RightElementBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 30px; /*match left offset of appbar */
-`
-const ScoreBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  margin-right: 10px;
-`
 const Navbar = (props) => {
 
   const handleTouchTap = () => props.history.push('/')
@@ -90,6 +78,19 @@ const Navbar = (props) => {
     />
   )
 }
+
+const RightElementBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30px; /*match left offset of appbar */
+`
+const ScoreBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-right: 10px;
+`
 
 Navbar.propTypes = {
   handleLogout: PropTypes.func.isRequired,

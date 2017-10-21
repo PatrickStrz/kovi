@@ -4,7 +4,7 @@ import {muiTheme} from 'styles/theme/mui-theme'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Site from 'components/Site'
 import Home from 'components/Home'
-import FeatureShowcase from 'components/FeatureShowcase'
+import FeatureShowcase from 'components/feature-showcase/FeatureShowcase'
 import RouteChange from 'components/RouteChange'
 
 class App extends Component {

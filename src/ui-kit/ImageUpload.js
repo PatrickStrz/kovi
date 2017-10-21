@@ -9,29 +9,6 @@ import Dropzone from 'react-dropzone'
 import {FaIcon} from 'ui-kit/icons'
 import CircularProgress from 'material-ui/CircularProgress';
 
-const Box = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-`
-const Text = styled.p`
-  font-size: 18px;
-  color: ${props => props.color ? props.color: colors.lightGrey};
-  text-align: center;
-  margin: 15px;
-`
-const Image = styled.img`
-  ${props => css`
-    height: ${props.previewHeight};
-    width: ${props.previewWidth};
-  `}
-`
-
-const IconBox = styled.div`
-  margin: 25px;
-`
 class ImageUpload extends Component {
   static propTypes = {
     onUpload: PropTypes.func.isRequired, // callback that accepts fileId and fileUrl
@@ -165,5 +142,29 @@ class ImageUpload extends Component {
     )
   }
 }
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+`
+const Text = styled.p`
+  font-size: 18px;
+  color: ${props => props.color ? props.color: colors.lightGrey};
+  text-align: center;
+  margin: 15px;
+`
+const Image = styled.img`
+  ${props => css`
+    height: ${props.previewHeight};
+    width: ${props.previewWidth};
+  `}
+`
+
+const IconBox = styled.div`
+  margin: 25px;
+`
 
 export default ImageUpload

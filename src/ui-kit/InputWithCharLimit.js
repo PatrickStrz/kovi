@@ -6,9 +6,6 @@ import {colors} from 'styles/theme/colors'
 //components
 import TextField from 'material-ui/TextField'
 
-const CharCount = styled.p`
-    color: ${props => props.color };
-`
 class InputWithCharLimit extends Component {
   state = {error: ''}
 
@@ -81,4 +78,7 @@ class InputWithCharLimit extends Component {
   }
 }
 
+const CharCount = styled.p`
+    color: ${props => props.color };
+`
 export default InputWithCharLimit

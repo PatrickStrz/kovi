@@ -6,10 +6,6 @@ import {range} from 'lodash'
 import randomstring from 'randomstring'
 import {loadingOpacity} from 'styles/animations/keyframes'
 
-const LoaderBox = styled.div`
-  animation: ${loadingOpacity} 1.25s infinite;
-`
-
 /* takes a component and length (number of nodes to render)
   and renders a list of loaders with loading animations applied to each node
 */
@@ -33,6 +29,10 @@ const LoaderList = (props) => {
     </div>
   )
 }
+
+const LoaderBox = styled.div`
+  animation: ${loadingOpacity} 1.25s infinite;
+`
 
 LoaderList.propTypes = {
   length: PropTypes.number.isRequired,
