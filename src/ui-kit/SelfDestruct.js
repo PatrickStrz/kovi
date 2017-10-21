@@ -4,26 +4,6 @@ import styled, {css} from 'styled-components'
 import Transition from 'react-transition-group/Transition'
 import {fadeOut, pulse} from 'styles/animations/keyframes'
 
-const Box = styled.div`
-${props => {
-  switch (props.state) {
-    case 'entering':
-      return css`
-      animation-duration: ${props.enterAnimationDuration}ms;
-      animation-name: ${pulse};
-      animation-iteration-count: 2;
-      `
-    case 'exiting':
-      return(css`
-        animation-duration: ${props.exitAnimationDuration}ms;
-        animation-name: ${fadeOut};
-        `)
-    default:
-      break
-    }
-  }}
-`
-
 /*
 Component that mounts and unmounts children after a certain duration + in/out
 animations. Children stay unaltered for length of 'stayDuration' prop and
@@ -90,5 +70,25 @@ SelfDestruct.propTypes = {
   children: PropTypes.node.isRequired,
   onSelfDestruct: PropTypes.func,
 }
+
+const Box = styled.div`
+${props => {
+  switch (props.state) {
+    case 'entering':
+      return css`
+      animation-duration: ${props.enterAnimationDuration}ms;
+      animation-name: ${pulse};
+      animation-iteration-count: 2;
+      `
+    case 'exiting':
+      return(css`
+        animation-duration: ${props.exitAnimationDuration}ms;
+        animation-name: ${fadeOut};
+        `)
+    default:
+      break
+    }
+  }}
+`
 
 export default SelfDestruct

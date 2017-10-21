@@ -5,6 +5,12 @@ import PropTypes from 'prop-types'
 import styled, {css} from 'styled-components'
 
 //Profile avatar that displays inline
+const UserPhoto = (props) => {
+  return(
+    <PictureFrame size={props.size} imageUrl={props.imageUrl}/>
+  )
+}
+
 const PictureFrame = styled.div`
   border-radius: 3px;
   background-image: url(${props => props.imageUrl});
@@ -21,12 +27,6 @@ const PictureFrame = styled.div`
       max-width: ${props.size};
     `}
 `
-
-const UserPhoto = (props) => {
-  return(
-    <PictureFrame size={props.size} imageUrl={props.imageUrl}/>
-  )
-}
 
 UserPhoto.propTypes = {
   imageUrl: PropTypes.string.isRequired,

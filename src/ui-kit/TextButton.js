@@ -3,21 +3,7 @@ import PropTypes from 'prop-types'
 
 import styled, {css} from 'styled-components'
 import {muiColors} from 'styles/theme/colors'
-import CircularProgress from 'material-ui/CircularProgress';
-
-const Button = styled.a`
-  ${props => css`
-    color: ${props.color};
-    font-size: ${props.fontSize};
-    `}
-  ${props => props.withBorder && css`
-    border: solid 2px ${props.borderColor};
-    border-radius: 3px;
-    `}
-  /* top left bottom right: */
-  padding: 2px 5px 2px 5px;
-  cursor: pointer;
-`
+import CircularProgress from 'material-ui/CircularProgress'
 
 const TextButton = (props) => {
 
@@ -43,6 +29,20 @@ const TextButton = (props) => {
     </div>
   )
 }
+
+const Button = styled.a`
+  ${props => css`
+    color: ${props.color};
+    font-size: ${props.fontSize};
+    `}
+  ${props => props.withBorder && css`
+    border: solid 2px ${props.borderColor};
+    border-radius: 3px;
+    `}
+  /* top left bottom right: */
+  padding: 2px 5px 2px 5px;
+  cursor: pointer;
+`
 
 TextButton.propTypes = {
   label: PropTypes.string.isRequired,

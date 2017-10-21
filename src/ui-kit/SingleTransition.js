@@ -9,10 +9,6 @@ in and out transitions (can use to animate). Mounts and unmounts based on the
 isMounted prop.
 ----------------------------------------------------------------------------*/
 
-const Box = styled.div`
-  ${props =>{return(props.styles)}}
-`
-
 class SingleTransition extends Component {
   static PropTypes = {
     /* component won't render unless isMounted === true , unmounts automatically
@@ -77,5 +73,9 @@ class SingleTransition extends Component {
     )
   }
 }
+
+const Box = styled.div`
+  ${props =>{return(props.styles)}}
+`
 
 export default SingleTransition

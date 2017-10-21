@@ -5,16 +5,6 @@ import PropTypes from 'prop-types'
 import Avatar from 'ui-kit/Avatar'
 import {muiColors} from 'styles/theme/colors'
 
-const OuterContainer = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const UserName = styled.div`
-  color: ${muiColors.primary1};
-  margin-left: 5px;
-`
-
 // Component that consists of user avatar with user name beside
 const UserHeader = (props) => {
  return(
@@ -24,6 +14,16 @@ const UserHeader = (props) => {
    </OuterContainer>
  )
 }
+
+const OuterContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const UserName = styled.div`
+  color: ${muiColors.primary1};
+  margin-left: 5px;
+`
 
 UserHeader.propTypes = {
   userName: PropTypes.string.isRequired,
