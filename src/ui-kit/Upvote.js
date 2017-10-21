@@ -8,21 +8,6 @@ import {bounceIn} from 'styles/animations/keyframes'
 //components
 import FaIcon from 'ui-kit/icons/FaIcon'
 
-const Box = styled.div`
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  ${ props => (props.animate) && css`
-      animation: ${bounceIn} 0.5s
-    `}
-`
-const Count = styled.p`
-  color: rgb(166, 163, 163);
-  font-size: 14px;
-  margin-left: 5px;
-`
-//components
-
 class Upvote extends Component{
   static propTypes = {
     faIconClassName: PropTypes.string, // http://fontawesome.io/cheatsheet/
@@ -97,5 +82,19 @@ class Upvote extends Component{
     )
   }
 }
+
+const Box = styled.div`
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  ${ props => (props.animate) && css`
+      animation: ${bounceIn} 0.5s
+    `}
+`
+const Count = styled.p`
+  color: rgb(166, 163, 163);
+  font-size: 14px;
+  margin-left: 5px;
+`
 
 export default Upvote

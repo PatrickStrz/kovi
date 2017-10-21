@@ -8,25 +8,6 @@ import {loadingOpacity} from 'styles/animations/keyframes'
 //components
 import {Image} from 'ui-kit'
 
-const Box = styled.div`
-  height: 190px;
-  width: 140px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 4px;
-  margin: 5px;
-  ${PRODUCT_CARD_SHADOW}
-`
-
-const Text = styled.div`
-  text-align: center;
-  font-size: 18px;
-  color: ${muiColors.primary1};
-  margin-top: 10px;
-`
-const ImageLoadingBox = styled.div`
-  animation: ${loadingOpacity} 1.25s infinite;
-`
-
 class ProductCard extends Component {
   static PropTypes = {
     solution: PropTypes.object.isRequired,
@@ -62,5 +43,24 @@ class ProductCard extends Component {
     )
   }
 }
+
+const Box = styled.div`
+  height: 190px;
+  width: 140px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px;
+  margin: 5px;
+  ${PRODUCT_CARD_SHADOW}
+`
+
+const Text = styled.div`
+  text-align: center;
+  font-size: 18px;
+  color: ${muiColors.primary1};
+  margin-top: 10px;
+`
+const ImageLoadingBox = styled.div`
+  animation: ${loadingOpacity} 1.25s infinite;
+`
 
 export default ProductCard

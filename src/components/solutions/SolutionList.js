@@ -7,15 +7,6 @@ import randomstring from 'randomstring'
 //components
 import ProductCard from 'components/solutions/ProductCard'
 
-export const SolutionsBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  margin-bottom: 20px;
-`
-
 export class SolutionList extends Component {
 
   static propTypes = {
@@ -71,5 +62,14 @@ export class SolutionList extends Component {
     )
   }
 }
+
+export const SolutionsBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 20px;
+`
 
 export default SolutionList

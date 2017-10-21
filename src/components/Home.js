@@ -23,25 +23,6 @@ import BottomBar from 'components/BottomBar'
 import {Dialog, Banner, SingleTransition} from 'ui-kit'
 import {fadeAndShrink} from 'styles/animations/keyframes'
 
-const ChallengeListBox = styled.div`
-  margin-top: 45px;
-  margin-bottom: 70px; /* so can see bottom of infinite scroll list */
-`
-
-const RightContent = styled.div`
-  top:15vh;
-  height:76vh;
-  position:fixed;
-  ${''/* background-color: #ffffff; */}
-  width: 20vw;
-  right:20px;
-  border-radius: 3px;
-  overflow-y:auto;
-  ::-webkit-scrollbar {
-    display: none;
-  } /* hides scrollbar*/
-  padding: 10px;
-`
 class Home extends Component {
 
   static propTypes = {
@@ -154,5 +135,25 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({
   isCreateViewOpen: state.app.challenges.isCreateViewOpen,
 })
+
+const ChallengeListBox = styled.div`
+  margin-top: 45px;
+  margin-bottom: 70px; /* so can see bottom of infinite scroll list */
+`
+
+const RightContent = styled.div`
+  top:15vh;
+  height:76vh;
+  position:fixed;
+  ${''/* background-color: #ffffff; */}
+  width: 20vw;
+  right:20px;
+  border-radius: 3px;
+  overflow-y:auto;
+  ::-webkit-scrollbar {
+    display: none;
+  } /* hides scrollbar*/
+  padding: 10px;
+`
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

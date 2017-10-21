@@ -3,7 +3,17 @@ import React, {Component} from 'react'
 //other
 import styled from 'styled-components'
 import {colors, muiColors} from 'styles/theme/colors'
-//other
+
+class ProgressMeter extends Component {
+  // static PropTypes
+  render(){
+    return(
+      <Box>
+        <Progress percent={80} />
+      </Box>
+    )
+  }
+}
 
 const Box = styled.div`
   height: 10px;
@@ -21,16 +31,5 @@ const Progress = styled.div`
   border-top-left-radius: 1px;
   border-bottom-left-radius: 1px;
 `
-
-class ProgressMeter extends Component {
-  // static PropTypes
-  render(){
-    return(
-      <Box>
-        <Progress percent={80} />
-      </Box>
-    )
-  }
-}
 
 export default ProgressMeter

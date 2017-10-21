@@ -10,21 +10,6 @@ import {MORE_INFO_SHADOW} from 'styles/shadows'
 import {FaIcon} from 'ui-kit/icons'
 import {Popover} from 'ui-kit'
 
-const Box = styled.div`
-  ${props => css`
-      height: ${props.size};
-      width: ${props.size};
-    `}
-`
-const MoreInfoBox = styled.div`
-  width: 40vw;
-  ${media.md`
-    width: 70vw;
-    `}
-  background-color: white;
-  ${MORE_INFO_SHADOW}
-`
-
 class MoreInfo extends Component {
   // static PropTypes
   render(){
@@ -47,5 +32,20 @@ class MoreInfo extends Component {
     )
   }
 }
+
+const Box = styled.div`
+  ${props => css`
+      height: ${props.size};
+      width: ${props.size};
+    `}
+`
+const MoreInfoBox = styled.div`
+  width: 40vw;
+  ${media.md`
+    width: 70vw;
+    `}
+  background-color: white;
+  ${MORE_INFO_SHADOW}
+`
 
 export default MoreInfo

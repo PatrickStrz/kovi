@@ -27,19 +27,9 @@ import MuiDrawer from 'ui-kit/MuiDrawer'
 import Placeholder from 'components/Placeholder'
 import {AvatarPop} from 'ui-kit'
 
-
 const NotificationsIcon = <Notifications />
 const FilterIcon = <FilterList />
 const PublicIcon = <Public style={{color:'#757575'}} />
-
-//Hides Bottom Bar for screens larger than md.
-const BottomBarBox = styled.div`
-  display:none;
-  ${media.md`display:block;`}
-  position: fixed;
-  bottom:0;
-  margin-top:40;
-`
 
 class BottomBar extends Component {
 
@@ -185,5 +175,15 @@ const mapStateToProps = (state) => ({
   userPictureUrl: state.app.scores.lastContributor.pictureUrl,
   communityScoreEventId: state.app.scores.communityScoreEventId,
 })
+
+//Hides Bottom Bar for screens larger than md.
+
+const BottomBarBox = styled.div`
+  display:none;
+  ${media.md`display:block;`}
+  position: fixed;
+  bottom:0;
+  margin-top:40;
+`
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomBar)

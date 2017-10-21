@@ -10,24 +10,6 @@ import ProfileCardContainer from 'components/ProfileCardContainer'
 import UserHeader from 'ui-kit/UserHeader'
 import {FaIcon} from 'ui-kit/icons'
 
-const CommentBox = styled.div`
-  padding: 15px;
-  border-radius: 3px;
-  ${ props => props.willDelete && css`
-    background-color: ${colors.errorRed}
-    ` }
-`
-
-const CommentHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const CommentText = styled.p`
-  color: #545252;
-  word-wrap: break-word;
-`
-
 // Component that consists of user avatar with user name beside
 class Comment extends Component{
 
@@ -93,5 +75,24 @@ class Comment extends Component{
     )
   }
 }
+
+const CommentBox = styled.div`
+  padding: 15px;
+  border-radius: 3px;
+  ${ props => props.willDelete && css`
+    background-color: ${colors.errorRed}
+    ` }
+`
+
+const CommentHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const CommentText = styled.p`
+  color: #545252;
+  word-wrap: break-word;
+`
+
 
 export default Comment

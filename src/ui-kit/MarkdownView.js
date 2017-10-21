@@ -3,6 +3,17 @@ import PropTypes from 'prop-types'
 import {muiColors, colors} from 'styles/theme/colors'
 import styled from 'styled-components'
 
+const MarkdownView = (props) => {
+  return(
+    <MarkdownBox styles={props.styles}>{props.children}</MarkdownBox>
+  )
+}
+
+MarkdownView.propTypes = {
+  children: PropTypes.node.isRequired,
+  styles: PropTypes.string, // css string
+}
+
 const MarkdownBox = styled.div`
   ${props=> props.styles && props.styles}
   word-wrap: break-word;
@@ -32,16 +43,5 @@ const MarkdownBox = styled.div`
     color: ${muiColors.secondary1};
   }
 `
-
-const MarkdownView = (props) => {
-  return(
-    <MarkdownBox styles={props.styles}>{props.children}</MarkdownBox>
-  )
-}
-
-MarkdownView.propTypes = {
-  children: PropTypes.node.isRequired,
-  styles: PropTypes.string, // css string
-}
 
 export default MarkdownView

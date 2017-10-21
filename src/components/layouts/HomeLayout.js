@@ -4,6 +4,35 @@ import styled, {css} from 'styled-components'
 import {colors} from 'styles/theme/colors'
 import {media} from 'styles/media-queries'
 
+const HomeLayout = (props) => {
+  const {showLines} = props
+  return(
+    <AppBox>
+      <LeftPanel showLines={showLines}>
+        {props.leftPanelContent}
+      </LeftPanel>
+        <CenterPanel showLines={showLines}>
+          {props.centerPanelContent}
+        </CenterPanel>
+      <RightPanel showLines={showLines}>
+        {props.rightPanelContent}
+      </RightPanel>
+    </AppBox>
+  )
+}
+
+HomeLayout.propTypes = {
+  centerPanelContent: PropTypes.element.isRequired,
+  leftPanelContent: PropTypes.element,
+  rightPanelContent: PropTypes.element,
+  // See colored borders of layout components for development:
+  showLines: PropTypes.bool,
+}
+
+HomeLayout.defaultProps = {
+  showLines: false,
+}
+
 const AppBox = styled.div`
   min-height:100vh;
   width:100%;
@@ -35,34 +64,5 @@ const RightPanel = styled.div`
   ${ props => props.showLines && css`border: solid 6px #ee6662;`}
   ${media.md`display:none;`}
 `
-
-const HomeLayout = (props) => {
-  const {showLines} = props
-  return(
-    <AppBox>
-      <LeftPanel showLines={showLines}>
-        {props.leftPanelContent}
-      </LeftPanel>
-        <CenterPanel showLines={showLines}>
-          {props.centerPanelContent}
-        </CenterPanel>
-      <RightPanel showLines={showLines}>
-        {props.rightPanelContent}
-      </RightPanel>
-    </AppBox>
-  )
-}
-
-HomeLayout.propTypes = {
-  centerPanelContent: PropTypes.element.isRequired,
-  leftPanelContent: PropTypes.element,
-  rightPanelContent: PropTypes.element,
-  // See colored borders of layout components for development:
-  showLines: PropTypes.bool,
-}
-
-HomeLayout.defaultProps = {
-  showLines: false,
-}
 
 export default HomeLayout

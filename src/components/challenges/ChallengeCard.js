@@ -21,13 +21,6 @@ import Card from 'ui-kit/Card'
 import {withRouter} from 'react-router'
 import SolutionListContainer from 'components/solutions/SolutionListContainer'
 
-const ActionsBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-`
-
 class ChallengeCard extends Component {
   static propTypes = {
     challenge: PropTypes.shape({
@@ -141,6 +134,14 @@ const ChallengeCardApollo = compose(
   graphql(ADD_CHALLENGE_UPVOTE_MUTATION, {name: "addChallengeUpvoteMutation"}),
   graphql(REMOVE_CHALLENGE_UPVOTE_MUTATION, {name: "removeChallengeUpvoteMutation"}),
 )(ChallengeCard)
+
+
+const ActionsBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(ChallengeCardApollo)

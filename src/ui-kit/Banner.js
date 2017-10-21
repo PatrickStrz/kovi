@@ -6,31 +6,6 @@ import {muiColors} from 'styles/theme/colors'
 //components
 import {FaIcon} from 'ui-kit/icons'
 
-const Box = styled.div`
-  margin-bottom:25px;
-  padding: 15px;
-  position:relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: ${muiColors.primary100};
-  border-radius: 3px;
-`
-
-const Text = styled.div`
-  width: 80%;
-  color: ${muiColors.primary1};
-  text-align: left;
-  line-height: 2;
-`
-
-const IconBox = styled.div`
-  position:absolute;
-  top:5px;
-  right:5px;
-`
-
 class Banner extends Component {
   static propTypes = {
       onExitClick: PropTypes.func.isRequired,
@@ -55,4 +30,28 @@ class Banner extends Component {
   }
 }
 
+const Box = styled.div`
+  margin-bottom:25px;
+  padding: 15px;
+  position:relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: ${muiColors.primary100};
+  border-radius: 3px;
+`
+
+const Text = styled.div`
+  width: 80%;
+  color: ${muiColors.primary1};
+  text-align: left;
+  line-height: 2;
+`
+
+const IconBox = styled.div`
+  position:absolute;
+  top:5px;
+  right:5px;
+`
 export default Banner
